@@ -662,7 +662,7 @@ public class EnemyMonsterController : MonoBehaviour
             aiController.SetActive(false);
 
             taggingSlot = slot;
-            tagTimer = 1f;
+            tagTimer = 0.3f;
             maskCutout.Play(tagTimer);
             //TriggerAction(TriggerType.tagOut);
             tagOn = true;

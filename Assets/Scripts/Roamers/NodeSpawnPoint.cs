@@ -8,9 +8,25 @@ public class NodeSpawnPoint : MonoBehaviour
     public Node myNode;
 
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        myNode = GetComponent<Node>();
+    }
+
     public bool CanSpawnRoamer()
     {
         bool state = true;
+
+
+        float minDist = 7f;
+        float dist = Vector3.Distance(GM.playerManager.transform.position, transform.position);
+
+        if (dist < minDist)
+        {
+            state = false;
+            return state;
+        }
 
 
         if (GM.playerManager.currentNode.id == myNode.id)
