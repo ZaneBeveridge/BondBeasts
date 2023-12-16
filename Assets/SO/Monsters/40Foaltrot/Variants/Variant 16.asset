@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: Variant 16
+  m_EditorClassIdentifier: 
+  variantName: Foaltrot
+  parentId: 40
+  id: 4016
+  variantStillSprite: {fileID: -1479257155, guid: ce89f2a8b813c63489e1cb46ea4b86a7, type: 3}
+  variantAnimator: {fileID: 22100000, guid: 1fe65d5a14e5688419366932ba341111, type: 2}

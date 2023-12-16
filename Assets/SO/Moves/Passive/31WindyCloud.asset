@@ -1,0 +1,42 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19c88f5039624d2489150474b45db958, type: 3}
+  m_Name: 31WindyCloud
+  m_EditorClassIdentifier: 
+  id: 31
+  moveName: Quicken Health
+  moveDescription: While at Full HP, +60% spark, shared.
+  shared: 1
+  passiveActions:
+  - name: 
+    effect: {fileID: 11400000, guid: a4a7ac3b6d5e87f408b96b14761c2682, type: 2}
+    targets:
+      team: 0
+      self: 1
+      enemy: 0
+    conditions:
+      always: 0
+      whenBeingHit: 0
+      whenTagIn: 0
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 1
+      whileBelow15HP: 0

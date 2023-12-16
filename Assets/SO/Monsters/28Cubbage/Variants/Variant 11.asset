@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: Variant 11
+  m_EditorClassIdentifier: 
+  variantName: Cubbage
+  parentId: 28
+  id: 2811
+  variantStillSprite: {fileID: 1508051919, guid: a4a58937f59033641a9a399c2ddc5502, type: 3}
+  variantAnimator: {fileID: 22100000, guid: bf67a14b4ff1d574da85c5cb37819187, type: 2}

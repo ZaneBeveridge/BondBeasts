@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: Variant 9
+  m_EditorClassIdentifier: 
+  variantName: CoconutBaby
+  parentId: 23
+  id: 239
+  variantStillSprite: {fileID: 475564301, guid: 2f7a89a58675cf148af8d19f92168bfa, type: 3}
+  variantAnimator: {fileID: 22100000, guid: ed83d8eedc774f3469827ed627c0ec50, type: 2}

@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: Variant 7
+  m_EditorClassIdentifier: 
+  variantName: Ragoon
+  parentId: 37
+  id: 377
+  variantStillSprite: {fileID: 1245306968, guid: 34c5b362bbd0cea4783a447eb7024819, type: 3}
+  variantAnimator: {fileID: 22100000, guid: 65c974744267e8b4ca2e3f3a1a1b3967, type: 2}

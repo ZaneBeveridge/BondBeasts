@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bf3f53d8ec9434aaf48b41bb48adcc, type: 3}
+  m_Name: 101BoxersWrapsPlus
+  m_EditorClassIdentifier: 
+  id: 101
+  groupedId: 1
+  itemName: Boxer's Wraps +
+  desc: Upon tagging in, adds 3s of Crit Attacks
+  icon: {fileID: 21300000, guid: 25a4a6e9bfa77cc49b76600df36e2974, type: 3}
+  type: 2
+  maxStack: 10
+  canBeUpgraded: 1
+  recipe:
+    usedCatalyst:
+      item: {fileID: 11400000}
+      amount: 2
+    glitter:
+      item: {fileID: 11400000, guid: 23efad9e80d1c9f4e87c2c4700f31bd7, type: 2}
+      amount: 25
+    extraMats:
+    - item: {fileID: 11400000, guid: 42705f23d31a0da47814d747d6102fb1, type: 2}
+      amount: 2
+    - item: {fileID: 11400000, guid: 8f3ace89d25be1a479d915bfe7c419a4, type: 2}
+      amount: 2
+    createdCatalyst:
+      item: {fileID: 11400000, guid: aff7d28656643214a923b1b21a03919a, type: 2}
+      amount: 1
+  itemEffects:
+  - name: Upon tagging in, adds 3s of Crit Attacks
+    effect: {fileID: 11400000, guid: 30f1efc43b1d93045bf5456c85a7a7ff, type: 2}
+    targets:
+      self: 1
+      team: 0
+      enemy: 0
+    conditions:
+      always: 0
+      whenBeingHit: 0
+      whenTagIn: 1
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0

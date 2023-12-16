@@ -1,0 +1,87 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbe7505f01354ad4e922a589930c6504, type: 3}
+  m_Name: 75Saturation
+  m_EditorClassIdentifier: 
+  datas:
+  - name: Red1
+    colourWheel: 0
+    startColour: {r: 1, g: 0.25098038, b: 0.25098038, a: 1}
+    endColour: {r: 1, g: 0.50065356, b: 0.25098038, a: 1}
+  - name: Red2
+    colourWheel: 1
+    startColour: {r: 1, g: 0.5131372, b: 0.25098038, a: 1}
+    endColour: {r: 1, g: 0.7503268, b: 0.25098038, a: 1}
+  - name: Red3
+    colourWheel: 2
+    startColour: {r: 1, g: 0.76281047, b: 0.25098038, a: 1}
+    endColour: {r: 1, g: 1, b: 0.25098038, a: 1}
+  - name: Orange1
+    colourWheel: 3
+    startColour: {r: 0.98751634, g: 1, b: 0.25098038, a: 1}
+    endColour: {r: 0.75032675, g: 1, b: 0.25098038, a: 1}
+  - name: Orange2
+    colourWheel: 4
+    startColour: {r: 0.7378432, g: 1, b: 0.25098038, a: 1}
+    endColour: {r: 0.5006535, g: 1, b: 0.25098038, a: 1}
+  - name: Orange3
+    colourWheel: 5
+    startColour: {r: 0.48816997, g: 1, b: 0.25098038, a: 1}
+    endColour: {r: 0.25098038, g: 1, b: 0.25098038, a: 1}
+  - name: Yellow1
+    colourWheel: 6
+    startColour: {r: 0.25098038, g: 1, b: 0.26346403, a: 1}
+    endColour: {r: 0.25098038, g: 1, b: 0.5006537, a: 1}
+  - name: Yellow2
+    colourWheel: 7
+    startColour: {r: 0.25098038, g: 1, b: 0.51313734, a: 1}
+    endColour: {r: 0.25098038, g: 1, b: 0.7503269, a: 1}
+  - name: Yellow3
+    colourWheel: 8
+    startColour: {r: 0.25098038, g: 1, b: 0.7628105, a: 1}
+    endColour: {r: 0.25098038, g: 1, b: 1, a: 1}
+  - name: Green1
+    colourWheel: 9
+    startColour: {r: 0.25098038, g: 0.9875165, b: 1, a: 1}
+    endColour: {r: 0.25098038, g: 0.7503267, b: 1, a: 1}
+  - name: Green2
+    colourWheel: 10
+    startColour: {r: 0.25098038, g: 0.7378432, b: 1, a: 1}
+    endColour: {r: 0.25098038, g: 0.5006537, b: 1, a: 1}
+  - name: Green3
+    colourWheel: 11
+    startColour: {r: 0.25098038, g: 0.48817006, b: 1, a: 1}
+    endColour: {r: 0.25098038, g: 0.25098038, b: 1, a: 1}
+  - name: Blue1
+    colourWheel: 12
+    startColour: {r: 0.26346385, g: 0.25098038, b: 1, a: 1}
+    endColour: {r: 0.5006533, g: 0.25098038, b: 1, a: 1}
+  - name: Blue2
+    colourWheel: 13
+    startColour: {r: 0.5131375, g: 0.25098038, b: 1, a: 1}
+    endColour: {r: 0.75032705, g: 0.25098038, b: 1, a: 1}
+  - name: Blue3
+    colourWheel: 14
+    startColour: {r: 0.7628105, g: 0.25098038, b: 1, a: 1}
+    endColour: {r: 1, g: 0.25098038, b: 1, a: 1}
+  - name: Purple1
+    colourWheel: 15
+    startColour: {r: 1, g: 0.25098038, b: 0.98751616, a: 1}
+    endColour: {r: 1, g: 0.25098038, b: 0.7503267, a: 1}
+  - name: Purple2
+    colourWheel: 16
+    startColour: {r: 1, g: 0.25098038, b: 0.7378432, a: 1}
+    endColour: {r: 1, g: 0.25098038, b: 0.5006537, a: 1}
+  - name: Purple3
+    colourWheel: 17
+    startColour: {r: 1, g: 0.25098038, b: 0.48816988, a: 1}
+    endColour: {r: 1, g: 0.25098038, b: 0.25098038, a: 1}

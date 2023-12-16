@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: VariantBlank 7
+  m_EditorClassIdentifier: 
+  variantName: Shark
+  parentId: 18
+  id: 187
+  variantStillSprite: {fileID: -555690754, guid: 1c74ce379267c1743a70d3c245169b7a, type: 3}
+  variantAnimator: {fileID: 22100000, guid: 65a3eef0435952d469d00963382aea6e, type: 2}

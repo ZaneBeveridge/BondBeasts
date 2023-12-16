@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bf3f53d8ec9434aaf48b41bb48adcc, type: 3}
+  m_Name: 102BoxersBusters
+  m_EditorClassIdentifier: 
+  id: 102
+  groupedId: 1
+  itemName: Boxer's Busters
+  desc: Upon tagging in, adds 4s of Crit Attacks
+  icon: {fileID: 21300000, guid: 2bc6113427dfa0543aa5bcbd6571a70a, type: 3}
+  type: 2
+  maxStack: 10
+  canBeUpgraded: 0
+  recipe:
+    usedCatalyst:
+      item: {fileID: 0}
+      amount: 0
+    glitter:
+      item: {fileID: 0}
+      amount: 0
+    extraMats: []
+    createdCatalyst:
+      item: {fileID: 0}
+      amount: 0
+  itemEffects:
+  - name: Upon tagging in, adds 4s of Crit Attacks
+    effect: {fileID: 11400000, guid: 77fbf066fe475e442899049d09d50afc, type: 2}
+    targets:
+      self: 1
+      team: 0
+      enemy: 0
+    conditions:
+      always: 0
+      whenBeingHit: 0
+      whenTagIn: 1
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0

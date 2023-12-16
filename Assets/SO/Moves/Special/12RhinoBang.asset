@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae354e8f102296498972b5cb8c82141, type: 3}
+  m_Name: 12RhinoBang
+  m_EditorClassIdentifier: 
+  id: 12
+  moveName: Rhino Bang
+  moveDescription: Guard. Perfect guard adds 3 seconds of Crit Attacks to team. CD
+    10s
+  moveSet: 1
+  iconSprite: {fileID: 21300000, guid: 21fe48850f2c38f418eab46cb76adc7c, type: 3}
+  baseCooldown: 10
+  minCooldown: 3
+  moveActions:
+  - name: 
+    effect: {fileID: 11400000, guid: d7a98403d2907464a8189035f4e28a17, type: 2}
+    targets:
+      self: 1
+      team: 0
+      enemy: 0
+    conditions:
+      whenUsed: 1
+      whenNotInAir: 1
+      whenInAir: 1
+      whenTagIn: 0
+      whenTagOut: 0
+      whenFullHP: 0
+      whenBelow15HP: 0

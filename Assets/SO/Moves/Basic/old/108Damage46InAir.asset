@@ -1,0 +1,48 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae354e8f102296498972b5cb8c82141, type: 3}
+  m_Name: 108Damage46InAir
+  m_EditorClassIdentifier: 
+  id: 108
+  moveName: Air Strike
+  moveDescription: Fires a projectile that deals 4 Damage or 6 Damage in air. 2s
+    CD
+  moveSet: 0
+  iconSprite: {fileID: 21300000, guid: 975933a28b79be646923246c7e3ffe25, type: 3}
+  baseCooldown: 2
+  moveActions:
+  - name: 
+    effect: {fileID: 11400000, guid: 2598e50427dea264aadcf184506776bc, type: 2}
+    targets:
+      self: 0
+      enemy: 0
+    conditions:
+      whenUsed: 1
+      whenNotInAir: 1
+      whenInAir: 0
+      whenHP:
+        active: 0
+        HPInequality: 0
+        value: 0
+  - name: 
+    effect: {fileID: 11400000, guid: 210adc9eb9f9ce544b76ed9911bdd623, type: 2}
+    targets:
+      self: 0
+      enemy: 0
+    conditions:
+      whenUsed: 1
+      whenNotInAir: 0
+      whenInAir: 1
+      whenHP:
+        active: 0
+        HPInequality: 0
+        value: 0
