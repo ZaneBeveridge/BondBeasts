@@ -12,16 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff3699ddc2302b344ad12b2c740221c4, type: 3}
   m_Name: 18SharkBall
   m_EditorClassIdentifier: 
-  defaultName: Shark
+  defaultName: Nibblil
   ID:
     ID: 18
     version: 0
   stillSpriteDynamic: {fileID: 1087375545, guid: 22277140a96f7054e99474b1e115aa9f, type: 3}
   stillSpriteStatic: {fileID: 1516369954, guid: 7f8d6d0808460f44cb32712cd27019ee, type: 3}
   animator: {fileID: 22100000, guid: 3f58deaebd7e7b8409af732ff5579c65, type: 2}
-  basicMove: {fileID: 11400000, guid: bcf40e2f8150a1344bdbe4ee62be3769, type: 2}
+  isHeavyJumper: 0
+  basicMove: {fileID: 11400000, guid: aa51be7a604188a4ca991aa06337c519, type: 2}
   specialMove: {fileID: 11400000, guid: e17ae140da02d5d469a60b4b8815bcb6, type: 2}
-  passiveMove: {fileID: 11400000, guid: 13fbfaa703cc14b44b614aaba0554ef0, type: 2}
+  passiveMove: {fileID: 11400000, guid: c2b618e149140a849a08459f334995c7, type: 2}
   strangePoolMoves:
   - {fileID: 11400000, guid: 42023686065b3db47a3affd2a3990397, type: 2}
   - {fileID: 11400000, guid: 65089b2b39c7af945a81486f2c57a6e7, type: 2}

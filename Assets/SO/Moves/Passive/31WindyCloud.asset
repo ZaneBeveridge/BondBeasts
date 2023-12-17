@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 31
   moveName: Quicken Health
-  moveDescription: While at Full HP, +60% spark, shared.
+  moveDescription: If full HP, Team +100% spark. Shared.
   shared: 1
   passiveActions:
   - name: 
-    effect: {fileID: 11400000, guid: a4a7ac3b6d5e87f408b96b14761c2682, type: 2}
+    effect: {fileID: 11400000, guid: ee35385e10e3d1142a43396c17c2cfed, type: 2}
     targets:
-      team: 0
-      self: 1
+      self: 0
+      team: 1
       enemy: 0
     conditions:
       always: 0

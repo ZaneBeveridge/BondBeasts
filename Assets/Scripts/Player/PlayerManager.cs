@@ -41,7 +41,7 @@ public class PlayerManager : MonoBehaviour
 
                     GM.overworldGameobject.SetActive(false);
                     GM.overworldUI.gameObject.SetActive(false);
-                    GM.battleManager.InitAlpha(mons, alphaRoamer.background, alphaRoamer.drops, alphaRoamer);
+                    GM.battleManager.InitAlpha(mons, alphaRoamer.background, alphaRoamer.drops, alphaRoamer, alphaRoamer.roamerMaxHealth);
 
                 }
                 else if (roamer.roamerType == RoamerType.Healer)
@@ -125,6 +125,7 @@ public class PlayerManager : MonoBehaviour
 
     private void SetUI(string txt)
     {
+        overworldUI.popupManager.Close();
         overworldUI.SetDirections(
             currentNode.northNode, currentNode.nTotalMonstersNeeded, currentNode.nTotalLevelNeeded, currentNode.nLevelCapNeeded, currentNode.nObjectiveNeeded, currentNode.nNodesCompleteNeeded,
             currentNode.eastNode,  currentNode.eTotalMonstersNeeded, currentNode.eTotalLevelNeeded, currentNode.eLevelCapNeeded, currentNode.eObjectiveNeeded, currentNode.eNodesCompleteNeeded,
@@ -132,6 +133,7 @@ public class PlayerManager : MonoBehaviour
             currentNode.westNode, currentNode.wTotalMonstersNeeded, currentNode.wTotalLevelNeeded, currentNode.wLevelCapNeeded, currentNode.wObjectiveNeeded, currentNode.wNodesCompleteNeeded
             );
         overworldUI.SetInteractionText(txt);
+        overworldUI.popupManager.Open(currentNode);
     }
 
 

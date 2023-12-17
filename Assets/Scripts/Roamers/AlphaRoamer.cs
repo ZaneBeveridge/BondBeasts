@@ -9,6 +9,7 @@ public class AlphaRoamer : Roamer
     [Header("Background")]
     public Sprite background;
     [Header("Monster")]
+    public int roamerMaxHealth = 100;
     public Monster monster;
 
     private bool isMoving;
@@ -48,7 +49,7 @@ public class AlphaRoamer : Roamer
 
         GM.overworldGameobject.SetActive(false);
         GM.overworldUI.gameObject.SetActive(false);
-        GM.battleManager.InitAlpha(mons, background, drops, this);
+        GM.battleManager.InitAlpha(mons, background, drops, this, roamerMaxHealth);
     }
 
     public override void Init(Node node, GameManager g, RoamerController c)

@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: abb3dda397eec824f9c2e3c9c0195a54, type: 3}
-  m_Name: Stun4Projectile
+  m_Name: Proj8Windy
   m_EditorClassIdentifier: 
   effectType: 0
-  projectilePrefab: {fileID: 1483389819041474986, guid: 5c6e355d3c938ba4dad35a2a79c4ca21, type: 3}
-  projectileDamage: 0
+  projectilePrefab: {fileID: 1483389819041474986, guid: 42b4c3774a088df4b8684a00c109bc0e, type: 3}
+  projectileDamage: 8
   projectileSpeed: 2
   lifetime: 0
-  collideWithAmountOfObjects: 0
+  collideWithAmountOfObjects: 1
   criticalProjectile: 0

@@ -10,19 +10,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ae354e8f102296498972b5cb8c82141, type: 3}
-  m_Name: 101Damage4CD1
+  m_Name: 102Dmg2CD5Grav
   m_EditorClassIdentifier: 
-  id: 101
-  moveName: Long Strike
-  moveDescription: Fires a projectile that deals 4 Damage. 1s CD
+  id: 102
+  moveName: Fluffy Strike
+  moveDescription: Fires a projectile that deals 2 Damage, and applies Low Gravity
+    to the enemy. 5s CD
   moveSet: 0
   iconSprite: {fileID: 21300000, guid: 975933a28b79be646923246c7e3ffe25, type: 3}
-  baseCooldown: 1
+  baseCooldown: 5
+  minCooldown: 0
   moveActions:
-  - name: 4Dmg Projectile
-    effect: {fileID: 11400000, guid: 5e26948f7929bd44693b26b701c8d776, type: 2}
+  - name: 2Dmg Projectile
+    effect: {fileID: 11400000, guid: 82574ee509f027b4e9179b85f954666f, type: 2}
     targets:
       self: 0
+      team: 0
       enemy: 0
     conditions:
       whenUsed: 1
@@ -30,7 +33,5 @@ MonoBehaviour:
       whenInAir: 1
       whenTagIn: 0
       whenTagOut: 0
-      whenHP:
-        active: 0
-        HPInequality: 0
-        value: 0
+      whenFullHP: 0
+      whenBelow15HP: 0

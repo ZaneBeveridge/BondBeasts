@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff3699ddc2302b344ad12b2c740221c4, type: 3}
   m_Name: 11BoxerBaby
   m_EditorClassIdentifier: 
-  defaultName: Boxer Baby
+  defaultName: Hookit
   ID:
     ID: 11
     version: 0
   stillSpriteDynamic: {fileID: 1716242710, guid: 48aa763d08c70e04c918ba36b8e4bee6, type: 3}
   stillSpriteStatic: {fileID: 610412089, guid: 95fad03cf2673534e9b6da4c968ff4f7, type: 3}
   animator: {fileID: 22100000, guid: 3ad426d78b2389e49a946d0e22448fe1, type: 2}
-  basicMove: {fileID: 11400000, guid: bcf40e2f8150a1344bdbe4ee62be3769, type: 2}
+  isHeavyJumper: 1
+  basicMove: {fileID: 11400000, guid: 4e8198d7a7f75954f95963f2cd22cd48, type: 2}
   specialMove: {fileID: 11400000, guid: 6c1b125a741487c4d9f1e687f7d04619, type: 2}
   passiveMove: {fileID: 11400000, guid: 73e9a80ae71eed94d8e4d05c27d09507, type: 2}
   strangePoolMoves:

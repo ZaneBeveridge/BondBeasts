@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 40
   moveName: Mini Pony
-  moveDescription: On tagging in, fire a mini-pony that adds 2s of DoT, shared.
+  moveDescription: 'On tag in: Fire a +3 melt time mini-pony. Shared'
   shared: 1
   passiveActions:
   - name: 

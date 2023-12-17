@@ -75,9 +75,53 @@ public class MoveController : MonoBehaviour
                     CritChanceEffectSO newEffect = m.effect as CritChanceEffectSO;
                     DoCritChance(newEffect.amount, m.targets);
                 }
+                else if (m.effect.effectType == EffectType.LowGravity)
+                {
+                    LowGravityEffectSO newEffect = m.effect as LowGravityEffectSO;
+                    DoLowGrav(newEffect.time, m.targets);
+                }
             }
         }
     }
+
+    public void DoLowGrav(float amount, Targets targets)
+    {
+        if (friendlyController) // came from player
+        {
+            if (targets.enemy)
+            {
+                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(amount, 5);
+            }
+
+            if (targets.self)
+            {
+                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(amount, 5);
+            }
+
+            if (targets.team)
+            {
+                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(amount, 5);
+            }
+        }
+        else // came from ai
+        {
+            if (targets.enemy)
+            {
+                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(amount, 5);
+            }
+
+            if (targets.self)
+            {
+                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(amount, 5);
+            }
+
+            if (targets.team)
+            {
+                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(amount, 5);
+            }
+        }
+    }
+
 
     public void DoCritChance(float amount, Targets targets)
     {

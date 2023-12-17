@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 37
   moveName: Ragoon Smash
-  moveDescription: 25 dmg, CD 17, Projectile x0.25 speed
+  moveDescription: 25 dmg, CD 25, Projectile x0.33 speed
   moveSet: 1
   iconSprite: {fileID: 21300000, guid: 21fe48850f2c38f418eab46cb76adc7c, type: 3}
-  baseCooldown: 17
+  baseCooldown: 25
+  minCooldown: 0
   moveActions:
   - name: 
     effect: {fileID: 11400000, guid: b0315e216d6403f44a83a607a5f56b50, type: 2}

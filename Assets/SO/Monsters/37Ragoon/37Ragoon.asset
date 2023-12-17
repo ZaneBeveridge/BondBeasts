@@ -19,7 +19,8 @@ MonoBehaviour:
   stillSpriteDynamic: {fileID: 2002481590, guid: 1f5cf65549c70eb449d91363bc206056, type: 3}
   stillSpriteStatic: {fileID: 438986345, guid: c353c4f3ff77ffe448592936bdc9907f, type: 3}
   animator: {fileID: 22100000, guid: 0ff30cfe75351d04f9fe68b291c62a49, type: 2}
-  basicMove: {fileID: 11400000, guid: bcf40e2f8150a1344bdbe4ee62be3769, type: 2}
+  isHeavyJumper: 0
+  basicMove: {fileID: 11400000, guid: 4e8198d7a7f75954f95963f2cd22cd48, type: 2}
   specialMove: {fileID: 11400000, guid: 6efce362170cf8f478a98b0b7c64711d, type: 2}
   passiveMove: {fileID: 11400000, guid: 7bd7b1957d18d1947924d1bc624bfe0a, type: 2}
   strangePoolMoves:

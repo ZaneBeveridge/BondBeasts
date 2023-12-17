@@ -17,7 +17,8 @@ MonoBehaviour:
   moveDescription: Heal 10HP, CD 14 (Dandelion)
   moveSet: 1
   iconSprite: {fileID: 21300000, guid: 21fe48850f2c38f418eab46cb76adc7c, type: 3}
-  baseCooldown: 14
+  baseCooldown: 12
+  minCooldown: 0
   moveActions:
   - name: 
     effect: {fileID: 11400000, guid: 90d818db3c45d7f4fa76574887a37987, type: 2}

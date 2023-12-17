@@ -103,7 +103,17 @@ public class BuffSlot : MonoBehaviour
                 manager.GM.battleManager.enemyMonsterController.TakingCrits(true);
             }
         }
-
+        else if (slotNum == 12) // low grav
+        {
+            if (isFriend)
+            {
+                manager.GM.battleManager.friendlyMonsterController.SetLowGravity(1f, 8f);
+            }
+            else
+            {
+                manager.GM.battleManager.enemyMonsterController.SetLowGravity(1f, 8f);
+            }
+        }
 
 
 
@@ -132,7 +142,7 @@ public class BuffSlot : MonoBehaviour
         timerOn = true;
     }
 
-    public void Init(int type, float time, BattleBuffManager man)// crit attacks, taking crits, critchance, stun, guard
+    public void Init(int type, float time, BattleBuffManager man)// crit attacks, taking crits, critchance, stun, guard, low grav
     {
         if (type == 7 || type == 8) // guard and stun
         {
@@ -329,6 +339,36 @@ public class BuffSlot : MonoBehaviour
                 manager.GM.battleManager.enemyMonsterController.SetCritChance(0);
             }
         }
+
+        if (slotType == 12) // low grav
+        {
+            if (manager.isFriendly)
+            {
+                if (manager.GM.battleManager.friendlyMonsterController.friendlyMonster.backupData.isHeavyJumper)
+                {
+                    manager.GM.battleManager.friendlyMonsterController.SetLowGravity(8f, 10f);
+                }
+                else
+                {
+                    manager.GM.battleManager.friendlyMonsterController.SetLowGravity(8f, 15f);
+                }
+
+                
+            }
+            else
+            {
+                if (manager.GM.battleManager.enemyMonsterController.currentMonster.backupData.isHeavyJumper)
+                {
+                    manager.GM.battleManager.enemyMonsterController.SetLowGravity(8f, 10f);
+                }
+                else
+                {
+                    manager.GM.battleManager.enemyMonsterController.SetLowGravity(8f, 15f);
+                }
+                
+            }
+        }
+
 
         //Debug.Log("I am slot type: " + slotType + ", and my value is: " + timerAmount);
 

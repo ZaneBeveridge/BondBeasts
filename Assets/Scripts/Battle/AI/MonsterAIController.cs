@@ -55,15 +55,18 @@ public class MonsterAIController : MonoBehaviour
         }
         else if (move == "HighJump") // if jump on cooldown return, else do high jump
         {
-            controller.Jump(30);
+            controller.Jump(0.25f);
+            Debug.Log("High");
         }
         else if (move == "MediumJump") // if jump on cooldown return, else do medium jump
         {
-            controller.Jump(25);
+            controller.Jump(0.15f);
+            Debug.Log("Med");
         }
         else if (move == "LowJump") // if jump on cooldown return, else do low jump
         {
-            controller.Jump(15);
+            controller.Jump(0.05f);
+            Debug.Log("Low");
         }
         else if (move == "Swap") // if all swaps on cooldown return, else do swap IF in punk fight mode
         {

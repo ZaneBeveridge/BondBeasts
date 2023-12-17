@@ -19,7 +19,7 @@ public class OverworldUI : MonoBehaviour
     public GameManager GM;
 
     public BattleHealthBar healthBar;
-
+    public NodeInfoPopupManager popupManager;
     void Start()
     {
         healthBar.SetMaxHealth(100f);

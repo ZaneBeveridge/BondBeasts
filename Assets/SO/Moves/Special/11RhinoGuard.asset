@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 11
   moveName: Rhino Guard
-  moveDescription: Guard. Perfect timing gives party +40% Guts. CD 9.6s
+  moveDescription: Guard. Perfect timing gives party +40% Guts. CD 7.2s
   moveSet: 1
   iconSprite: {fileID: 21300000, guid: 21fe48850f2c38f418eab46cb76adc7c, type: 3}
-  baseCooldown: 9.6
+  baseCooldown: 7.2
   minCooldown: 3
   moveActions:
   - name: 

@@ -10,6 +10,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class MenuMan : MonoBehaviour
 {
     public GameObject button;
+    public GameObject resetButton;
 
     public string mainScene;
 
@@ -23,7 +24,7 @@ public class MenuMan : MonoBehaviour
     public void LoadScene()
     {
         button.gameObject.SetActive(false);
-
+        resetButton.gameObject.SetActive(false);
         loadingScreen.SetActive(true);
         StartCoroutine(LoadAsynchronously(mainScene));
     }

@@ -14,10 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 31
   moveName: Windy Hit
-  moveDescription: 15 damage, Crits in air. CD 18. Projectile
+  moveDescription: 8 damage, 25 damage in air. CD 16.5. Projectile
   moveSet: 1
   iconSprite: {fileID: 21300000, guid: 21fe48850f2c38f418eab46cb76adc7c, type: 3}
-  baseCooldown: 18
+  baseCooldown: 16.5
+  minCooldown: 0
   moveActions:
   - name: 
     effect: {fileID: 11400000, guid: 53664f02afcbaa143ae1970f255190d5, type: 2}
