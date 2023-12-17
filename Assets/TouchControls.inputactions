@@ -6,15 +6,6 @@
             "id": "d1d00c95-5bee-4cb3-8b5b-7898e88c6437",
             "actions": [
                 {
-                    "name": "TouchInput",
-                    "type": "PassThrough",
-                    "id": "c27ad8c0-5631-4645-836c-e070742f9596",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
                     "name": "TouchPress",
                     "type": "Button",
                     "id": "4fb4e575-edba-4dc6-b4a9-73b0659a9066",
@@ -36,34 +27,23 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "ddf06f53-4f28-4cd6-80e6-5d3463a55665",
-                    "path": "<Touchscreen>/primaryTouch",
+                    "id": "b2fb0925-12a4-4c68-8a17-cb16e9a693ef",
+                    "path": "<Touchscreen>/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "TouchInput",
+                    "action": "TouchPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "660c7972-715a-4402-9b04-fd70cd8a8986",
-                    "path": "<Touchscreen>/primaryTouch/press",
-                    "interactions": "Press(behavior=2)",
-                    "processors": "",
-                    "groups": "",
-                    "action": "TouchPress",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b2fb0925-12a4-4c68-8a17-cb16e9a693ef",
-                    "path": "<Touchscreen>/primaryTouch/position",
+                    "path": "<Touchscreen>/Press",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "TouchPosition",
+                    "action": "TouchPress",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

@@ -74,6 +74,7 @@ MonoBehaviour:
   sprite: {fileID: 9116299386454378248}
   opposition: 
   statsBuff: 000000000000000000000000000000000000000000000000
+  antiGravTime: 0
   critAttackTime: 0
   takingCritsTime: 0
   stunnedTime: 0

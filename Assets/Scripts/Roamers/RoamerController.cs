@@ -19,24 +19,14 @@ public class RoamerController : MonoBehaviour
     [SerializeField]private int turnCount = 0;
 
     public bool roamerActive = false;
-    public int roamerControllerUnlockObjective;
+    public int roamerControllerUnlockNode;
 
     public GameManager GM;
 
 
-    public void Start()
-    {
-        if (GM.objectivesComplete.Count <= roamerControllerUnlockObjective - 1)
-        {
-            GM.objectivesComplete.Add(false);
-        }
-    }
-
-
-
     public void TurnCount()
     {
-        if (GM.objectivesComplete[roamerControllerUnlockObjective - 1])
+        if (GM.nodesCompleted[roamerControllerUnlockNode])
         {
             turnCount++;
             TrySpawn();
@@ -48,7 +38,7 @@ public class RoamerController : MonoBehaviour
     {
         //Debug.Log("Hello1");
 
-        if (GM.objectivesComplete[roamerControllerUnlockObjective - 1])
+        if (GM.nodesCompleted[roamerControllerUnlockNode])
         {
             //Debug.Log("Hello2");
             for (int i = 0; i < currentRoamers.Count; i++)
@@ -74,13 +64,24 @@ public class RoamerController : MonoBehaviour
     {
         if (turnCount >= turnsUntilSpawn & currentRoamers.Count < maxRoamers)
         {
-            for (int i = 0; i < spawnPoints.Count; i++)
+            bool done = false;
+            int count = 0;
+                
+            while(!done)
             {
-                if (spawnPoints[i].CanSpawnRoamer())
+                int rand = Random.Range(0, spawnPoints.Count - 1);
+
+                if (spawnPoints[rand].CanSpawnRoamer())
                 {
-                    SpawnRoamer(i);
+                    SpawnRoamer(rand);
                     turnCount = 0;
-                    break;
+                    done = true;
+                }
+                count++;
+
+                if (count > 10)
+                {
+                    done = true;
                 }
             }
         }

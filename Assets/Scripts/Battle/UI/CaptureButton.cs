@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class CaptureButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
+public class CaptureButton : MonoBehaviour
 {
     public BattleManager manager;
 
     public float chargeAmount = 10.0f; // The time it takes to fully charge
     public float decayAmount = 2f;
-    public Button chargeButton; // The button used to charge
+    public Image chargeButton; // The button used to charge
     public Transform fillObject;
 
     [SerializeField]private float currentCharge = 0.0f; // The current charge level
@@ -20,7 +20,7 @@ public class CaptureButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
 
     void Start()
     {
-
+        /*
         // Get the EventTrigger component from the button
         EventTrigger eventTrigger = chargeButton.GetComponent<EventTrigger>();
 
@@ -35,6 +35,7 @@ public class CaptureButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
         pointerUpEntry.eventID = EventTriggerType.PointerUp;
         pointerUpEntry.callback.AddListener((eventData) => { StopCharging(); });
         eventTrigger.triggers.Add(pointerUpEntry);
+        */
     }
 
     void Update()
@@ -96,7 +97,7 @@ public class CaptureButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
 
     // Called when the button is pressed
-    public void OnPointerDown(PointerEventData eventData)
+    public void PointerDown()
     {
         if (manager.controlsActive)
         {
@@ -107,7 +108,7 @@ public class CaptureButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     }
 
     // Called when the button is released
-    public void OnPointerUp(PointerEventData eventData)
+    public void PointerUp()
     {
         if (isCharging)
         {
@@ -122,13 +123,14 @@ public class CaptureButton : MonoBehaviour, IPointerDownHandler, IPointerUpHandl
     {
         loopCharge = 0.1f;
         isCharging = true;
-
+        chargeButton.color = new Color(0.25f, 0.25f, 0.25f);
     }
 
     public void StopCharging()
     {
         loopCharge = 0f;
         isCharging = false;
+        chargeButton.color = new Color(1f, 1f, 1f);
         //currentCharge = 0.0f;
     }
 

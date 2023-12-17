@@ -24,14 +24,13 @@ public class BattleUI : MonoBehaviour
     public JumpHandler jumpHandler;
     public CaptureButton captureBute;
 
+    public Image captureBut;
+    public Image basicBut;
+    public Image specialBut;
 
-    public Button captureBut;
-    public Button basicBut;
-    public Button specialBut;
-
-    public Button tag1But;
-    public Button tag2But;
-    public Button tag3But;
+    public Image tag1But;
+    public Image tag2But;
+    public Image tag3But;
     public Image jumpBut;
 
     public BattleHealthBar enemyHealthBar;
@@ -45,11 +44,11 @@ public class BattleUI : MonoBehaviour
     public void DisableAllButCapture()
     {
         jumpHandler.Off();
-        basicBut.interactable = false;
-        specialBut.interactable = false;
-        tag1But.interactable = false;
-        tag2But.interactable = false;
-        tag3But.interactable = false;
+        basicBut.color = new Color(1f,1f,1f,0.1f);
+        specialBut.color = new Color(1f, 1f, 1f, 0.1f);
+        tag1But.color = new Color(1f, 0.85f, 0.14f, 0.1f);
+        tag2But.color = new Color(1f, 0.85f, 0.14f, 0.1f);
+        tag3But.color = new Color(1f, 0.85f, 0.14f, 0.1f);
     }
 
 
@@ -57,23 +56,23 @@ public class BattleUI : MonoBehaviour
     public void DisableControls()
     {
         jumpHandler.Off();
-        captureBut.interactable = false;
-        basicBut.interactable = false;
-        specialBut.interactable = false;
-        tag1But.interactable = false;
-        tag2But.interactable = false;
-        tag3But.interactable = false;
+        captureBut.color = new Color(1f, 1f, 1f, 0.1f);
+        basicBut.color = new Color(1f, 1f, 1f, 0.1f);
+        specialBut.color = new Color(1f, 1f, 1f, 0.1f);
+        tag1But.color = new Color(1f, 0.85f, 0.14f, 0.1f);
+        tag2But.color = new Color(1f, 0.85f, 0.14f, 0.1f);
+        tag3But.color = new Color(1f, 0.85f, 0.14f, 0.1f);
     }
 
     public void EnableControls()
     {
         jumpHandler.On();
-        captureBut.interactable = true;
-        basicBut.interactable = true;
-        specialBut.interactable = true;
-        tag1But.interactable = true;
-        tag2But.interactable = true;
-        tag3But.interactable = true;
+        captureBut.color = new Color(1f, 1f, 1f, 1f);
+        basicBut.color = new Color(1f, 1f, 1f, 1f);
+        specialBut.color = new Color(1f, 1f, 1f, 1f);
+        tag1But.color = new Color(1f, 0.85f, 0.14f, 1f);
+        tag2But.color = new Color(1f, 0.85f, 0.14f, 1f);
+        tag3But.color = new Color(1f, 0.85f, 0.14f, 1f);
     }
 
 }

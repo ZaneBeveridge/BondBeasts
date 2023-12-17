@@ -59,6 +59,7 @@ MonoBehaviour:
     minDrops: 1
     maxDrops: 1
   background: {fileID: 21300000, guid: 98ee39ba0ed4ced47ba945cbb90d1605, type: 3}
+  roamerMaxHealth: 120
   monster:
     name: Raging Boxer
     ID:

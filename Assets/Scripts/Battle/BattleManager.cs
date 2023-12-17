@@ -197,7 +197,7 @@ public class BattleManager : MonoBehaviour
         StartBattle(mons, type, background, 0, true);
     }
 
-    public void InitPunk(List<Monster> mons, NodeType type, Sprite background, List<ItemDrop> drops)
+    public void InitPunk(List<Monster> mons, NodeType type, Sprite background, List<ItemDrop> drops, int punkMaxHealth)
     {
         survival = false;
         rewardedItems = new List<StoredItem>();
@@ -207,11 +207,11 @@ public class BattleManager : MonoBehaviour
         friendlyMonsterController.inBattleTime.Add(0f);
         friendlyMonsterController.inBattleTime.Add(0f);
 
-        StartBattlePunk(mons, type, background, 0, drops, true);
+        StartBattlePunk(mons, type, background, 0, drops, true, punkMaxHealth);
     }
 
 
-    public void InitAlpha(List<Monster> mons, Sprite background, List<ItemDrop> drops, AlphaRoamer roamer)
+    public void InitAlpha(List<Monster> mons, Sprite background, List<ItemDrop> drops, AlphaRoamer roamer, int roamerMaxHealth)
     {
         survival = false;
         currentRoamer = roamer;
@@ -222,7 +222,7 @@ public class BattleManager : MonoBehaviour
         friendlyMonsterController.inBattleTime.Add(0f);
         friendlyMonsterController.inBattleTime.Add(0f);
 
-        StartBattlePunk(mons, NodeType.Roamer, background, 0, drops, false);
+        StartBattlePunk(mons, NodeType.Roamer, background, 0, drops, false, roamerMaxHealth);
     }
 
     public void StartBattle(List<MonsterSpawn> mons, NodeType type, Sprite background, int extraStats, bool captureOn)
@@ -357,7 +357,7 @@ public class BattleManager : MonoBehaviour
         
     }
 
-    public void StartBattlePunk(List<Monster> mons, NodeType type, Sprite background, int extraStats, List<ItemDrop> drops, bool punkOn)
+    public void StartBattlePunk(List<Monster> mons, NodeType type, Sprite background, int extraStats, List<ItemDrop> drops, bool punkOn, int punkMaxHealth)
     {
         gameType = type;
 
@@ -397,7 +397,7 @@ public class BattleManager : MonoBehaviour
         friendlyMonsterController.RefreshCooldowns();
 
         CalcRewardNode(drops);
-        enemyMonsterController.SetupEnemyPunk(mons, type, 0);
+        enemyMonsterController.SetupEnemyPunk(mons, type, 0, punkMaxHealth);
 
 
         friendlyMonsterController.healthBar.SetMaxHealth(100);

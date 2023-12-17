@@ -170,9 +170,13 @@ public class BattleBuffManager : MonoBehaviour
         {
             SpawnBuffObject(7, time);
         }
-        else if (type == 4) // CritAttacks
+        else if (type == 4) // CritChance
         {
             SpawnBuffObject(11, (int)time);
+        }
+        else if (type == 5) // Low Grav
+        {
+            SpawnBuffObject(12, time);
         }
     }
 
@@ -267,7 +271,7 @@ public class BattleBuffManager : MonoBehaviour
         slots.Add(obj.GetComponent<BuffSlot>());
     }
 
-    private void SpawnBuffObject(int type, float time) // crit attacks, taking crits, stun, guard
+    private void SpawnBuffObject(int type, float time) // crit attacks, taking crits, stun, guard, low grav
     {
         for (int i = 0; i < slots.Count; i++)
         {
@@ -348,6 +352,7 @@ public class BattleBuffManager : MonoBehaviour
 
         if (isFriendly)
         {
+            GM.battleManager.friendlyMonsterController.SetLowGravity(8f, 15f);
             GM.battleManager.friendlyMonsterController.Stun(false, 0f);
             GM.battleManager.friendlyMonsterController.Guard(false, PerfectGuardEffects.None, 0f, ts);
             GM.battleManager.friendlyMonsterController.CritAttacks(false);
@@ -355,6 +360,7 @@ public class BattleBuffManager : MonoBehaviour
         }
         else
         {
+            GM.battleManager.enemyMonsterController.SetLowGravity(8f, 15f);
             GM.battleManager.enemyMonsterController.Stun(false, 0f);
             GM.battleManager.enemyMonsterController.Guard(false, PerfectGuardEffects.None, 0f, ts);
             GM.battleManager.enemyMonsterController.CritAttacks(false);

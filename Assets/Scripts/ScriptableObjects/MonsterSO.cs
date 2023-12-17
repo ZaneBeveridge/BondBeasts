@@ -15,6 +15,7 @@ public class MonsterSO : ScriptableObject
     public AnimatorOverrideController animator;
 
     [Header("Moves")]
+    public bool isHeavyJumper = false;
     public MoveSO basicMove;
     public MoveSO specialMove;
     public PassiveSO passiveMove;

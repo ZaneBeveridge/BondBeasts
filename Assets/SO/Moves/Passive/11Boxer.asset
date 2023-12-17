@@ -13,25 +13,30 @@ MonoBehaviour:
   m_Name: 11Boxer
   m_EditorClassIdentifier: 
   id: 11
-  moveName: Group Heal Thorns
-  moveDescription: On being hit, heal 1. Shared.
+  moveName: Group Guard
+  moveDescription: 'On tag in: Guard. Perfect timing gives party +40% Guts. Shared'
   shared: 1
   passiveActions:
   - name: 
-    effect: {fileID: 11400000, guid: 04daa53cbcf14db4d87ee119681e54e8, type: 2}
+    effect: {fileID: 11400000, guid: aa045665ec5773c40b1f83e040bce030, type: 2}
     targets:
-      team: 0
       self: 1
+      team: 0
       enemy: 0
     conditions:
       always: 0
-      whenBeingHit: 1
-      whenTagIn: 0
+      whenBeingHit: 0
+      whenTagIn: 1
       whenTagOut: 0
       whenCrit: 0
+      whenEnemyStunned: 0
       whenUseBasic: 0
       whenUseSpecial: 0
-      enemyCloseToDeath: 0
       whenEnemyHitBasic: 0
       whenEnemyHitSpecial: 0
-      whenEnemyStunned: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0

@@ -17,6 +17,7 @@ public class Projectile : MonoBehaviour
 
     public List<int> statsBuff = new List<int>();
 
+    public float antiGravTime = 0f;
     public float critAttackTime = 0f;
     public float takingCritsTime = 0f;
     public float stunnedTime = 0f;
@@ -123,6 +124,11 @@ public class Projectile : MonoBehaviour
                         manager.GM.battleManager.friendlyMonsterController.specialReady[manager.GM.battleManager.friendlyMonsterController.currentSlot] = true;
                         manager.GM.battleManager.friendlyMonsterController.specialC[manager.GM.battleManager.friendlyMonsterController.currentSlot] = 0f;
                     }
+
+                    if (antiGravTime > 0)
+                    {
+                        manager.AddBuff(antiGravTime, 5);
+                    }
                 }
 
                 
@@ -196,6 +202,11 @@ public class Projectile : MonoBehaviour
                     {
                         manager.GM.battleManager.enemyMonsterController.specialReady[manager.GM.battleManager.enemyMonsterController.currentSlot] = true;
                         manager.GM.battleManager.enemyMonsterController.specialC[manager.GM.battleManager.enemyMonsterController.currentSlot] = 0f;
+                    }
+
+                    if (antiGravTime > 0)
+                    {
+                        manager.AddBuff(antiGravTime, 5);
                     }
                 }
 

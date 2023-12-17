@@ -14,10 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 40
   moveName: Horse Foot
-  moveDescription: 1 DoT, +8 seconds. CD 15
+  moveDescription: Fire a projectile applying +1 melt damage and +8s melt time. CD
+    11.2
   moveSet: 1
   iconSprite: {fileID: 21300000, guid: 21fe48850f2c38f418eab46cb76adc7c, type: 3}
-  baseCooldown: 8.8
+  baseCooldown: 11.2
+  minCooldown: 0
   moveActions:
   - name: 
     effect: {fileID: 11400000, guid: b912aace1d8951f4e878b5de60f02306, type: 2}

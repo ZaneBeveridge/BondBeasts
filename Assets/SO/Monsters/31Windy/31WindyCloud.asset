@@ -12,14 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff3699ddc2302b344ad12b2c740221c4, type: 3}
   m_Name: 31WindyCloud
   m_EditorClassIdentifier: 
-  defaultName: Windy Cloud
+  defaultName: Cloud Bird
   ID:
     ID: 31
     version: 0
   stillSpriteDynamic: {fileID: -694989167, guid: dcd70e5532548cb4786a6fac7f02f676, type: 3}
   stillSpriteStatic: {fileID: -967313934, guid: afdb32c232a735a45a8d4e8178cfc94f, type: 3}
   animator: {fileID: 22100000, guid: 2dc94903ca92f3740ba39b0067d41024, type: 2}
-  basicMove: {fileID: 11400000, guid: bcf40e2f8150a1344bdbe4ee62be3769, type: 2}
+  isHeavyJumper: 0
+  basicMove: {fileID: 11400000, guid: 64229d1761a6b544f9ca58ebc9f54e6b, type: 2}
   specialMove: {fileID: 11400000, guid: 6e17afc6a822a674da6b2f92f4d86474, type: 2}
   passiveMove: {fileID: 11400000, guid: d29fee945ff29144f9331742d72fabde, type: 2}
   strangePoolMoves:

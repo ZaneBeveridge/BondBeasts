@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 23
   moveName: Healthy Protection
-  moveDescription: While at 100 HP, +60% Oomph, shared.
+  moveDescription: While at 100 HP, +50% Oomph, shared.
   shared: 1
   passiveActions:
   - name: 
-    effect: {fileID: 11400000, guid: ff1895d551372d743a0098a2d3f8b865, type: 2}
+    effect: {fileID: 11400000, guid: 7e14abb4ac2db46428c4ad2d58dcb5ab, type: 2}
     targets:
-      team: 0
       self: 1
+      team: 0
       enemy: 0
     conditions:
       always: 0

@@ -170,7 +170,7 @@ public class AftermathUI : MonoBehaviour
                             }
 
                             xpToReachCap = Mathf.RoundToInt(addAmount);
-                            Debug.Log(xpToReachCap);
+                            //Debug.Log(xpToReachCap);
 
                             int lowerLvlXP = 0;
 
@@ -192,11 +192,11 @@ public class AftermathUI : MonoBehaviour
                             
 
                             lowerLvlXP = Mathf.RoundToInt(addAmount2);
-                            Debug.Log(splitXps[i]);
+                            //Debug.Log(splitXps[i]);
 
-                            Debug.Log(lowerLvlXP);
+                            //Debug.Log(lowerLvlXP);
 
-                            Debug.Log(mon.xp + splitXps[i] + lowerLvlXP);
+                            //Debug.Log(mon.xp + splitXps[i] + lowerLvlXP);
 
                             if (mon.xp + splitXps[i] + lowerLvlXP >= xpToReachCap)
                             {

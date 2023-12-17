@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 18
   moveName: Shark Block
-  moveDescription: Guard. Perfect timing heals 16. CD 16
+  moveDescription: Guard. Perfect timing heals 16. CD 15.6
   moveSet: 1
   iconSprite: {fileID: 21300000, guid: 21fe48850f2c38f418eab46cb76adc7c, type: 3}
-  baseCooldown: 16
+  baseCooldown: 15.6
   minCooldown: 3
   moveActions:
   - name: 

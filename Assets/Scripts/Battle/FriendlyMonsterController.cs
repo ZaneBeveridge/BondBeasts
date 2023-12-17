@@ -574,6 +574,15 @@ public class FriendlyMonsterController : MonoBehaviour
         friendlyLevelText.text = "Level " + friendlyMonster.level.ToString();
 
 
+        if (friendlyMonster.backupData.isHeavyJumper)
+        {
+            jumpForce = 10f;
+        }
+        else
+        {
+            jumpForce = 15f;
+        }
+
         
         //OnTagInBuffs
 
@@ -892,6 +901,11 @@ public class FriendlyMonsterController : MonoBehaviour
 
     }
 
+    public void SetLowGravity(float grav, float jumpF)
+    {
+        rb.gravityScale = grav;
+        jumpForce = jumpF;
+    }
     public void SetCritChance(int amount)
     {
         critchance = amount;

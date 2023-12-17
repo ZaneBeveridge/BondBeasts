@@ -43,7 +43,7 @@ public class EnemyMonsterController : MonoBehaviour
     public float checkRadius;
     public LayerMask whatIsGround;
     //public float jumpForce;
-
+    public float jumpForce;
     private bool doLand;
     
     
@@ -126,6 +126,9 @@ public class EnemyMonsterController : MonoBehaviour
     private float accumulatedJuiceHealing = 0f;
 
     public bool active = true;
+
+    private bool isJumping;
+    private float jumpTime;
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -298,6 +301,22 @@ public class EnemyMonsterController : MonoBehaviour
                     }
                 }
             }
+
+
+
+            if (isJumping)
+            {
+                if (jumpTime > 0)
+                {
+                    JumpRepeat();
+                    jumpTime -= Time.deltaTime;
+                }
+                else
+                {
+                    isJumping = false;
+
+                }
+            }
         }
 
     }
@@ -454,7 +473,7 @@ public class EnemyMonsterController : MonoBehaviour
 
     }
 
-    public void SetupEnemyPunk(List<Monster> mons, NodeType type, int extraStats)
+    public void SetupEnemyPunk(List<Monster> mons, NodeType type, int extraStats, int punkMaxHealth)
     {
         backupMonsters = mons;
 
@@ -481,9 +500,9 @@ public class EnemyMonsterController : MonoBehaviour
             enemyBattleBuffManager.AddBuff(EffectedStat.Spark, extraStats * 40, targ);
         }
 
-        enemyHealth = 100;
-        healthBar.SetMaxHealth(100);
-        healthBar.SetHealth(100);
+        enemyHealth = punkMaxHealth;
+        healthBar.SetMaxHealth(punkMaxHealth);
+        healthBar.SetHealth(punkMaxHealth);
 
         for (int i = 0; i < 3; i++)
         {
@@ -662,7 +681,7 @@ public class EnemyMonsterController : MonoBehaviour
             aiController.SetActive(false);
 
             taggingSlot = slot;
-            tagTimer = 1f;
+            tagTimer = 0.3f;
             maskCutout.Play(tagTimer);
             //TriggerAction(TriggerType.tagOut);
             tagOn = true;
@@ -932,6 +951,12 @@ public class EnemyMonsterController : MonoBehaviour
         }
     }
 
+    public void SetLowGravity(float grav, float jumpF)
+    {
+        rb.gravityScale = grav;
+        jumpForce = jumpF;
+    }
+
     public void SetCritChance(int amount)
     {
         critchance = amount;
@@ -948,11 +973,19 @@ public class EnemyMonsterController : MonoBehaviour
     }
 
 
-    public void Jump(int height) // Jumps monster into air
+    public void Jump(float maxHold) // Jumps monster into air
     {
         if (!isGrounded) return;
 
-        rb.velocity = Vector2.up  * height;
+
+        isJumping = true;
+        jumpTime = maxHold;
+        JumpRepeat();
+    }
+
+    private void JumpRepeat()
+    {
+        rb.velocity = Vector2.up * jumpForce;
 
         enemyAnim.SetBool("Jump", true);
         enemyAnimVariant.SetBool("Jump", true);
@@ -960,6 +993,9 @@ public class EnemyMonsterController : MonoBehaviour
 
     public void StopJump()
     {
+        isJumping = false;
+
+
         enemyAnim.SetBool("Jump", false);
         enemyAnimVariant.SetBool("Jump", false);
     }

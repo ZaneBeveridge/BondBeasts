@@ -6,6 +6,7 @@ public class PunkNode : Node
 {
     [Header("Monster Spawn")]
     public Sprite backgroundSprite;
+    public int punkMaxHealth = 100;
     public List<MonsterStatic> monsters = new List<MonsterStatic>();
 
     public List<ItemDrop> drops = new List<ItemDrop>();
@@ -115,7 +116,7 @@ public class PunkNode : Node
                 ));
         }
 
-        GM.battleManager.InitPunk(mons, nodeType, backgroundSprite, drops);
+        GM.battleManager.InitPunk(mons, nodeType, backgroundSprite, drops, punkMaxHealth);
 
     }
 
