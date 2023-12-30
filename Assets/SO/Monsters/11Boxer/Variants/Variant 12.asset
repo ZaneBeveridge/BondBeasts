@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Variant 12
   m_EditorClassIdentifier: 
   variantName: Boxer
-  parentId: 11
+  parentId: 12
   id: 1112
   variantStillSprite: {fileID: 202770484, guid: 99ff80caa4a72b544919876d7310234c, type: 3}
   variantAnimator: {fileID: 22100000, guid: eaae9551a3510c24a878e606fd95ebb3, type: 2}

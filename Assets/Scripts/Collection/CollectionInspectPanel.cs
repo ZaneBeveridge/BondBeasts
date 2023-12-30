@@ -15,6 +15,10 @@ public class CollectionInspectPanel : MonoBehaviour
     
     public GameObject panel;
 
+    public Button item1Button;
+    public Button item2Button;
+    public Button item3Button;
+
     public Image dynamicImage;
     public Image staticImage;
     public Image variantImage;
@@ -94,6 +98,26 @@ public class CollectionInspectPanel : MonoBehaviour
 
     public void UpdatePanel(Monster monster, GameManager GM)
     {
+        if (monster.capLevel == 0)
+        {
+            item1Button.gameObject.SetActive(true);
+            item2Button.gameObject.SetActive(false);
+            item3Button.gameObject.SetActive(false);
+        }
+        else if (monster.capLevel == 1)
+        {
+            item1Button.gameObject.SetActive(true);
+            item2Button.gameObject.SetActive(true);
+            item3Button.gameObject.SetActive(false);
+        }
+        if (monster.capLevel == 2)
+        {
+            item1Button.gameObject.SetActive(true);
+            item2Button.gameObject.SetActive(true);
+            item3Button.gameObject.SetActive(true);
+        }
+
+
         dynamicImage.sprite = monster.dynamicSprite;
         staticImage.sprite = monster.staticSprite;
         variantImage.sprite = monster.variant.variantStillSprite;
@@ -374,6 +398,10 @@ public class CollectionInspectPanel : MonoBehaviour
 
         GM.monsterType = type;
         GM.monsterNumInStorage = numInStorage;
+
+
+        
+
 
         UpdatePanel(monster, GM);
     }

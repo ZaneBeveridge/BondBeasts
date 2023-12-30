@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Variant 14 - Rager
   m_EditorClassIdentifier: 
   variantName: Boxer
-  parentId: 11
+  parentId: 14
   id: 1114
   variantStillSprite: {fileID: -1310794410, guid: 05c7b5cbf7078544cbc083407ba8540f, type: 3}
   variantAnimator: {fileID: 22100000, guid: 829885794ceb80a4b95d8f54e51b65e9, type: 2}

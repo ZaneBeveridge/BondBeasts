@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: VariantBlank 9
   m_EditorClassIdentifier: 
   variantName: Shark
-  parentId: 18
+  parentId: 9
   id: 189
   variantStillSprite: {fileID: 260105742, guid: 8652aa8494fc1ea48ba9da5268323613, type: 3}
   variantAnimator: {fileID: 22100000, guid: 8bd1adb5a8c88704397e0f1256a43888, type: 2}

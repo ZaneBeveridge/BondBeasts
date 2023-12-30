@@ -34,6 +34,7 @@ public class PlayerData
     //Monsters
     public List<string> mNames = new List<string>();
     public List<int> mLevels = new List<int>();
+    public List<int> mCapLevels = new List<int>();
     public List<int> mXPs = new List<int>();
     public List<bool> mSymbiotics = new List<bool>();
     public List<int> mNatures = new List<int>();
@@ -108,6 +109,7 @@ public class PlayerData
 
                 mNames.Add(mon.name);
                 mLevels.Add(mon.level);
+                mCapLevels.Add(mon.capLevel);
                 mXPs.Add(mon.xp);
                 mSymbiotics.Add(mon.symbiotic);
                 mNatures.Add(mon.nature.id);
@@ -181,6 +183,7 @@ public class PlayerData
 
             mNames.Add(mon.name);
             mLevels.Add(mon.level);
+            mCapLevels.Add(mon.capLevel);
             mXPs.Add(mon.xp);
             mSymbiotics.Add(mon.symbiotic);
             mNatures.Add(mon.nature.id);

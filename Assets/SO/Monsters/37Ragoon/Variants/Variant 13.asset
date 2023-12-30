@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Variant 13
   m_EditorClassIdentifier: 
   variantName: Ragoon
-  parentId: 37
+  parentId: 13
   id: 3713
   variantStillSprite: {fileID: -794445809, guid: 1787a1e980127a74ebb5cccf1c7df804, type: 3}
   variantAnimator: {fileID: 22100000, guid: 46ac325f19775254987f6abfac475d3f, type: 2}

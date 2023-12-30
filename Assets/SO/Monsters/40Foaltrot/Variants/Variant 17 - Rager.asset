@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Variant 17 - Rager
   m_EditorClassIdentifier: 
   variantName: Foaltrot
-  parentId: 40
+  parentId: 17
   id: 4017
   variantStillSprite: {fileID: 381619993, guid: 44f6bfa6253d60b409f5944bf4d96a94, type: 3}
   variantAnimator: {fileID: 22100000, guid: b69d8a6cbb12cbd4ba8f7c07917cd668, type: 2}

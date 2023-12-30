@@ -57,22 +57,40 @@ public class HealerRoamer : Roamer
 
         if (currentNode.northNode != null)
         {
-            directionList.Add(1);
+            if (currentNode.northNode != GM.playerManager.currentNode)
+            {
+                directionList.Add(1);
+            }
+            
         }
 
         if (currentNode.southNode != null)
         {
-            directionList.Add(2);
+            if (currentNode.southNode != GM.playerManager.currentNode)
+            {
+                directionList.Add(2);
+            }
+            
         }
 
         if (currentNode.eastNode != null)
         {
-            directionList.Add(3);
+
+            if (currentNode.eastNode != GM.playerManager.currentNode)
+            {
+                directionList.Add(3);
+            }
+            
         }
 
         if (currentNode.westNode != null)
         {
-            directionList.Add(4);
+
+            if (currentNode.westNode != GM.playerManager.currentNode)
+            {
+                directionList.Add(4);
+            }
+            
         }
 
         int rand = Random.Range(0, directionList.Count);

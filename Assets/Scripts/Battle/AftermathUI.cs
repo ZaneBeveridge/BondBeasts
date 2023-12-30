@@ -104,13 +104,20 @@ public class AftermathUI : MonoBehaviour
 
                 splitXps.Add(times[i] * div);
 
-
-                if (mon.level >= GM.levelCap)
+                if (mon.level >= GM.levelCap && mon.level < ((mon.capLevel + 1) * 10))
                 {
                     xps[i].text = "MAX LEVEL";
                     xps2[i].text = "MAX LEVEL";
 
                     sliders[i].value = 1f;
+                }
+                else if (mon.level >= ((mon.capLevel + 1) * 10))
+                {
+                    xps[i].text = "TRANSFORM READY";
+                    xps2[i].text = "TRANSFORM READY";
+
+                    sliders[i].value = 1f;
+                    buttons[i].gameObject.SetActive(false);
                 }
                 else
                 {
@@ -141,6 +148,8 @@ public class AftermathUI : MonoBehaviour
                         {
                             buttons[i].gameObject.SetActive(false);
                         }
+
+                        
                     }
                     else
                     {
