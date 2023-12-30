@@ -23,7 +23,8 @@ public class PartySlot : Slot
     public GameObject levelupObject;
     public GameObject evolveObject;
 
-    public Image levelUpEvolveImage;
+    public Image levelUpImage;
+    public Image evolveImage;
 
     public PartySlotManager partySlotManager;
 
@@ -65,12 +66,12 @@ public class PartySlot : Slot
         nameText.text = monster.name;
         levelText.text = "Lvl " + monster.level.ToString();
 
-        if (monster.level >= manager.GM.levelCap)
+        if (monster.level >= manager.GM.levelCap) // if monster level bigger or equal to cap show MAX LEVEL
         {
             slider.value = 1f;
             sliderText1.text = "MAX LEVEL";
 
-            levelUpEvolveImage.gameObject.SetActive(false);
+            levelUpImage.gameObject.SetActive(false);
             levelupObject.SetActive(false);
         }
         else
@@ -87,24 +88,42 @@ public class PartySlot : Slot
             sliderText1.text = monster.xp.ToString() + "/" + xpMax.ToString() + " XP";
 
 
-            if (monster.xp >= xpMax)
+            if (monster.xp >= xpMax) // Show level up button if xp above current level max xp required
             {
                 levelupObject.SetActive(true);
-                levelUpEvolveImage.gameObject.SetActive(true);
+                levelUpImage.gameObject.SetActive(true);
             }
             else
             {
-                levelUpEvolveImage.gameObject.SetActive(false);
+                levelUpImage.gameObject.SetActive(false);
                 levelupObject.SetActive(false);
             }
 
         }
 
-        
+
+        if (((monster.level / 10) - 1) == monster.capLevel && !levelupObject.activeSelf)
+        {
+            evolveObject.SetActive(true);
+            evolveImage.gameObject.SetActive(true);
+
+            slider.value = 1f;
+            sliderText1.text = "TRANSFORM READY";
+
+            levelUpImage.gameObject.SetActive(false);
+            levelupObject.SetActive(false);
+        }
+        else
+        {
+            evolveObject.SetActive(false);
+            evolveImage.gameObject.SetActive(false);
+        }
 
 
-        
-        
+
+
+
+
         evolveObject.SetActive(false);
     }
 
@@ -135,12 +154,13 @@ public class PartySlot : Slot
         nameText.text = storedMonster.name;
         levelText.text = "Lvl " + storedMonster.level.ToString();
 
+
         if (storedMonster.level >= manager.GM.levelCap)
         {
             slider.value = 1f;
             sliderText1.text = "MAX LEVEL";
 
-            levelUpEvolveImage.gameObject.SetActive(false);
+            levelUpImage.gameObject.SetActive(false);
             levelupObject.SetActive(false);
         }
         else
@@ -158,19 +178,37 @@ public class PartySlot : Slot
 
             if (storedMonster.xp >= xpMax)
             {
-                levelUpEvolveImage.gameObject.SetActive(true);
+                levelUpImage.gameObject.SetActive(true);
                 levelupObject.SetActive(true);
             }
             else
             {
-                levelUpEvolveImage.gameObject.SetActive(false);
+                levelUpImage.gameObject.SetActive(false);
                 levelupObject.SetActive(false);
             }
         }
 
 
+        if (((storedMonster.level / 10) - 1) == storedMonster.capLevel && !levelupObject.activeSelf)
+        {
+            evolveObject.SetActive(true);
+            evolveImage.gameObject.SetActive(true);
 
-        
+            slider.value = 1f;
+            sliderText1.text = "TRANSFORM READY";
+
+            levelUpImage.gameObject.SetActive(false);
+            levelupObject.SetActive(false);
+        }
+        else
+        {
+            evolveObject.SetActive(false);
+            evolveImage.gameObject.SetActive(false);
+        }
+
+
+
+
 
         evolveObject.SetActive(false);
     }
@@ -192,6 +230,11 @@ public class PartySlot : Slot
     public void ClickLevelup()
     {
         manager.GM.levelUpUI.Init(storedMonster, partySlotManager.slotNum - 1, LevelUpType.Party);
+    }
+
+    public void ClickEvolve()
+    {
+        manager.GM.evolveUI.Init(storedMonster, partySlotManager.slotNum - 1);
     }
 
 }

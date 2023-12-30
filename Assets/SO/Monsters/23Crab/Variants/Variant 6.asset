@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Variant 6
   m_EditorClassIdentifier: 
   variantName: CoconutBaby
-  parentId: 23
+  parentId: 6
   id: 236
   variantStillSprite: {fileID: -1360508838, guid: 36335a2783a10944a9c7fb30f83bd89a, type: 3}
   variantAnimator: {fileID: 22100000, guid: da706e221e957a7428727353794d7476, type: 2}

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Variant 2
   m_EditorClassIdentifier: 
   variantName: Foaltrot
-  parentId: 40
+  parentId: 2
   id: 402
   variantStillSprite: {fileID: -1502210014, guid: f9d5a6de5ac374b42a84992a71b5f8e6, type: 3}
   variantAnimator: {fileID: 22100000, guid: 0a128dd6cee66ef4799fea30bf06b753, type: 2}

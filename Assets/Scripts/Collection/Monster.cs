@@ -10,6 +10,7 @@ public class Monster
     public Identifier ID;
 
     public int level;
+    public int capLevel; 
     public int xp;
     public bool symbiotic;
 
@@ -56,6 +57,7 @@ public class Monster
         }
 
         level = lvl;
+        capLevel = 0;
         
         ID = data.ID;
 
@@ -112,8 +114,10 @@ public class Monster
         name = data.defaultName;
 
         level = lvl;
+        capLevel = 0;
 
         ID = data.ID;
+        
 
         stats.Add(new Stat("Oomph", 0));
         stats.Add(new Stat("Guts", 0));
@@ -162,11 +166,12 @@ public class Monster
     }
 
     // 1 item
-    public Monster(string _name, int _level, int _xp, bool _symbiotic, NatureSO _nature, VariantSO _variant, bool _strange, ColourRoll _color, List<Stat> _stats, MonsterSO _data, MoveSO _bMove, MoveSO _sMove, PassiveSO _pMove, List<MonsterItemSO> items)
+    public Monster(string _name, int _level, int _capLevel, int _xp, bool _symbiotic, NatureSO _nature, VariantSO _variant, bool _strange, ColourRoll _color, List<Stat> _stats, MonsterSO _data, MoveSO _bMove, MoveSO _sMove, PassiveSO _pMove, List<MonsterItemSO> items)
     {
         //Debug.Log("Hello3");
         name = _name;
         level = _level;
+        capLevel = _capLevel;
         xp = _xp;
         symbiotic = _symbiotic;
         nature = _nature;

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Variant 1
   m_EditorClassIdentifier: 
   variantName: Twigster
-  parentId: 34
+  parentId: 1
   id: 341
   variantStillSprite: {fileID: -1261176548, guid: 68c4bb3b717df624690039d02c65e177, type: 3}
   variantAnimator: {fileID: 22100000, guid: e008e9d2a32edeb43a5ba735bcbd90cd, type: 2}

@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 11
   moveName: Group Guard
-  moveDescription: 'On tag in: Guard. Perfect timing gives party +40% Guts. Shared'
+  moveDescription: 'On tag in: Guard. Shared'
   shared: 1
   passiveActions:
   - name: 
-    effect: {fileID: 11400000, guid: aa045665ec5773c40b1f83e040bce030, type: 2}
+    effect: {fileID: 11400000, guid: d3274408ba176094b9244082de639189, type: 2}
     targets:
       self: 1
       team: 0

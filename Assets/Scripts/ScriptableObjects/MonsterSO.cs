@@ -51,7 +51,12 @@ public class MonsterSO : ScriptableObject
     [Header("References")]
     public List<NatureSO> natures = new List<NatureSO>();
 
-    
+    [Header("Transformations")]
+
+    public MonsterForm ascendForm;
+    public MonsterForm descendForm;
+    public List<MonsterFormWithCata> cataForms = new List<MonsterFormWithCata>();
+
 
     private void Awake()
     {
@@ -280,4 +285,22 @@ public class ItemDrop
     public MonsterItemSO item;
     [Range(0f, 100f)] public float chance;
     public int minDrops, maxDrops;
+}
+
+[System.Serializable]
+public class MonsterForm
+{
+    public MonsterSO form;
+    public List<MonsterItemSOAmount> requiredItems = new List<MonsterItemSOAmount>();
+
+}
+
+
+
+[System.Serializable]
+public class MonsterFormWithCata
+{
+    public MonsterSO form;
+    public List<MonsterItemSOAmount> requiredItems = new List<MonsterItemSOAmount>();
+    public MonsterItemSO requiredCatalyst;
 }

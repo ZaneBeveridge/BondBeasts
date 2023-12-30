@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Variant 11
   m_EditorClassIdentifier: 
   variantName: Cubbage
-  parentId: 28
+  parentId: 11
   id: 2811
   variantStillSprite: {fileID: 1508051919, guid: a4a58937f59033641a9a399c2ddc5502, type: 3}
   variantAnimator: {fileID: 22100000, guid: bf67a14b4ff1d574da85c5cb37819187, type: 2}

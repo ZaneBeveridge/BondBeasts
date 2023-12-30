@@ -101,6 +101,7 @@ public class PunkNode : Node
             mons.Add(new Monster(
                 monsters[i].name,
                 monsters[i].level,
+                monsters[i].capLevel,
                 monsters[i].xp,
                 monsters[i].symbiotic,
                 monsters[i].nature,
@@ -144,6 +145,7 @@ public class MonsterStatic
 {
     public string name;
     public int level;
+    public int capLevel;
     public int xp;
     public bool symbiotic;
 

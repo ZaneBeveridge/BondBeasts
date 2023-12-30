@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public CutsceneController cutsceneController;
     public AftermathUI aftermathUI;
     public LevelUpUI levelUpUI;
+    public EvolveUIManager evolveUI;
     [HideInInspector]public ItemEquipMenu itemEquipMenu;
     public ItemInspectManagerPopup itemInspectManagerPopup;
 
@@ -413,7 +414,15 @@ public class GameManager : MonoBehaviour
             }
 
 
-            Monster mon = new Monster(playerData.mNames[i], playerData.mLevels[i], playerData.mXPs[i], playerData.mSymbiotics[i], natureSOData[nat], variantSOData[var], playerData.mStranges[i], col, st, monsterSOData[dt], bMove, sMove, pMove, ownedItems);
+            int capLevel = 0;
+
+            if (playerData.mCapLevels.Count > 0)
+            {
+                capLevel = playerData.mCapLevels[i];
+            }
+
+
+            Monster mon = new Monster(playerData.mNames[i], playerData.mLevels[i], capLevel, playerData.mXPs[i], playerData.mSymbiotics[i], natureSOData[nat], variantSOData[var], playerData.mStranges[i], col, st, monsterSOData[dt], bMove, sMove, pMove, ownedItems);
 
 
 
@@ -637,6 +646,27 @@ public class GameManager : MonoBehaviour
             if (itemsOwned[j].item == itm && itemsOwned[j].amount > 1)
             {
                 itemsOwned[j].amount -= 1;
+                break;
+            }
+            else if (itemsOwned[j].item == itm && itemsOwned[j].amount <= 1)
+            {
+                itemsOwned.RemoveAt(j);
+            }
+        }
+
+    }
+
+    public void RemoveItemFromStorage(MonsterItemSO itm, int amount)
+    {
+        for (int j = 0; j < itemsOwned.Count; j++)
+        {
+            if (itemsOwned[j].item == itm && itemsOwned[j].amount > 1)
+            {
+                itemsOwned[j].amount -= amount;
+                if (itemsOwned[j].amount <= 0)
+                {
+                    itemsOwned.RemoveAt(j);
+                }
                 break;
             }
             else if (itemsOwned[j].item == itm && itemsOwned[j].amount <= 1)
