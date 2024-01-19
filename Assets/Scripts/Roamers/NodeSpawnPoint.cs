@@ -5,7 +5,7 @@ using UnityEngine;
 public class NodeSpawnPoint : MonoBehaviour
 {
     public GameManager GM;
-    public Node myNode;
+    [HideInInspector]public Node myNode;
 
     // Start is called before the first frame update
 

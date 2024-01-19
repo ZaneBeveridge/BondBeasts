@@ -14,16 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 28
   moveName: Cubbage Mash
-  moveDescription: Heal 10HP, CD 14 (Dandelion)
+  moveDescription: Heal 10HP, CD 12
   moveSet: 1
-  iconSprite: {fileID: 21300000, guid: 21fe48850f2c38f418eab46cb76adc7c, type: 3}
   baseCooldown: 12
   minCooldown: 0
   moveActions:
   - name: 
     effect: {fileID: 11400000, guid: 90d818db3c45d7f4fa76574887a37987, type: 2}
+    delay: 0
     targets:
-      self: 1
       team: 0
       enemy: 0
     conditions:

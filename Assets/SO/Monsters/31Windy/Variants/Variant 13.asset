@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: Variant 13
+  m_EditorClassIdentifier: 
+  variantName: Cloud Bird
+  parentId: 13
+  id: 3113
+  variantStillSprite: {fileID: -518480416, guid: cd667df9db540724f91947e842e38e0a, type: 3}
+  variantAnimator: {fileID: 22100000, guid: 0437a28d88b035e4791b4e30b0f24996, type: 2}

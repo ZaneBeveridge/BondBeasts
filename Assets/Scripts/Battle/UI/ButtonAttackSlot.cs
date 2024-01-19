@@ -20,6 +20,9 @@ public class ButtonAttackSlot : MonoBehaviour
     public GameObject flashMask;
     public Image flaskMaskImage;
 
+
+    
+
     public bool isBasic = true;
 
     private bool readyDone = false;
@@ -29,7 +32,6 @@ public class ButtonAttackSlot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         if (readyDone)
         {
             if (timer > 0f)
@@ -46,21 +48,17 @@ public class ButtonAttackSlot : MonoBehaviour
 
 
 
-
-
-
-
         float value1 = 0f;
         float value2 = 0f;
         float value3 = 0f;
 
         if (isBasic)
         {
-            value1 = controller.edge + controller.friendlyBattleBuffManager.slotValues[3];
+            value1 = controller.edge + controller.friendlyBattleBuffManager.slotValues[3] + controller.friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Edge);
         }
         else
         {
-            value1 = controller.wits + controller.friendlyBattleBuffManager.slotValues[4];
+            value1 = controller.wits + controller.friendlyBattleBuffManager.slotValues[4] + controller.friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Wits);
         }
 
 
@@ -220,7 +218,6 @@ public class ButtonAttackSlot : MonoBehaviour
                         val2 = controller.friendlyMonster.basicMove.baseCooldown - (controller.friendlyMonster.basicMove.baseCooldown * (0.008f * value3));
                     }
                 }
-
             }
         }
         else
@@ -248,6 +245,11 @@ public class ButtonAttackSlot : MonoBehaviour
             }
         }
 
+
+        if (val2 <= 0)
+        {
+            val2 = 1;
+        }
         
 
         fillObject1.localScale = new Vector3(1f, val1 / val2, 1f);

@@ -37,6 +37,7 @@ public class Passive
 {
     public string name;
     public EffectSO effect;
+    public float delay = 0f;
     public Targets targets;
     public PassiveConditions conditions;
 }

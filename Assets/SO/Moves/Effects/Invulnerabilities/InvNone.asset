@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: InvNone
   m_EditorClassIdentifier: 
   effectType: 2
-  invulnerableTime: 0
+  invulnerableTime: 1.5
   perfectGuardEffect: 0
   perfectGuardEffectValue: 0

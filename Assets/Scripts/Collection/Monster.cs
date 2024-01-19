@@ -89,15 +89,15 @@ public class Monster
 
         if (strange)
         {
-            basicMove = data.strangePoolMoves[Random.Range(0, data.strangePoolMoves.Count - 1)];
+            specialMove = data.strangePoolMoves[Random.Range(0, data.strangePoolMoves.Count - 1)];
         }
         else
         {
-            basicMove = data.basicMove;
+            specialMove = data.specialMove;
         }
-        
 
-        specialMove = data.specialMove;
+        basicMove = data.basicMove;
+        
         passiveMove = data.passiveMove;
 
         item1 = data.blankItem;
@@ -147,15 +147,15 @@ public class Monster
 
         if (strange)
         {
-            basicMove = data.strangePoolMoves[Random.Range(0, data.strangePoolMoves.Count - 1)];
+            specialMove = data.strangePoolMoves[Random.Range(0, data.strangePoolMoves.Count - 1)];
         }
         else
         {
-            basicMove = data.basicMove;
+            specialMove = data.specialMove;
         }
 
-
-        specialMove = data.specialMove;
+        basicMove = data.basicMove;
+        
         passiveMove = data.passiveMove;
 
 

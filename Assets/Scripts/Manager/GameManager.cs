@@ -38,7 +38,9 @@ public class GameManager : MonoBehaviour
     public List<MonsterSO> monsterSOData = new List<MonsterSO>();
     public List<NatureSO> natureSOData = new List<NatureSO>();
     public List<VariantSO> variantSOData = new List<VariantSO>();
-    public List<MoveSO> moveSOData = new List<MoveSO>();
+    public List<MoveSO> basicSOData = new List<MoveSO>();
+    public List<MoveSO> specialSOData = new List<MoveSO>();
+    //public List<MoveSO> moveSOData = new List<MoveSO>();
     public List<PassiveSO> passiveSOData = new List<PassiveSO>();
     public List<Node> nodesData = new List<Node>();
     public List<MonsterItemSO> monsterItemData = new List<MonsterItemSO>();
@@ -323,20 +325,22 @@ public class GameManager : MonoBehaviour
             MoveSO sMove = ScriptableObject.CreateInstance<MoveSO>();
             PassiveSO pMove = ScriptableObject.CreateInstance<PassiveSO>();
 
-            for (int j = 0; j < moveSOData.Count; j++)
+            for (int j = 0; j < basicSOData.Count; j++)
             {
-                if (moveSOData[j].id == playerData.mBasic[i])
+                if (basicSOData[j].id == playerData.mBasic[i])
                 {
-                    bMove = moveSOData[j];
+                    bMove = basicSOData[j];
                 }
-
-                if (moveSOData[j].id == playerData.mSpecial[i])
-                {
-                    sMove = moveSOData[j];
-                }
-
             }
 
+            for (int j = 0; j < specialSOData.Count; j++)
+            {
+                if (specialSOData[j].id == playerData.mSpecial[i])
+                {
+                    sMove = specialSOData[j];
+                }
+            }
+    
             for (int j = 0; j < passiveSOData.Count; j++)
             {
                 if (passiveSOData[j].id == playerData.mPassive[i])

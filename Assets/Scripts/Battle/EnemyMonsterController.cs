@@ -15,6 +15,7 @@ public class EnemyMonsterController : MonoBehaviour
     public Animator enemyAnim;
     public Animator enemyAnimVariant;
     public Animator enemyParentAnim;
+
     public SpriteRenderer enemyDynamicSprite;
     public TextMeshProUGUI enemyNameText;
     public TextMeshProUGUI enemyLevelText;
@@ -108,6 +109,7 @@ public class EnemyMonsterController : MonoBehaviour
     private bool parryOn = false;
     private PerfectGuardEffects perfectGuard;
     private float perfectValue;
+    private FireProjectileEffectSO perfectProjectile;
     private Targets perfectTargets;
 
     private bool critAttacks = false;
@@ -206,17 +208,11 @@ public class EnemyMonsterController : MonoBehaviour
                 else if (regenTimer <= 0)
                 {
                     //REGEN
-
                     float regenAmount = 0f;
+                    float itemPassives = enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice);
+                    float buffSlots = enemyBattleBuffManager.slotValues[2];
+                    regenAmount = 0.1f * (juice + itemPassives + buffSlots);
 
-                    if (juice < 0) // less than 0, negatives
-                    {
-                        regenAmount = 0.1f * (juice + (juice * ((enemyBattleBuffManager.slotValues[2]) / -100f)));
-                    }
-                    else if (juice >= 0) // 0 or more, positives
-                    {
-                        regenAmount = 0.1f * (juice + (juice * ((enemyBattleBuffManager.slotValues[2]) / 100f)));
-                    }
 
                     //Debug.Log("Regen Amount: " + regenAmount.ToString());
                     int flooredRegen = Mathf.FloorToInt(regenAmount + accumulatedJuiceHealing);
@@ -288,7 +284,7 @@ public class EnemyMonsterController : MonoBehaviour
                     }
                     else
                     {
-                        float regenAmount = 0.1f * (juice + (juice * ((enemyBattleBuffManager.slotValues[2] + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice)) / 100f)));
+                        float regenAmount = 0.1f * (juice + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice) + enemyBattleBuffManager.slotValues[2]);
 
                         if (regenOn && enemyHealth < 100 && regenAmount >= 1)
                         {
@@ -438,7 +434,7 @@ public class EnemyMonsterController : MonoBehaviour
 
         if (extraStats > 0)
         {
-            Targets targ = new Targets(true, false, false);
+            Targets targ = new Targets(false, false);
 
             enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, extraStats * 40, targ);
             enemyBattleBuffManager.AddBuff(EffectedStat.Guts, extraStats * 40, targ);
@@ -490,7 +486,7 @@ public class EnemyMonsterController : MonoBehaviour
 
         if (extraStats > 0)
         {
-            Targets targ = new Targets(true, false, false);
+            Targets targ = new Targets(false, false);
 
             enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, extraStats * 40, targ);
             enemyBattleBuffManager.AddBuff(EffectedStat.Guts, extraStats * 40, targ);
@@ -532,15 +528,7 @@ public class EnemyMonsterController : MonoBehaviour
 
         if (!isStart)
         {
-            if (spark < 0) // less than 0, negatives
-            {
-                tagC[currentSlot] = cooldown - (cooldown * (0.008f * (spark + (spark * ((enemyBattleBuffManager.slotValues[5] + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark)) / -100f))))); //tagCooldown;
-            }
-            else if (spark >= 0) // 0 or more, positives
-            {
-                tagC[currentSlot] = cooldown - (cooldown * (0.008f * (spark + (spark * ((enemyBattleBuffManager.slotValues[5] + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark)) / 100f))))); //tagCooldown;
-            }
-            //tagC[currentSlot] = cooldown - (cooldown * (0.008f * (spark + (spark * ((enemyBattleBuffManager.slotValues[5] + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark)) / 100f))))); //tagCooldown;
+            tagC[currentSlot] = cooldown - (cooldown * (0.008f * (spark + enemyBattleBuffManager.slotValues[5] + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark)))); //tagCooldown;
             tagReady[currentSlot] = false;
         }
 
@@ -579,43 +567,150 @@ public class EnemyMonsterController : MonoBehaviour
 
         if (currentMonster.level - 1 <= 20)
         {
-            oomphA = (1 * (currentMonster.stats[0].value / 5)) * (currentMonster.level - 1);
-            oomphB = 0;
+            if (currentMonster.stats[0].value < 0)
+            {
+                oomphA = 0;
+                oomphB = 0;
+            }
+            else
+            {
+                oomphA = (1 * (currentMonster.stats[0].value / 5)) * (currentMonster.level - 1);
+                oomphB = 0;
+            }
 
-            gutsA = (1 * (currentMonster.stats[1].value / 5)) * (currentMonster.level - 1);
-            gutsB = 0;
+            if (currentMonster.stats[1].value < 0)
+            {
+                gutsA = 0;
+                gutsB = 0;
+            }
+            else
+            {
+                gutsA = (1 * (currentMonster.stats[1].value / 5)) * (currentMonster.level - 1);
+                gutsB = 0;
+            }
 
-            juiceA = (1 * (currentMonster.stats[2].value / 5)) * (currentMonster.level - 1);
-            juiceB = 0;
+            if (currentMonster.stats[2].value < 0)
+            {
+                juiceA = 0;
+                juiceB = 0;
+            }
+            else
+            {
+                juiceA = (1 * (currentMonster.stats[2].value / 5)) * (currentMonster.level - 1);
+                juiceB = 0;
+            }
 
-            edgeA = (1 * (currentMonster.stats[3].value / 5)) * (currentMonster.level - 1);
-            edgeB = 0;
+            if (currentMonster.stats[3].value < 0)
+            {
+                edgeA = 0;
+                edgeB = 0;
+            }
+            else
+            {
+                edgeA = (1 * (currentMonster.stats[3].value / 5)) * (currentMonster.level - 1);
+                edgeB = 0;
+            }
 
-            witsA = (1 * (currentMonster.stats[4].value / 5)) * (currentMonster.level - 1);
-            witsB = 0;
+            if (currentMonster.stats[4].value < 0)
+            {
+                witsA = 0;
+                witsB = 0;
+            }
+            else
+            {
+                witsA = (1 * (currentMonster.stats[4].value / 5)) * (currentMonster.level - 1);
+                witsB = 0;
+            }
 
-            sparkA = (1 * (currentMonster.stats[5].value / 5)) * (currentMonster.level - 1);
-            sparkB = 0;
+            if (currentMonster.stats[5].value < 0)
+            {
+                sparkA = 0;
+                sparkB = 0;
+            }
+            else
+            {
+                sparkA = (1 * (currentMonster.stats[5].value / 5)) * (currentMonster.level - 1);
+                sparkB = 0;
+            }
+
         }
         else if (currentMonster.level - 1 > 20 && currentMonster.level - 1 <= 40)
         {
-            oomphA = (1 * (currentMonster.stats[0].value / 5)) * 19;
-            oomphB = (0.66f * (currentMonster.stats[0].value / 5)) * (currentMonster.level - 20);
 
-            gutsA = (1 * (currentMonster.stats[1].value / 5)) * 19;
-            gutsB = (0.66f * (currentMonster.stats[1].value / 5)) * (currentMonster.level - 20);
+            if (currentMonster.stats[0].value < 0)
+            {
+                oomphA = 0;
+                oomphB = 0;
+            }
+            else
+            {
+                oomphA = (1 * (currentMonster.stats[0].value / 5)) * 19;
+                oomphB = (0.66f * (currentMonster.stats[0].value / 5)) * (currentMonster.level - 20);
+            }
 
-            juiceA = (1 * (currentMonster.stats[2].value / 5)) * 19;
-            juiceB = (0.66f * (currentMonster.stats[2].value / 5)) * (currentMonster.level - 20);
+            if (currentMonster.stats[1].value < 0)
+            {
+                gutsA = 0;
+                gutsB = 0;
+            }
+            else
+            {
+                gutsA = (1 * (currentMonster.stats[1].value / 5)) * 19;
+                gutsB = (0.66f * (currentMonster.stats[1].value / 5)) * (currentMonster.level - 20);
+            }
 
-            edgeA = (1 * (currentMonster.stats[3].value / 5)) * 19;
-            edgeB = (0.66f * (currentMonster.stats[3].value / 5)) * (currentMonster.level - 20);
+            if (currentMonster.stats[2].value < 0)
+            {
+                juiceA = 0;
+                juiceB = 0;
+            }
+            else
+            {
+                juiceA = (1 * (currentMonster.stats[2].value / 5)) * 19;
+                juiceB = (0.66f * (currentMonster.stats[2].value / 5)) * (currentMonster.level - 20);
+            }
 
-            witsA = (1 * (currentMonster.stats[4].value / 5)) * 19;
-            witsB = (0.66f * (currentMonster.stats[4].value / 5)) * (currentMonster.level - 20);
+            if (currentMonster.stats[3].value < 0)
+            {
+                edgeA = 0;
+                edgeB = 0;
+            }
+            else
+            {
+                edgeA = (1 * (currentMonster.stats[3].value / 5)) * 19;
+                edgeB = (0.66f * (currentMonster.stats[3].value / 5)) * (currentMonster.level - 20);
+            }
 
-            sparkA = (1 * (currentMonster.stats[5].value / 5)) * 19;
-            sparkB = (0.66f * (currentMonster.stats[5].value / 5)) * (currentMonster.level - 20);
+            if (currentMonster.stats[4].value < 0)
+            {
+                witsA = 0;
+                witsB = 0;
+            }
+            else
+            {
+                witsA = (1 * (currentMonster.stats[4].value / 5)) * 19;
+                witsB = (0.66f * (currentMonster.stats[4].value / 5)) * (currentMonster.level - 20);
+            }
+
+            if (currentMonster.stats[5].value < 0)
+            {
+
+                sparkA = 0;
+                sparkB = 0;
+            }
+            else
+            {
+                sparkA = (1 * (currentMonster.stats[5].value / 5)) * 19;
+                sparkB = (0.66f * (currentMonster.stats[5].value / 5)) * (currentMonster.level - 20);
+            }
+            
+
+ 
+
+            
+
+          
+
         }
 
 
@@ -626,9 +721,9 @@ public class EnemyMonsterController : MonoBehaviour
         wits = Mathf.FloorToInt((witsA + witsB + currentMonster.stats[4].value) * currentMonster.nature.addedStats[4].value);
         spark = Mathf.FloorToInt((sparkA + sparkB + currentMonster.stats[5].value) * currentMonster.nature.addedStats[5].value);
 
-        float edgeAmount = edge + enemyBattleBuffManager.slotValues[3];
-        float witsAmount = wits + enemyBattleBuffManager.slotValues[4];
-        float sparkAmount = spark + enemyBattleBuffManager.slotValues[5];
+        float edgeAmount = edge + enemyBattleBuffManager.slotValues[3] + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Edge);
+        float witsAmount = wits + enemyBattleBuffManager.slotValues[4] + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Wits);
+        float sparkAmount = spark + enemyBattleBuffManager.slotValues[5] + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark);
 
         basicExtraCharges = 0;
         specialExtraCharges = 0;
@@ -748,9 +843,14 @@ public class EnemyMonsterController : MonoBehaviour
             {
                 enemyBattleBuffManager.AddBuff(EffectedStat.Spark, (int)perfectValue, perfectTargets);
             }
-            Targets ts = new Targets(false, false, false);
+            else if (perfectGuard == PerfectGuardEffects.Projectile)
+            {
+                enemyMoveController.DoProjectile(perfectProjectile.projectilePrefab, perfectProjectile.projectileDamage, perfectProjectile.projectileSpeed, perfectProjectile.lifetime, perfectProjectile.collideWithAmountOfObjects, perfectProjectile.criticalProjectile, perfectTargets);
+            }
+
+            Targets ts = new Targets(false, false);
             hitNumbers.SpawnText("Perfect Block", "Yellow");
-            Guard(false, PerfectGuardEffects.None, 0f, ts);
+            GuardOff();
         }    
         else if (effect || !guardOn  && !invulnerable)
         {
@@ -781,17 +881,9 @@ public class EnemyMonsterController : MonoBehaviour
             float gutsReal = 0f;
 
             float gutsAmount = 0f;
-
-            if (guts < 0) // less than 0, negatives
-            {
-                gutsAmount = guts + (guts * (enemyBattleBuffManager.slotValues[1] / -100f));
-            }
-            else if (guts >= 0) // 0 or more, positives
-            {
-                gutsAmount = guts + (guts * (enemyBattleBuffManager.slotValues[1] / 100f));
-            }
-
-           // Debug.Log("Dmg : " + flDmg);
+            float itemPassives = enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Guts);
+            float buffSlots = enemyBattleBuffManager.slotValues[1];
+            gutsAmount = guts + itemPassives + buffSlots;
             
 
 
@@ -872,7 +964,7 @@ public class EnemyMonsterController : MonoBehaviour
         }
         else // STUPID LONG CODE FOR GUARD STUFF
         {
-            Targets ts = new Targets(false, false, false);
+            Targets ts = new Targets(false, false);
 
 
             if (invulnerable)
@@ -884,7 +976,7 @@ public class EnemyMonsterController : MonoBehaviour
                 hitNumbers.SpawnText("Block", "Blue");
             }
 
-            Guard(false, PerfectGuardEffects.None, 0f, ts);
+            GuardOff();
         }
     }
 
@@ -923,32 +1015,30 @@ public class EnemyMonsterController : MonoBehaviour
 
     }
 
-    public void Guard(bool state, PerfectGuardEffects perfectGuardEffect, float perfectGuardValue, Targets targs)
+    public void Guard(PerfectGuardEffects perfectGuardEffect, float perfectGuardValue, FireProjectileEffectSO perfectGuardProjectile, Targets targs, float parryTime)
     {
-        //Debug.Log("guarding");
-        if (state)
-        {
-            //Debug.Log("true");
-            guardOn = true;
-            guardRenderer.gameObject.SetActive(true);
-            guardRenderer.sprite = yellowGuard;
-            parryTimer = 0.25f;
-            parryOn = true;
-            perfectGuard = perfectGuardEffect;
-            perfectValue = perfectGuardValue;
-            perfectTargets = targs;
-        }
-        else
-        {
-            //Debug.Log("false");
-            guardOn = false;
-            guardRenderer.gameObject.SetActive(false);
-            parryTimer = 0f;
-            parryOn = false;
-            perfectGuard = PerfectGuardEffects.None;
-            perfectValue = 0f;
-            perfectTargets = new Targets(false, false, false);
-        }
+        guardOn = true;
+        guardRenderer.gameObject.SetActive(true);
+        guardRenderer.sprite = yellowGuard;
+        parryTimer = parryTime;
+        parryOn = true;
+        perfectGuard = perfectGuardEffect;
+        perfectValue = perfectGuardValue;
+        perfectProjectile = perfectGuardProjectile;
+        perfectTargets = targs;
+    }
+
+    public void GuardOff()
+    {
+        //Debug.Log("false");
+        guardOn = false;
+        guardRenderer.gameObject.SetActive(false);
+        parryTimer = 0;
+        parryOn = false;
+        perfectGuard = PerfectGuardEffects.None;
+        perfectValue = 0f;
+        perfectProjectile = null;
+        perfectTargets = new Targets(false, false);
     }
 
     public void SetLowGravity(float grav, float jumpF)
@@ -1049,6 +1139,8 @@ public class EnemyMonsterController : MonoBehaviour
 
     private void DoSpecial(float sizeNum, int num)
     {
+        if (currentMonster.specialMove == null) return;
+
         if (currentMonster.specialMove.moveActions.Count > 0)
         {
             // use moves
@@ -1061,15 +1153,10 @@ public class EnemyMonsterController : MonoBehaviour
         enemyAnimVariant.SetTrigger("Special");
 
         float valueAmount = 0f;
+        float itemPassives = enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Wits);
+        float buffSlots = enemyBattleBuffManager.slotValues[4];
 
-        if (wits < 0) // less than 0, negatives
-        {
-            valueAmount = wits + (wits * ((enemyBattleBuffManager.slotValues[4]) / -100f));
-        }
-        else if (wits >= 0) // 0 or more, positives
-        {
-            valueAmount = wits + (wits * ((enemyBattleBuffManager.slotValues[4]) / 100f));
-        }
+        valueAmount = wits + itemPassives + buffSlots;
 
         float valueReal = 0f;
 
@@ -1110,6 +1197,9 @@ public class EnemyMonsterController : MonoBehaviour
     }
     private void DoAttack(float sizeNum, int num)
     {
+        if (currentMonster.basicMove == null) return;
+        
+
         if (currentMonster.basicMove.moveActions.Count > 0)
         {
             enemyMoveController.UseMove(currentMonster.basicMove);
@@ -1119,15 +1209,9 @@ public class EnemyMonsterController : MonoBehaviour
         enemyAnimVariant.SetTrigger("Basic");
 
         float valueAmount = 0f;
-
-        if (edge < 0) // less than 0, negatives
-        {
-            valueAmount = edge + (edge * ((enemyBattleBuffManager.slotValues[3]) / -100f));
-        }
-        else if (edge >= 0) // 0 or more, positives
-        {
-            valueAmount = edge + (edge * ((enemyBattleBuffManager.slotValues[3]) / 100f));
-        }
+        float itemPassives = enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Edge);
+        float buffSlots = enemyBattleBuffManager.slotValues[3];
+        valueAmount = edge + itemPassives + buffSlots;
 
         //float valueAmount = edge + (edge * ((enemyBattleBuffManager.slotValues[3]) / 100));
         float valueReal = 0f;

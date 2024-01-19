@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 28
   moveName: Team Healer
-  moveDescription: On special hit, heal 3 HP, shared.
+  moveDescription: 'On special hit: Heal 3 HP. Shared'
   shared: 1
   passiveActions:
   - name: 
     effect: {fileID: 11400000, guid: e13e1570d942e3a4dab3d4cae3d0c864, type: 2}
+    delay: 0
     targets:
-      self: 1
       team: 0
       enemy: 0
     conditions:

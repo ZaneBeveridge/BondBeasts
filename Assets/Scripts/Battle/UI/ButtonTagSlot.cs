@@ -18,6 +18,7 @@ public class ButtonTagSlot : MonoBehaviour
 
     public GameObject selectedObject;
 
+
     public int slotNum = 0;
     // Update is called once per frame
     void Update()
