@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 37
   moveName: Special Buffer
-  moveDescription: 'On special hit: Team +10% Oomph. Shared'
+  moveDescription: 'On special hit: Team +2 Oomph. Shared'
   shared: 1
   passiveActions:
   - name: 
-    effect: {fileID: 11400000, guid: e9ee4e1178d542042b361a70daf5af4d, type: 2}
+    effect: {fileID: 11400000, guid: 2c89b825ef1049f419d0e07f3ac6c2c6, type: 2}
+    delay: 0
     targets:
-      self: 0
       team: 1
       enemy: 0
     conditions:

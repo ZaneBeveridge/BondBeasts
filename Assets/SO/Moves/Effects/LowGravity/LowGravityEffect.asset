@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: LowGravityEffect
   m_EditorClassIdentifier: 
   effectType: 11
-  time: 4
+  time: 3

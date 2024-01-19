@@ -15,7 +15,9 @@ public class Projectile : MonoBehaviour
     public string opposition;
 
 
-    public List<int> statsBuff = new List<int>();
+    public List<int> enemyStatsBuff = new List<int>();
+    public List<int> friendlyStatsBuff = new List<int>();
+
 
     public float antiGravTime = 0f;
     public float critAttackTime = 0f;
@@ -129,6 +131,65 @@ public class Projectile : MonoBehaviour
                     {
                         manager.AddBuff(antiGravTime, 5);
                     }
+
+                    for (int i = 0; i < enemyStatsBuff.Count; i++)
+                    {
+                        Targets t = new Targets(false, false);
+
+                        if (enemyStatsBuff[i] != 0)
+                        {
+                            switch (i)
+                            {
+                                case 0:
+                                    enemy.enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, enemyStatsBuff[i], t);
+                                    break;
+                                case 1:
+                                    enemy.enemyBattleBuffManager.AddBuff(EffectedStat.Guts, enemyStatsBuff[i], t);
+                                    break;
+                                case 2:
+                                    enemy.enemyBattleBuffManager.AddBuff(EffectedStat.Juice, enemyStatsBuff[i], t);
+                                    break;
+                                case 3:
+                                    enemy.enemyBattleBuffManager.AddBuff(EffectedStat.Edge, enemyStatsBuff[i], t);
+                                    break;
+                                case 4:
+                                    enemy.enemyBattleBuffManager.AddBuff(EffectedStat.Wits, enemyStatsBuff[i], t);
+                                    break;
+                                case 5:
+                                    enemy.enemyBattleBuffManager.AddBuff(EffectedStat.Spark, enemyStatsBuff[i], t);
+                                    break;
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < friendlyStatsBuff.Count; i++)
+                    {
+                        Targets t = new Targets(false, false);
+                        if (friendlyStatsBuff[i] != 0)
+                        {
+                            switch (i)
+                            {
+                                case 0:
+                                    manager.GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Oomph, friendlyStatsBuff[i], t);
+                                    break;
+                                case 1:
+                                    manager.GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Guts, friendlyStatsBuff[i], t);
+                                    break;
+                                case 2:
+                                    manager.GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Juice, friendlyStatsBuff[i], t);
+                                    break;
+                                case 3:
+                                    manager.GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Edge, friendlyStatsBuff[i], t);
+                                    break;
+                                case 4:
+                                    manager.GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Wits, friendlyStatsBuff[i], t);
+                                    break;
+                                case 5:
+                                    manager.GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Spark, friendlyStatsBuff[i], t);
+                                    break;
+                            }
+                        }
+                    }
                 }
 
                 
@@ -207,6 +268,66 @@ public class Projectile : MonoBehaviour
                     if (antiGravTime > 0)
                     {
                         manager.AddBuff(antiGravTime, 5);
+                    }
+
+
+                    for (int i = 0; i < enemyStatsBuff.Count; i++)
+                    {
+                        Targets t = new Targets(false, false);
+
+                        if (enemyStatsBuff[i] != 0)
+                        {
+                            switch (i)
+                            {
+                                case 0:
+                                    friend.friendlyBattleBuffManager.AddBuff(EffectedStat.Oomph, enemyStatsBuff[i], t);
+                                    break;
+                                case 1:
+                                    friend.friendlyBattleBuffManager.AddBuff(EffectedStat.Guts, enemyStatsBuff[i], t);
+                                    break;
+                                case 2:
+                                    friend.friendlyBattleBuffManager.AddBuff(EffectedStat.Juice, enemyStatsBuff[i], t);
+                                    break;
+                                case 3:
+                                    friend.friendlyBattleBuffManager.AddBuff(EffectedStat.Edge, enemyStatsBuff[i], t);
+                                    break;
+                                case 4:
+                                    friend.friendlyBattleBuffManager.AddBuff(EffectedStat.Wits, enemyStatsBuff[i], t);
+                                    break;
+                                case 5:
+                                    friend.friendlyBattleBuffManager.AddBuff(EffectedStat.Spark, enemyStatsBuff[i], t);
+                                    break;
+                            }
+                        }
+                    }
+
+                    for (int i = 0; i < friendlyStatsBuff.Count; i++)
+                    {
+                        Targets t = new Targets(false, false);
+                        if (friendlyStatsBuff[i] != 0)
+                        {
+                            switch (i)
+                            {
+                                case 0:
+                                    manager.GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, friendlyStatsBuff[i], t);
+                                    break;
+                                case 1:
+                                    manager.GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Guts, friendlyStatsBuff[i], t);
+                                    break;
+                                case 2:
+                                    manager.GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Juice, friendlyStatsBuff[i], t);
+                                    break;
+                                case 3:
+                                    manager.GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Edge, friendlyStatsBuff[i], t);
+                                    break;
+                                case 4:
+                                    manager.GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Wits, friendlyStatsBuff[i], t);
+                                    break;
+                                case 5:
+                                    manager.GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Spark, friendlyStatsBuff[i], t);
+                                    break;
+                            }
+                        }
                     }
                 }
 

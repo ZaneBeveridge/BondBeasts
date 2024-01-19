@@ -54,7 +54,7 @@ public class NodeInfoPopupManager : MonoBehaviour
                 subTitleText.text = "COMPLETE";
 
                 BattleNode bNode = node as BattleNode;
-
+                /*
                 string text = "Seen beasts:\n";
 
                 for (int i = 0; i < bNode.monsterPool.Count; i++)
@@ -69,6 +69,9 @@ public class NodeInfoPopupManager : MonoBehaviour
                     }
                 }
                 infoText.text = text;
+                */
+
+                infoText.text = "Completed this node, you may now pass to the next area";
             }
             else
             {

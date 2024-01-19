@@ -263,18 +263,18 @@ public class BattleManager : MonoBehaviour
         {
             List<MonsterSpawn> monsSurvival = new List<MonsterSpawn>();
 
-            int total = 0;
+            float total = 0;
 
             for (int j = 0; j < mons.Count; j++)
             {
                 total += mons[j].weight;
             }
 
-            float random = Random.Range(1, total);
+            float random = Random.Range(0f, total);
 
 
 
-            int addUp = 0;
+            float addUp = 0;
             for (int j = 0; j < mons.Count; j++)
             {
                 addUp = addUp + mons[j].weight;

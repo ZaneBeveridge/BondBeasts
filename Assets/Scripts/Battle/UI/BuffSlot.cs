@@ -8,15 +8,14 @@ public class BuffSlot : MonoBehaviour
 {
     public Image typeImage;
     public TextMeshProUGUI numText;
-    public TextMeshProUGUI timerText;
-    public Image upDownImage;
+
+    public Color positiveColour;
+    public Color negativeColour;
 
     public int slotType;
-    public int timerAmount = 0 ;
+    public int timerAmount = 0;
 
     public List<Sprite> sprites = new List<Sprite>();
-    public Sprite upSprite;
-    public Sprite downSprite;
 
     private float timer = 0;
     private bool timerOn = false;
@@ -44,13 +43,10 @@ public class BuffSlot : MonoBehaviour
         {
             if (timer > 0)
             {
-                string txt = Mathf.RoundToInt(timer).ToString() + "s";
-                timerText.text = txt;
                 timer -= Time.deltaTime;
             }
             else if (timer <= 0)
             {
-                timerText.text = "";
                 TimerEnd();
             }
         }
@@ -74,11 +70,27 @@ public class BuffSlot : MonoBehaviour
         {
             if (isFriend)
             {
-                manager.GM.battleManager.friendlyMonsterController.Guard(true, manager.perfectGuardEffect, manager.perfectGuardValue, manager.perfectGuardTargets);
+                if (manager.perfectGuardEffect == PerfectGuardEffects.None)
+                {
+                    manager.GM.battleManager.friendlyMonsterController.Guard(manager.perfectGuardEffect, manager.perfectGuardValue, manager.perfectGuardProjectile, manager.perfectGuardTargets, 0f);
+                }
+                else
+                {
+                    manager.GM.battleManager.friendlyMonsterController.Guard( manager.perfectGuardEffect, manager.perfectGuardValue, manager.perfectGuardProjectile, manager.perfectGuardTargets, 0.25f);
+                }
+                
             }
             else
             {
-                manager.GM.battleManager.enemyMonsterController.Guard(true, manager.perfectGuardEffect, manager.perfectGuardValue, manager.perfectGuardTargets);
+                if (manager.perfectGuardEffect == PerfectGuardEffects.None)
+                {
+                    manager.GM.battleManager.enemyMonsterController.Guard(manager.perfectGuardEffect, manager.perfectGuardValue, manager.perfectGuardProjectile, manager.perfectGuardTargets, 0f);
+                }
+                else
+                {
+                    manager.GM.battleManager.enemyMonsterController.Guard(manager.perfectGuardEffect, manager.perfectGuardValue, manager.perfectGuardProjectile, manager.perfectGuardTargets, 0.25f);
+                }
+                
             }
         }
         else if (slotNum == 9) // crit attacks
@@ -123,13 +135,8 @@ public class BuffSlot : MonoBehaviour
 
     public void Init(int type, int amount, float time, BattleBuffManager man) // dot
     {
-        
-        typeImage.sprite = sprites[type];
-        string txt = Mathf.RoundToInt(timer).ToString() + "s";
-        timerText.text = txt;
-        upDownImage.gameObject.SetActive(false);
-
-        numText.text = "-" + amount.ToString();
+        typeImage.gameObject.SetActive(false);
+        numText.gameObject.SetActive(false);
 
         manager = man;
         slotType = type;
@@ -140,38 +147,23 @@ public class BuffSlot : MonoBehaviour
 
         active = true;
         timerOn = true;
+
+        UpdateText();
     }
 
     public void Init(int type, float time, BattleBuffManager man)// crit attacks, taking crits, critchance, stun, guard, low grav
     {
-        if (type == 7 || type == 8) // guard and stun
-        {
-            typeImage.gameObject.SetActive(false);
-            upDownImage.gameObject.SetActive(false);
-            timerText.gameObject.SetActive(false);
-            numText.gameObject.SetActive(false);
-        }
-        else
-        {
-            typeImage.sprite = sprites[type];
-            string txt = Mathf.RoundToInt(timer).ToString() + "s";
-            timerText.text = txt;
-            numText.text = "";
+        typeImage.gameObject.SetActive(false);
+        numText.gameObject.SetActive(false);
 
-
-            upDownImage.color = new Color(255f, 255f, 255f, 0f);
-            upDownImage.gameObject.SetActive(false);
-        }
 
         if (type == 11)// critchance
         {
-            timerText.text = "";
-
             timerAmount = (int)time;
             timer = 0f;
 
 
-            UpdateText();
+            
 
             manager = man;
 
@@ -189,14 +181,15 @@ public class BuffSlot : MonoBehaviour
             timerOn = true;
         }
 
-        
+        UpdateText();
     }
 
     public void Init(int type, int amount, BattleBuffManager man) // stats
     {
+        typeImage.gameObject.SetActive(true);
+        numText.gameObject.SetActive(true);
+
         typeImage.sprite = sprites[type];
-        timerText.text = "";
-        upDownImage.gameObject.SetActive(false);
 
         timerAmount = amount;
 
@@ -228,8 +221,6 @@ public class BuffSlot : MonoBehaviour
         timer += time;
         timerAmount += amount;
 
-        string txt = Mathf.RoundToInt(timer).ToString() + "s";
-        timerText.text = txt;
 
         UpdateText();
     }
@@ -238,8 +229,7 @@ public class BuffSlot : MonoBehaviour
     {
         timer += time;
 
-        string txt = Mathf.RoundToInt(timer).ToString() + "s";
-        timerText.text = txt;
+        UpdateText();
     }
 
     public void MergeAmount(int amount)
@@ -258,24 +248,25 @@ public class BuffSlot : MonoBehaviour
     {
         if (timerAmount >= 0)
         {
-            numText.text = "+" + timerAmount.ToString() + "%";
-            numText.color = Color.green;
+            numText.text = "+" + timerAmount.ToString();
+            numText.color = positiveColour;
         }
         else
         {
-            numText.text = "-" + timerAmount.ToString() + "%";
-            numText.color = Color.red;
+            numText.text = timerAmount.ToString();
+            numText.color = negativeColour;
         }
     }    
 
     public void TimerEnd()
     {
-        Targets ts = new Targets(false, false, false);
+        Targets ts = new Targets(false, false);
 
         if (slotType == 8)
         {
             manager.perfectGuardEffect = PerfectGuardEffects.None;
             manager.perfectGuardValue = 0;
+            manager.perfectGuardProjectile = null;
 
             manager.perfectGuardTargets = ts;
         }
@@ -296,11 +287,11 @@ public class BuffSlot : MonoBehaviour
         {
             if (manager.isFriendly)
             {
-                manager.GM.battleManager.friendlyMonsterController.Guard(false, PerfectGuardEffects.None, 0f, ts);
+                manager.GM.battleManager.friendlyMonsterController.GuardOff();
             }
             else
             {
-                manager.GM.battleManager.enemyMonsterController.Guard(false, PerfectGuardEffects.None, 0f, ts);
+                manager.GM.battleManager.enemyMonsterController.GuardOff();
             }
         }
 

@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 14
   moveName: Cheetah Kick
-  moveDescription: 5 dmg. CD 6. Projectile x2 speed
+  moveDescription: 5 dmg. CD 6. Fast projectile
   moveSet: 1
-  iconSprite: {fileID: 21300000, guid: 21fe48850f2c38f418eab46cb76adc7c, type: 3}
   baseCooldown: 6
   minCooldown: 0
   moveActions:
   - name: 
     effect: {fileID: 11400000, guid: aceab912f54427345a9d1abf4a69ab1e, type: 2}
+    delay: 0
     targets:
       self: 1
       team: 0

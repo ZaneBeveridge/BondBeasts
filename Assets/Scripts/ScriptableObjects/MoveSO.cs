@@ -10,7 +10,7 @@ public class MoveSO : ScriptableObject
     public string moveName;
     public string moveDescription;
     public MoveSet moveSet;
-    public Sprite iconSprite;
+    //public Sprite iconSprite;
     public float baseCooldown = 1f;
     public float minCooldown = 0f;
 
@@ -68,6 +68,7 @@ public class Move
 {
     public string name;
     public EffectSO effect;
+    public float delay = 0f;
     public Targets targets;
     public Conditions conditions;
 }
@@ -88,13 +89,11 @@ public class Conditions
 [System.Serializable]
 public class Targets
 {
-    public bool self;
     public bool team;
     public bool enemy;
 
-    public Targets(bool s, bool t, bool e)
+    public Targets(bool t, bool e)
     {
-        self = s;
         team = t;
         enemy = e;
     }

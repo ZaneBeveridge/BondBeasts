@@ -11,6 +11,8 @@ public class FriendlyMonsterController : MonoBehaviour
     public Animator friendlyAnim;
     public Animator friendlyAnimVariant;
     public Animator friendlyParentAnim;
+    public Animator friendlyUIAnimBasic;
+    public Animator friendlyUIAnimSpecial;
     public SpriteRenderer friendlyDynamicSprite;
     public TextMeshProUGUI friendlyNameText;
     public TextMeshProUGUI friendlyLevelText;
@@ -105,6 +107,7 @@ public class FriendlyMonsterController : MonoBehaviour
     private bool parryOn = false;
     private PerfectGuardEffects perfectGuard;
     private float perfectValue;
+    private FireProjectileEffectSO perfectProjectile;
     private Targets perfectTargets;
     private bool critAttacks = false;
     private bool takingCrits = false;
@@ -219,21 +222,11 @@ public class FriendlyMonsterController : MonoBehaviour
             }
             else if (regenTimer <= 0)
             {
-                //REGEN
-                //float gutsAmount = guts + (guts * ((ItemStat(EffectedStat.Guts) + friendlyBattleBuffManager.slotValues[1] + PassiveStat(EffectedStat.Guts)) / 100f));
-                //float regenAmount = 0.1f * (juice + (juice * ((friendlyBattleBuffManager.slotValues[2] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice)) / 100f)));
 
                 float regenAmount = 0f;
-
-                if (juice < 0) // less than 0, negatives
-                {
-                    regenAmount = 0.1f * (juice + (juice * ((friendlyBattleBuffManager.slotValues[2] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice)) / -100f)));
-                }
-                else if (juice >= 0) // 0 or more, positives
-                {
-                    regenAmount = 0.1f * (juice + (juice * ((friendlyBattleBuffManager.slotValues[2] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice)) / 100f)));
-                }
-
+                float itemPassives = friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice);
+                float buffSlots = friendlyBattleBuffManager.slotValues[2];
+                regenAmount = 0.1f * (juice + itemPassives + buffSlots);
 
                 //Debug.Log("Regen Amount: " + regenAmount.ToString());
 
@@ -307,8 +300,8 @@ public class FriendlyMonsterController : MonoBehaviour
                 }
                 else
                 {
-                    
-                    float regenAmount = 0.1f * (juice + (juice * ((friendlyBattleBuffManager.slotValues[2] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice)) / 100f)));
+                   
+                    float regenAmount = 0.1f * (juice + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice) + friendlyBattleBuffManager.slotValues[2]);
 
                     if (regenOn && GM.playerHP < 100 && regenAmount >= 1)
                     {
@@ -426,19 +419,8 @@ public class FriendlyMonsterController : MonoBehaviour
 
         if (!isStart)
         {
-            if (spark < 0) // less than 0, negatives
-            {
-                tagC[currentSlot] = cooldown - (cooldown * (0.008f * (spark + (spark * ((friendlyBattleBuffManager.slotValues[5] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark)) / -100f))))); //tagCooldown;
-                tagReady[currentSlot] = false;
-            }
-            else if (spark >= 0) // 0 or more, positives
-            {
-                tagC[currentSlot] = cooldown - (cooldown * (0.008f * (spark + (spark * ((friendlyBattleBuffManager.slotValues[5] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark)) / 100f))))); //tagCooldown;
-                tagReady[currentSlot] = false;
-            }
-
-            //tagC[currentSlot] = cooldown - (cooldown * (0.008f * (spark + (spark * ((friendlyBattleBuffManager.slotValues[5] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark)) / 100f))))); //tagCooldown;
-            
+            tagC[currentSlot] = cooldown - (cooldown * (0.008f * (spark + friendlyBattleBuffManager.slotValues[5] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark)))); //tagCooldown;
+            tagReady[currentSlot] = false;
         }
         
 
@@ -534,9 +516,9 @@ public class FriendlyMonsterController : MonoBehaviour
         //wits = Mathf.RoundToInt(friendlyMonster.stats[4].value * friendlyMonster.nature.addedStats[4].value);
         //spark = Mathf.RoundToInt(friendlyMonster.stats[5].value * friendlyMonster.nature.addedStats[5].value);
 
-        float edgeAmount = edge + friendlyBattleBuffManager.slotValues[3];
-        float witsAmount = wits + friendlyBattleBuffManager.slotValues[4];
-        float sparkAmount = spark + friendlyBattleBuffManager.slotValues[5];
+        float edgeAmount = edge + friendlyBattleBuffManager.slotValues[3] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Edge);
+        float witsAmount = wits + friendlyBattleBuffManager.slotValues[4] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Wits);
+        float sparkAmount = spark + friendlyBattleBuffManager.slotValues[5] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark);
 
         basicExtraCharges = 0;
         specialExtraCharges = 0;
@@ -707,10 +689,14 @@ public class FriendlyMonsterController : MonoBehaviour
             {
                 friendlyBattleBuffManager.AddBuff(EffectedStat.Spark, (int)perfectValue, perfectTargets);
             }
+            else if (perfectGuard == PerfectGuardEffects.Projectile)
+            {
+                friendlyMoveController.DoProjectile(perfectProjectile.projectilePrefab, perfectProjectile.projectileDamage, perfectProjectile.projectileSpeed, perfectProjectile.lifetime, perfectProjectile.collideWithAmountOfObjects, perfectProjectile.criticalProjectile, perfectTargets);
+            }
 
-            Targets targs = new Targets(false, false, false);
+            Targets targs = new Targets(false, false);
             hitNumbers.SpawnText("Perfect Block", "Yellow");
-            Guard(false, PerfectGuardEffects.None, 0f, targs);
+            GuardOff();
 
         }
         else if (effect || !guardOn && !invulnerable)
@@ -741,14 +727,10 @@ public class FriendlyMonsterController : MonoBehaviour
             float gutsReal = 0f;
             float gutsAmount = 0f;
 
-            if (guts < 0) // less than 0, negatives
-            {
-                gutsAmount = guts + (guts * ((friendlyBattleBuffManager.slotValues[1] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Guts)) / -100f));
-            }
-            else if (guts >= 0) // 0 or more, positives
-            {
-                gutsAmount = guts + (guts * ((friendlyBattleBuffManager.slotValues[1] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Guts)) / 100f));
-            }
+            float itemPassives = friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Guts);
+            float buffSlots = friendlyBattleBuffManager.slotValues[1];
+            gutsAmount = guts + itemPassives + buffSlots;
+
 
             //float gutsAmount = guts + (guts * ((friendlyBattleBuffManager.slotValues[1] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Guts)) / 100f));
 
@@ -818,7 +800,7 @@ public class FriendlyMonsterController : MonoBehaviour
         }
         else
         {
-            Targets targs = new Targets(false, false, false);
+            Targets targs = new Targets(false, false);
 
             if (invulnerable)
             {
@@ -830,8 +812,8 @@ public class FriendlyMonsterController : MonoBehaviour
             }
 
 
-            
-            Guard(false, PerfectGuardEffects.None, 0f, targs);
+
+            GuardOff();
         }
 
     }
@@ -874,31 +856,30 @@ public class FriendlyMonsterController : MonoBehaviour
 
     }
 
-    public void Guard(bool state, PerfectGuardEffects perfectGuardEffect, float perfectGuardValue, Targets targs)
+    public void Guard(PerfectGuardEffects perfectGuardEffect, float perfectGuardValue, FireProjectileEffectSO perfectGuardProjectile, Targets targs, float parryTime)
     {
-        if (state)
-        {
-            guardOn = true;
-            guardRenderer.gameObject.SetActive(true);
-            guardRenderer.sprite = yellowGuard;
-            parryTimer = 0.25f;
-            parryOn = true;
+        guardOn = true;
+        guardRenderer.gameObject.SetActive(true);
+        guardRenderer.sprite = yellowGuard;
+        parryTimer = parryTime; // 0.25f
+        parryOn = true;
 
-            perfectGuard = perfectGuardEffect;
-            perfectValue = perfectGuardValue;
-            perfectTargets = targs;
-        }
-        else
-        {
-            guardOn = false;
-            guardRenderer.gameObject.SetActive(false);
-            parryTimer = 0f;
-            parryOn = false;
-            perfectGuard = PerfectGuardEffects.None;
-            perfectValue = 0f;
-            perfectTargets = new Targets(false, false, false);
-        }
+        perfectGuard = perfectGuardEffect;
+        perfectValue = perfectGuardValue;
+        perfectProjectile = perfectGuardProjectile;
+        perfectTargets = targs;
+    }
 
+    public void GuardOff()
+    {
+        guardOn = false;
+        guardRenderer.gameObject.SetActive(false);
+        parryTimer = 0;
+        parryOn = false;
+        perfectGuard = PerfectGuardEffects.None;
+        perfectValue = 0f;
+        perfectProjectile = null;
+        perfectTargets = new Targets(false, false);
     }
 
     public void SetLowGravity(float grav, float jumpF)
@@ -982,6 +963,8 @@ public class FriendlyMonsterController : MonoBehaviour
     }
     private void DoSpecial(float sizeNum, int num)
     {
+        //if (friendlyMonster.specialMove == null) return;
+
         if (friendlyMonster.specialMove.moveActions.Count > 0)
         {
             // use moves
@@ -993,22 +976,18 @@ public class FriendlyMonsterController : MonoBehaviour
         friendlyAnim.SetTrigger("Special");
         friendlyAnimVariant.SetTrigger("Special");
 
+        friendlyUIAnimSpecial.SetTrigger("BigTrigger");
+
         TriggerAction(TriggerType.useSpecial);
 
         float valueAmount = 0f;
+        float itemPassives = friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Wits);
+        float buffSlots = friendlyBattleBuffManager.slotValues[4];
 
-        if (wits < 0) // less than 0, negatives
-        {
-            valueAmount = wits + (wits * ((friendlyBattleBuffManager.slotValues[4] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Wits)) / -100f));
-        }
-        else if (wits >= 0) // 0 or more, positives
-        {
-            valueAmount = wits + (wits * ((friendlyBattleBuffManager.slotValues[4] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Wits)) / 100f));
-        }
+        valueAmount = wits + itemPassives + buffSlots;
 
+        
 
-
-        //float valueAmount = wits + (wits * ((friendlyBattleBuffManager.slotValues[4] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Wits)) / 100f));
         float valueReal = 0f;
 
 
@@ -1049,10 +1028,14 @@ public class FriendlyMonsterController : MonoBehaviour
     }
     private void DoAttack(float sizeNum, int num)
     {
+        //if (friendlyMonster.basicMove == null) return;
+
         if (friendlyMonster.basicMove.moveActions.Count > 0)
         {
             friendlyMoveController.UseMove(friendlyMonster.basicMove);
         }
+
+        friendlyUIAnimBasic.SetTrigger("BigTrigger");
         friendlyParentAnim.SetTrigger("Attack");
         friendlyAnim.SetTrigger("Basic");
         friendlyAnimVariant.SetTrigger("Basic");
@@ -1060,17 +1043,10 @@ public class FriendlyMonsterController : MonoBehaviour
         TriggerAction(TriggerType.useBasic);
 
         float valueAmount = 0f;
+        float itemPassives = friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Edge);
+        float buffSlots = friendlyBattleBuffManager.slotValues[3];
+        valueAmount = edge + itemPassives + buffSlots;
 
-        if (edge < 0) // less than 0, negatives
-        {
-            valueAmount = edge + (edge * ((friendlyBattleBuffManager.slotValues[3] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Edge)) / -100f));
-        }
-        else if (edge >= 0) // 0 or more, positives
-        {
-            valueAmount = edge + (edge * ((friendlyBattleBuffManager.slotValues[3] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Edge)) / 100f));
-        }
-
-        //float valueAmount = edge + (edge * ((friendlyBattleBuffManager.slotValues[3] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Edge)) / 100f));
         float valueReal = 0f;
 
 

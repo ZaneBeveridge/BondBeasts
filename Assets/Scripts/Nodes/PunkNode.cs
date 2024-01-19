@@ -6,6 +6,7 @@ public class PunkNode : Node
 {
     [Header("Monster Spawn")]
     public Sprite backgroundSprite;
+    public string punkName;
     public int punkMaxHealth = 100;
     public List<MonsterStatic> monsters = new List<MonsterStatic>();
 

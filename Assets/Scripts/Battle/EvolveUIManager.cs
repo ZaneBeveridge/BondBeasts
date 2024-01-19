@@ -57,7 +57,7 @@ public class EvolveUIManager : MonoBehaviour
 
     [Header("Manager References")]
     public GameManager GM;
-
+    public VariantSO blankVariant;
     
     
 
@@ -389,7 +389,16 @@ public class EvolveUIManager : MonoBehaviour
             aMon.specialMove = currentMonster.backupData.ascendForm.form.specialMove;
             aMon.passiveMove = currentMonster.backupData.ascendForm.form.passiveMove;
 
-            aMon.variant = currentMonster.backupData.ascendForm.form.possibleVariants[currentMonster.variant.parentId].variant;
+            if (currentMonster.variant.parentId < currentMonster.backupData.ascendForm.form.possibleVariants.Count )
+            {
+                aMon.variant = currentMonster.backupData.ascendForm.form.possibleVariants[currentMonster.variant.parentId].variant;
+            }
+            else
+            {
+                aMon.variant = blankVariant;
+            }
+
+            
             aMon.staticSprite = currentMonster.backupData.ascendForm.form.stillSpriteStatic;
             aMon.dynamicSprite = currentMonster.backupData.ascendForm.form.stillSpriteDynamic;
             aMon.animator = currentMonster.backupData.ascendForm.form.animator;
@@ -425,6 +434,15 @@ public class EvolveUIManager : MonoBehaviour
             dMon.basicMove = currentMonster.backupData.descendForm.form.basicMove;
             dMon.specialMove = currentMonster.backupData.descendForm.form.specialMove;
             dMon.passiveMove = currentMonster.backupData.descendForm.form.passiveMove;
+
+            if (currentMonster.variant.parentId < currentMonster.backupData.descendForm.form.possibleVariants.Count)
+            {
+                dMon.variant = currentMonster.backupData.descendForm.form.possibleVariants[currentMonster.variant.parentId].variant;
+            }
+            else
+            {
+                dMon.variant = blankVariant;
+            }
 
             dMon.variant = currentMonster.backupData.descendForm.form.possibleVariants[currentMonster.variant.parentId].variant;
             dMon.staticSprite = currentMonster.backupData.descendForm.form.stillSpriteStatic;

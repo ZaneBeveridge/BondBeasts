@@ -6,7 +6,9 @@ public class BattleBuffManager : MonoBehaviour
 {
     [Header("Buff Management")]
     public GameObject buffSlotPrefab;
-    public Transform locationParent;
+    public List<Transform> statLocationParents = new List<Transform>();
+    public Transform otherLocationParent;
+
 
     public GameManager GM;
 
@@ -18,6 +20,7 @@ public class BattleBuffManager : MonoBehaviour
 
     public PerfectGuardEffects perfectGuardEffect = PerfectGuardEffects.None;
     public float perfectGuardValue = 0;
+    public FireProjectileEffectSO perfectGuardProjectile;
     public Targets perfectGuardTargets;
 
     public bool isFriendly = false;
@@ -29,17 +32,8 @@ public class BattleBuffManager : MonoBehaviour
     private PassiveSO currentMonPassive;
     private List<PassiveSO> sharedPassives = new List<PassiveSO>();
 
-    private bool passivesOn = false;
     void Update()
     {
-        if (passivesOn)
-        {
-            for (int i = 0; i < sharedPassives.Count; i++)
-            {
-                // CHECK ALL PASSIVES HERE
-
-            }
-        }
 
         if (tickActive)
         {
@@ -81,12 +75,6 @@ public class BattleBuffManager : MonoBehaviour
     }
 
 
-    
-
-    public void StartPassives(List<PassiveSO> ps)
-    {
-
-    }
 
 
     public float GetStatsFromItemsPassives(EffectedStat effectedStat) // only gets always stats, for calc
@@ -187,10 +175,11 @@ public class BattleBuffManager : MonoBehaviour
         SpawnBuffObject(6, amount, time);
     }
 
-    public void AddBuff(float time, PerfectGuardEffects effect, float effectValue, Targets team) // for invulnurability and perfect guard effects
+    public void AddBuff(float time, PerfectGuardEffects effect, float effectValue, FireProjectileEffectSO projectile, Targets team) // for invulnurability and perfect guard effects
     {
         perfectGuardEffect = effect;
         perfectGuardValue = effectValue;
+        perfectGuardProjectile = projectile;
         perfectGuardTargets = team;
         SpawnBuffObject(8, time);
     }
@@ -266,7 +255,7 @@ public class BattleBuffManager : MonoBehaviour
         }
 
         slotValues[type] += amount;
-        GameObject obj = Instantiate(buffSlotPrefab, locationParent);
+        GameObject obj = Instantiate(buffSlotPrefab, otherLocationParent);
         obj.GetComponent<BuffSlot>().Init(type, amount, time, this);
         slots.Add(obj.GetComponent<BuffSlot>());
     }
@@ -282,7 +271,7 @@ public class BattleBuffManager : MonoBehaviour
             }
         }
 
-        GameObject obj = Instantiate(buffSlotPrefab, locationParent);
+        GameObject obj = Instantiate(buffSlotPrefab, otherLocationParent);
         obj.GetComponent<BuffSlot>().Init(type, time, this);
         slots.Add(obj.GetComponent<BuffSlot>());
     }
@@ -303,7 +292,7 @@ public class BattleBuffManager : MonoBehaviour
         }
 
         slotValues[type] += amount;
-        GameObject obj = Instantiate(buffSlotPrefab, locationParent);
+        GameObject obj = Instantiate(buffSlotPrefab, statLocationParents[type]);
         obj.GetComponent<BuffSlot>().Init(type, amount, this);
         slots.Add(obj.GetComponent<BuffSlot>());
     }
@@ -322,7 +311,7 @@ public class BattleBuffManager : MonoBehaviour
         }
 
         slotValues[type] -= amount;
-        GameObject obj = Instantiate(buffSlotPrefab, locationParent);
+        GameObject obj = Instantiate(buffSlotPrefab, statLocationParents[type]);
         obj.GetComponent<BuffSlot>().Init(type, amount, this);
         slots.Add(obj.GetComponent<BuffSlot>());
     }
@@ -346,15 +335,16 @@ public class BattleBuffManager : MonoBehaviour
 
         perfectGuardEffect = PerfectGuardEffects.None;
         perfectGuardValue = 0;
+        perfectGuardProjectile = null;
         
-        Targets ts = new Targets(false, false, false);
+        Targets ts = new Targets(false, false);
         perfectGuardTargets = ts;
 
         if (isFriendly)
         {
             GM.battleManager.friendlyMonsterController.SetLowGravity(8f, 15f);
             GM.battleManager.friendlyMonsterController.Stun(false, 0f);
-            GM.battleManager.friendlyMonsterController.Guard(false, PerfectGuardEffects.None, 0f, ts);
+            GM.battleManager.friendlyMonsterController.GuardOff();
             GM.battleManager.friendlyMonsterController.CritAttacks(false);
             GM.battleManager.friendlyMonsterController.TakingCrits(false);
         }
@@ -362,7 +352,7 @@ public class BattleBuffManager : MonoBehaviour
         {
             GM.battleManager.enemyMonsterController.SetLowGravity(8f, 15f);
             GM.battleManager.enemyMonsterController.Stun(false, 0f);
-            GM.battleManager.enemyMonsterController.Guard(false, PerfectGuardEffects.None, 0f, ts);
+            GM.battleManager.enemyMonsterController.GuardOff();
             GM.battleManager.enemyMonsterController.CritAttacks(false);
             GM.battleManager.enemyMonsterController.TakingCrits(false);
         }

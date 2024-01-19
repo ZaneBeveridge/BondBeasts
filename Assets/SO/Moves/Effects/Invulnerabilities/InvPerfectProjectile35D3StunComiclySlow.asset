@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02e2d8d1700e0f141a7a96d7b90d93b5, type: 3}
+  m_Name: InvPerfectProjectile35D3StunComiclySlow
+  m_EditorClassIdentifier: 
+  effectType: 0
+  invulnerableTime: 1.5
+  perfectGuardEffect: 11
+  perfectGuardEffectValue: 0
+  projectile: {fileID: 11400000, guid: 48ba5de0ffb3b5445a917088eeea45bf, type: 2}

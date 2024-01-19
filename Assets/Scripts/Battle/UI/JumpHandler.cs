@@ -7,6 +7,8 @@ public class JumpHandler : MonoBehaviour
 {
     public FriendlyMonsterController controller;
     public Image jumpButton;
+
+    public Animator anim;
     public float jumpStartTime;
     private float jumpTime;
     private bool isJumping;
@@ -21,13 +23,14 @@ public class JumpHandler : MonoBehaviour
             if (jumpTime > 0)
             {
                 controller.Jump();
+                jumpButton.color = new Color(0.4f, 0.4f, 0.4f);
                 jumpTime -= Time.deltaTime;
             }
             else
             {
                 isJumping = false;
-                jumpButton.color = new Color(1f, 1f, 1f);
-
+                jumpButton.color = new Color(0.4f, 0.4f, 0.4f);
+                //anim.SetBool("Big", false);
             }
         }
         /*
@@ -40,6 +43,11 @@ public class JumpHandler : MonoBehaviour
             jumpButton.color = new Color(0.25f, 0.25f, 0.25f);
         }
         */
+
+        if (controller.isGrounded)
+        {
+            jumpButton.color = new Color(1f, 1f, 1f);
+        }
     }
 
     public void Off()
@@ -61,7 +69,8 @@ public class JumpHandler : MonoBehaviour
             isJumping = true;
             jumpTime = jumpStartTime;
             controller.Jump();
-            jumpButton.color = new Color(0.25f, 0.25f, 0.25f);
+            jumpButton.color = new Color(0.4f, 0.4f, 0.4f);
+            anim.SetBool("Big", true);
         }
 
         
@@ -70,7 +79,8 @@ public class JumpHandler : MonoBehaviour
     public void PointerUp()
     {
         isJumping = false;
-        jumpButton.color = new Color(1f, 1f, 1f);
+        jumpButton.color = new Color(0.4f, 0.4f, 0.4f);
+        anim.SetBool("Big", false);
     }
 
 

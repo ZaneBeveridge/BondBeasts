@@ -5,6 +5,7 @@ using System.Collections.Generic;
 [CustomEditor(typeof(MoveSO))]
 public class MoveSOEditor : Editor
 {
+    /*
     public override void OnInspectorGUI()
     {
         // Draw the default Inspector for MoveSO
@@ -86,4 +87,6 @@ public class MoveSOEditor : Editor
             }
         }
     }
+
+    */
 }

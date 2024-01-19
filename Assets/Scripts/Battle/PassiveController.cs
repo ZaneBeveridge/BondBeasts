@@ -231,7 +231,7 @@ public class PassiveController : MonoBehaviour
                 else if (m.effect.effectType == EffectType.Invulnerability)
                 {
                     InvulnerabilityEffectSO newEffect = m.effect as InvulnerabilityEffectSO;
-                    moveController.DoInvulnerability(newEffect.invulnerableTime, newEffect.perfectGuardEffect, newEffect.perfectGuardEffectValue, m.targets);
+                    moveController.DoInvulnerability(newEffect.invulnerableTime, newEffect.perfectGuardEffect, newEffect.perfectGuardEffectValue, newEffect.projectile, m.targets);
                 }
                 else if (m.effect.effectType == EffectType.RefreshCooldown)
                 {

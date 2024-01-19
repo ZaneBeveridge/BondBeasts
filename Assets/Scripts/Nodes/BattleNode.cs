@@ -92,18 +92,18 @@ public class BattleNode : Node
 
         for (int i = 0; i < spawnNum; i++)
         {
-            int total = 0;
+            float total = 0;
 
             for (int j = 0; j < monsterPool.Count; j++)
             {
                 total += monsterPool[j].weight;
             }
 
-            float random = Random.Range(1, total);
+            float random = Random.Range(0f, total);
 
 
 
-            int addUp = 0;
+            float addUp = 0;
             for (int j = 0; j < monsterPool.Count; j++)
             {
                 addUp = addUp + monsterPool[j].weight;
@@ -151,7 +151,7 @@ public class MonsterSpawn
 {
     public MonsterSO monster;
     public int minLevel, maxLevel;
-    public int weight;
+    public float weight;
 }
 
 

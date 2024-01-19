@@ -13,73 +13,112 @@ public class MoveController : MonoBehaviour
     public bool friendlyController = false;
     public BattleBuffManager manager;
 
+    private List<DelayedEffect> delayedEffects = new List<DelayedEffect>();
+    private List<float> delayedEffectsTime = new List<float>();
+    public void Update()
+    {
+        if (delayedEffects.Count > 0)
+        {
+            for (int i = 0; i < delayedEffects.Count; i++)
+            {
+                if (delayedEffectsTime[i] > 0)
+                {
+                    delayedEffectsTime[i] -= Time.deltaTime;
+                }
+                else if (delayedEffectsTime[i] <= 0)
+                {
+                    UseEffect(delayedEffects[i].effect, delayedEffects[i].targets);
+
+                    delayedEffects.RemoveAt(i);
+                    delayedEffectsTime.RemoveAt(i);
+                }
+            }
+        }
+        
+    }
+
+    private void UseEffect(EffectSO effect, Targets targets)
+    {
+        if (effect.effectType == EffectType.CritAttacks)
+        {
+            CritAttacksEffectSO newEffect = effect as CritAttacksEffectSO;
+            DoCritAttacks(newEffect.time, 1, targets);
+        }
+        else if (effect.effectType == EffectType.DoT)
+        {
+            DoTEffectSO newEffect = effect as DoTEffectSO;
+            DoDoT(newEffect.amount, newEffect.time, targets);
+        }
+        else if (effect.effectType == EffectType.FireProjectile)
+        {
+            //Debug.Log("Fired Projectile");
+            FireProjectileEffectSO newEffect = effect as FireProjectileEffectSO;
+            DoProjectile(newEffect.projectilePrefab, newEffect.projectileDamage, newEffect.projectileSpeed, newEffect.lifetime, newEffect.collideWithAmountOfObjects, newEffect.criticalProjectile, targets);
+        }
+        else if (effect.effectType == EffectType.Heal)
+        {
+            HealEffectSO newEffect = effect as HealEffectSO;
+            DoHeal(newEffect.healAmount, targets);
+        }
+        else if (effect.effectType == EffectType.Invulnerability)
+        {
+            InvulnerabilityEffectSO newEffect = effect as InvulnerabilityEffectSO;
+            DoInvulnerability(newEffect.invulnerableTime, newEffect.perfectGuardEffect, newEffect.perfectGuardEffectValue, newEffect.projectile, targets);
+        }
+        else if (effect.effectType == EffectType.RefreshCooldown)
+        {
+            RefreshCooldownEffectSO newEffect = effect as RefreshCooldownEffectSO;
+            DoRefreshCooldown(newEffect.chance, newEffect.whatToRefresh, newEffect.amount, targets);
+        }
+        else if (effect.effectType == EffectType.StatMod)
+        {
+            StatModEffectSO newEffect = effect as StatModEffectSO;
+            DoStatMod(newEffect.stat, newEffect.amount, targets);
+        }
+        else if (effect.effectType == EffectType.Stun)
+        {
+            StunEffectSO newEffect = effect as StunEffectSO;
+            DoStun(newEffect.stunTime, 3, targets);
+        }
+        else if (effect.effectType == EffectType.TakingCrits)
+        {
+            TakingCritsEffectSO newEffect = effect as TakingCritsEffectSO;
+            DoTakingCrits(newEffect.time, 2, targets);
+        }
+        else if (effect.effectType == EffectType.TimeBomb)
+        {
+            TimeBombEffectSO newEffect = effect as TimeBombEffectSO;
+            DoTimeBomb(newEffect.damage, newEffect.breaksOnDamage, newEffect.decayTime, newEffect.decayAmount);
+        }
+        else if (effect.effectType == EffectType.CritChance)
+        {
+            CritChanceEffectSO newEffect = effect as CritChanceEffectSO;
+            DoCritChance(newEffect.amount, targets);
+        }
+        else if (effect.effectType == EffectType.LowGravity)
+        {
+            LowGravityEffectSO newEffect = effect as LowGravityEffectSO;
+            DoLowGrav(newEffect.time, targets);
+        }
+    }
+
     public void UseMove(MoveSO move) // use basic or special
     {
         foreach (Move m in move.moveActions)
         {
             if (PassConditionTest(m.conditions))
             {
-                if (m.effect.effectType == EffectType.CritAttacks)
+                if (m.delay > 0)
                 {
-                    CritAttacksEffectSO newEffect = m.effect as CritAttacksEffectSO;
-                    DoCritAttacks(newEffect.time, 1, m.targets);
+                    delayedEffects.Add(new DelayedEffect(m.effect, m.targets));
+                    delayedEffectsTime.Add(m.delay);
                 }
-                else if (m.effect.effectType == EffectType.DoT)
+                else
                 {
-                    DoTEffectSO newEffect = m.effect as DoTEffectSO;
-                    DoDoT(newEffect.amount, newEffect.time, m.targets);
+                    UseEffect(m.effect, m.targets);
                 }
-                else if (m.effect.effectType == EffectType.FireProjectile)
-                {
-                    //Debug.Log("Fired Projectile");
-                    FireProjectileEffectSO newEffect = m.effect as FireProjectileEffectSO;
-                    DoProjectile(newEffect.projectilePrefab, newEffect.projectileDamage, newEffect.projectileSpeed, newEffect.lifetime, newEffect.collideWithAmountOfObjects, newEffect.criticalProjectile, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.Heal)
-                {
-                    HealEffectSO newEffect = m.effect as HealEffectSO;
-                    DoHeal(newEffect.healAmount, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.Invulnerability)
-                {
-                    InvulnerabilityEffectSO newEffect = m.effect as InvulnerabilityEffectSO;
-                    DoInvulnerability(newEffect.invulnerableTime, newEffect.perfectGuardEffect, newEffect.perfectGuardEffectValue, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.RefreshCooldown)
-                {
-                    RefreshCooldownEffectSO newEffect = m.effect as RefreshCooldownEffectSO;
-                    DoRefreshCooldown(newEffect.chance, newEffect.whatToRefresh, newEffect.amount, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.StatMod)
-                {
-                    StatModEffectSO newEffect = m.effect as StatModEffectSO;
-                    DoStatMod(newEffect.stat, newEffect.amount, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.Stun)
-                {
-                    StunEffectSO newEffect = m.effect as StunEffectSO;
-                    DoStun(newEffect.stunTime, 3, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.TakingCrits)
-                {
-                    TakingCritsEffectSO newEffect = m.effect as TakingCritsEffectSO;
-                    DoTakingCrits(newEffect.time, 2, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.TimeBomb)
-                {
-                    TimeBombEffectSO newEffect = m.effect as TimeBombEffectSO;
-                    DoTimeBomb(newEffect.damage, newEffect.breaksOnDamage, newEffect.decayTime, newEffect.decayAmount);
-                }
-                else if (m.effect.effectType == EffectType.CritChance)
-                {
-                    CritChanceEffectSO newEffect = m.effect as CritChanceEffectSO;
-                    DoCritChance(newEffect.amount, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.LowGravity)
-                {
-                    LowGravityEffectSO newEffect = m.effect as LowGravityEffectSO;
-                    DoLowGrav(newEffect.time, m.targets);
-                }
+
+                
             }
         }
     }
@@ -93,11 +132,6 @@ public class MoveController : MonoBehaviour
                 GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(amount, 5);
             }
 
-            if (targets.self)
-            {
-                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(amount, 5);
-            }
-
             if (targets.team)
             {
                 GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(amount, 5);
@@ -108,11 +142,6 @@ public class MoveController : MonoBehaviour
             if (targets.enemy)
             {
                 GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(amount, 5);
-            }
-
-            if (targets.self)
-            {
-                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(amount, 5);
             }
 
             if (targets.team)
@@ -132,11 +161,6 @@ public class MoveController : MonoBehaviour
                 GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(amount, 4);
             }
 
-            if (targets.self)
-            {
-                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(amount, 4);
-            }
-
             if (targets.team)
             {
                 GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(amount, 4);
@@ -147,11 +171,6 @@ public class MoveController : MonoBehaviour
             if (targets.enemy)
             {
                 GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(amount, 4);
-            }
-
-            if (targets.self)
-            {
-                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(amount, 4);
             }
 
             if (targets.team)
@@ -172,11 +191,6 @@ public class MoveController : MonoBehaviour
                 GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(time, type);
             }
 
-            if (targets.self)
-            {
-                manager.AddBuff(time, type);
-            }
-
             if (targets.team)
             {
                 manager.AddBuff(time, type);
@@ -187,11 +201,6 @@ public class MoveController : MonoBehaviour
             if (targets.enemy)
             {
                 manager.AddBuff(time, type);
-            }
-
-            if (targets.self)
-            {
-                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(time, type);
             }
 
             if (targets.team)
@@ -210,11 +219,6 @@ public class MoveController : MonoBehaviour
                 GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(amount, time);
             }
 
-            if (targets.self)
-            {
-                manager.AddBuff(amount, time);
-            }
-
             if (targets.team)
             {
                 manager.AddBuff(amount, time);
@@ -225,11 +229,6 @@ public class MoveController : MonoBehaviour
             if (targets.enemy)
             {
                 manager.AddBuff(amount, time);
-            }
-
-            if (targets.self)
-            {
-                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(amount, time);
             }
 
             if (targets.team)
@@ -246,17 +245,11 @@ public class MoveController : MonoBehaviour
     {
         if (friendlyController)
         {
-            // GM.battleManager.friendlyMonsterController.
-            // float gutsAmount = guts + (guts * ((ItemStat(EffectedStat.Guts) + friendlyBattleBuffManager.slotValues[1] + PassiveStat(EffectedStat.Guts)) / 100f));
             float oomphAmount = 0f;
-            if (GM.battleManager.friendlyMonsterController.oomph < 0) // less than 0, negatives
-            {
-                oomphAmount = GM.battleManager.friendlyMonsterController.oomph + (GM.battleManager.friendlyMonsterController.oomph * ((GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Oomph) + GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.slotValues[0]) / -100f));
-            }
-            else if (GM.battleManager.friendlyMonsterController.oomph >= 0) // 0 or more, positives
-            {
-                oomphAmount = GM.battleManager.friendlyMonsterController.oomph + (GM.battleManager.friendlyMonsterController.oomph * ((GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Oomph) + GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.slotValues[0]) / 100f));
-            }
+            float itemPassives = GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Oomph);
+            float buffSlots = GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.slotValues[0];
+
+            oomphAmount = GM.battleManager.friendlyMonsterController.oomph + itemPassives + buffSlots;
 
 
             //spd = speed + (speed * (0.02f * amt));
@@ -284,14 +277,10 @@ public class MoveController : MonoBehaviour
         else
         {
             float oomphAmount = 0f;
-            if (GM.battleManager.friendlyMonsterController.oomph < 0) // less than 0, negatives
-            {
-                oomphAmount = GM.battleManager.enemyMonsterController.oomph + (GM.battleManager.enemyMonsterController.oomph * ((GM.battleManager.enemyMonsterController.enemyBattleBuffManager.slotValues[0]) / -100f));
-            }
-            else if (GM.battleManager.friendlyMonsterController.oomph >= 0) // 0 or more, positives
-            {
-                oomphAmount = GM.battleManager.enemyMonsterController.oomph + (GM.battleManager.enemyMonsterController.oomph * ((GM.battleManager.enemyMonsterController.enemyBattleBuffManager.slotValues[0]) / 100f));
-            }
+            float itemPassives = GM.battleManager.enemyMonsterController.enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Oomph);
+            float buffSlots = GM.battleManager.enemyMonsterController.enemyBattleBuffManager.slotValues[0];
+
+            oomphAmount = GM.battleManager.enemyMonsterController.oomph + itemPassives + buffSlots;
 
             //spd = speed + (speed * (0.02f * amt));
 
@@ -323,11 +312,6 @@ public class MoveController : MonoBehaviour
                 GM.battleManager.enemyMonsterController.Heal(amount);
             }
 
-            if (targets.self)
-            {
-                GM.battleManager.friendlyMonsterController.Heal(amount);
-            }
-
             if (targets.team)
             {
                 GM.battleManager.friendlyMonsterController.Heal(amount);
@@ -338,11 +322,6 @@ public class MoveController : MonoBehaviour
             if (targets.enemy)
             {
                 GM.battleManager.friendlyMonsterController.Heal(amount);
-            }
-
-            if (targets.self)
-            {
-                GM.battleManager.enemyMonsterController.Heal(amount);
             }
 
             if (targets.team)
@@ -352,29 +331,24 @@ public class MoveController : MonoBehaviour
         }
     }
 
-    public void DoInvulnerability(float time, PerfectGuardEffects effect, float effectValue, Targets targets)
+    public void DoInvulnerability(float time, PerfectGuardEffects effect, float effectValue, FireProjectileEffectSO projectile, Targets targets)
     {
         if (friendlyController)
         {
-            if (targets.self)
-            {
-                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(time, effect, effectValue, targets);
-            }
-
             if (targets.team)
             {
-                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(time, effect, effectValue, targets);
+                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(time, effect, effectValue, projectile, targets);
             }
 
             if (targets.enemy)
             {
-                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(time, effect, effectValue, targets);
+                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(time, effect, effectValue, projectile, targets);
             }
             
         }
         else
         {
-            GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(time, effect, effectValue, targets);
+            GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(time, effect, effectValue, projectile, targets);
         }
     }
 
@@ -402,8 +376,8 @@ public class MoveController : MonoBehaviour
         {
             if (GM.battleManager.friendlyMonsterController.guardOn)
             {
-                Targets ts = new Targets(false, false, false);
-                GM.battleManager.friendlyMonsterController.Guard(false, PerfectGuardEffects.None, 0f, ts);
+                Targets ts = new Targets(false, false);
+                GM.battleManager.friendlyMonsterController.GuardOff();
             }
             else
             {
@@ -415,8 +389,8 @@ public class MoveController : MonoBehaviour
         {
             if (GM.battleManager.enemyMonsterController.guardOn)
             {
-                Targets ts = new Targets(false, false, false);
-                GM.battleManager.enemyMonsterController.Guard(false, PerfectGuardEffects.None, 0f, ts);
+                Targets ts = new Targets(false, false);
+                GM.battleManager.enemyMonsterController.GuardOff();
             }
             else
             {
@@ -435,11 +409,6 @@ public class MoveController : MonoBehaviour
                 GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(time, type);
             }
 
-            if (targets.self)
-            {
-                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(time, type);
-            }
-
             if (targets.team)
             {
                 GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(time, type);
@@ -450,11 +419,6 @@ public class MoveController : MonoBehaviour
             if (targets.enemy)
             {
                 GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(time, type);
-            }
-
-            if (targets.self)
-            {
-                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(time, type);
             }
 
             if (targets.team)
@@ -575,5 +539,19 @@ public class MoveController : MonoBehaviour
 
 
         return state;
+    }
+}
+
+
+
+public class DelayedEffect
+{
+    public EffectSO effect;
+    public Targets targets;
+
+    public DelayedEffect(EffectSO e, Targets t)
+    {
+        effect = e;
+        targets = t;
     }
 }

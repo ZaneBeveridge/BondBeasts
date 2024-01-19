@@ -15,4 +15,5 @@ MonoBehaviour:
   effectType: 2
   invulnerableTime: 1.5
   perfectGuardEffect: 2
-  perfectGuardEffectValue: 40
+  perfectGuardEffectValue: 8
+  projectile: {fileID: 0}
