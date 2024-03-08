@@ -14,6 +14,6 @@ public class TimeBombEffectSO : EffectSO
 
     public void Awake()
     {
-        effectType = EffectType.TimeBomb;
+        //effectType = EffectType.TimeBomb;
     }
 }

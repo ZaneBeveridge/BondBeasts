@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 116
   groupedId: 6
   itemName: Cloudmallow +
-  desc: +40% Oomph Up while airborne.
+  desc: +8 Oomph Up while airborne.
   icon: {fileID: 21300000, guid: 18f7465f496ebbb4a95d055348976777, type: 3}
   type: 2
   maxStack: 10
@@ -36,10 +36,10 @@ MonoBehaviour:
       item: {fileID: 11400000, guid: 547ea0c52a1d8744584a8ebc9e26d7a0, type: 2}
       amount: 1
   itemEffects:
-  - name: +40% Oomph Up while airborne.
-    effect: {fileID: 11400000, guid: 709c32b598a68c44ab07d4e5cdf5f9d4, type: 2}
+  - name: +8 Oomph Up while airborne.
+    effect: {fileID: 11400000, guid: 2c89b825ef1049f419d0e07f3ac6c2c6, type: 2}
+    delay: 0
     targets:
-      self: 1
       team: 0
       enemy: 0
     conditions:

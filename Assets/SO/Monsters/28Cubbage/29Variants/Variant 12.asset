@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: Variant 12
+  m_EditorClassIdentifier: 
+  variantName: Vermilion
+  parentId: 12
+  id: 2912
+  variantStillSprite: {fileID: 1074859402, guid: 51d79c6e8e2231048b24de106bd4096d, type: 3}
+  variantAnimator: {fileID: 22100000, guid: 5efa22d5396b94a4d9acbb016f782b45, type: 2}

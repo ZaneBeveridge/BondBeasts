@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: VulPine
+  m_Controller: {fileID: 9100000, guid: d8e53068418da524eb8ebc989e71a7ab, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: fcaf2763a608e7745abb079064d4f3d7, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6c0ec0d3566cb444a8715d14d0365d34, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: ab8f9f639328e464d8072feb6de3c5ef, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: bd9a1838d1bf9504a828a57079c1edfc, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 7acb65ac74a6a974d9693b344c6280c3, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 8f8632c9e07abf94ab0bab5a7bb3a4d4, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 498f5e3ca145e844bae902c7e949377c, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4b2946c871afa114a9c8c49c34c1b7b6, type: 2}

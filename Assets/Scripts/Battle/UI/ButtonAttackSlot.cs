@@ -19,7 +19,7 @@ public class ButtonAttackSlot : MonoBehaviour
 
     public GameObject flashMask;
     public Image flaskMaskImage;
-
+    public Animator anim;
 
     
 
@@ -80,6 +80,7 @@ public class ButtonAttackSlot : MonoBehaviour
                         f = Mathf.Round(f * 10.0f) * 0.1f;
                         num.text = f.ToString() + "s";
                         trueReady = true;
+
                     }
                     else
                     {
@@ -266,8 +267,7 @@ public class ButtonAttackSlot : MonoBehaviour
             trueReady = false;
             flashMask.SetActive(true);
             flaskMaskImage.color = new Color(255f, 255f, 255f, opacity);
-
+            anim.SetTrigger("Ready");
         }
     }
-
 }

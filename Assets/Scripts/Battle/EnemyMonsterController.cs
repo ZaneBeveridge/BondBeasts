@@ -15,12 +15,14 @@ public class EnemyMonsterController : MonoBehaviour
     public Animator enemyAnim;
     public Animator enemyAnimVariant;
     public Animator enemyParentAnim;
-
+    public Animator healthBarShakeAnim;
+    public Slider juiceRegenSlider;
     public SpriteRenderer enemyDynamicSprite;
     public TextMeshProUGUI enemyNameText;
     public TextMeshProUGUI enemyLevelText;
     public EnemyIconRotator enemyIconRotator;
-    public HitNumbers hitNumbers;
+    public NumberPopupManager hitNumbers;
+    public Transform defaultHitNumbersLocation;
     public BattleBuffManager enemyBattleBuffManager;
 
     public StunManager stunManager;
@@ -34,6 +36,7 @@ public class EnemyMonsterController : MonoBehaviour
     public SpriteRenderer guardRenderer;
     public Sprite blueGuard;
     public Sprite yellowGuard;
+    public GameObject antiGravEffect;
 
     [Header("Controller")]
     private Rigidbody2D rb;
@@ -112,22 +115,19 @@ public class EnemyMonsterController : MonoBehaviour
     private FireProjectileEffectSO perfectProjectile;
     private Targets perfectTargets;
 
-    private bool critAttacks = false;
-    private bool takingCrits = false;
+    //private bool critAttacks = false;
+    //private bool takingCrits = false;
     private int critchance = 0;
-
-    public float airCritHeight = 1f;
-    public bool airCrit = false;
 
     private bool invulnerable = false;
     private float invTime = 0f;
 
-    private bool stunned = false;
+    [HideInInspector] public bool stunned = false;
 
     private NodeType nodeType;
     private float accumulatedJuiceHealing = 0f;
 
-    public bool active = true;
+    //public bool active = true;
 
     private bool isJumping;
     private float jumpTime;
@@ -137,181 +137,177 @@ public class EnemyMonsterController : MonoBehaviour
     }
     void Update()
     {
-        if (active)
+        if (invulnerable)
         {
-            if (transform.position.y >= airCritHeight)
+            if (invTime > 0)
             {
-                airCrit = true;
+                invTime -= Time.deltaTime;
+            }
+            else if (invTime <= 0)
+            {
+                invTime = 0f;
+                invulnerable = false;
+            }
+        }
+
+        isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
+
+        if (isGrounded)
+        {
+            if (doLand)
+            {
+                StopJump();
+                enemyParentAnim.SetTrigger("Land");
+                doLand = false;
+            }
+        }
+        else
+        {
+            if (!doLand)
+            {
+                enemyParentAnim.SetTrigger("Jump");
+            }
+            doLand = true;
+        }
+
+        DoCooldowns();
+
+        if (regenCooldown)
+        {
+            if (regenCooldownTime > 0)
+            {
+                regenCooldownTime -= Time.deltaTime;
+                
+            }
+            else if (regenCooldownTime <= 0)
+            {
+                //REGEN
+                regenOn = true;
+                regenCooldown = false;
+                regenCooldownTime = 0f;
+            }
+
+            juiceRegenSlider.value = regenCooldownTime / regenCoolodownBaseTime;
+        }
+
+
+
+        if (regenOn)
+        {
+            if (regenTimer > 0)
+            {
+                regenTimer -= Time.deltaTime;
+                
+            }
+            else if (regenTimer <= 0)
+            {
+                //REGEN
+                float regenAmount = 0f;
+                float itemPassives = enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice);
+                float buffSlots = enemyBattleBuffManager.slotValues[2];
+                regenAmount = 0.1f * (juice + itemPassives + buffSlots);
+
+
+                //Debug.Log("Regen Amount: " + regenAmount.ToString());
+                int flooredRegen = Mathf.FloorToInt(regenAmount + accumulatedJuiceHealing);
+                //Debug.Log("Floored: " + flooredRegen.ToString());
+                float leftOvers = (regenAmount + accumulatedJuiceHealing) - flooredRegen;
+                //Debug.Log("Left Overs: " + leftOvers.ToString());
+
+                accumulatedJuiceHealing = leftOvers;
+
+                if (flooredRegen >= 1 || flooredRegen <= -1)
+                {
+                    healthBar.SetHealth(enemyHealth + flooredRegen, false);
+                    enemyHealth = healthBar.slider.value;
+                }
+
+                //capBar.SetCaptureLevel(GM.battleManager.enemyCapturePoints, enemyHealth);
+
+                regenTimer = regenBaseTime;
+            }
+        }
+
+        if (tagOn)
+        {
+            if (tagTimer > 0)
+            {
+                tagTimer -= Time.deltaTime;
+                //transform.localPosition = Vector3.Lerp(transform.position, new Vector3(10f, -1f, 0f), tagTimer / 1f);
+            }
+            else if (tagTimer <= 0)
+            {
+                aiController.SetActive(true);
+                tagOn = false;
+                SpawnNewMonster(taggingSlot, false);
+                //transform.localPosition = new Vector3(5f, -1f, 0f);
+                tagTimer = 0f;
+            }
+        }
+
+
+        if (parryOn)
+        {
+            if (parryTimer > 0)
+            {
+                parryTimer -= Time.deltaTime;
+            }
+            else if (parryTimer <= 0)
+            {
+                guardRenderer.sprite = blueGuard;
+                parryOn = false;
+                parryTimer = 0f;
+            }
+        }
+
+        if (stunned)
+        {
+            healthBar.ChangeColor("Stun");
+        }
+        else
+        {
+            if (guardOn)
+            {
+                healthBar.ChangeColor("Guard");
+            }
+            else if (parryOn)
+            {
+                healthBar.ChangeColor("PerfectGuard");
             }
             else
             {
-                airCrit = false;
-            }
-
-            if (invulnerable)
-            {
-                if (invTime > 0)
+                if (enemyBattleBuffManager.slotValues[6] > 0)
                 {
-                    invTime -= Time.deltaTime;
-                }
-                else if (invTime <= 0)
-                {
-                    invTime = 0f;
-                    invulnerable = false;
-                }
-            }
-
-            isGrounded = Physics2D.OverlapCircle(feetPos.position, checkRadius, whatIsGround);
-
-            if (isGrounded)
-            {
-                if (doLand)
-                {
-                    StopJump();
-                    enemyParentAnim.SetTrigger("Land");
-                    doLand = false;
-                }
-            }
-            else
-            {
-                if (!doLand)
-                {
-                    enemyParentAnim.SetTrigger("Jump");
-                }
-                doLand = true;
-            }
-
-            DoCooldowns();
-
-            if (regenCooldown)
-            {
-                if (regenCooldownTime > 0)
-                {
-                    regenCooldownTime -= Time.deltaTime;
-                }
-                else if (regenCooldownTime <= 0)
-                {
-                    //REGEN
-                    regenOn = true;
-                    regenCooldown = false;
-                }
-            }
-
-
-
-            if (regenOn)
-            {
-                if (regenTimer > 0)
-                {
-                    regenTimer -= Time.deltaTime;
-                }
-                else if (regenTimer <= 0)
-                {
-                    //REGEN
-                    float regenAmount = 0f;
-                    float itemPassives = enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice);
-                    float buffSlots = enemyBattleBuffManager.slotValues[2];
-                    regenAmount = 0.1f * (juice + itemPassives + buffSlots);
-
-
-                    //Debug.Log("Regen Amount: " + regenAmount.ToString());
-                    int flooredRegen = Mathf.FloorToInt(regenAmount + accumulatedJuiceHealing);
-                    //Debug.Log("Floored: " + flooredRegen.ToString());
-                    float leftOvers = (regenAmount + accumulatedJuiceHealing) - flooredRegen;
-                    //Debug.Log("Left Overs: " + leftOvers.ToString());
-
-                    accumulatedJuiceHealing = leftOvers;
-
-                    if (flooredRegen >= 1 || flooredRegen <= -1)
-                    {
-                        healthBar.SetHealth(enemyHealth + flooredRegen);
-                        enemyHealth = healthBar.slider.value;
-                    }
-
-                    //capBar.SetCaptureLevel(GM.battleManager.enemyCapturePoints, enemyHealth);
-
-                    regenTimer = regenBaseTime;
-                }
-            }
-
-            if (tagOn)
-            {
-                if (tagTimer > 0)
-                {
-                    tagTimer -= Time.deltaTime;
-                    //transform.localPosition = Vector3.Lerp(transform.position, new Vector3(10f, -1f, 0f), tagTimer / 1f);
-                }
-                else if (tagTimer <= 0)
-                {
-                    aiController.SetActive(true);
-                    tagOn = false;
-                    SpawnNewMonster(taggingSlot, false);
-                    //transform.localPosition = new Vector3(5f, -1f, 0f);
-                    tagTimer = 0f;
-                }
-            }
-
-
-            if (parryOn)
-            {
-                if (parryTimer > 0)
-                {
-                    parryTimer -= Time.deltaTime;
-                }
-                else if (parryTimer <= 0)
-                {
-                    guardRenderer.sprite = blueGuard;
-                    parryOn = false;
-                    parryTimer = 0f;
-                }
-            }
-
-            if (stunned)
-            {
-                healthBar.ChangeColor("Yellow");
-            }
-            else
-            {
-                if (guardOn)
-                {
-                    healthBar.ChangeColor("Blue");
+                    healthBar.ChangeColor("Dot");
                 }
                 else
                 {
-                    if (enemyBattleBuffManager.slotValues[6] > 0)
+                    float regenAmount = 0.1f * (juice + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice) + enemyBattleBuffManager.slotValues[2]);
+
+                    if (regenOn && enemyHealth < 100)
                     {
-                        healthBar.ChangeColor("Red");
+                        healthBar.ChangeColor("Regen");
                     }
                     else
                     {
-                        float regenAmount = 0.1f * (juice + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice) + enemyBattleBuffManager.slotValues[2]);
-
-                        if (regenOn && enemyHealth < 100 && regenAmount >= 1)
-                        {
-                            healthBar.ChangeColor("BrightGreen");
-                        }
-                        else
-                        {
-                            healthBar.ChangeColor("Normal");
-                        }
+                        healthBar.ChangeColor("Normal");
                     }
                 }
             }
+        }
 
 
-
-            if (isJumping)
+        if (isJumping)
+        {
+            if (jumpTime > 0)
             {
-                if (jumpTime > 0)
-                {
-                    JumpRepeat();
-                    jumpTime -= Time.deltaTime;
-                }
-                else
-                {
-                    isJumping = false;
+                JumpRepeat();
+                jumpTime -= Time.deltaTime;
+            }
+            else
+            {
+                isJumping = false;
 
-                }
             }
         }
 
@@ -436,17 +432,17 @@ public class EnemyMonsterController : MonoBehaviour
         {
             Targets targ = new Targets(false, false);
 
-            enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, extraStats * 40, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Guts, extraStats * 40, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Juice, extraStats * 40, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Edge, extraStats * 40, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Wits, extraStats * 40, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Spark, extraStats * 40, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, extraStats * 8, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Guts, extraStats * 8, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Juice, extraStats * 8, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Edge, extraStats * 8, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Wits, extraStats * 8, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Spark, extraStats * 8, targ);
         }
 
         enemyHealth = 100;
         healthBar.SetMaxHealth(100);
-        healthBar.SetHealth(100);
+        healthBar.SetHealth(100, false);
 
         for (int i = 0; i < 3; i++)
         {
@@ -488,17 +484,17 @@ public class EnemyMonsterController : MonoBehaviour
         {
             Targets targ = new Targets(false, false);
 
-            enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, extraStats * 40, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Guts, extraStats * 40, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Juice, extraStats * 40, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Edge, extraStats * 40, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Wits, extraStats * 40, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Spark, extraStats * 40, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, extraStats * 8, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Guts, extraStats * 8, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Juice, extraStats * 8, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Edge, extraStats * 8, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Wits, extraStats * 8, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Spark, extraStats * 8, targ);
         }
 
         enemyHealth = punkMaxHealth;
         healthBar.SetMaxHealth(punkMaxHealth);
-        healthBar.SetHealth(punkMaxHealth);
+        healthBar.SetHealth(punkMaxHealth, false);
 
         for (int i = 0; i < 3; i++)
         {
@@ -790,7 +786,7 @@ public class EnemyMonsterController : MonoBehaviour
 
     public void ActivateAI(bool state)
     {
-        active = state;
+        //active = state;
 
         aiController.SetActive(state);
         transform.position = new Vector3(5f, -1f, 0f);
@@ -798,7 +794,7 @@ public class EnemyMonsterController : MonoBehaviour
 
 
 
-    public void TakeDamage(int damage, bool effect, bool critical)
+    public void TakeDamage(int damage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile)
     {
         if (parryOn)
         {
@@ -845,11 +841,11 @@ public class EnemyMonsterController : MonoBehaviour
             }
             else if (perfectGuard == PerfectGuardEffects.Projectile)
             {
-                enemyMoveController.DoProjectile(perfectProjectile.projectilePrefab, perfectProjectile.projectileDamage, perfectProjectile.projectileSpeed, perfectProjectile.lifetime, perfectProjectile.collideWithAmountOfObjects, perfectProjectile.criticalProjectile, perfectTargets);
+                enemyMoveController.DoProjectile(perfectProjectile.projectilePrefab, perfectProjectile.projectileDamage, perfectProjectile.projectileSpeed, perfectProjectile.lifetime, perfectProjectile.collideWithAmountOfObjects, perfectProjectile.criticalProjectile, perfectProjectile);
             }
 
             Targets ts = new Targets(false, false);
-            hitNumbers.SpawnText("Perfect Block", "Yellow");
+            hitNumbers.SpawnPopup(PopupType.PerfectBlock, pos, "", 0); // perfectblock popup
             GuardOff();
         }    
         else if (effect || !guardOn  && !invulnerable)
@@ -864,7 +860,7 @@ public class EnemyMonsterController : MonoBehaviour
 
             if (!effect)
             {
-                if (takingCrits || critical)
+                if (critical)
                 {
                     flDmg = damage * 2;
                 }
@@ -887,7 +883,7 @@ public class EnemyMonsterController : MonoBehaviour
             
 
 
-            if (gutsAmount > 100)
+            if (gutsAmount > 100 && !effect)
             {
                 gutsReal = 100f;
 
@@ -896,6 +892,28 @@ public class EnemyMonsterController : MonoBehaviour
                 if (gutsAmount > 200)
                 {
                     gutsNegateAmount = 100f;
+                    float gutsReflectAmount = gutsAmount - 200f;
+
+                    float reflectRand = Random.Range(0f, 1f);
+                    float reflectChance = 0.008f * gutsReflectAmount;
+
+                    //Debug.Log("Reflect Try: Rand: " + reflectRand.ToString() + ", Chance: " + reflectChance.ToString() + ", Guts Reflect Amount: " + gutsReflectAmount.ToString());
+
+                    if (reflectRand <= reflectChance) // reflect projectile and take no dmg
+                    {
+                        if (effectProjectile != null)
+                        {
+                            enemyMoveController.DoProjectile(effectProjectile.projectilePrefab, effectProjectile.projectileDamage, effectProjectile.projectileSpeed, effectProjectile.lifetime, effectProjectile.collideWithAmountOfObjects, effectProjectile.criticalProjectile, effectProjectile);
+                        }
+                        else
+                        {
+                            Debug.LogError("Projectile Data is Null, But is needed for reflecting");
+                        }
+
+
+                        hitNumbers.SpawnPopup(PopupType.Reflected, pos, "", 0);
+                        return;
+                    }
                 }
                 else
                 {
@@ -907,7 +925,7 @@ public class EnemyMonsterController : MonoBehaviour
 
                 if (rand <= chance) // negate damage
                 {
-
+                    hitNumbers.SpawnPopup(PopupType.Negated, pos, "", 0);
                     return;
                 }
             }
@@ -915,6 +933,98 @@ public class EnemyMonsterController : MonoBehaviour
             {
                 gutsReal = gutsAmount;
             }
+
+            // IF NO NEGATE OR REFLECT THIS WILL CONTINUE BUT OTHERWISE THIS CODE WON'T RUN
+
+            if (!effect)
+            {
+
+                if (dotAmount > 0 || dotTime > 0) // has dot
+                {
+                    enemyBattleBuffManager.AddBuff(dotAmount, dotTime);
+                }
+
+                if (stunnedTime > 0)
+                {
+                    enemyBattleBuffManager.AddBuff(stunnedTime, 3);
+                }
+
+                if (resetSpecial)
+                {
+                    GM.battleManager.friendlyMonsterController.specialReady[GM.battleManager.friendlyMonsterController.currentSlot] = true;
+                    GM.battleManager.friendlyMonsterController.specialC[GM.battleManager.friendlyMonsterController.currentSlot] = 0f;
+                }
+
+                if (antiGravTime > 0)
+                {
+                    enemyBattleBuffManager.AddBuff(antiGravTime, 5);
+                }
+
+                if (echo)
+                {
+                    GM.battleManager.friendlyMonsterController.friendlyMoveController.DoProjectile(effectProjectile.projectilePrefab, effectProjectile.projectileDamage, effectProjectile.projectileSpeed, effectProjectile.lifetime, effectProjectile.collideWithAmountOfObjects, effectProjectile.criticalProjectile, effectProjectile);
+                }
+
+                for (int i = 0; i < enemyStatBuffs.Count; i++)
+                {
+                    Targets t = new Targets(false, false);
+
+                    if (enemyStatBuffs[i] != 0)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, enemyStatBuffs[i], t);
+                                break;
+                            case 1:
+                                enemyBattleBuffManager.AddBuff(EffectedStat.Guts, enemyStatBuffs[i], t);
+                                break;
+                            case 2:
+                                enemyBattleBuffManager.AddBuff(EffectedStat.Juice, enemyStatBuffs[i], t);
+                                break;
+                            case 3:
+                                enemyBattleBuffManager.AddBuff(EffectedStat.Edge, enemyStatBuffs[i], t);
+                                break;
+                            case 4:
+                                enemyBattleBuffManager.AddBuff(EffectedStat.Wits, enemyStatBuffs[i], t);
+                                break;
+                            case 5:
+                                enemyBattleBuffManager.AddBuff(EffectedStat.Spark, enemyStatBuffs[i], t);
+                                break;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < friendlyStatBuffs.Count; i++)
+                {
+                    Targets t = new Targets(false, false);
+                    if (friendlyStatBuffs[i] != 0)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Oomph, friendlyStatBuffs[i], t);
+                                break;
+                            case 1:
+                                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Guts, friendlyStatBuffs[i], t);
+                                break;
+                            case 2:
+                                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Juice, friendlyStatBuffs[i], t);
+                                break;
+                            case 3:
+                                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Edge, friendlyStatBuffs[i], t);
+                                break;
+                            case 4:
+                                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Wits, friendlyStatBuffs[i], t);
+                                break;
+                            case 5:
+                                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Spark, friendlyStatBuffs[i], t);
+                                break;
+                        }
+                    }
+                }
+            }
+
 
 
             float trueDamage = flDmg - (flDmg * (0.008f * gutsReal));
@@ -932,12 +1042,12 @@ public class EnemyMonsterController : MonoBehaviour
             //Debug.Log("True dmg: " + dmg);
             //Debug.Log("Protected dmg: " + protectedDamage);
 
-            healthBar.SetHealth(enemyHealth - dmg);
+            healthBar.SetHealth(enemyHealth - dmg, true);
             enemyHealth = healthBar.slider.value;
 
             enemyParentAnim.SetTrigger("Hit");
-
             
+
 
             if (enemyHealth <= 0)
             {
@@ -956,7 +1066,17 @@ public class EnemyMonsterController : MonoBehaviour
             {
                 if (dmg > 0)
                 {
-                    hitNumbers.SpawnDamageNumbersWithMod(dmg, protectedDamage, "Red", "Blue");
+                    if (effect)
+                    {
+                        hitNumbers.SpawnPopup(PopupType.Dot, pos, dmg.ToString(), protectedDamage); //dot popup
+                        healthBarShakeAnim.SetTrigger("DotShake");
+                    }
+                    else
+                    {
+                        hitNumbers.SpawnPopup(PopupType.Damage, pos, dmg.ToString(), protectedDamage); //damage popup
+                        healthBarShakeAnim.SetTrigger("Shake");
+                        GM.battleManager.cameraAnimator.SetInteger("Focus", 2);
+                    }
                 }
 
                 
@@ -969,11 +1089,11 @@ public class EnemyMonsterController : MonoBehaviour
 
             if (invulnerable)
             {
-                hitNumbers.SpawnText("Parry", "Blue");
+                hitNumbers.SpawnPopup(PopupType.Parry, pos, "", 0); // parry popup
             }
             else
             {
-                hitNumbers.SpawnText("Block", "Blue");
+                hitNumbers.SpawnPopup(PopupType.Block, pos, "", 0); // block popup
             }
 
             GuardOff();
@@ -990,9 +1110,9 @@ public class EnemyMonsterController : MonoBehaviour
                 realAmount = (amount + (int)enemyHealth) - 100;
             }
 
-            healthBar.SetHealth(enemyHealth + amount);
+            healthBar.SetHealth(enemyHealth + amount, false);
             enemyHealth = healthBar.slider.value;
-            hitNumbers.SpawnDamageNumbersWithMod(realAmount, 0, "Green", "Blue");
+            hitNumbers.SpawnPopup(PopupType.Heal, defaultHitNumbersLocation, realAmount.ToString(), 0); // heal popup
         }
     }
 
@@ -1045,21 +1165,20 @@ public class EnemyMonsterController : MonoBehaviour
     {
         rb.gravityScale = grav;
         jumpForce = jumpF;
+
+        if (rb.gravityScale <= 1)
+        {
+            antiGravEffect.SetActive(true);
+        }
+        else
+        {
+            antiGravEffect.SetActive(false);
+        }
     }
 
     public void SetCritChance(int amount)
     {
         critchance = amount;
-    }
-
-    public void CritAttacks(bool state)
-    {
-        critAttacks = state;
-    }
-
-    public void TakingCrits(bool state)
-    {
-        takingCrits = state;
     }
 
 
@@ -1254,51 +1373,40 @@ public class EnemyMonsterController : MonoBehaviour
         invTime = 0.1f;
     }
 
-    public void FireProjectile(GameObject prefab, float speed, int dmg, float lifeTime, int collideWithAmountOfObjects, bool criticalProjectile, bool inAir)
+    public void FireProjectile(GameObject prefab, float speed, int dmg, float lifeTime, int collideWithAmountOfObjects, bool criticalProjectile, FireProjectileEffectSO projEffect)
     {
-        
-
         GameObject proj = Instantiate(prefab, firePoint.position, firePoint.rotation);
         projectiles.Add(proj);
 
-        if (critAttacks)
+        if (enemyBattleBuffManager.slotValues[11] > 0)
         {
-            proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, critAttacks, "Friend", GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager, inAir);
-        }
-        else
-        {
-            if (enemyBattleBuffManager.slotValues[11] > 0)
+            int amount = enemyBattleBuffManager.slotValues[11];
+
+            if (amount >= 100)
             {
-                int amount = enemyBattleBuffManager.slotValues[11];
-
-                if (amount >= 100)
-                {
-                    proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, true, "Friend", GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager, inAir);
-                }
-                else
-                {
-                    float random = Random.Range(1, 100);
-                    
-
-                    if (random <= amount)
-                    {
-                        proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, true, "Friend", GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager, inAir);
-                    }
-                    else
-                    {
-                        proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, "Friend", GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager, inAir);
-                    }
-                }
+                proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, true, "Friend", GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager, projEffect);
             }
             else
             {
-                proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, "Friend", GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager, inAir);
+                float random = Random.Range(1, 100);
+
+
+                if (random <= amount)
+                {
+                    proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, true, "Friend", GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager, projEffect);
+                }
+                else
+                {
+                    proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, "Friend", GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager, projEffect);
+                }
             }
-
-
+        }
+        else
+        {
+            proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, "Friend", GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager, projEffect);
         }
 
-        
+
     }
 
     public void ClearCooldowns()

@@ -74,6 +74,7 @@ public class ItemEffect
 {
     public string name;
     public EffectSO effect;
+    public float delay = 0f;
     public Targets targets;
     public ItemConditions conditions;
 }

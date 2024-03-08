@@ -23,7 +23,7 @@ public class OverworldUI : MonoBehaviour
     void Start()
     {
         healthBar.SetMaxHealth(100f);
-        healthBar.SetHealth(GM.playerHP);
+        healthBar.SetHealth(GM.playerHP, false);
     }
 
 

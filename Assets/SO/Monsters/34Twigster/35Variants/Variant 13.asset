@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: Variant 13
+  m_EditorClassIdentifier: 
+  variantName: Vul-Pine
+  parentId: 13
+  id: 3513
+  variantStillSprite: {fileID: -1214460251, guid: 69425cadf1b88c7409964b7c389b00d4, type: 3}
+  variantAnimator: {fileID: 22100000, guid: b90e118f67e46aa42bec5ba0138d0ae4, type: 2}

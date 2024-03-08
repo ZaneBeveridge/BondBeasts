@@ -45,7 +45,7 @@ public class SurvivalSubMenu : MonoBehaviour
     public int scoreNeededToPass = 0;
 
     private int xpBuffPerRound = 30;
-    private int statBuffPerRound = 40;
+    private int statBuffPerRound = 8;
 
 
 
@@ -106,10 +106,10 @@ public class SurvivalSubMenu : MonoBehaviour
         currentBestText.text = GM.survivalBest[survivalID].ToString();
 
         currentXPBonusText.text = survivalStreak * xpBuffPerRound + "%";
-        currentEnemyStatBuffText.text = survivalStreak * statBuffPerRound + "%";
+        currentEnemyStatBuffText.text = "+" + survivalStreak * statBuffPerRound;
 
         nextRoundXPBonusText.text = "+" + xpBuffPerRound + "%";
-        nextRoundEnemyStatBuffText.text = "+" + statBuffPerRound + "%";
+        nextRoundEnemyStatBuffText.text = "+" + statBuffPerRound;
 
 
         UpdateItemsVisuals();

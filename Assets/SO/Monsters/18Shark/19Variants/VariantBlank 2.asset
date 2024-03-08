@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: VariantBlank 2
+  m_EditorClassIdentifier: 
+  variantName: Gnawtic
+  parentId: 2
+  id: 182
+  variantStillSprite: {fileID: 685875895, guid: 47b236d0bb59e1d4dbaf92675665d8f2, type: 3}
+  variantAnimator: {fileID: 22100000, guid: fab16d4f7ef44bd4d8f997a8c3c144d5, type: 2}

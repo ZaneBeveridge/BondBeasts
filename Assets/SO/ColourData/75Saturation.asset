@@ -13,75 +13,43 @@ MonoBehaviour:
   m_Name: 75Saturation
   m_EditorClassIdentifier: 
   datas:
-  - name: Red1
+  - name: Red
     colourWheel: 0
     startColour: {r: 1, g: 0.25098038, b: 0.25098038, a: 1}
-    endColour: {r: 1, g: 0.50065356, b: 0.25098038, a: 1}
-  - name: Red2
+    endColour: {r: 1, g: 0.338366, b: 0.25098038, a: 1}
+  - name: Orange
     colourWheel: 1
-    startColour: {r: 1, g: 0.5131372, b: 0.25098038, a: 1}
-    endColour: {r: 1, g: 0.7503268, b: 0.25098038, a: 1}
-  - name: Red3
+    startColour: {r: 1, g: 0.4875, b: 0.25, a: 1}
+    endColour: {r: 1, g: 0.6754248, b: 0.25098038, a: 1}
+  - name: Yellow
     colourWheel: 2
-    startColour: {r: 1, g: 0.76281047, b: 0.25098038, a: 1}
-    endColour: {r: 1, g: 1, b: 0.25098038, a: 1}
-  - name: Orange1
+    startColour: {r: 1, g: 0.90013075, b: 0.25098038, a: 1}
+    endColour: {r: 1, g: 0.95006543, b: 0.25098038, a: 1}
+  - name: Lime
     colourWheel: 3
-    startColour: {r: 0.98751634, g: 1, b: 0.25098038, a: 1}
-    endColour: {r: 0.75032675, g: 1, b: 0.25098038, a: 1}
-  - name: Orange2
+    startColour: {r: 0.90013075, g: 1, b: 0.25098038, a: 1}
+    endColour: {r: 0.7752941, g: 1, b: 0.25098038, a: 1}
+  - name: Green
     colourWheel: 4
-    startColour: {r: 0.7378432, g: 1, b: 0.25098038, a: 1}
-    endColour: {r: 0.5006535, g: 1, b: 0.25098038, a: 1}
-  - name: Orange3
+    startColour: {r: 0.53810465, g: 1, b: 0.25098038, a: 1}
+    endColour: {r: 0.2884314, g: 1, b: 0.25098038, a: 1}
+  - name: Teal
     colourWheel: 5
-    startColour: {r: 0.48816997, g: 1, b: 0.25098038, a: 1}
-    endColour: {r: 0.25098038, g: 1, b: 0.25098038, a: 1}
-  - name: Yellow1
-    colourWheel: 6
-    startColour: {r: 0.25098038, g: 1, b: 0.26346403, a: 1}
-    endColour: {r: 0.25098038, g: 1, b: 0.5006537, a: 1}
-  - name: Yellow2
-    colourWheel: 7
-    startColour: {r: 0.25098038, g: 1, b: 0.51313734, a: 1}
+    startColour: {r: 0.25098038, g: 1, b: 0.6254902, a: 1}
     endColour: {r: 0.25098038, g: 1, b: 0.7503269, a: 1}
-  - name: Yellow3
+  - name: Sky
+    colourWheel: 6
+    startColour: {r: 0.25098038, g: 1, b: 0.95006543, a: 1}
+    endColour: {r: 0.25098038, g: 0.8751633, b: 1, a: 1}
+  - name: Blue
+    colourWheel: 7
+    startColour: {r: 0.25098038, g: 0.70039207, b: 1, a: 1}
+    endColour: {r: 0.25098038, g: 0.43823528, b: 1, a: 1}
+  - name: Purple
     colourWheel: 8
-    startColour: {r: 0.25098038, g: 1, b: 0.7628105, a: 1}
-    endColour: {r: 0.25098038, g: 1, b: 1, a: 1}
-  - name: Green1
+    startColour: {r: 0.45071912, g: 0.25098038, b: 1, a: 1}
+    endColour: {r: 0.8377124, g: 0.25098038, b: 1, a: 1}
+  - name: Pink
     colourWheel: 9
-    startColour: {r: 0.25098038, g: 0.9875165, b: 1, a: 1}
-    endColour: {r: 0.25098038, g: 0.7503267, b: 1, a: 1}
-  - name: Green2
-    colourWheel: 10
-    startColour: {r: 0.25098038, g: 0.7378432, b: 1, a: 1}
-    endColour: {r: 0.25098038, g: 0.5006537, b: 1, a: 1}
-  - name: Green3
-    colourWheel: 11
-    startColour: {r: 0.25098038, g: 0.48817006, b: 1, a: 1}
-    endColour: {r: 0.25098038, g: 0.25098038, b: 1, a: 1}
-  - name: Blue1
-    colourWheel: 12
-    startColour: {r: 0.26346385, g: 0.25098038, b: 1, a: 1}
-    endColour: {r: 0.5006533, g: 0.25098038, b: 1, a: 1}
-  - name: Blue2
-    colourWheel: 13
-    startColour: {r: 0.5131375, g: 0.25098038, b: 1, a: 1}
-    endColour: {r: 0.75032705, g: 0.25098038, b: 1, a: 1}
-  - name: Blue3
-    colourWheel: 14
-    startColour: {r: 0.7628105, g: 0.25098038, b: 1, a: 1}
-    endColour: {r: 1, g: 0.25098038, b: 1, a: 1}
-  - name: Purple1
-    colourWheel: 15
-    startColour: {r: 1, g: 0.25098038, b: 0.98751616, a: 1}
-    endColour: {r: 1, g: 0.25098038, b: 0.7503267, a: 1}
-  - name: Purple2
-    colourWheel: 16
-    startColour: {r: 1, g: 0.25098038, b: 0.7378432, a: 1}
-    endColour: {r: 1, g: 0.25098038, b: 0.5006537, a: 1}
-  - name: Purple3
-    colourWheel: 17
-    startColour: {r: 1, g: 0.25098038, b: 0.48816988, a: 1}
-    endColour: {r: 1, g: 0.25098038, b: 0.25098038, a: 1}
+    startColour: {r: 1, g: 0.25098038, b: 0.9750327, a: 1}
+    endColour: {r: 1, g: 0.25098038, b: 0.7628105, a: 1}

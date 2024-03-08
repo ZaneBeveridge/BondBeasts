@@ -221,6 +221,7 @@ GameObject:
   - component: {fileID: 7652003090942252406}
   - component: {fileID: 7443351787776813494}
   - component: {fileID: 4045092328989708362}
+  - component: {fileID: 3430234915084583435}
   m_Layer: 5
   m_Name: BuffSlot
   m_TagString: Untagged
@@ -312,4 +313,26 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 61042972a5d67864ab2a75af8c4231d7, type: 3}
   - {fileID: 21300000, guid: 15b39364c1cb5494a9498cafd51ca1ca, type: 3}
   - {fileID: 21300000, guid: cf668aeedbdb2ce4c96fd112d3f0d710, type: 3}
+  anim: {fileID: 3430234915084583435}
   active: 0
+--- !u!95 &3430234915084583435
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4044595817137054141}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 5d048a4bb18f68840b0e3910d5b31008, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

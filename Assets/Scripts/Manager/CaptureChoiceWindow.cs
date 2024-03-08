@@ -219,7 +219,7 @@ public class CaptureChoiceWindow : MonoBehaviour
                 GM.overworldGameobject.SetActive(true);
                 GM.overworldUI.gameObject.SetActive(true);
 
-                GM.overworldUI.healthBar.SetHealth(GM.playerHP);
+                GM.overworldUI.healthBar.SetHealth(GM.playerHP, false);
 
                 List<float> tms = new List<float>();
                 tms.Add(0);

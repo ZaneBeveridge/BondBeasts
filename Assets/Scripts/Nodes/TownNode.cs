@@ -37,7 +37,7 @@ public class TownNode : Node
         {
             GM.playerHP = 50f;
             GM.popupManager.FullyHealed();
-            GM.overworldUI.healthBar.SetHealth(50f);
+            GM.overworldUI.healthBar.SetHealth(50f, false);
         }
 
         
