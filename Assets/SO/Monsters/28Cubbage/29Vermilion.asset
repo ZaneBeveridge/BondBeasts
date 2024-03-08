@@ -16,9 +16,9 @@ MonoBehaviour:
   ID:
     ID: 29
     version: 0
-  stillSpriteDynamic: {fileID: -1844933783, guid: 8bc452fc6dc7e454295efbac447059ce, type: 3}
-  stillSpriteStatic: {fileID: 1020048807, guid: bfc95d8d8e7e43d4a86e3a701ff01d68, type: 3}
-  animator: {fileID: 22100000, guid: c26864b0fab328e439fb66eb716a55e8, type: 2}
+  stillSpriteDynamic: {fileID: -1629704960, guid: 92129ffeb17a61443b318b992eecf462, type: 3}
+  stillSpriteStatic: {fileID: 1444730869, guid: 460100b5b0c507544b094865d6a7fb66, type: 3}
+  animator: {fileID: 22100000, guid: c54e9e5078ce721418c4745a058f8248, type: 2}
   isHeavyJumper: 0
   basicMove: {fileID: 11400000, guid: 4e8198d7a7f75954f95963f2cd22cd48, type: 2}
   specialMove: {fileID: 11400000, guid: 94e2468c0ea62b94c99b8530ab8d0f6c, type: 2}
@@ -59,36 +59,36 @@ MonoBehaviour:
   possibleVariants:
   - variant: {fileID: 11400000, guid: 17feec844fd853643a744ee6b8f58eda, type: 2}
     weight: 16384
-  - variant: {fileID: 11400000, guid: bc2ee8d5a91460147a67b8a6e221afde, type: 2}
+  - variant: {fileID: 11400000, guid: 77a692711b1e30c459b190cfe84b8727, type: 2}
     weight: 8192
-  - variant: {fileID: 11400000, guid: 4101481d97dda31438865e356fcf8226, type: 2}
+  - variant: {fileID: 11400000, guid: 29f334db80def344eabfad2bcb4d7ed5, type: 2}
     weight: 4096
-  - variant: {fileID: 11400000, guid: c46db09086f4cab4192bbb8c9a2255a9, type: 2}
+  - variant: {fileID: 11400000, guid: 4808079e67e098d41b303fe1b0786b46, type: 2}
     weight: 2048
-  - variant: {fileID: 11400000, guid: cb823d59c51121941b0a94a0f3db56bc, type: 2}
+  - variant: {fileID: 11400000, guid: 4ab9d9a5d2dcc1548b12eb4dd9f73b81, type: 2}
     weight: 1024
-  - variant: {fileID: 11400000, guid: 3f58278c2b48b2c47b3315c536f83b09, type: 2}
+  - variant: {fileID: 11400000, guid: a977f56b73fc1eb44bdeea817b85c211, type: 2}
     weight: 512
-  - variant: {fileID: 11400000, guid: c0ef03da026cd764e9a26bb9010e541c, type: 2}
+  - variant: {fileID: 11400000, guid: 309c9a8e4d093ac4b98f1652cf9b89c8, type: 2}
     weight: 256
-  - variant: {fileID: 11400000, guid: f504eee99d088bd4097199f6dac81b11, type: 2}
+  - variant: {fileID: 11400000, guid: 7d9c58945cb471545b5c2622a7cdca21, type: 2}
     weight: 128
-  - variant: {fileID: 11400000, guid: d5a98aaa5bcf96c4da5adeaca953a03a, type: 2}
+  - variant: {fileID: 11400000, guid: 40fe2ff551585d044abca8d9fd25cd2d, type: 2}
     weight: 64
-  - variant: {fileID: 11400000, guid: ec87a6286a61c3a49a8bc87f3ca869dc, type: 2}
+  - variant: {fileID: 11400000, guid: 57c3087996528794facc01d4c7bb6a66, type: 2}
     weight: 32
-  - variant: {fileID: 11400000, guid: b1fcaf8ea22f5fe4f87ace5be19642a7, type: 2}
+  - variant: {fileID: 11400000, guid: 0f4353917fb452e43995792bfc4536e4, type: 2}
     weight: 16
-  - variant: {fileID: 11400000, guid: 4a29bc8abd0712b4eb1fad74169a3272, type: 2}
+  - variant: {fileID: 11400000, guid: 1400306a4d8b389438fcf9e1f978bf21, type: 2}
     weight: 8
-  - variant: {fileID: 11400000, guid: 19077aa040d906f4b9326131bd392ac1, type: 2}
+  - variant: {fileID: 11400000, guid: e891f6e951c152b4b8204cebecdf7aca, type: 2}
     weight: 4
-  - variant: {fileID: 11400000, guid: ddb44477722ce3b499fb5c4fa54e7fb2, type: 2}
+  - variant: {fileID: 11400000, guid: 3843ced205a5f6849a49dfbd5e09c2e2, type: 2}
     weight: 2
-  - variant: {fileID: 11400000, guid: 57c075f75dadd8f4e9324b58adb6df73, type: 2}
+  - variant: {fileID: 11400000, guid: 295e877e14322b14c991a6b52064b301, type: 2}
     weight: 1
   startColour: 0
-  amountOfColours: 15
+  amountOfColours: 9
   colourData: {fileID: 11400000, guid: cdef74056f4d24f49a01629c87019535, type: 2}
   chanceData: {fileID: 11400000, guid: 1178a54ee9a0ecb4c93d22bbd54719db, type: 2}
   height: 0

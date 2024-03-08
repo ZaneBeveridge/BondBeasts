@@ -34,7 +34,7 @@ public class AftermathUI : MonoBehaviour
     private List<GameObject> items = new List<GameObject>();
     public void Init(string text, List<float> times, int xp, int num)
     {
-        GM.overworldUI.healthBar.SetHealth(GM.playerHP);
+        GM.overworldUI.healthBar.SetHealth(GM.playerHP, false);
 
         if (text == "WON")
         {
@@ -266,7 +266,7 @@ public class AftermathUI : MonoBehaviour
 
         
 
-        GM.overworldUI.healthBar.SetHealth(GM.playerHP);
+        GM.overworldUI.healthBar.SetHealth(GM.playerHP, false);
 
         //Debug.Log("Hello1");
         GM.playerManager.currentRoamerController.RoamerControllerMove();

@@ -13,6 +13,8 @@ public class CaptureButton : MonoBehaviour
     public Image chargeButton; // The button used to charge
     public Transform fillObject;
     public Animator anim;
+    public Animator captureBarAnim;
+    public Animator cameraAnim;
 
     [SerializeField]private float currentCharge = 0.0f; // The current charge level
     private bool isCharging = false; // Whether or not the player is currently charging
@@ -127,7 +129,9 @@ public class CaptureButton : MonoBehaviour
         loopCharge = 0.1f;
         isCharging = true;
         chargeButton.color = new Color(0.25f, 0.25f, 0.25f);
-        anim.SetBool("Big", true);
+        anim.SetBool("On", true);
+        captureBarAnim.SetBool("Capturing", true);
+        cameraAnim.SetBool("Capturing", true);
     }
 
     public void StopCharging()
@@ -135,7 +139,9 @@ public class CaptureButton : MonoBehaviour
         loopCharge = 0f;
         isCharging = false;
         chargeButton.color = new Color(1f, 1f, 1f);
-        anim.SetBool("Big", false);
+        anim.SetBool("On", false);
+        captureBarAnim.SetBool("Capturing", false);
+        cameraAnim.SetBool("Capturing", false);
         //currentCharge = 0.0f;
     }
 

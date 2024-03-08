@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 108
   groupedId: 3
   itemName: Cococonut
-  desc: +60% Guts Up while healthy.
+  desc: +12 Guts Up while healthy.
   icon: {fileID: 21300000, guid: 7e7868a5c5848b445a3ef57ca522f7a9, type: 3}
   type: 2
   maxStack: 10
@@ -32,10 +32,10 @@ MonoBehaviour:
       item: {fileID: 0}
       amount: 0
   itemEffects:
-  - name: +60% Guts Up while healthy.
-    effect: {fileID: 11400000, guid: 55c7c636dc2c71c4da41727ae05ba6fc, type: 2}
+  - name: +12 Guts Up while healthy.
+    effect: {fileID: 11400000, guid: 11caeaa70b7141b4f82b03f9d7a1e7a3, type: 2}
+    delay: 0
     targets:
-      self: 1
       team: 0
       enemy: 0
     conditions:

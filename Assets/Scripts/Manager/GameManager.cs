@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     [Header("DATA")]
     public List<MonsterSO> monsterSOData = new List<MonsterSO>();
     public List<NatureSO> natureSOData = new List<NatureSO>();
-    public List<VariantSO> variantSOData = new List<VariantSO>();
+    //public List<VariantSO> variantSOData = new List<VariantSO>();
     public List<MoveSO> basicSOData = new List<MoveSO>();
     public List<MoveSO> specialSOData = new List<MoveSO>();
     //public List<MoveSO> moveSOData = new List<MoveSO>();
@@ -63,6 +63,9 @@ public class GameManager : MonoBehaviour
     public string monsterType;
     public int monsterNumInStorage;
     public MonsterItemSO blankItem;
+
+
+    [HideInInspector] public bool invulnerableDebug = false;
     private void Awake()
     {
         if (SaveSystem.GetSave() == false) // First time!
@@ -300,15 +303,7 @@ public class GameManager : MonoBehaviour
                     nat = j;
                 }
             }
-            //Variants
-            int var = 0;
-            for (int j = 0; j < variantSOData.Count; j++)
-            {
-                if (variantSOData[j].id == playerData.mVariants[i])
-                {
-                    var = j;
-                }
-            }
+            
 
             //DATA
             int dt = 0;
@@ -317,6 +312,16 @@ public class GameManager : MonoBehaviour
                 if (monsterSOData[j].ID.ID == playerData.mData[i])
                 {
                     dt = j;
+                }
+            }
+
+            //Variants
+            int var = 0;
+            for (int j = 0; j < monsterSOData[dt].possibleVariants.Count; j++)
+            {
+                if (monsterSOData[dt].possibleVariants[j].variant.id == playerData.mVariants[i])
+                {
+                    var = j;
                 }
             }
 
@@ -426,7 +431,7 @@ public class GameManager : MonoBehaviour
             }
 
 
-            Monster mon = new Monster(playerData.mNames[i], playerData.mLevels[i], capLevel, playerData.mXPs[i], playerData.mSymbiotics[i], natureSOData[nat], variantSOData[var], playerData.mStranges[i], col, st, monsterSOData[dt], bMove, sMove, pMove, ownedItems);
+            Monster mon = new Monster(playerData.mNames[i], playerData.mLevels[i], capLevel, playerData.mXPs[i], playerData.mSymbiotics[i], natureSOData[nat], monsterSOData[dt].possibleVariants[var].variant, playerData.mStranges[i], col, st, monsterSOData[dt], bMove, sMove, pMove, ownedItems);
 
 
 
@@ -892,6 +897,34 @@ public class GameManager : MonoBehaviour
                 }
             }
         }
+    }
+
+
+
+    //Random management/debug methods
+
+    public void LevelPartyPlusOne()
+    {
+        for (int i = 0; i < collectionManager.partySlots.Count; i++)
+        {
+            if (collectionManager.partySlots[i].storedMonsterObject != null)
+            {
+                collectionManager.partySlots[i].storedMonsterObject.GetComponent<PartySlot>().storedMonster.level++;
+            }
+        }
+    }
+
+    public void FullyHealSelf()
+    {
+        playerHP = 100f;
+        battleManager.friendlyMonsterController.healthBar.SetHealth(playerHP, false);
+        overworldUI.healthBar.SetHealth(playerHP, false);
+        
+    }
+
+    public void Invulnerable()
+    {
+        invulnerableDebug = !invulnerableDebug;
     }
    
 }

@@ -13,11 +13,14 @@ public class FriendlyMonsterController : MonoBehaviour
     public Animator friendlyParentAnim;
     public Animator friendlyUIAnimBasic;
     public Animator friendlyUIAnimSpecial;
+    public Animator healthBarShakeAnim;
+    public Slider juiceRegenSlider;
     public SpriteRenderer friendlyDynamicSprite;
     public TextMeshProUGUI friendlyNameText;
     public TextMeshProUGUI friendlyLevelText;
     public FriendlyIconRotator friendlyIconRotator;
-    public HitNumbers hitNumbers;
+    public NumberPopupManager hitNumbers;
+    public Transform defaultHitNumbersLocation;
     public BattleBuffManager friendlyBattleBuffManager;
 
     public StunManager stunManager;
@@ -32,6 +35,7 @@ public class FriendlyMonsterController : MonoBehaviour
     public SpriteRenderer guardRenderer;
     public Sprite blueGuard;
     public Sprite yellowGuard;
+    public GameObject antiGravEffect;
     [Header("Controller")]
     private Rigidbody2D rb;
     public Transform firePoint;
@@ -109,16 +113,12 @@ public class FriendlyMonsterController : MonoBehaviour
     private float perfectValue;
     private FireProjectileEffectSO perfectProjectile;
     private Targets perfectTargets;
-    private bool critAttacks = false;
-    private bool takingCrits = false;
+    //private bool critAttacks = false;
+    //private bool takingCrits = false;
     private int critchance = 0;
 
     public MaskCutout maskCutout;
 
-
-    public float airCritHeight = 1f;
-
-    public bool airCrit = false;
 
     private bool invulnerable = false;
     private float invTime = 0f;
@@ -137,15 +137,6 @@ public class FriendlyMonsterController : MonoBehaviour
 
     private void Update()
     {
-        if (transform.position.y >= airCritHeight)
-        {
-            airCrit = true;
-        }
-        else
-        {
-            airCrit = false;
-        }
-
         if (invulnerable)
         {
             if (invTime > 0)
@@ -212,6 +203,8 @@ public class FriendlyMonsterController : MonoBehaviour
                 regenOn = true;
                 regenCooldown = false;
             }
+
+            juiceRegenSlider.value = regenCooldownTime / regenCoolodownBaseTime;
         }
 
         if (regenOn)
@@ -240,7 +233,7 @@ public class FriendlyMonsterController : MonoBehaviour
 
                 if (flooredRegen >= 1 || flooredRegen <= -1)
                 {
-                    healthBar.SetHealth(GM.playerHP + flooredRegen);
+                    healthBar.SetHealth(GM.playerHP + flooredRegen, false);
                     GM.playerHP = healthBar.slider.value;
 
                 }
@@ -284,28 +277,32 @@ public class FriendlyMonsterController : MonoBehaviour
 
         if (stunned)
         {
-            healthBar.ChangeColor("Yellow");
+            healthBar.ChangeColor("Stun");
         }
         else
         {
             if (guardOn)
             {
-                healthBar.ChangeColor("Blue");
+                healthBar.ChangeColor("Guard");
+            }
+            else if (parryOn)
+            {
+                healthBar.ChangeColor("PerfectGuard");
             }
             else
             {
                 if (friendlyBattleBuffManager.slotValues[6] > 0)
                 {
-                    healthBar.ChangeColor("Red");
+                    healthBar.ChangeColor("Dot");
                 }
                 else
                 {
                    
                     float regenAmount = 0.1f * (juice + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice) + friendlyBattleBuffManager.slotValues[2]);
 
-                    if (regenOn && GM.playerHP < 100 && regenAmount >= 1)
+                    if (regenOn && GM.playerHP < 100)
                     {
-                        healthBar.ChangeColor("BrightGreen");
+                        healthBar.ChangeColor("Regen");
                     }
                     else
                     {
@@ -635,7 +632,7 @@ public class FriendlyMonsterController : MonoBehaviour
 
     }
 
-    public void TakeDamage(int damage, bool effect, bool critical) // if effect cant be parried, guarded
+    public void TakeDamage(int damage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile) // if effect cant be parried, guarded
     {
         //USE DEFENCE HERE
         if (!effect)
@@ -644,7 +641,7 @@ public class FriendlyMonsterController : MonoBehaviour
         }
         
 
-        if (parryOn)
+        if (parryOn) // perfect guard
         {
             // NO damage but do guard effect
             //Debug.Log("YO");
@@ -691,11 +688,11 @@ public class FriendlyMonsterController : MonoBehaviour
             }
             else if (perfectGuard == PerfectGuardEffects.Projectile)
             {
-                friendlyMoveController.DoProjectile(perfectProjectile.projectilePrefab, perfectProjectile.projectileDamage, perfectProjectile.projectileSpeed, perfectProjectile.lifetime, perfectProjectile.collideWithAmountOfObjects, perfectProjectile.criticalProjectile, perfectTargets);
+                friendlyMoveController.DoProjectile(perfectProjectile.projectilePrefab, perfectProjectile.projectileDamage, perfectProjectile.projectileSpeed, perfectProjectile.lifetime, perfectProjectile.collideWithAmountOfObjects, perfectProjectile.criticalProjectile, perfectProjectile);
             }
 
             Targets targs = new Targets(false, false);
-            hitNumbers.SpawnText("Perfect Block", "Yellow");
+            hitNumbers.SpawnPopup(PopupType.PerfectBlock, pos, "", 0);// perfectblock popup
             GuardOff();
 
         }
@@ -705,12 +702,13 @@ public class FriendlyMonsterController : MonoBehaviour
             regenCooldown = true;
 
             regenOn = false;
+
             float flDmg = damage;
 
             if (!effect)
             {
                 
-                if (takingCrits || critical)
+                if (critical)
                 {
                     flDmg = damage * 2;
                 }
@@ -734,15 +732,37 @@ public class FriendlyMonsterController : MonoBehaviour
 
             //float gutsAmount = guts + (guts * ((friendlyBattleBuffManager.slotValues[1] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Guts)) / 100f));
 
-            if (gutsAmount > 100)
+            if (gutsAmount > 100 && !effect)
             {
                 gutsReal = 100f;
 
                 float gutsNegateAmount = 0f;
 
-                if (gutsAmount > 200)
+                if (gutsAmount > 200) // reflect chance
                 {
                     gutsNegateAmount = 100f;
+                    float gutsReflectAmount = gutsAmount - 200f;
+
+                    float reflectRand = Random.Range(0f, 1f);
+                    float reflectChance = 0.008f * gutsReflectAmount;
+
+                    //Debug.Log("Reflect Try: Rand: " + reflectRand.ToString() + ", Chance: " + reflectChance.ToString() + ", Guts Reflect Amount: " + gutsReflectAmount.ToString());
+
+                    if (reflectRand <= reflectChance) // reflect projectile and take no dmg
+                    {
+                        if (effectProjectile != null)
+                        {
+                            friendlyMoveController.DoProjectile(effectProjectile.projectilePrefab, effectProjectile.projectileDamage, effectProjectile.projectileSpeed, effectProjectile.lifetime, effectProjectile.collideWithAmountOfObjects, effectProjectile.criticalProjectile, effectProjectile);
+                        }
+                        else
+                        {
+                            Debug.LogError("Projectile Data is Null, But is needed for reflecting");
+                        }
+
+
+                        hitNumbers.SpawnPopup(PopupType.Reflected, pos, "", 0);
+                        return;
+                    }
                 }
                 else
                 {
@@ -752,15 +772,107 @@ public class FriendlyMonsterController : MonoBehaviour
                 float rand = Random.Range(0f, 1f);
                 float chance = ((0.008f * gutsNegateAmount));
 
+                //Debug.Log("Negate Try: Rand: " + rand.ToString() + ", Chance: " + chance.ToString() + ", Guts Negate Amount: " + gutsNegateAmount.ToString());
+
                 if (rand <= chance) // negate damage
                 {
-
+                    hitNumbers.SpawnPopup(PopupType.Negated, pos, "", 0);
                     return;
                 }
             }
             else
             {
                 gutsReal = gutsAmount;
+            }
+
+            // IF NO NEGATE OR REFLECT THIS WILL CONTINUE BUT OTHERWISE THIS CODE WON'T RUN
+
+            if (!effect)
+            {
+                if (dotAmount > 0 || dotTime > 0) // has dot
+                {
+                    friendlyBattleBuffManager.AddBuff(dotAmount, dotTime);
+                }
+
+                if (stunnedTime > 0)
+                {
+                    friendlyBattleBuffManager.AddBuff(stunnedTime, 3);
+                }
+
+                if (resetSpecial)
+                {
+                    GM.battleManager.enemyMonsterController.specialReady[GM.battleManager.enemyMonsterController.currentSlot] = true;
+                    GM.battleManager.enemyMonsterController.specialC[GM.battleManager.enemyMonsterController.currentSlot] = 0f;
+                }
+
+                if (antiGravTime > 0)
+                {
+                    friendlyBattleBuffManager.AddBuff(antiGravTime, 5);
+                }
+
+                if (echo)
+                {
+                    GM.battleManager.enemyMonsterController.enemyMoveController.DoProjectile(effectProjectile.projectilePrefab, effectProjectile.projectileDamage, effectProjectile.projectileSpeed, effectProjectile.lifetime, effectProjectile.collideWithAmountOfObjects, effectProjectile.criticalProjectile, effectProjectile);
+                }
+
+                for (int i = 0; i < enemyStatBuffs.Count; i++)
+                {
+                    Targets t = new Targets(false, false);
+
+                    if (enemyStatBuffs[i] != 0)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                friendlyBattleBuffManager.AddBuff(EffectedStat.Oomph, enemyStatBuffs[i], t);
+                                break;
+                            case 1:
+                                friendlyBattleBuffManager.AddBuff(EffectedStat.Guts, enemyStatBuffs[i], t);
+                                break;
+                            case 2:
+                                friendlyBattleBuffManager.AddBuff(EffectedStat.Juice, enemyStatBuffs[i], t);
+                                break;
+                            case 3:
+                                friendlyBattleBuffManager.AddBuff(EffectedStat.Edge, enemyStatBuffs[i], t);
+                                break;
+                            case 4:
+                                friendlyBattleBuffManager.AddBuff(EffectedStat.Wits, enemyStatBuffs[i], t);
+                                break;
+                            case 5:
+                                friendlyBattleBuffManager.AddBuff(EffectedStat.Spark, enemyStatBuffs[i], t);
+                                break;
+                        }
+                    }
+                }
+
+                for (int i = 0; i < friendlyStatBuffs.Count; i++)
+                {
+                    Targets t = new Targets(false, false);
+                    if (friendlyStatBuffs[i] != 0)
+                    {
+                        switch (i)
+                        {
+                            case 0:
+                                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, friendlyStatBuffs[i], t);
+                                break;
+                            case 1:
+                                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Guts, friendlyStatBuffs[i], t);
+                                break;
+                            case 2:
+                                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Juice, friendlyStatBuffs[i], t);
+                                break;
+                            case 3:
+                                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Edge, friendlyStatBuffs[i], t);
+                                break;
+                            case 4:
+                                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Wits, friendlyStatBuffs[i], t);
+                                break;
+                            case 5:
+                                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Spark, friendlyStatBuffs[i], t);
+                                break;
+                        }
+                    }
+                }
             }
 
 
@@ -774,15 +886,20 @@ public class FriendlyMonsterController : MonoBehaviour
                 dmg = 1;
             }
 
-
             int protectedDamage = dmg - (int)flDmg;
             //Debug.Log("True dmg: " + dmg);
 
-            healthBar.SetHealth(GM.playerHP - dmg);
+            if (GM.invulnerableDebug)
+            {
+                dmg = 0;
+                protectedDamage = 0;
+            }
+
+            healthBar.SetHealth(GM.playerHP - dmg, true);
             GM.playerHP = (int)healthBar.slider.value;
 
             friendlyParentAnim.SetTrigger("Hit");
-
+            
 
 
             if (GM.playerHP <= 0)
@@ -793,7 +910,19 @@ public class FriendlyMonsterController : MonoBehaviour
             {
                 if (dmg > 0)
                 {
-                    hitNumbers.SpawnDamageNumbersWithMod(dmg, protectedDamage, "Red", "Blue");
+                    if (effect)
+                    {
+                        hitNumbers.SpawnPopup(PopupType.Dot, pos, dmg.ToString(), protectedDamage); //dot popup
+
+                        healthBarShakeAnim.SetTrigger("DotShake");
+                    }
+                    else
+                    {
+                        hitNumbers.SpawnPopup(PopupType.Damage, pos, dmg.ToString(), protectedDamage); //damage popup
+
+                        healthBarShakeAnim.SetTrigger("Shake");
+                        GM.battleManager.cameraAnimator.SetInteger("Focus", 3);
+                    }
                 }
 
             }
@@ -804,11 +933,12 @@ public class FriendlyMonsterController : MonoBehaviour
 
             if (invulnerable)
             {
-                hitNumbers.SpawnText("Parry", "Blue");
+                hitNumbers.SpawnPopup(PopupType.Parry, pos, "", 0); // parry popup
+                GM.battleManager.cameraAnimator.SetTrigger("Shake");
             }
             else
             {
-                hitNumbers.SpawnText("Block", "Blue");
+                hitNumbers.SpawnPopup(PopupType.Block, pos, "", 0); // block popup
             }
 
 
@@ -829,9 +959,9 @@ public class FriendlyMonsterController : MonoBehaviour
                 realAmount = (amount + (int)GM.playerHP) - 100;
             }
 
-            healthBar.SetHealth(GM.playerHP + amount);
+            healthBar.SetHealth(GM.playerHP + amount, false);
             GM.playerHP = healthBar.slider.value;
-            hitNumbers.SpawnDamageNumbersWithMod(realAmount, 0, "Green", "Blue");
+            hitNumbers.SpawnPopup(PopupType.Heal, defaultHitNumbersLocation, realAmount.ToString(), 0); // heal popup
         }
 
     }
@@ -886,21 +1016,21 @@ public class FriendlyMonsterController : MonoBehaviour
     {
         rb.gravityScale = grav;
         jumpForce = jumpF;
+
+        if (rb.gravityScale <= 1)
+        {
+            antiGravEffect.SetActive(true);
+        }
+        else
+        {
+            antiGravEffect.SetActive(false);
+        }
     }
     public void SetCritChance(int amount)
     {
         critchance = amount;
     }
 
-    public void CritAttacks(bool state)
-    {
-        critAttacks = state;
-    }
-
-    public void TakingCrits(bool state)
-    {
-        takingCrits = state;
-    }
 
     public void Jump() // Jumps monster into air
     {
@@ -976,7 +1106,7 @@ public class FriendlyMonsterController : MonoBehaviour
         friendlyAnim.SetTrigger("Special");
         friendlyAnimVariant.SetTrigger("Special");
 
-        friendlyUIAnimSpecial.SetTrigger("BigTrigger");
+        friendlyUIAnimSpecial.SetTrigger("Pressed");
 
         TriggerAction(TriggerType.useSpecial);
 
@@ -1035,7 +1165,7 @@ public class FriendlyMonsterController : MonoBehaviour
             friendlyMoveController.UseMove(friendlyMonster.basicMove);
         }
 
-        friendlyUIAnimBasic.SetTrigger("BigTrigger");
+        friendlyUIAnimBasic.SetTrigger("Pressed");
         friendlyParentAnim.SetTrigger("Attack");
         friendlyAnim.SetTrigger("Basic");
         friendlyAnimVariant.SetTrigger("Basic");
@@ -1090,44 +1220,37 @@ public class FriendlyMonsterController : MonoBehaviour
 
     }
 
-    public void FireProjectile(GameObject prefab, float speed, int dmg, float lifeTime, int collideWithAmountOfObjects, bool criticalProjectile, bool inAir)
+    public void FireProjectile(GameObject prefab, float speed, int dmg, float lifeTime, int collideWithAmountOfObjects, bool criticalProjectile, FireProjectileEffectSO projEffect)
     {
         GameObject proj = Instantiate(prefab, firePoint.position, firePoint.rotation);
         projectiles.Add(proj);
         //Debug.Log("What?");
-        if (critAttacks)
+        if (friendlyBattleBuffManager.slotValues[11] > 0) // critical chance
         {
-            proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, critAttacks, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, inAir);
-        }
-        else
-        {
-            if (friendlyBattleBuffManager.slotValues[11] > 0)
+            int amount = friendlyBattleBuffManager.slotValues[11];
+
+            if (amount >= 100) // crit higher than 100
             {
-                int amount = friendlyBattleBuffManager.slotValues[11];
-
-                if (amount >= 100)
-                {
-                    proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, true, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, inAir);
-                }
-                else
-                {
-                    float random = Random.Range(1, 100);
-                    //Debug.Log(random);
-
-                    if (random <= amount)
-                    {
-                        proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, true, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, inAir);
-                    }
-                    else
-                    {
-                        proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, inAir);
-                    }
-                }
+                proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, true, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, projEffect);
             }
             else
             {
-                proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, inAir);
+                float random = Random.Range(1, 100);
+                //Debug.Log(random);
+
+                if (random <= amount)
+                {
+                    proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, true, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, projEffect);
+                }
+                else
+                {
+                    proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, projEffect);
+                }
             }
+        }
+        else
+        {
+            proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, projEffect);
         }
 
     }
@@ -1184,5 +1307,6 @@ public enum TriggerType
     useBasic, // self use 
     useSpecial,
     enemyHitBasic, // enemy hit
-    enemyHitSpecial
+    enemyHitSpecial,
+    enemyHitInAir
 }

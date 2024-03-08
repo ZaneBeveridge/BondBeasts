@@ -12,6 +12,7 @@ public class FireProjectileEffectSO : EffectSO
     public float lifetime = 0f;
     public int collideWithAmountOfObjects = 0; //0 = no collide, 1 = first collide destroys both objects, 2 = first collide doesn't destroy self but second does
     public bool criticalProjectile;
+    public bool echo;
 
     public void Awake()
     {

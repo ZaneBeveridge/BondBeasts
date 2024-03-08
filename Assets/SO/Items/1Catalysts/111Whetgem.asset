@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 111
   groupedId: 4
   itemName: Whetgem
-  desc: +30% Edge Up.
+  desc: +6 Edge Up.
   icon: {fileID: 21300000, guid: 4c199e88252916c4f9651a7727b70e76, type: 3}
   type: 2
   maxStack: 10
@@ -32,19 +32,26 @@ MonoBehaviour:
       item: {fileID: 0}
       amount: 0
   itemEffects:
-  - name: +30% Edge Up.
-    effect: {fileID: 11400000, guid: a9a4391a36adcd64b98b6341bbca594a, type: 2}
+  - name: +6 Edge Up.
+    effect: {fileID: 11400000, guid: 21bd54f619a549941b02214419a33047, type: 2}
+    delay: 0
     targets:
-      self: 1
       team: 0
       enemy: 0
     conditions:
       always: 1
-      onTagIn: 0
-      onTagOut: 0
-      onBeingHit: 0
-      onHit: 0
-      onCrit: 0
-      inAir: 0
-      whenFullHP: 0
-      whenBelow15HP: 0
+      whenBeingHit: 0
+      whenTagIn: 0
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0

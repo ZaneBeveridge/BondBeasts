@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: Variant 4
+  m_EditorClassIdentifier: 
+  variantName: Coconut Teen
+  parentId: 4
+  id: 244
+  variantStillSprite: {fileID: -2119252441, guid: b37f7ac96e7e78449957d9910f6d517b, type: 3}
+  variantAnimator: {fileID: 22100000, guid: d55687a5304a5a14da3dccfb60582f16, type: 2}

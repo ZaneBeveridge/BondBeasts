@@ -70,7 +70,7 @@ public class JumpHandler : MonoBehaviour
             jumpTime = jumpStartTime;
             controller.Jump();
             jumpButton.color = new Color(0.4f, 0.4f, 0.4f);
-            anim.SetBool("Big", true);
+            anim.SetBool("On", true);
         }
 
         
@@ -80,7 +80,7 @@ public class JumpHandler : MonoBehaviour
     {
         isJumping = false;
         jumpButton.color = new Color(0.4f, 0.4f, 0.4f);
-        anim.SetBool("Big", false);
+        anim.SetBool("On", false);
     }
 
 

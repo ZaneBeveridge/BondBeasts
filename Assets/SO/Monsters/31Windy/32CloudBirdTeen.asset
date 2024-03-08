@@ -87,8 +87,8 @@ MonoBehaviour:
     weight: 2
   - variant: {fileID: 11400000, guid: fc4031eed2267184082744187f3c85e2, type: 2}
     weight: 1
-  startColour: 9
-  amountOfColours: 15
+  startColour: 6
+  amountOfColours: 9
   colourData: {fileID: 11400000, guid: cdef74056f4d24f49a01629c87019535, type: 2}
   chanceData: {fileID: 11400000, guid: 1178a54ee9a0ecb4c93d22bbd54719db, type: 2}
   height: 0

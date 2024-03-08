@@ -76,7 +76,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isBasic: 0
-  impactEffect: {fileID: 7428979386879693808, guid: 13c09c11d697aaa4b890baf0e08460f3, type: 3}
+  onFireParticle: {fileID: 0}
+  onHitParticle: {fileID: 7428979386879693808, guid: 13c09c11d697aaa4b890baf0e08460f3, type: 3}
   rb: {fileID: 7886508744218910038}
   sprite: {fileID: 9116299386454378248}
   opposition: 

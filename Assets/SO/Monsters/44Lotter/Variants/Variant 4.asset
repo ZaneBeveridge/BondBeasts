@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: Variant 4
+  m_EditorClassIdentifier: 
+  variantName: Lotter
+  parentId: 4
+  id: 444
+  variantStillSprite: {fileID: -833134357, guid: a2ccd21b0dcc1e04d91384c40ef9b968, type: 3}
+  variantAnimator: {fileID: 22100000, guid: 6b92730f98b46ce4b8b3f27ebd0c8460, type: 2}

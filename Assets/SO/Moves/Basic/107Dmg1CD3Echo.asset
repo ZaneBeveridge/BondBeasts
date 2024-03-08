@@ -1,0 +1,35 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ae354e8f102296498972b5cb8c82141, type: 3}
+  m_Name: 107Dmg1CD3Echo
+  m_EditorClassIdentifier: 
+  id: 107
+  moveName: Echo Strike
+  moveDescription: Fires a projectile dealing 1 damage. 3s Cooldown. Echo
+  moveSet: 0
+  baseCooldown: 3
+  minCooldown: 0
+  moveActions:
+  - name: 1 Dmg Echo
+    effect: {fileID: 11400000, guid: 8ef0d53e9bdf2b847b77029594fc59d1, type: 2}
+    delay: 0
+    targets:
+      team: 0
+      enemy: 0
+    conditions:
+      whenUsed: 1
+      whenNotInAir: 1
+      whenInAir: 1
+      whenTagIn: 0
+      whenTagOut: 0
+      whenFullHP: 0
+      whenBelow15HP: 0

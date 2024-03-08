@@ -21,6 +21,8 @@ public class BattleManager : MonoBehaviour
     public SpriteRenderer friendlyPunk;
     public SpriteRenderer enemyPunk;
 
+    public List<ButtonTagSlot> tagButtons = new List<ButtonTagSlot>();
+
     [Header("Friendly")]
     public FriendlyMonsterController friendlyMonsterController;
 
@@ -67,11 +69,13 @@ public class BattleManager : MonoBehaviour
     //public float extraCaptureTimeEnemyLevel = 0f;
     //public float extraCaptureTimeMissingHealth = 0f;
 
+    public Animator cameraAnimator;
+
     void Start()
     {
         // FOR TESTING 
         //InitBattle(testMonster, false);
-      
+        cameraAnimator.SetInteger("Focus", 1);
     }
 
     public void CalcRewardSurv()
@@ -316,7 +320,7 @@ public class BattleManager : MonoBehaviour
 
         
         friendlyMonsterController.healthBar.SetMaxHealth(100);
-        friendlyMonsterController.healthBar.SetHealth(GM.playerHP);
+        friendlyMonsterController.healthBar.SetHealth(GM.playerHP, false);
 
         
         for (int i = 0; i < 3; i++)
@@ -401,7 +405,7 @@ public class BattleManager : MonoBehaviour
 
 
         friendlyMonsterController.healthBar.SetMaxHealth(100);
-        friendlyMonsterController.healthBar.SetHealth(GM.playerHP);
+        friendlyMonsterController.healthBar.SetHealth(GM.playerHP, false);
 
 
         for (int i = 0; i < 3; i++)
@@ -513,12 +517,14 @@ public class BattleManager : MonoBehaviour
         if (controlsActive && friendlyMonsterController.tagReady[slot] && friendlyMonsterController.currentSlot != slot)
         {
             friendlyMonsterController.SetFriendlyMonster(slot);
+
+            tagButtons[slot].anim.SetTrigger("Pressed");
         }
     }
 
     public void SwitchEnemy()
     {
-        if (!enemyMonsterController.active) { return; }
+        if (enemyMonsterController.stunned) { return; }
 
         for (int i = 0; i < enemyMonsterController.backupMonsters.Count; i++)
         {

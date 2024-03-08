@@ -17,6 +17,8 @@ public class BuffSlot : MonoBehaviour
 
     public List<Sprite> sprites = new List<Sprite>();
 
+    public Animator anim;
+
     private float timer = 0;
     private bool timerOn = false;
 
@@ -91,28 +93,6 @@ public class BuffSlot : MonoBehaviour
                     manager.GM.battleManager.enemyMonsterController.Guard(manager.perfectGuardEffect, manager.perfectGuardValue, manager.perfectGuardProjectile, manager.perfectGuardTargets, 0.25f);
                 }
                 
-            }
-        }
-        else if (slotNum == 9) // crit attacks
-        {
-            if (isFriend)
-            {
-                manager.GM.battleManager.friendlyMonsterController.CritAttacks(true);
-            }
-            else
-            {
-                manager.GM.battleManager.enemyMonsterController.CritAttacks(true);
-            }
-        }
-        else if (slotNum == 10) // taking crits
-        {
-            if (isFriend)
-            {
-                manager.GM.battleManager.friendlyMonsterController.TakingCrits(true);
-            }
-            else
-            {
-                manager.GM.battleManager.enemyMonsterController.TakingCrits(true);
             }
         }
         else if (slotNum == 12) // low grav
@@ -191,6 +171,15 @@ public class BuffSlot : MonoBehaviour
 
         typeImage.sprite = sprites[type];
 
+        if (amount < 0)
+        {
+            anim.SetTrigger("Neg");
+        }
+        else if (amount > 0)
+        {
+            anim.SetTrigger("Pos");
+        }
+
         timerAmount = amount;
 
 
@@ -232,8 +221,19 @@ public class BuffSlot : MonoBehaviour
         UpdateText();
     }
 
-    public void MergeAmount(int amount)
+    public void MergeAmount(int amount, int addedAmount) // for stats
     {
+        if (addedAmount < 0)
+        {
+            anim.SetTrigger("Neg");
+        }
+        else if (addedAmount > 0)
+        {
+            anim.SetTrigger("Pos");
+        }
+
+
+
         timerAmount = amount;
 
         if (timerAmount == 0)
@@ -292,30 +292,6 @@ public class BuffSlot : MonoBehaviour
             else
             {
                 manager.GM.battleManager.enemyMonsterController.GuardOff();
-            }
-        }
-
-        if (slotType == 9) // crit attacks
-        {
-            if (manager.isFriendly)
-            {
-                manager.GM.battleManager.friendlyMonsterController.CritAttacks(false);
-            }
-            else
-            {
-                manager.GM.battleManager.enemyMonsterController.CritAttacks(false);
-            }
-        }
-
-        if (slotType == 10) // taking crits
-        {
-            if (manager.isFriendly)
-            {
-                manager.GM.battleManager.friendlyMonsterController.TakingCrits(false);
-            }
-            else
-            {
-                manager.GM.battleManager.enemyMonsterController.TakingCrits(false);
             }
         }
 

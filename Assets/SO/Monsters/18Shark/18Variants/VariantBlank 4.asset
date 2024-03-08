@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: VariantBlank 4
+  m_EditorClassIdentifier: 
+  variantName: Nibblil
+  parentId: 4
+  id: 184
+  variantStillSprite: {fileID: -854183248, guid: 98cbb7b5d6c96fc4aa9ed1fb4869712d, type: 3}
+  variantAnimator: {fileID: 22100000, guid: d4162479b33cd734c9dca65955369a97, type: 2}

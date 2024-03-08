@@ -11,24 +11,16 @@ public class ColourDataSO : ScriptableObject
     {
         if (datas.Count <= 0)
         {
-            datas.Add(new ColourData(ColourWheel.Red1, Color.red));
-            datas.Add(new ColourData(ColourWheel.Red2, Color.red));
-            datas.Add(new ColourData(ColourWheel.Red3, Color.red));
-            datas.Add(new ColourData(ColourWheel.Orange1, Color.red));
-            datas.Add(new ColourData(ColourWheel.Orange2, Color.red));
-            datas.Add(new ColourData(ColourWheel.Orange3, Color.red));
-            datas.Add(new ColourData(ColourWheel.Yellow1, Color.red));
-            datas.Add(new ColourData(ColourWheel.Yellow2, Color.red));
-            datas.Add(new ColourData(ColourWheel.Yellow3, Color.red));
-            datas.Add(new ColourData(ColourWheel.Green1, Color.red));
-            datas.Add(new ColourData(ColourWheel.Green2, Color.red));
-            datas.Add(new ColourData(ColourWheel.Green3, Color.red));
-            datas.Add(new ColourData(ColourWheel.Blue1, Color.red));
-            datas.Add(new ColourData(ColourWheel.Blue2, Color.red));
-            datas.Add(new ColourData(ColourWheel.Blue3, Color.red));
-            datas.Add(new ColourData(ColourWheel.Purple1, Color.red));
-            datas.Add(new ColourData(ColourWheel.Purple2, Color.red));
-            datas.Add(new ColourData(ColourWheel.Purple3, Color.red));
+            datas.Add(new ColourData(ColourWheel.Red, Color.red));
+            datas.Add(new ColourData(ColourWheel.Orange, Color.red));
+            datas.Add(new ColourData(ColourWheel.Yellow, Color.red));
+            datas.Add(new ColourData(ColourWheel.Lime, Color.red));
+            datas.Add(new ColourData(ColourWheel.Green, Color.red));
+            datas.Add(new ColourData(ColourWheel.Teal, Color.red));
+            datas.Add(new ColourData(ColourWheel.Sky, Color.red));
+            datas.Add(new ColourData(ColourWheel.Blue, Color.red));
+            datas.Add(new ColourData(ColourWheel.Purple, Color.red));
+            datas.Add(new ColourData(ColourWheel.Pink, Color.red));
         }
 
     }
@@ -39,7 +31,7 @@ public class ColourDataSO : ScriptableObject
 [System.Serializable]
 public class ColourData
 {
-    [HideInInspector]public string name;
+    public string name;
     public ColourWheel colourWheel;
     public Color startColour;
     public Color endColour;
@@ -56,23 +48,14 @@ public class ColourData
 
 public enum ColourWheel
 {
-    Red1,
-    Red2,
-    Red3,
-    Orange1,
-    Orange2,
-    Orange3,
-    Yellow1,
-    Yellow2,
-    Yellow3,
-    Green1,
-    Green2,
-    Green3,
-    Blue1,
-    Blue2,
-    Blue3,
-    Purple1,
-    Purple2,
-    Purple3,
-
+    Red,
+    Orange,
+    Yellow,
+    Lime,
+    Green,
+    Teal,
+    Sky,
+    Blue,
+    Purple,
+    Pink
 }

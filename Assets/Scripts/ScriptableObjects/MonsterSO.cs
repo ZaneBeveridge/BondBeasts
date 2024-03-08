@@ -32,7 +32,7 @@ public class MonsterSO : ScriptableObject
 
     [Header("Colour")]
     public ColourWheel startColour;
-    [Range(1, 18)]public int amountOfColours = 1;
+    [Range(1, 10)]public int amountOfColours = 1;
     public ColourDataSO colourData;
     public ChanceDataSO chanceData;
 

@@ -19,3 +19,4 @@ MonoBehaviour:
   lifetime: 0
   collideWithAmountOfObjects: 0
   criticalProjectile: 0
+  echo: 0

@@ -11,6 +11,6 @@ public class CritAttacksEffectSO : EffectSO
 
     public void Awake()
     {
-        effectType = EffectType.CritAttacks;
+        //effectType = EffectType.CritAttacks;
     }
 }

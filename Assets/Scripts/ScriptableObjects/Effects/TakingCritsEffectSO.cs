@@ -11,6 +11,6 @@ public class TakingCritsEffectSO : EffectSO
 
     public void Awake()
     {
-        effectType = EffectType.TakingCrits;
+        //effectType = EffectType.TakingCrits;
     }
 }

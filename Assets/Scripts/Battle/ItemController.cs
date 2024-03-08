@@ -15,6 +15,10 @@ public class ItemController : MonoBehaviour
     private List<ItemEffect> activePropertyEffects = new List<ItemEffect>();
     private List<bool> activePropertyEffectsOn = new List<bool>();
 
+
+    private List<DelayedEffect> delayedEffects = new List<DelayedEffect>();
+    private List<float> delayedEffectsTime = new List<float>();
+
     void Update()
     {
         if (itemsOn)
@@ -32,9 +36,27 @@ public class ItemController : MonoBehaviour
                 {
                     ActivateItemProperty(activePropertyEffects[i], 0, i); // check to turn off, if does not pass condition check do so
                 }
-
-
             }
+
+            if (delayedEffects.Count > 0)
+            {
+                for (int i = 0; i < delayedEffects.Count; i++)
+                {
+                    if (delayedEffectsTime[i] > 0)
+                    {
+                        delayedEffectsTime[i] -= Time.deltaTime;
+                    }
+                    else if (delayedEffectsTime[i] <= 0)
+                    {
+                        UseEffect(delayedEffects[i].effect, delayedEffects[i].targets);
+
+                        delayedEffects.RemoveAt(i);
+                        delayedEffectsTime.RemoveAt(i);
+                    }
+                }
+            }
+
+
         }
     }
 
@@ -64,6 +86,8 @@ public class ItemController : MonoBehaviour
         CheckAllEffectsForAlways();
 
         itemsOn = true;
+
+        
     }
 
     private void ClearActivePropertyEffects()
@@ -170,6 +194,55 @@ public class ItemController : MonoBehaviour
         }
     }
 
+    private void UseEffect(EffectSO effect, Targets targets)
+    {
+        if (effect.effectType == EffectType.StatMod)
+        {
+            StatModEffectSO newEffect = effect as StatModEffectSO;
+            manager.AddBuff(newEffect.stat, newEffect.amount, targets);
+        }
+        else if (effect.effectType == EffectType.Heal)
+        {
+            HealEffectSO newEffect = effect as HealEffectSO;
+            moveController.DoHeal(newEffect.healAmount, targets);
+        }
+        else if (effect.effectType == EffectType.FireProjectile)
+        {
+            FireProjectileEffectSO newEffect = effect as FireProjectileEffectSO;
+            moveController.DoProjectile(newEffect.projectilePrefab, newEffect.projectileDamage, newEffect.projectileSpeed, newEffect.lifetime, newEffect.collideWithAmountOfObjects, newEffect.criticalProjectile, newEffect);
+        }
+        else if (effect.effectType == EffectType.Invulnerability)
+        {
+            InvulnerabilityEffectSO newEffect = effect as InvulnerabilityEffectSO;
+            moveController.DoInvulnerability(newEffect.invulnerableTime, newEffect.perfectGuardEffect, newEffect.perfectGuardEffectValue, newEffect.projectile, targets);
+        }
+        else if (effect.effectType == EffectType.RefreshCooldown)
+        {
+            RefreshCooldownEffectSO newEffect = effect as RefreshCooldownEffectSO;
+            moveController.DoRefreshCooldown(newEffect.chance, newEffect.whatToRefresh, newEffect.amount, targets);
+        }
+        else if (effect.effectType == EffectType.Stun)
+        {
+            StunEffectSO newEffect = effect as StunEffectSO;
+            moveController.DoStun(newEffect.stunTime, 3, targets);
+        }
+        else if (effect.effectType == EffectType.DoT)
+        {
+            DoTEffectSO newEffect = effect as DoTEffectSO;
+            moveController.DoDoT(newEffect.amount, newEffect.time, targets);
+        }
+        else if (effect.effectType == EffectType.CritChance)
+        {
+            CritChanceEffectSO newEffect = effect as CritChanceEffectSO;
+            moveController.DoCritChance(newEffect.amount, targets);
+        }
+        else if (effect.effectType == EffectType.LowGravity)
+        {
+            LowGravityEffectSO newEffect = effect as LowGravityEffectSO;
+            moveController.DoLowGrav(newEffect.time, targets);
+        }
+    }
+
     private void ActivateItemTrigger(MonsterItemSO item, TriggerType triggerType) // for start 0 == negative, 1 == positive
     {
         foreach (ItemEffect m in item.itemEffects)
@@ -177,58 +250,22 @@ public class ItemController : MonoBehaviour
             //Debug.Log(m.conditions.whenTagIn);
             //Debug.Log(PassConditionTest(m.conditions));
             //Debug.Log(PassTriggerTest(m.conditions, triggerType));
-            if (PassConditionTest(m.conditions) && PassTriggerTest(m.conditions, triggerType))
+            if (!PassConditionTestAlways(m.conditions))
             {
-                //Debug.Log("test");
+                if (PassConditionTest(m.conditions) && PassTriggerTest(m.conditions, triggerType))
+                {
+                    //Debug.Log("Trigger:" + triggerType.ToString());
 
-                if (m.effect.effectType == EffectType.StatMod)
-                {
-                    StatModEffectSO newEffect = m.effect as StatModEffectSO;
-                    manager.AddBuff(newEffect.stat, newEffect.amount, m.targets);
+                    if (m.delay > 0)
+                    {
+                        delayedEffects.Add(new DelayedEffect(m.effect, m.targets));
+                        delayedEffectsTime.Add(m.delay);
+                    }
+                    else
+                    {
+                        UseEffect(m.effect, m.targets);
+                    }
                 }
-                else if (m.effect.effectType == EffectType.Heal)
-                {
-                    HealEffectSO newEffect = m.effect as HealEffectSO;
-                    moveController.DoHeal(newEffect.healAmount, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.FireProjectile)
-                {
-                    FireProjectileEffectSO newEffect = m.effect as FireProjectileEffectSO;
-                    moveController.DoProjectile(newEffect.projectilePrefab, newEffect.projectileDamage, newEffect.projectileSpeed, newEffect.lifetime, newEffect.collideWithAmountOfObjects, newEffect.criticalProjectile, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.Invulnerability)
-                {
-                    InvulnerabilityEffectSO newEffect = m.effect as InvulnerabilityEffectSO;
-                    moveController.DoInvulnerability(newEffect.invulnerableTime, newEffect.perfectGuardEffect, newEffect.perfectGuardEffectValue, newEffect.projectile, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.RefreshCooldown)
-                {
-                    RefreshCooldownEffectSO newEffect = m.effect as RefreshCooldownEffectSO;
-                    moveController.DoRefreshCooldown(newEffect.chance, newEffect.whatToRefresh, newEffect.amount, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.Stun)
-                {
-                    StunEffectSO newEffect = m.effect as StunEffectSO;
-                    moveController.DoStun(newEffect.stunTime, 3, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.TakingCrits)
-                {
-                    TakingCritsEffectSO newEffect = m.effect as TakingCritsEffectSO;
-                    moveController.DoTakingCrits(newEffect.time, 2, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.CritAttacks)
-                {
-                    CritAttacksEffectSO newEffect = m.effect as CritAttacksEffectSO;
-                    moveController.DoCritAttacks(newEffect.time, 1, m.targets);
-                }
-                else if (m.effect.effectType == EffectType.DoT)
-                {
-                    DoTEffectSO newEffect = m.effect as DoTEffectSO;
-                    moveController.DoDoT(newEffect.amount, newEffect.time, m.targets);
-                }
-
-
-
             }
         }
 

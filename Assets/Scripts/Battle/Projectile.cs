@@ -8,7 +8,9 @@ public class Projectile : MonoBehaviour
 
     public bool isBasic;
 
-    public GameObject impactEffect;
+    public GameObject onFireParticle;
+    public GameObject onHitParticle;
+
     public Rigidbody2D rb;
     public SpriteRenderer sprite;
 
@@ -31,15 +33,17 @@ public class Projectile : MonoBehaviour
     public bool triggersBasicORSpecial = false;
 
 
+
     private bool life = false;
     private float lifeTimeTimer = 0f;
 
     private int amountOfObjectsToCollideWith = 0; // 0 means it will ignore other projectiles, 1 will break 1 and explode, 2 will break 1 and then the second its breaks dies with it
     private bool criticalProj = false;
 
+    private FireProjectileEffectSO projectileEffect;
+
     private BattleBuffManager manager;
 
-    private bool inAirOn = false;
     void Update()
     {
         if (life)
@@ -52,16 +56,22 @@ public class Projectile : MonoBehaviour
             {
                 lifeTimeTimer = 0f;
                 life = false;
-                Instantiate(impactEffect, transform.position, transform.rotation);
+
                 Destroy(gameObject);
             }
         }
     }
 
-    public void Init(float spd, int dmg, float lifeTime, int collideWithAmountOfObjects, bool criticalProjectile, string op, BattleBuffManager man, bool inAir)
+    public void Init(float spd, int dmg, float lifeTime, int collideWithAmountOfObjects, bool criticalProjectile, string op, BattleBuffManager man, FireProjectileEffectSO projEffect)
     {
+        if (onFireParticle != null)
+        {
+            Instantiate(onFireParticle, transform.position, transform.rotation);
+        }
+        
+
         manager = man;
-        inAirOn = inAir;
+        projectileEffect = projEffect;
         if (op == "Enemy") // opposition is
         {
             sprite.flipX = false;
@@ -98,110 +108,34 @@ public class Projectile : MonoBehaviour
             EnemyMonsterController enemy = collision.GetComponent<EnemyMonsterController>();
             if (enemy != null)
             {
-                if (!enemy.guardOn)
-                {
-
-                    if (dotAmount > 0 || dotTime > 0) // has dot
-                    {
-                        manager.AddBuff(dotAmount, dotTime);
-                    }
-
-                    if (critAttackTime > 0)
-                    {
-                        manager.AddBuff(critAttackTime, 1);
-                    }
-
-                    if (takingCritsTime > 0)
-                    {
-                        manager.AddBuff(takingCritsTime, 2);
-                    }
-
-                    if (stunnedTime > 0)
-                    {
-                        manager.AddBuff(stunnedTime, 3);
-                    }
-
-                    if (resetSpecialCooldownOnHit)
-                    {
-                        manager.GM.battleManager.friendlyMonsterController.specialReady[manager.GM.battleManager.friendlyMonsterController.currentSlot] = true;
-                        manager.GM.battleManager.friendlyMonsterController.specialC[manager.GM.battleManager.friendlyMonsterController.currentSlot] = 0f;
-                    }
-
-                    if (antiGravTime > 0)
-                    {
-                        manager.AddBuff(antiGravTime, 5);
-                    }
-
-                    for (int i = 0; i < enemyStatsBuff.Count; i++)
-                    {
-                        Targets t = new Targets(false, false);
-
-                        if (enemyStatsBuff[i] != 0)
-                        {
-                            switch (i)
-                            {
-                                case 0:
-                                    enemy.enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, enemyStatsBuff[i], t);
-                                    break;
-                                case 1:
-                                    enemy.enemyBattleBuffManager.AddBuff(EffectedStat.Guts, enemyStatsBuff[i], t);
-                                    break;
-                                case 2:
-                                    enemy.enemyBattleBuffManager.AddBuff(EffectedStat.Juice, enemyStatsBuff[i], t);
-                                    break;
-                                case 3:
-                                    enemy.enemyBattleBuffManager.AddBuff(EffectedStat.Edge, enemyStatsBuff[i], t);
-                                    break;
-                                case 4:
-                                    enemy.enemyBattleBuffManager.AddBuff(EffectedStat.Wits, enemyStatsBuff[i], t);
-                                    break;
-                                case 5:
-                                    enemy.enemyBattleBuffManager.AddBuff(EffectedStat.Spark, enemyStatsBuff[i], t);
-                                    break;
-                            }
-                        }
-                    }
-
-                    for (int i = 0; i < friendlyStatsBuff.Count; i++)
-                    {
-                        Targets t = new Targets(false, false);
-                        if (friendlyStatsBuff[i] != 0)
-                        {
-                            switch (i)
-                            {
-                                case 0:
-                                    manager.GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Oomph, friendlyStatsBuff[i], t);
-                                    break;
-                                case 1:
-                                    manager.GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Guts, friendlyStatsBuff[i], t);
-                                    break;
-                                case 2:
-                                    manager.GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Juice, friendlyStatsBuff[i], t);
-                                    break;
-                                case 3:
-                                    manager.GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Edge, friendlyStatsBuff[i], t);
-                                    break;
-                                case 4:
-                                    manager.GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Wits, friendlyStatsBuff[i], t);
-                                    break;
-                                case 5:
-                                    manager.GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Spark, friendlyStatsBuff[i], t);
-                                    break;
-                            }
-                        }
-                    }
-                }
-
-                
 
                 if (criticalProj) // has crit
                 {
                     enemy.fMonsterController.TriggerAction(TriggerType.crit);
-                    enemy.TakeDamage(damage, false, true);
+
+                    if (enemy.transform.position.y > -1.1)
+                    {
+                        enemy.TakeDamage(damage + (int)(damage * 0.5f), false, true, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, friendlyStatsBuff, enemyStatsBuff, this.transform, projectileEffect);
+                        enemy.hitNumbers.SpawnPopup(PopupType.AirHit, this.transform, "", 0);
+                        enemy.fMonsterController.TriggerAction(TriggerType.enemyHitInAir);
+                    }
+                    else
+                    {
+                        enemy.TakeDamage(damage, false, true, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, friendlyStatsBuff, enemyStatsBuff, this.transform, projectileEffect);
+                    }
                 }
                 else
                 {
-                    enemy.TakeDamage(damage, false, false);
+                    if (enemy.transform.position.y > -1.1)
+                    {
+                        enemy.TakeDamage(damage + (int)(damage * 0.5f), false, false, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, friendlyStatsBuff, enemyStatsBuff, this.transform, projectileEffect);
+                        enemy.hitNumbers.SpawnPopup(PopupType.AirHit, this.transform, "", 0);
+                        enemy.fMonsterController.TriggerAction(TriggerType.enemyHitInAir);
+                    }
+                    else
+                    {
+                        enemy.TakeDamage(damage, false, false, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, friendlyStatsBuff, enemyStatsBuff, this.transform, projectileEffect);
+                    }
                 }
 
 
@@ -217,15 +151,11 @@ public class Projectile : MonoBehaviour
                     }
                 }
 
-                
-                
-
-                if (inAirOn)
+                if (onHitParticle != null)
                 {
-                    enemy.hitNumbers.SpawnText("Air Hit!", "Yellow");
+                    Instantiate(onHitParticle, transform.position, transform.rotation);
                 }
 
-                Instantiate(impactEffect, transform.position, transform.rotation);
                 Destroy(gameObject);
             }
         }
@@ -237,117 +167,42 @@ public class Projectile : MonoBehaviour
             {
                 
 
-                if (!friend.guardOn)
-                {
-                    if (dotAmount > 0 || dotTime > 0) // has dot
-                    {
-                        manager.AddBuff(dotAmount, dotTime);
-                    }
-
-                    if (critAttackTime > 0)
-                    {
-                        manager.AddBuff(critAttackTime, 1);
-                    }
-
-                    if (takingCritsTime > 0)
-                    {
-                        manager.AddBuff(takingCritsTime, 2);
-                    }
-
-                    if (stunnedTime > 0)
-                    {
-                        manager.AddBuff(stunnedTime, 3);
-                    }
-
-                    if (resetSpecialCooldownOnHit)
-                    {
-                        manager.GM.battleManager.enemyMonsterController.specialReady[manager.GM.battleManager.enemyMonsterController.currentSlot] = true;
-                        manager.GM.battleManager.enemyMonsterController.specialC[manager.GM.battleManager.enemyMonsterController.currentSlot] = 0f;
-                    }
-
-                    if (antiGravTime > 0)
-                    {
-                        manager.AddBuff(antiGravTime, 5);
-                    }
-
-
-                    for (int i = 0; i < enemyStatsBuff.Count; i++)
-                    {
-                        Targets t = new Targets(false, false);
-
-                        if (enemyStatsBuff[i] != 0)
-                        {
-                            switch (i)
-                            {
-                                case 0:
-                                    friend.friendlyBattleBuffManager.AddBuff(EffectedStat.Oomph, enemyStatsBuff[i], t);
-                                    break;
-                                case 1:
-                                    friend.friendlyBattleBuffManager.AddBuff(EffectedStat.Guts, enemyStatsBuff[i], t);
-                                    break;
-                                case 2:
-                                    friend.friendlyBattleBuffManager.AddBuff(EffectedStat.Juice, enemyStatsBuff[i], t);
-                                    break;
-                                case 3:
-                                    friend.friendlyBattleBuffManager.AddBuff(EffectedStat.Edge, enemyStatsBuff[i], t);
-                                    break;
-                                case 4:
-                                    friend.friendlyBattleBuffManager.AddBuff(EffectedStat.Wits, enemyStatsBuff[i], t);
-                                    break;
-                                case 5:
-                                    friend.friendlyBattleBuffManager.AddBuff(EffectedStat.Spark, enemyStatsBuff[i], t);
-                                    break;
-                            }
-                        }
-                    }
-
-                    for (int i = 0; i < friendlyStatsBuff.Count; i++)
-                    {
-                        Targets t = new Targets(false, false);
-                        if (friendlyStatsBuff[i] != 0)
-                        {
-                            switch (i)
-                            {
-                                case 0:
-                                    manager.GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, friendlyStatsBuff[i], t);
-                                    break;
-                                case 1:
-                                    manager.GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Guts, friendlyStatsBuff[i], t);
-                                    break;
-                                case 2:
-                                    manager.GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Juice, friendlyStatsBuff[i], t);
-                                    break;
-                                case 3:
-                                    manager.GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Edge, friendlyStatsBuff[i], t);
-                                    break;
-                                case 4:
-                                    manager.GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Wits, friendlyStatsBuff[i], t);
-                                    break;
-                                case 5:
-                                    manager.GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Spark, friendlyStatsBuff[i], t);
-                                    break;
-                            }
-                        }
-                    }
-                }
+                
 
                 
 
                 if (criticalProj)
                 {
-                    friend.TakeDamage(damage, false, true);
+                    if (friend.transform.position.y > -1.1)
+                    {
+                        friend.TakeDamage(damage + (int)(damage * 0.5f), false, true, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, friendlyStatsBuff, enemyStatsBuff, this.transform, projectileEffect);
+                        friend.hitNumbers.SpawnPopup(PopupType.AirHit, this.transform, "", 0);
+                        //friend.TriggerAction(TriggerType.enemyHitInAir);
+                    }
+                    else
+                    {
+                        friend.TakeDamage(damage, false, true, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, friendlyStatsBuff, enemyStatsBuff, this.transform, projectileEffect);
+                    }
                 }
                 else
                 {
-                    friend.TakeDamage(damage, false, false);
+                    if (friend.transform.position.y > -1.1)
+                    {
+                        friend.TakeDamage(damage + (int)(damage * 0.5f), false, false, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, friendlyStatsBuff, enemyStatsBuff, this.transform, projectileEffect);
+                        friend.hitNumbers.SpawnPopup(PopupType.AirHit, this.transform, "", 0);
+                        //friend.fMonsterController.TriggerAction(TriggerType.enemyHitInAir);
+                    }
+                    else
+                    {
+                        friend.TakeDamage(damage, false, false, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, friendlyStatsBuff, enemyStatsBuff, this.transform, projectileEffect);
+                    }
                 }
 
-                if (inAirOn)
+                if (onHitParticle != null)
                 {
-                    friend.hitNumbers.SpawnText("Air Hit!", "Yellow");
+                    Instantiate(onHitParticle, transform.position, transform.rotation);
                 }
 
-                Instantiate(impactEffect, transform.position, transform.rotation);
                 Destroy(gameObject);
             }
         }
@@ -356,7 +211,6 @@ public class Projectile : MonoBehaviour
         
         if (collision.tag == "Border")
         {
-            Instantiate(impactEffect, transform.position, transform.rotation);
             Destroy(gameObject);
         }
     }

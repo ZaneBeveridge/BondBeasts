@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2cacedef4bcdbdd44a742afafae619b4, type: 3}
+  m_Name: Variant 10
+  m_EditorClassIdentifier: 
+  variantName: Ampurr
+  parentId: 10
+  id: 1410
+  variantStillSprite: {fileID: -466597771, guid: 4cf19650561270b4fae46c2fba0fbda8, type: 3}
+  variantAnimator: {fileID: 22100000, guid: 2246c9f4d9e7b264f8b013a30bf7fafe, type: 2}

@@ -39,12 +39,7 @@ public class MoveController : MonoBehaviour
 
     private void UseEffect(EffectSO effect, Targets targets)
     {
-        if (effect.effectType == EffectType.CritAttacks)
-        {
-            CritAttacksEffectSO newEffect = effect as CritAttacksEffectSO;
-            DoCritAttacks(newEffect.time, 1, targets);
-        }
-        else if (effect.effectType == EffectType.DoT)
+        if (effect.effectType == EffectType.DoT)
         {
             DoTEffectSO newEffect = effect as DoTEffectSO;
             DoDoT(newEffect.amount, newEffect.time, targets);
@@ -53,7 +48,7 @@ public class MoveController : MonoBehaviour
         {
             //Debug.Log("Fired Projectile");
             FireProjectileEffectSO newEffect = effect as FireProjectileEffectSO;
-            DoProjectile(newEffect.projectilePrefab, newEffect.projectileDamage, newEffect.projectileSpeed, newEffect.lifetime, newEffect.collideWithAmountOfObjects, newEffect.criticalProjectile, targets);
+            DoProjectile(newEffect.projectilePrefab, newEffect.projectileDamage, newEffect.projectileSpeed, newEffect.lifetime, newEffect.collideWithAmountOfObjects, newEffect.criticalProjectile, newEffect);
         }
         else if (effect.effectType == EffectType.Heal)
         {
@@ -79,16 +74,6 @@ public class MoveController : MonoBehaviour
         {
             StunEffectSO newEffect = effect as StunEffectSO;
             DoStun(newEffect.stunTime, 3, targets);
-        }
-        else if (effect.effectType == EffectType.TakingCrits)
-        {
-            TakingCritsEffectSO newEffect = effect as TakingCritsEffectSO;
-            DoTakingCrits(newEffect.time, 2, targets);
-        }
-        else if (effect.effectType == EffectType.TimeBomb)
-        {
-            TimeBombEffectSO newEffect = effect as TimeBombEffectSO;
-            DoTimeBomb(newEffect.damage, newEffect.breaksOnDamage, newEffect.decayTime, newEffect.decayAmount);
         }
         else if (effect.effectType == EffectType.CritChance)
         {
@@ -180,35 +165,7 @@ public class MoveController : MonoBehaviour
         }
     }
 
-    public void DoCritAttacks(float time, int type, Targets targets)
-    {
-        // Give crit attack buff to friend/enemy for amount, time, decay
-
-        if (friendlyController)
-        {
-            if (targets.enemy)
-            {
-                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(time, type);
-            }
-
-            if (targets.team)
-            {
-                manager.AddBuff(time, type);
-            }
-        }
-        else
-        {
-            if (targets.enemy)
-            {
-                manager.AddBuff(time, type);
-            }
-
-            if (targets.team)
-            {
-                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(time, type);
-            }
-        }
-    }
+ 
 
     public void DoDoT(int amount, float time, Targets targets)
     {
@@ -241,7 +198,7 @@ public class MoveController : MonoBehaviour
         
     }
 
-    public void DoProjectile(GameObject projectile, int damage, float speed, float lifeTime, int collideWithAmountOfObjects, bool criticalProjectile, Targets targets)
+    public void DoProjectile(GameObject projectile, int damage, float speed, float lifeTime, int collideWithAmountOfObjects, bool criticalProjectile, FireProjectileEffectSO projEffect)
     {
         if (friendlyController)
         {
@@ -261,18 +218,11 @@ public class MoveController : MonoBehaviour
             //Debug.Log("Before Crit Damage: " + tD.ToString());
 
             int realDmg = (int)tD;
-            float fltDmg = tD;
-            bool state = false;
 
-            if (GM.battleManager.friendlyMonsterController.airCrit)
-            {
-                realDmg = (int)(fltDmg + (fltDmg * 0.5f));
-                state = true;
-            }
 
             //Debug.Log("Real Damage: " + realDmg.ToString());
 
-            GM.battleManager.friendlyMonsterController.FireProjectile(projectile, speed * 10, realDmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, state);
+            GM.battleManager.friendlyMonsterController.FireProjectile(projectile, speed * 10, realDmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, projEffect);
         }
         else
         {
@@ -287,19 +237,12 @@ public class MoveController : MonoBehaviour
             float tD = damage + (damage * (0.016f * oomphAmount));
 
             int realDmg = (int)tD;
-            float fltDmg = tD;
-            bool state = false;
-            if (GM.battleManager.enemyMonsterController.airCrit)
-            {
-                realDmg = (int)(fltDmg + (fltDmg * 0.5f));
-                state = true;
-            }
 
             // ENEMY SPEED MODIFIER - CHANGE THIS TO ALTER THE SLIGHT SLOWER SPEED OF ALL ENEMY PROJECTILES COMPARED TO THE PLAYERS 
             float enemyProjectileSpeedModifier = 0.6f; // 0-1   0%-100%
 
 
-            GM.battleManager.enemyMonsterController.FireProjectile(projectile, (speed * 10) * enemyProjectileSpeedModifier, realDmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, state);
+            GM.battleManager.enemyMonsterController.FireProjectile(projectile, (speed * 10) * enemyProjectileSpeedModifier, realDmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, projEffect);
         }
     }
 
@@ -400,39 +343,7 @@ public class MoveController : MonoBehaviour
         }
     }
 
-    public void DoTakingCrits(float time, int type, Targets targets)
-    {
-        if (friendlyController)
-        {
-            if (targets.enemy)
-            {
-                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(time, type);
-            }
 
-            if (targets.team)
-            {
-                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(time, type);
-            }
-        }
-        else
-        {
-            if (targets.enemy)
-            {
-                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(time, type);
-            }
-
-            if (targets.team)
-            {
-                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(time, type);
-            }
-        }
-    }
-
-    public void DoTimeBomb(int amount, bool breaksOnDamage, float time, int decay)
-    {
-        //DISABLED ATM ONLY ACTIVE ON PROJECTILES THEMSELVES
-        Debug.Log("A move should not contain this type of move action");
-    }
     private bool PassConditionTest(Conditions conditions)
     {
         bool state = false;

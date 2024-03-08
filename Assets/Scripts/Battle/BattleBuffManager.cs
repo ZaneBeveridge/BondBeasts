@@ -51,11 +51,11 @@ public class BattleBuffManager : MonoBehaviour
                         {
                             if (isFriendly)
                             {
-                                GM.battleManager.friendlyMonsterController.TakeDamage(slotValues[6], true, false);
+                                GM.battleManager.friendlyMonsterController.TakeDamage(slotValues[6], true, false, 0, 0f, 0f, false, 0f, false, null, null, GM.battleManager.friendlyMonsterController.defaultHitNumbersLocation, null);
                             }
                             else
                             {
-                                GM.battleManager.enemyMonsterController.TakeDamage(slotValues[6], true, false);
+                                GM.battleManager.enemyMonsterController.TakeDamage(slotValues[6], true, false, 0, 0f, 0f, false, 0f, false, null, null, GM.battleManager.enemyMonsterController.defaultHitNumbersLocation, null);
                             }
                         }
 
@@ -146,15 +146,7 @@ public class BattleBuffManager : MonoBehaviour
 
     public void AddBuff(float time, int type) // doing crits buff / for taking crits
     {
-        if (type == 1) // CritAttacks
-        {
-            SpawnBuffObject(9, time);
-        }
-        else if (type == 2) // TakingCrits
-        {
-            SpawnBuffObject(10, time);
-        }
-        else if (type == 3) // stun
+        if (type == 3) // stun
         {
             SpawnBuffObject(7, time);
         }
@@ -186,6 +178,8 @@ public class BattleBuffManager : MonoBehaviour
 
     public void AddBuff(EffectedStat stat, int amount, Targets targets) // for buffing, debuffing, inversing etc any stat type
     {
+        //Debug.Log("Add Buff:" + stat.ToString() + ", " + amount.ToString());
+
         if (stat == EffectedStat.Oomph)
         {
             SpawnBuffObject(0, amount);
@@ -286,7 +280,7 @@ public class BattleBuffManager : MonoBehaviour
             if (slots[i].slotType == type)
             {
                 slotValues[type] += amount;
-                slots[i].MergeAmount(slotValues[type]);
+                slots[i].MergeAmount(slotValues[type], amount);
                 return;
             }
         }
@@ -305,7 +299,7 @@ public class BattleBuffManager : MonoBehaviour
             if (slots[i].slotType == type)
             {
                 slotValues[type] -= amount;
-                slots[i].MergeAmount(slotValues[type]);
+                slots[i].MergeAmount(slotValues[type], amount);
                 return;
             }
         }
@@ -345,16 +339,12 @@ public class BattleBuffManager : MonoBehaviour
             GM.battleManager.friendlyMonsterController.SetLowGravity(8f, 15f);
             GM.battleManager.friendlyMonsterController.Stun(false, 0f);
             GM.battleManager.friendlyMonsterController.GuardOff();
-            GM.battleManager.friendlyMonsterController.CritAttacks(false);
-            GM.battleManager.friendlyMonsterController.TakingCrits(false);
         }
         else
         {
             GM.battleManager.enemyMonsterController.SetLowGravity(8f, 15f);
             GM.battleManager.enemyMonsterController.Stun(false, 0f);
             GM.battleManager.enemyMonsterController.GuardOff();
-            GM.battleManager.enemyMonsterController.CritAttacks(false);
-            GM.battleManager.enemyMonsterController.TakingCrits(false);
         }
 
     }

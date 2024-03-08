@@ -60,7 +60,7 @@ public class PlayerManager : MonoBehaviour
                     }
 
                     
-                    GM.overworldUI.healthBar.SetHealth(GM.playerHP);
+                    GM.overworldUI.healthBar.SetHealth(GM.playerHP, false);
                     healerRoamer.Kill();
 
                 }

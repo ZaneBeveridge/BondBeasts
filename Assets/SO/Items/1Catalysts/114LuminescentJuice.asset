@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 114
   groupedId: 5
   itemName: Luminescent Juice
-  desc: +300% Juice Up while close to death.
+  desc: +60 Juice Up while below 15 hp.
   icon: {fileID: 21300000, guid: c59e268724b6e3b489286ea239ab1646, type: 3}
   type: 2
   maxStack: 10
@@ -32,10 +32,10 @@ MonoBehaviour:
       item: {fileID: 0}
       amount: 0
   itemEffects:
-  - name: +300% Juice Up while close to death.
-    effect: {fileID: 11400000, guid: 806b898a2875ad1439f7161dc34fc07b, type: 2}
+  - name: +60 Juice Up while below 15 hp
+    effect: {fileID: 11400000, guid: 2b28ed3925a848a43aef5a8fa4dfc2da, type: 2}
+    delay: 0
     targets:
-      self: 1
       team: 0
       enemy: 0
     conditions:

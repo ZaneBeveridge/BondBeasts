@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 112
   groupedId: 5
   itemName: Verjuice
-  desc: +100% Juice Up while close to death.
+  desc: +20 Juice Up while below 15 hp
   icon: {fileID: 21300000, guid: 5ec38c1d7e16dac4fa9519c0800f2d71, type: 3}
   type: 2
   maxStack: 10
@@ -36,10 +36,10 @@ MonoBehaviour:
       item: {fileID: 11400000, guid: c4ee030372fed1f4e8dcf44d2f740f89, type: 2}
       amount: 1
   itemEffects:
-  - name: +100% Juice Up while close to death.
-    effect: {fileID: 11400000, guid: 2426c511483c8c545aacf810a93fb9fd, type: 2}
+  - name: +20 Juice Up while below 15 hp
+    effect: {fileID: 11400000, guid: b40ae581cc4567340a1df9be17fa7213, type: 2}
+    delay: 0
     targets:
-      self: 1
       team: 0
       enemy: 0
     conditions:
