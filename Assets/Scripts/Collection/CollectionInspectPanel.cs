@@ -15,10 +15,6 @@ public class CollectionInspectPanel : MonoBehaviour
     
     public GameObject panel;
 
-    public Button item1Button;
-    public Button item2Button;
-    public Button item3Button;
-
     public Image dynamicImage;
     public Image staticImage;
     public Image variantImage;
@@ -56,12 +52,10 @@ public class CollectionInspectPanel : MonoBehaviour
 
     public GameObject statButton;
     public GameObject skillButton;
-    public GameObject itemButton;
     public GameObject loreButton;
 
     public GameObject statPageButton;
     public GameObject skillPageButton;
-    public GameObject itemPageButton;
     public GameObject lorePageButton;
 
 
@@ -77,13 +71,6 @@ public class CollectionInspectPanel : MonoBehaviour
     public TextMeshProUGUI loreText;
     public TextMeshProUGUI locationsText;
 
-    [Header("Items")]
-    public List<GameObject> storageItems = new List<GameObject>();
-    public List<ItemSlotManager> itemEquipSlots = new List<ItemSlotManager>();
-
-    public GameObject itemSlotPrefab;
-
-    public ItemEquipMenu itemEquipMenu;
 
     private GameObject storedObject;
     [HideInInspector]public GameManager g;
@@ -98,25 +85,6 @@ public class CollectionInspectPanel : MonoBehaviour
 
     public void UpdatePanel(Monster monster, GameManager GM)
     {
-        if (monster.capLevel == 0)
-        {
-            item1Button.gameObject.SetActive(true);
-            item2Button.gameObject.SetActive(false);
-            item3Button.gameObject.SetActive(false);
-        }
-        else if (monster.capLevel == 1)
-        {
-            item1Button.gameObject.SetActive(true);
-            item2Button.gameObject.SetActive(true);
-            item3Button.gameObject.SetActive(false);
-        }
-        if (monster.capLevel == 2)
-        {
-            item1Button.gameObject.SetActive(true);
-            item2Button.gameObject.SetActive(true);
-            item3Button.gameObject.SetActive(true);
-        }
-
 
         dynamicImage.sprite = monster.dynamicSprite;
         staticImage.sprite = monster.staticSprite;
@@ -324,52 +292,7 @@ public class CollectionInspectPanel : MonoBehaviour
             projectileTextSpecial.gameObject.SetActive(false);
         }
 
-        for (int i = 0; i < itemEquipSlots.Count; i++)
-        {
-            if (itemEquipSlots[i].storedItemObject != null)
-            {
-                Destroy(itemEquipSlots[i].storedItemObject);
-                itemEquipSlots[i].storedItemObject = null;
-            }
-        }
-
-        if (monster.item1.id != 0)
-        {
-            GameObject itm = Instantiate(itemSlotPrefab, itemEquipSlots[0].transform);
-            itm.GetComponent<ItemEquipSlotMoveable>().Init(monster.item1, g, itemEquipSlots[0]);
-            itemEquipSlots[0].storedItemObject = itm;
-        }
-        else
-        {
-            itemEquipSlots[0].nameText.text = "";
-            itemEquipSlots[0].descText.text = "TAP TO EQUIP";
-        }
-
-        if (monster.item2.id != 0)
-        {
-            GameObject itm = Instantiate(itemSlotPrefab, itemEquipSlots[1].transform);
-            itm.GetComponent<ItemEquipSlotMoveable>().Init(monster.item2, g, itemEquipSlots[1]);
-            itemEquipSlots[1].storedItemObject = itm;
-        }
-        else
-        {
-            itemEquipSlots[1].nameText.text = "";
-            itemEquipSlots[1].descText.text = "TAP TO EQUIP";
-        }
-
-        if (monster.item3.id != 0)
-        {
-            GameObject itm = Instantiate(itemSlotPrefab, itemEquipSlots[2].transform);
-            itm.GetComponent<ItemEquipSlotMoveable>().Init(monster.item3, g, itemEquipSlots[2]);
-            itemEquipSlots[2].storedItemObject = itm;
-        }
-        else
-        {
-            itemEquipSlots[2].nameText.text = "";
-            itemEquipSlots[2].descText.text = "TAP TO EQUIP";
-        }
-
-   
+        
         heightText.text = monster.backupData.height;
         weightText.text = monster.backupData.weight;
         loreText.text = monster.backupData.lore;
@@ -382,26 +305,19 @@ public class CollectionInspectPanel : MonoBehaviour
         //slotNumberStorage = slotNum;
 
         titleText.text = "STATS";
-        GM.itemEquipMenu = itemEquipMenu;
         g = GM;
         storedObject = obj;
         panel.SetActive(true);
         statButton.SetActive(false);
         skillButton.SetActive(true);
-        itemButton.SetActive(true);
         loreButton.SetActive(true);
 
         statPageButton.SetActive(true);
         skillPageButton.SetActive(false);
-        itemPageButton.SetActive(false);
         lorePageButton.SetActive(false);
 
         GM.monsterType = type;
         GM.monsterNumInStorage = numInStorage;
-
-
-        
-
 
         UpdatePanel(monster, GM);
     }
@@ -450,14 +366,12 @@ public class CollectionInspectPanel : MonoBehaviour
 
     public void ClosePanel()
     {
-        itemEquipMenu.Hide();
         panel.SetActive(false);
-        
     }
 
     public void DestroyMonster()
     {
-        g.collectionManager.ClearMonster(storedObject);
+        g.collectionManager.ClearMonster(currentMonster);
     }
 
     public void UpdateTitle(string txt)
@@ -476,38 +390,17 @@ public class CollectionInspectPanel : MonoBehaviour
     }
 
 
-
-
-    public void OpenSelectItemWindow(int num, bool rightSide)
-    {
-        List<StoredItem> equippableItems = new List<StoredItem>();
-
-        for (int i = 0; i < g.itemsOwned.Count; i++)
-        {
-            if (g.itemsOwned[i].item.type == ItemType.Catalyst)
-            {
-                equippableItems.Add(new StoredItem(g.itemsOwned[i].item, g.itemsOwned[i].amount));
-            }
-        }
-
-        itemEquipMenu.Show(this, rightSide);
-        itemEquipMenu.Refresh(equippableItems, g.monsterType, g.monsterNumInStorage, g);
-
-    }
-
     public void UpdateInspectPanel()
     {
         List<StoredItem> itms = new List<StoredItem>();
 
-        for (int i = 0; i < g.itemsOwned.Count; i++)
+        for (int i = 0; i < g.collectionManager.itemsOwned.Count; i++)
         {
-            if (g.itemsOwned[i].item.type == ItemType.Catalyst)
+            if (g.collectionManager.itemsOwned[i].item.type == ItemType.Catalyst)
             {
-                itms.Add(g.itemsOwned[i]);
+                itms.Add(g.collectionManager.itemsOwned[i]);
             }
         }
-
-        itemEquipMenu.Refresh(itms, g.monsterType, g.monsterNumInStorage, g);
 
         if (g.monsterType == "Party")
         {
@@ -515,7 +408,7 @@ public class CollectionInspectPanel : MonoBehaviour
         }
         else if (g.monsterType == "Collection")
         {
-            UpdatePanel(g.collectionManager.collectionMonsters[g.monsterNumInStorage].GetComponent<CollectionSlot>().storedMonster, g);
+            UpdatePanel(g.collectionManager.collectionMonsters[g.monsterNumInStorage].monster, g);
         }
 
         //manager.SaveData();

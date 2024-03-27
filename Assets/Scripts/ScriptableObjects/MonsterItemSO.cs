@@ -42,7 +42,6 @@ public class MonsterItemSO : ScriptableObject
 
 public enum ItemType
 {
-    Currency, // Glitter, used to upgrade and as curreny
     Material, // Materials used to craft items and consumables
     Catalyst // can be Equipped as well as crafted into higher items
 }

@@ -17,6 +17,9 @@ public class PlayerData
     //PROGRESSION INFO - What things has the player done, open gates, completed challenges, position on the map, etc etc
 
     public int levelCap;
+    public int numOfBagsCollection;
+    public int numOfBagsMaterials;
+    public int numOfBagsEquipment;
 
     public List<int> act1RoamersPrefab = new List<int>();
     public List<int> act1RoamersCurrentNode = new List<int>();
@@ -28,6 +31,9 @@ public class PlayerData
 
     public List<int> ownedItems = new List<int>();
     public List<int> stackNumberOfItems = new List<int>();
+    public List<int> itemsStoredID = new List<int>();
+
+    public List<int> numOfBeastsSeenID = new List<int>();
 
     //COLLECTION INFO - The full collection of monsters the player has in storage AND in party, all unique details, name, level, xp, colour, stats, variant, nature, strange, and the orginal data used to create it, which contains static info on the monster
 
@@ -68,7 +74,7 @@ public class PlayerData
 
     public List<int> mData = new List<int>();
 
-    public List<bool> mInParty = new List<bool>();
+    public List<int> mStoredID = new List<int>();
 
 
     public PlayerData(GameManager m)
@@ -82,6 +88,12 @@ public class PlayerData
 
         levelCap = m.levelCap;
 
+        numOfBagsCollection = m.numOfBagsCollection;
+        numOfBagsMaterials = m.numOfBagsMaterials;
+        numOfBagsEquipment = m.numOfBagsEquipment;
+
+        numOfBeastsSeenID = m.numOfBeastsSeenIDs;
+
 
         for (int i = 0; i < m.playerManager.currentRoamerController.currentRoamers.Count; i++)
         {
@@ -94,10 +106,11 @@ public class PlayerData
         nodesComplete = m.nodesCompleted;
         survivalBest = m.survivalBest;
 
-        for (int i = 0; i < m.itemsOwned.Count; i++)
+        for (int i = 0; i < m.collectionManager.itemsOwned.Count; i++)
         {
-            ownedItems.Add(m.itemsOwned[i].item.id);
-            stackNumberOfItems.Add(m.itemsOwned[i].amount);
+            ownedItems.Add(m.collectionManager.itemsOwned[i].item.id);
+            stackNumberOfItems.Add(m.collectionManager.itemsOwned[i].amount);
+            itemsStoredID.Add(m.collectionManager.itemsOwned[i].storedID);
         }
 
 
@@ -170,7 +183,7 @@ public class PlayerData
 
                 mData.Add(mon.backupData.ID.ID);
 
-                mInParty.Add(true);
+                mStoredID.Add(i);
             }
             
 
@@ -179,7 +192,7 @@ public class PlayerData
 
         for (int i = 0; i < m.collectionManager.collectionMonsters.Count; i++)
         {
-            Monster mon = m.collectionManager.collectionMonsters[i].GetComponent<CollectionSlot>().storedMonster;
+            Monster mon = m.collectionManager.collectionMonsters[i].monster;
 
             mNames.Add(mon.name);
             mLevels.Add(mon.level);
@@ -241,7 +254,7 @@ public class PlayerData
 
             mData.Add(mon.backupData.ID.ID);
 
-            mInParty.Add(false);
+            mStoredID.Add(m.collectionManager.collectionMonsters[i].storedID);
 
 
 

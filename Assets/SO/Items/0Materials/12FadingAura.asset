@@ -19,13 +19,18 @@ MonoBehaviour:
     like to catch these and hold onto them. They seem to escape your bag over some
     time.
   icon: {fileID: 21300000, guid: 712b1e82943456043b01a08237213212, type: 3}
-  type: 1
+  type: 0
   maxStack: 1000
-  upgradedItem:
-    item: {fileID: 0}
-    amount: 0
-  glitter:
-    item: {fileID: 0}
-    amount: 0
-  extraMats: []
+  canBeUpgraded: 0
+  recipe:
+    usedCatalyst:
+      item: {fileID: 0}
+      amount: 0
+    glitter:
+      item: {fileID: 0}
+      amount: 0
+    extraMats: []
+    createdCatalyst:
+      item: {fileID: 0}
+      amount: 0
   itemEffects: []

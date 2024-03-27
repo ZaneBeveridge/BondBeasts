@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Boxer's Wraps
   desc: Upon tagging in, +20 Oomph Up for 2s
   icon: {fileID: 21300000, guid: 4998ec14ef1190b45a120831b974a568, type: 3}
-  type: 2
+  type: 1
   maxStack: 10
   canBeUpgraded: 1
   recipe:

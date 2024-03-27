@@ -9,7 +9,7 @@ public class BeastSlot : MonoBehaviour
     public Image dynamicImage;
     public Image variantImage;
     public TextMeshProUGUI levelText;
-
+    //
 
     [HideInInspector] public GameManager manager;
     [HideInInspector] public Monster monster;
@@ -25,7 +25,7 @@ public class BeastSlot : MonoBehaviour
 
         dynamicImage.color = monster.colour.colour;
 
-        levelText.text = "Lvl " + monster.level.ToString();
+        levelText.text = "LVL " + monster.level.ToString();
 
     }
 

@@ -314,11 +314,11 @@ public class EvolveUIManager : MonoBehaviour
         int ownedAmount = 0;
         bool hasAmount = false;
 
-        for (int i = 0; i < GM.itemsOwned.Count; i++)
+        for (int i = 0; i < GM.collectionManager.itemsOwned.Count; i++)
         {
-            if (GM.itemsOwned[i].item.id == item.item.id)
+            if (GM.collectionManager.itemsOwned[i].item.id == item.item.id)
             {
-                ownedAmount = GM.itemsOwned[i].amount;
+                ownedAmount = GM.collectionManager.itemsOwned[i].amount;
                 break;
             }
         }
@@ -508,7 +508,7 @@ public class EvolveUIManager : MonoBehaviour
             {
                 for (int i = 0; i < currentMonster.backupData.ascendForm.requiredItems.Count; i++)
                 {
-                    GM.RemoveItemFromStorage(currentMonster.backupData.ascendForm.requiredItems[i].item, currentMonster.backupData.ascendForm.requiredItems[i].amount);
+                    GM.collectionManager.RemoveItemFromStorage(currentMonster.backupData.ascendForm.requiredItems[i].item, currentMonster.backupData.ascendForm.requiredItems[i].amount);
                 }
             }
         }
@@ -520,7 +520,7 @@ public class EvolveUIManager : MonoBehaviour
             {
                 for (int i = 0; i < currentMonster.backupData.descendForm.requiredItems.Count; i++)
                 {
-                    GM.RemoveItemFromStorage(currentMonster.backupData.descendForm.requiredItems[i].item, currentMonster.backupData.descendForm.requiredItems[i].amount);
+                    GM.collectionManager.RemoveItemFromStorage(currentMonster.backupData.descendForm.requiredItems[i].item, currentMonster.backupData.descendForm.requiredItems[i].amount);
                 }
             }
         }
@@ -535,7 +535,7 @@ public class EvolveUIManager : MonoBehaviour
         pickScreen.SetActive(false);
         evolveScreen.SetActive(false);
 
-        GM.collectionManager.UpdateCollectionItems();
+        GM.collectionManager.UpdateCollectionBeasts(0);
 
         
     }

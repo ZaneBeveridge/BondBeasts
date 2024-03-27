@@ -18,13 +18,18 @@ MonoBehaviour:
   desc: The remnants of a lively plant. This fibre from Beasts seems to have many
     more internal elements than usual flora.
   icon: {fileID: 21300000, guid: 70356ffa28d2c5f49b20b65dd34daeed, type: 3}
-  type: 1
+  type: 0
   maxStack: 1000
-  upgradedItem:
-    item: {fileID: 0}
-    amount: 0
-  glitter:
-    item: {fileID: 0}
-    amount: 0
-  extraMats: []
+  canBeUpgraded: 0
+  recipe:
+    usedCatalyst:
+      item: {fileID: 0}
+      amount: 0
+    glitter:
+      item: {fileID: 0}
+      amount: 0
+    extraMats: []
+    createdCatalyst:
+      item: {fileID: 0}
+      amount: 0
   itemEffects: []

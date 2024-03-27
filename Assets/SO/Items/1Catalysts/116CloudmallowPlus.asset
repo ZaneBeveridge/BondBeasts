@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Cloudmallow +
   desc: +8 Oomph Up while airborne.
   icon: {fileID: 21300000, guid: 18f7465f496ebbb4a95d055348976777, type: 3}
-  type: 2
+  type: 1
   maxStack: 10
   canBeUpgraded: 1
   recipe:

@@ -187,7 +187,7 @@ public class LevelUpUI : MonoBehaviour
         }
         else if (levelUpType == LevelUpType.Party)
         {
-            GM.collectionManager.UpdateCollectionItems();
+            GM.collectionManager.UpdateCollectionBeasts(0);
         }
 
         

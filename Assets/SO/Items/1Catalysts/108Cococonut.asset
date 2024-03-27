@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Cococonut
   desc: +12 Guts Up while healthy.
   icon: {fileID: 21300000, guid: 7e7868a5c5848b445a3ef57ca522f7a9, type: 3}
-  type: 2
+  type: 1
   maxStack: 10
   canBeUpgraded: 0
   recipe:

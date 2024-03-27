@@ -49,11 +49,11 @@ public class AftermathUI : MonoBehaviour
                 bool merge = false;
                 int mergeId = 0;
 
-                if (GM.itemsOwned.Count > 0)
+                if (GM.collectionManager.itemsOwned.Count > 0)
                 {
-                    for (int j = 0; j < GM.itemsOwned.Count; j++)
+                    for (int j = 0; j < GM.collectionManager.itemsOwned.Count; j++)
                     {
-                        if (GM.itemsOwned[j].item == GM.battleManager.rewardedItems[i].item)
+                        if (GM.collectionManager.itemsOwned[j].item == GM.battleManager.rewardedItems[i].item)
                         {
                             mergeId = j;
                             merge = true;
@@ -64,11 +64,11 @@ public class AftermathUI : MonoBehaviour
 
                 if (merge)
                 {
-                    GM.itemsOwned[mergeId].amount += GM.battleManager.rewardedItems[i].amount;
+                    GM.collectionManager.itemsOwned[mergeId].amount += GM.battleManager.rewardedItems[i].amount;
                 }
                 else
                 {
-                    GM.itemsOwned.Add(new StoredItem(GM.battleManager.rewardedItems[i].item, GM.battleManager.rewardedItems[i].amount));
+                    GM.collectionManager.AddItemToStorage(GM.battleManager.rewardedItems[i].item, GM.battleManager.rewardedItems[i].amount);
                 }
             }
         }
