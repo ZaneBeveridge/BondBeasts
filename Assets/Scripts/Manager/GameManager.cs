@@ -10,6 +10,9 @@ public class GameManager : MonoBehaviour
     public int levelCap = 3;
 
     public int playerHomeNodeID = 0;
+    public int numOfBagsCollection = 5;
+    public int numOfBagsMaterials = 5;
+    public int numOfBagsEquipment = 5;
 
     public MenuGUI menuGUI;
     public CollectionManager collectionManager;
@@ -21,7 +24,6 @@ public class GameManager : MonoBehaviour
     public AftermathUI aftermathUI;
     public LevelUpUI levelUpUI;
     public EvolveUIManager evolveUI;
-    [HideInInspector]public ItemEquipMenu itemEquipMenu;
     public ItemInspectManagerPopup itemInspectManagerPopup;
 
     public BattleManager battleManager;
@@ -31,8 +33,6 @@ public class GameManager : MonoBehaviour
     public CaptureChoiceWindow captureChoiceWindow;
 
     public PopupManager popupManager;
-    public ItemStoragePanel itemStoragePanel;
-
 
     [Header("DATA")]
     public List<MonsterSO> monsterSOData = new List<MonsterSO>();
@@ -50,8 +50,7 @@ public class GameManager : MonoBehaviour
     public List<bool> objectivesComplete = new List<bool>(); // 0 = shortcut1, 1=RoamersStart
     public List<bool> nodesCompleted = new List<bool>();
     public List<int> survivalBest = new List<int>();
-
-    public List<StoredItem> itemsOwned = new List<StoredItem>();
+    public List<int> numOfBeastsSeenIDs = new List<int>();
 
     public double avgTeamLevel;
 
@@ -62,7 +61,7 @@ public class GameManager : MonoBehaviour
 
     public string monsterType;
     public int monsterNumInStorage;
-    public MonsterItemSO blankItem;
+    
 
 
     [HideInInspector] public bool invulnerableDebug = false;
@@ -77,9 +76,7 @@ public class GameManager : MonoBehaviour
         else
         {
             LoadData();
-
             // LOAD NODES
-
             //Set current and prev location
             
             for (int i = 0; i < nodesData.Count; i++)
@@ -97,8 +94,6 @@ public class GameManager : MonoBehaviour
                     //Debug.Log("Prev loc: " + playerData.previousLocation);
                     pNode = nodesData[i];
                 }
-
-
             }
             
             //Set nodes to complete
@@ -107,8 +102,6 @@ public class GameManager : MonoBehaviour
             {
                 nodesData[i].SetComplete(nodesCompleted[i]);
             }
-            
-            
 
             if (cNode != null)
             {
@@ -118,7 +111,6 @@ public class GameManager : MonoBehaviour
             {
                 Debug.Log("Error in Load");
             }
-
 
             for (int i = 0; i < playerData.act1RoamersPrefab.Count; i++)
             {
@@ -133,17 +125,11 @@ public class GameManager : MonoBehaviour
                                 playerManager.currentRoamerController.SpawnRoamerFromLoad(roamerPrefabData[l], nodesData[x]);
                                 break;
                             }
-
                         }
-
                         break;
                     }
                 }
-
-                
             }
-
-            
         }
         
 
@@ -164,7 +150,22 @@ public class GameManager : MonoBehaviour
             levelCap = playerData.levelCap;
         }
 
-        
+        if (playerData.numOfBagsCollection > numOfBagsCollection)
+        {
+            numOfBagsCollection = playerData.numOfBagsCollection;
+        }
+
+        if (playerData.numOfBagsMaterials > numOfBagsMaterials)
+        {
+            numOfBagsMaterials = playerData.numOfBagsMaterials;
+        }
+
+        if (playerData.numOfBagsEquipment > numOfBagsEquipment)
+        {
+            numOfBagsEquipment = playerData.numOfBagsEquipment;
+        }
+
+        numOfBeastsSeenIDs = playerData.numOfBeastsSeenID;
 
 
         if (objectivesComplete.Count == playerData.objectivesComplete.Count)
@@ -280,7 +281,7 @@ public class GameManager : MonoBehaviour
             {
                 if (monsterItemData[j].id == playerData.ownedItems[i])
                 {
-                    itemsOwned.Add(new StoredItem(monsterItemData[j], playerData.stackNumberOfItems[i]));
+                    collectionManager.AddItemToStorageWithID(monsterItemData[j], playerData.stackNumberOfItems[i], playerData.itemsStoredID[i]);
                     break;
                 }
             }
@@ -290,9 +291,7 @@ public class GameManager : MonoBehaviour
         collectionManager.ClearAllMonstersFromCollection();
         collectionManager.ClearAllMonstersFromParty();
 
-        int inPlayerSlot = 0;
-
-        for (int i = 0; i < playerData.mInParty.Count; i++) // for every monster in save data
+        for (int i = 0; i < playerData.mNames.Count; i++) // for every monster in save data
         {
             //Natures
             int nat = 0;
@@ -439,15 +438,13 @@ public class GameManager : MonoBehaviour
 
 
 
-            if (playerData.mInParty[i]) // in party
+            if (playerData.mStoredID[i] <= 2) // in party
             {
-                collectionManager.SpawnMonsterInParty(mon, inPlayerSlot + 1);
-
-                inPlayerSlot++;
+                collectionManager.SpawnMonsterInParty(mon, playerData.mStoredID[i]);
             }
-            else if (!playerData.mInParty[i]) //in collection
+            else if (playerData.mStoredID[i] > 2) //in collection
             {
-                collectionManager.SpawnMonsterInCollection(mon);
+                collectionManager.SpawnMonsterInCollectionWithID(mon, playerData.mStoredID[i]);
             }
 
 
@@ -606,6 +603,26 @@ public class GameManager : MonoBehaviour
     }
 
 
+
+    public void AddBeastToSeenIDs(MonsterSO mon)
+    {
+        bool seen = false;
+
+        for (int i = 0; i < numOfBeastsSeenIDs.Count; i++)
+        {
+            if (mon.ID.ID == numOfBeastsSeenIDs[i])
+            {
+                seen = true;
+            }
+        }
+
+        if (!seen)
+        {
+            numOfBeastsSeenIDs.Add(mon.ID.ID);
+        }
+    }
+
+
     public void SaveData()
     {
         //Debug.Log("Saved");
@@ -648,166 +665,9 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void RemoveItemFromStorage(MonsterItemSO itm) 
-    {
-        for (int j = 0; j < itemsOwned.Count; j++)
-        {
-            if (itemsOwned[j].item == itm && itemsOwned[j].amount > 1)
-            {
-                itemsOwned[j].amount -= 1;
-                break;
-            }
-            else if (itemsOwned[j].item == itm && itemsOwned[j].amount <= 1)
-            {
-                itemsOwned.RemoveAt(j);
-            }
-        }
+    
 
-    }
-
-    public void RemoveItemFromStorage(MonsterItemSO itm, int amount)
-    {
-        for (int j = 0; j < itemsOwned.Count; j++)
-        {
-            if (itemsOwned[j].item == itm && itemsOwned[j].amount > 1)
-            {
-                itemsOwned[j].amount -= amount;
-                if (itemsOwned[j].amount <= 0)
-                {
-                    itemsOwned.RemoveAt(j);
-                }
-                break;
-            }
-            else if (itemsOwned[j].item == itm && itemsOwned[j].amount <= 1)
-            {
-                itemsOwned.RemoveAt(j);
-            }
-        }
-
-    }
-
-    public void AddItemToStorage(MonsterItemSO itm) // Spawns an item in storage, adds the count to be higher
-    {
-        bool merge = false;
-        int mergeId = 0;
-
-        if (itemsOwned.Count > 0)
-        {
-            for (int j = 0; j < itemsOwned.Count; j++)
-            {
-                if (itemsOwned[j].item == itm)
-                {
-                    mergeId = j;
-                    merge = true;
-                    break;
-                }
-            }
-        }
-
-        if (merge)
-        {
-            itemsOwned[mergeId].amount += 1;
-        }
-        else
-        {
-            itemsOwned.Add(new StoredItem(itm, 1));
-        }
-    }
-
-    public void RemoveItemFromMonster(int fromSlotNum)
-    {
-        if (monsterType == "Collection")
-        {
-            Monster mon = collectionManager.collectionMonsters[monsterNumInStorage].GetComponent<CollectionSlot>().storedMonster;
-
-            if (fromSlotNum == 1)
-            {
-                mon.item1 = blankItem;
-            }
-            else if (fromSlotNum == 2)
-            {
-                mon.item2 = blankItem;
-            }
-            else if (fromSlotNum == 3)
-            {
-                mon.item3 = blankItem;
-            }
-
-            collectionManager.collectionMonsters[monsterNumInStorage].GetComponent<CollectionSlot>().storedMonster = mon;
-        }
-        else if (monsterType == "Party")
-        {
-            if (collectionManager.partySlots[monsterNumInStorage].storedMonsterObject != null)
-            {
-                Monster mon = collectionManager.partySlots[monsterNumInStorage].storedMonsterObject.GetComponent<PartySlot>().storedMonster;
-
-                if (fromSlotNum == 1)
-                {
-                    mon.item1 = blankItem;
-                }
-                else if (fromSlotNum == 2)
-                {
-                    mon.item2 = blankItem;
-                }
-                else if (fromSlotNum == 3)
-                {
-                    mon.item3 = blankItem;
-                }
-
-                collectionManager.partySlots[monsterNumInStorage].storedMonsterObject.GetComponent<PartySlot>().storedMonster = mon;
-            }
-        }
-
-        
-
-        
-    }
-
-    public void AddItemToMonster(MonsterItemSO itm, int toSlotNum)
-    {
-        if (monsterType == "Collection")
-        {
-            Monster mon = collectionManager.collectionMonsters[monsterNumInStorage].GetComponent<CollectionSlot>().storedMonster;
-
-            if (toSlotNum == 1)
-            {
-                mon.item1 = itm;
-            }
-            else if (toSlotNum == 2)
-            {
-                mon.item2 = itm;
-            }
-            else if (toSlotNum == 3)
-            {
-                mon.item3 = itm;
-            }
-
-            collectionManager.collectionMonsters[monsterNumInStorage].GetComponent<CollectionSlot>().storedMonster = mon;
-        }
-        else if (monsterType == "Party")
-        {
-            if (collectionManager.partySlots[monsterNumInStorage].storedMonsterObject != null)
-            {
-                Monster mon = collectionManager.partySlots[monsterNumInStorage].storedMonsterObject.GetComponent<PartySlot>().storedMonster;
-
-                if (toSlotNum == 1)
-                {
-                    mon.item1 = itm;
-                }
-                else if (toSlotNum == 2)
-                {
-                    mon.item2 = itm;
-                }
-                else if (toSlotNum == 3)
-                {
-                    mon.item3 = itm;
-                }
-
-                collectionManager.partySlots[monsterNumInStorage].storedMonsterObject.GetComponent<PartySlot>().storedMonster = mon;
-
-            }
-        }
-    }
+    
 
 
     public void OpenItemInspectTooltip(MonsterItemSO item, Transform pos)
@@ -819,87 +679,6 @@ public class GameManager : MonoBehaviour
     {
         itemInspectManagerPopup.CloseCurrentPanel();
     }
-
-
-    public void EquipItem(MonsterItemSO itm, int slot, Monster mon, string type, int slotInStorage)
-    { 
-        if (type == "Collection")
-        {
-            for (int i = 0; i < collectionManager.collectionMonsters.Count; i++)
-            {
-                if (i == slotInStorage)
-                {
-                    for (int j = 0; j < itemsOwned.Count; j++)
-                    {
-                        if (itemsOwned[j].item == itm && itemsOwned[j].amount > 0)
-                        {
-                            if (slot == 1)
-                            {
-                                mon.item1 = itm;
-                            }
-                            else if (slot == 2)
-                            {
-                                mon.item2 = itm;
-                            }
-                            else if (slot == 3)
-                            {
-                                mon.item3 = itm;
-                            }
-
-                            collectionManager.collectionMonsters[i].GetComponent<CollectionSlot>().storedMonster = mon;
-
-                            itemsOwned[j].amount -= 1;
-                            if (itemsOwned[j].amount <= 0)
-                            {
-                                itemsOwned.RemoveAt(j);
-                            }
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-        else if (type == "Party")
-        {
-            for (int i = 0; i < collectionManager.partySlots.Count; i++)
-            {
-                if (collectionManager.partySlots[i].storedMonsterObject != null)
-                {
-                    if (i == slotInStorage)
-                    {
-                        for (int j = 0; j < itemsOwned.Count; j++)
-                        {
-                            if (itemsOwned[j].item == itm && itemsOwned[j].amount > 0)
-                            {
-                                if (slot == 1)
-                                {
-                                    mon.item1 = itm;
-                                }
-                                else if (slot == 2)
-                                {
-                                    mon.item2 = itm;
-                                }
-                                else if (slot == 3)
-                                {
-                                    mon.item3 = itm;
-                                }
-
-                                collectionManager.partySlots[i].storedMonsterObject.GetComponent<PartySlot>().storedMonster = mon;
-                                itemsOwned[j].amount -= 1;
-                                if (itemsOwned[j].amount <= 0)
-                                {
-                                    itemsOwned.RemoveAt(j);
-                                }
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-
 
     //Random management/debug methods
 
@@ -929,15 +708,4 @@ public class GameManager : MonoBehaviour
    
 }
 
-[System.Serializable]
-public class StoredItem
-{
-    public MonsterItemSO item;
-    public int amount = 1;
 
-    public StoredItem(MonsterItemSO i, int a)
-    {
-        item = i;
-        amount = a;
-    }
-}

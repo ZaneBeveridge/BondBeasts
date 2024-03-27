@@ -49,27 +49,39 @@ public class CollectionSlot : Slot, IDropHandler
         manager.OpenCollectionInspect(storedMonster, this.gameObject, "Collection", slotNum);
     }
 
-    public void OnDrop(PointerEventData eventData)
+    public void OnDrop(PointerEventData eventData) // drop from party to collection slot, swaps collection slot with party
     {
         GameObject dropped = eventData.pointerDrag;
         Slot slot = dropped.GetComponent<Slot>();
 
+        manager.EndDrag(this.gameObject);
+
         if (slot.type == SlotType.Party)
         {
+            int storedMonID = storedMonster.storedID;
+
             PartySlot pSlot = dropped.GetComponent<PartySlot>();
-            GameObject mon = Instantiate(pSlot.partySlotManager.partySlotPrefab, pSlot.partySlotManager.gameObject.transform);
-            mon.GetComponent<PartySlot>().Init(storedMonster, manager, pSlot.partySlotManager);
-            pSlot.partySlotManager.storedMonsterObject = mon;
+            manager.ClearMonsterFromParty(dropped, pSlot.partySlotManager.slotNum - 1); // remove dragged mon from party
+            manager.SpawnMonsterInParty(storedMonster, pSlot.partySlotManager.slotNum - 1); // place new mon from dropped slot in party
 
-            Destroy(dropped);
-
-            manager.SpawnMonsterInCollection(slot.storedMonster);
             
 
-
-
-            manager.ClearMonster(this.gameObject);
-
+            manager.ClearMonster(storedMonster); // remove mon from dropped slot
+            manager.SpawnMonsterInCollectionWithID(slot.storedMonster, storedMonID); // place new mon in dropped slot
         }
+        else if (slot.type == SlotType.Collection)
+        {
+            int storedMonID = storedMonster.storedID;
+            CollectionSlot cSlot = dropped.GetComponent<CollectionSlot>();
+
+
+            manager.ClearMonster(slot.storedMonster); // remove mon from dragged slot
+            manager.SpawnMonsterInCollectionWithID(storedMonster, cSlot.slotNum);
+
+            manager.ClearMonster(storedMonster); // remove mon from dropped slot
+            manager.SpawnMonsterInCollectionWithID(slot.storedMonster, storedMonID); // place new mon in dropped slot
+        }
+
+        manager.UpdateCollectionAll();
     }
 }

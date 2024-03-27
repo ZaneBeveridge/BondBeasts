@@ -32,10 +32,12 @@ public class Monster
 
     public Sprite staticSprite;
     public Sprite dynamicSprite;
+
     public AnimatorOverrideController animator;
 
     public MonsterSO backupData;
 
+    public int storedID;
     public Monster()
     {
 

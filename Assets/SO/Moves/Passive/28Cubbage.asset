@@ -21,7 +21,7 @@ MonoBehaviour:
     effect: {fileID: 11400000, guid: e13e1570d942e3a4dab3d4cae3d0c864, type: 2}
     delay: 0
     targets:
-      team: 0
+      team: 1
       enemy: 0
     conditions:
       always: 0

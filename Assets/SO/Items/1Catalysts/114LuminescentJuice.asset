@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Luminescent Juice
   desc: +60 Juice Up while below 15 hp.
   icon: {fileID: 21300000, guid: c59e268724b6e3b489286ea239ab1646, type: 3}
-  type: 2
+  type: 1
   maxStack: 10
   canBeUpgraded: 0
   recipe:

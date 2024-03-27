@@ -6,128 +6,44 @@ using TMPro;
 using UnityEngine.UI;
 public class ItemSlotManager : MonoBehaviour, IDropHandler
 {
-    public bool rightS;
-    public int slotNum;
-    public GameObject slotPrefab;
+    public int slotID;
 
-    public Image backImage;
-    public Sprite noItem;
-    public Sprite withItem;
+    public CollectionManager manager;
 
-    public TextMeshProUGUI nameText;
-    public TextMeshProUGUI descText;
+    public ItemType slotItemType;
 
-    public GameObject storedItemObject;
-    public CollectionInspectPanel panel;
-    public AllSlotsManagerItems allManager;
-    [HideInInspector]public GameManager manager;
-    public void Awake()
-    {
-        manager = panel.g;
-    }
     public void OnDrop(PointerEventData eventData)
     {
-        if (eventData.pointerDrag == null) { return; }
-
         GameObject dropped = eventData.pointerDrag;
+        ItemSlot slot = dropped.GetComponent<ItemSlot>();
 
-        manager.itemInspectManagerPopup.CloseCurrentPanel();
-        ItemSlotMoveable slot = dropped.GetComponent<ItemSlotMoveable>();
         if (slot == null) { return; }
 
-        MonsterItemSO item = slot.item;
+        manager.EndDrag(dropped);
 
+        if (slot.itemType != slotItemType) { return; } // if slot being dropped item type is not the same as type (mat/cata) of this slot manager then return
 
-        if (storedItemObject != null) //SWAP
+        if (slot.slotType == ItemSlotType.EquipSlot) // if dragging from equipSlot to storage slot
         {
-            if (slot.type == ItemSlotType.StorageSlot) // SWAP BETWEEN ITEM STORAGE AND EQUIP
-            {
-                if (allManager.CheckIfAlreadyEquipped(item)) { return; }
+            int realSlot = slotID + (manager.currentBag * manager.currentAmountOfCollectionSlots);
+            TeamEquipSlot equipSlot = slot.GetComponent<TeamEquipSlot>();
 
-                GameObject itm = Instantiate(slotPrefab, transform);
-                itm.GetComponent<ItemEquipSlotMoveable>().Init(item, manager, this);
+            manager.AddItemToStorageWithID(slot.item, slot.amount, realSlot);
+            manager.RemoveItemFromMonsterInParty(equipSlot.pManager.slotNum - 1, equipSlot.tManager.slotNum + 1);
 
-                manager.RemoveItemFromMonster(slotNum);
-                manager.AddItemToMonster(item, slotNum);
-                
-                manager.RemoveItemFromStorage(item);
-                manager.AddItemToStorage(storedItemObject.GetComponent<ItemEquipSlotMoveable>().item);
-                //REMOVE OLD OBJECT
-
-                Destroy(storedItemObject);
-                Destroy(dropped);
-                //SET NEW OBJECT
-                storedItemObject = itm;
-                
-            }
-            else if (slot.type == ItemSlotType.EquipSlot) // SWAP BETWEEN EQUIP AND EQUIP
-            {
-                //GETS DROPPED ITEMS ITEM SLOT MANAGER FOR REFERENCE
-                ItemSlotManager previousPartyManager = dropped.GetComponent<ItemEquipSlotMoveable>().itemSlotManager;
-
-                //SPAWNS ITEM AT THIS LOCATION BASED ON DROPPED ITEM INFO
-                GameObject itm = Instantiate(slotPrefab, transform);
-                itm.GetComponent<ItemEquipSlotMoveable>().Init(item, manager, this);
-
-                //SPAWNS ITEM AT DROPPED ITEMS MANAGER WITH THE INFO FROM THIS MANAGERS ITEM
-                GameObject previousitm = Instantiate(slotPrefab, previousPartyManager.gameObject.transform);
-                previousitm.GetComponent<ItemEquipSlotMoveable>().Init(storedItemObject.GetComponent<ItemEquipSlotMoveable>().item, manager, previousPartyManager);
-
-                //SET LAST ITEM MANAGER ITEM 
-                previousPartyManager.storedItemObject = previousitm;
-
-                manager.RemoveItemFromMonster(slotNum);
-                manager.AddItemToMonster(item, slotNum);
-
-                manager.RemoveItemFromMonster(previousPartyManager.slotNum);
-                manager.AddItemToMonster(storedItemObject.GetComponent<ItemEquipSlotMoveable>().item, previousPartyManager.slotNum);
-                //REMOVE OLD OBJECT
-                Destroy(storedItemObject); 
-                Destroy(dropped);
-
-                storedItemObject = itm;
-            }
+            //manager.RemoveItemFromEquipMon(); WORK HERE
         }
-        else //PLACE
+        else if (slot.slotType == ItemSlotType.StorageSlot) // if dragging from storage slot to another storage slot
         {
-            if (slot.type == ItemSlotType.StorageSlot) // PLACE FROM ITEM STORAGE TO EQUIP
-            {
-                if (allManager.CheckIfAlreadyEquipped(item)) { return; }
-                GameObject itm = Instantiate(slotPrefab, transform);
-                itm.GetComponent<ItemEquipSlotMoveable>().Init(item, manager, this);
-                storedItemObject = itm;
+            int realSlot = slotID + (manager.currentBag * manager.currentAmountOfCollectionSlots);
 
-                
-                manager.AddItemToMonster(item, slotNum);
-                manager.RemoveItemFromStorage(item);
-            }
-            else if (slot.type == ItemSlotType.EquipSlot) // PLACE FROM EQUIP TO EQUIP
-            {
-                GameObject itm = Instantiate(slotPrefab, transform);
-                itm.GetComponent<ItemEquipSlotMoveable>().Init(item, manager, this);
-                storedItemObject = itm;
+            manager.RemoveItemFromStorage(slot.item, slot.amount);
 
-                dropped.GetComponent<ItemEquipSlotMoveable>().itemSlotManager.backImage.sprite = dropped.GetComponent<ItemEquipSlotMoveable>().itemSlotManager.noItem;
+            manager.AddItemToStorageWithID(slot.item, slot.amount, realSlot);
 
-                int fromSlotNum = dropped.GetComponent<ItemEquipSlotMoveable>().itemSlotManager.slotNum;
 
-                manager.AddItemToMonster(item, slotNum);
-                manager.RemoveItemFromMonster(fromSlotNum);
-
-                
-            }
         }
 
-
-        panel.UpdateInspectPanel();
-
-    }
-
-
-    
-
-    public void OnButtonClick()
-    {
-        panel.OpenSelectItemWindow(slotNum, rightS);
+        manager.UpdateCollectionAll();
     }
 }

@@ -17,13 +17,18 @@ MonoBehaviour:
   itemName: Fur
   desc: Some shedded fur from a Beast. It is commonly used to make soft coats.
   icon: {fileID: 21300000, guid: 904ffc765b7b960469811c76de2540a7, type: 3}
-  type: 1
+  type: 0
   maxStack: 1000
-  upgradedItem:
-    item: {fileID: 0}
-    amount: 0
-  glitter:
-    item: {fileID: 0}
-    amount: 0
-  extraMats: []
+  canBeUpgraded: 0
+  recipe:
+    usedCatalyst:
+      item: {fileID: 0}
+      amount: 0
+    glitter:
+      item: {fileID: 0}
+      amount: 0
+    extraMats: []
+    createdCatalyst:
+      item: {fileID: 0}
+      amount: 0
   itemEffects: []

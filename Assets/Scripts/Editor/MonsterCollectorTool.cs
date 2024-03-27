@@ -7,6 +7,10 @@ public class MonsterCollectorTool : EditorWindow
     public int level = 1;
     public MonsterSO baseMonsterInfo;
 
+
+    public int itemAmount;
+    public MonsterItemSO itemSO;
+
     [MenuItem("Tools/Monster Collector Tool")]
     public static void ShowWindow()
     {
@@ -41,6 +45,16 @@ public class MonsterCollectorTool : EditorWindow
         if (GUILayout.Button("Clear Party"))
         {
             ClearMonstersFromParty();
+        }
+
+        GUILayout.Label("Add Items To Collection", EditorStyles.boldLabel);
+
+        itemAmount = EditorGUILayout.IntSlider("Amount Of Items", itemAmount, 1, 999);
+        itemSO = EditorGUILayout.ObjectField("Item Scriptable Object", itemSO, typeof(MonsterItemSO), false) as MonsterItemSO;
+
+        if (GUILayout.Button("Add Item To Collection"))
+        {
+            AddItemCollection();
         }
 
 
@@ -104,7 +118,8 @@ public class MonsterCollectorTool : EditorWindow
 
         collectionManager.SpawnMonsterInCollection(monster);
 
-
+        collectionManager.UpdateCollectionBeasts(collectionManager.currentBag);
+        collectionManager.UpdatePartyLevel();
     }
 
     private void AddMonsterParty()
@@ -119,7 +134,25 @@ public class MonsterCollectorTool : EditorWindow
 
         collectionManager.SpawnMonsterInParty(monster, collectionManager.CheckFreePartySlot());
 
+        collectionManager.UpdateCollectionBeasts(collectionManager.currentBag);
+        collectionManager.UpdatePartyLevel();
+    }
 
+    private void AddItemCollection()
+    {
+        CollectionManager collectionManager = GameObject.FindGameObjectWithTag("CollectionManager").GetComponent<CollectionManager>();
+        if (collectionManager == null) return;
+
+        collectionManager.AddItemToStorage(itemSO, itemAmount);
+
+        if (collectionManager.bagMode == 1)
+        {
+            collectionManager.UpdateCollectionMaterials(collectionManager.currentBag);
+        }
+        else if (collectionManager.bagMode == 2)
+        {
+            collectionManager.UpdateCollectionEquipment(collectionManager.currentBag);
+        }
     }
 
     private void ClearMonsters()

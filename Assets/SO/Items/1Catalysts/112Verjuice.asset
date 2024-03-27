@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Verjuice
   desc: +20 Juice Up while below 15 hp
   icon: {fileID: 21300000, guid: 5ec38c1d7e16dac4fa9519c0800f2d71, type: 3}
-  type: 2
+  type: 1
   maxStack: 10
   canBeUpgraded: 1
   recipe:

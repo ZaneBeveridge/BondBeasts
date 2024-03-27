@@ -96,9 +96,9 @@ public class CreateProfile : MonoBehaviour
 
     public void Save()
     {
-        
+        GM.AddBeastToSeenIDs(options[selectedNum - 1].monster.backupData);
         GM.playerName = inputfield.text;
-        GM.collectionManager.SpawnMonsterInParty(options[selectedNum - 1].monster, 1);
+        GM.collectionManager.SpawnMonsterInParty(options[selectedNum - 1].monster, 0);
         selectedNum = 0;
 
         GM.cNode = GM.playerManager.homeNode;

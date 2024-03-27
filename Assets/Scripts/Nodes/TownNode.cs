@@ -42,7 +42,7 @@ public class TownNode : Node
 
         
         GM.playerHomeNodeID = id;
-        GM.collectionManager.OpenInterface();
+        //GM.collectionManager.OpenInterface();
     }
 
     public override bool IsComplete()

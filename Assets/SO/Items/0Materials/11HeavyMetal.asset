@@ -18,7 +18,7 @@ MonoBehaviour:
   desc: A material as hard as iron which absorbs heat quickly. Beasts from hot habitats
     like to collect these to line their sleeping areas with them.
   icon: {fileID: 21300000, guid: e7aa088923ad3aa4ab46e0c76efb8436, type: 3}
-  type: 1
+  type: 0
   maxStack: 1000
   canBeUpgraded: 0
   recipe:

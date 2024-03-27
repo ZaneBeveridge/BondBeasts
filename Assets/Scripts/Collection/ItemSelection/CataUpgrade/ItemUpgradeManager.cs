@@ -17,7 +17,7 @@ public class ItemUpgradeManager : MonoBehaviour
     public TextMeshProUGUI glitterOwned;
     public TextMeshProUGUI glitterNeeded;
 
-    public GameManager GM;
+    public CollectionManager GM;
 
     private MonsterItemSO item;
 
@@ -32,7 +32,7 @@ public class ItemUpgradeManager : MonoBehaviour
     {
         obj.SetActive(true);
         item = itm;
-        GM = g;
+        GM = g.collectionManager;
 
         //Set hasItemsToUpgrade to true if the player has the items in MonsterItemSO recipe 
 
@@ -177,13 +177,12 @@ public class ItemUpgradeManager : MonoBehaviour
 
         for (int i = 0; i < item.recipe.createdCatalyst.amount; i++)
         {
-            GM.AddItemToStorage(item.recipe.createdCatalyst.item);
+            GM.AddItemToStorage(item.recipe.createdCatalyst.item, 1);
         }
 
-        GM.itemStoragePanel.RefreshItems();
 
         DeleteItems();
-        Init(item, GM);
+        Init(item, GM.GM);
         
         //obj.SetActive(false);
     }

@@ -17,13 +17,18 @@ MonoBehaviour:
   itemName: Scale
   desc: A shedded scale from a Beast.
   icon: {fileID: 21300000, guid: ab754e49bcf0da243a04be66debd857b, type: 3}
-  type: 1
+  type: 0
   maxStack: 1000
-  upgradedItem:
-    item: {fileID: 0}
-    amount: 0
-  glitter:
-    item: {fileID: 0}
-    amount: 0
-  extraMats: []
+  canBeUpgraded: 0
+  recipe:
+    usedCatalyst:
+      item: {fileID: 0}
+      amount: 0
+    glitter:
+      item: {fileID: 0}
+      amount: 0
+    extraMats: []
+    createdCatalyst:
+      item: {fileID: 0}
+      amount: 0
   itemEffects: []

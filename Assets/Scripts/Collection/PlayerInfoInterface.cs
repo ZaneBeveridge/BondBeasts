@@ -6,11 +6,8 @@ using TMPro;
 
 public class PlayerInfoInterface : MonoBehaviour
 {
-    public TextMeshProUGUI rankText;
-    public TextMeshProUGUI rankText2;
+    public TextMeshProUGUI thirdText;
 
-    public TextMeshProUGUI nodesTextNum;
-    public TextMeshProUGUI monsTextNum;
 
     public GameManager manager;
     public void UpdateInfo()
@@ -23,11 +20,6 @@ public class PlayerInfoInterface : MonoBehaviour
                 numCompleted++;
             }
         }
-
-
-        
-
-        nodesTextNum.text = numCompleted.ToString() + "/" + manager.nodesCompleted.Count;
 
 
         int monCompleted = 0;
@@ -43,14 +35,20 @@ public class PlayerInfoInterface : MonoBehaviour
             }
         }
 
+        int monsSeen = 0;
 
+        for (int i = 0; i < manager.monsterSOData.Count; i++)
+        {
+            for (int j = 0; j < manager.playerData.numOfBeastsSeenID.Count; j++)
+            {
+                if (manager.playerData.numOfBeastsSeenID[j] == manager.monsterSOData[i].ID.ID)
+                {
+                    monsSeen++;
+                    break;
+                }
+            }
+        }
 
-
-        monsTextNum.text = monCompleted.ToString();
-
-        float num = (numCompleted * 5) + (monCompleted * 5);
-
-        rankText.text = "Rank " + num;
-        rankText2.text = "Rank " + num;
+        thirdText.text = "I've seen " + monsSeen.ToString() + " different species of Bond Beasts,\n and bonded with " + monCompleted.ToString() + " of them.";
     }
 }

@@ -5,46 +5,42 @@ using UnityEngine.UI;
 using TMPro;
 public class MenuTabButtons : MonoBehaviour
 {
-    public TextMeshProUGUI text;
-    public Transform buttonPos;
     public Image backgroundImage;
     public Button ownButton;
 
-    public Color selectColor;
-    public Color unselectedColor;
+    public Sprite selectedSprite;
+    public Sprite unselectedSprite;
 
-    public Vector3 selectPos;
-    public Vector3 unselectedPos;
-
-    public float selectFontSize;
-    public float unselectedFontSize;
-
-    public void ResetSelection()
+    public Animator anim;
+    public void Select(bool instant)
     {
-        backgroundImage.enabled = true;
-        ownButton.enabled = true;
-        text.enabled = true;
-
-        buttonPos.localPosition = unselectedPos;
-        backgroundImage.color = unselectedColor;
-        text.fontSize = unselectedFontSize;
-    }
-
-    public void Select()
-    {
-        backgroundImage.enabled = true;
-        ownButton.enabled = true;
-        text.enabled = true;
-
-        buttonPos.localPosition = selectPos;
-        backgroundImage.color = selectColor;
-        text.fontSize = selectFontSize;
-    }
-
-    public void Hide()
-    {
-        backgroundImage.enabled = false;
+        backgroundImage.sprite = selectedSprite;
         ownButton.enabled = false;
-        text.enabled = false;
+
+        if (instant)
+        {
+            anim.SetTrigger("SelectTriggerInstant");
+        }
+        else
+        {
+            anim.SetTrigger("SelectTrigger");
+        }
+        
     }
+
+    public void Hide(bool instant)
+    {
+        backgroundImage.sprite = unselectedSprite;
+        ownButton.enabled = true;
+
+        if (instant)
+        {
+            anim.SetTrigger("UnselectTriggerInstant");
+        }
+        else
+        {
+            anim.SetTrigger("UnselectTrigger");
+        }
+    }
+
 }

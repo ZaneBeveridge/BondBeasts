@@ -132,7 +132,7 @@ public class BattleManager : MonoBehaviour
             {
                 int randomAmount = Random.Range(spawn.monster.itemDrops[i].minDrops, spawn.monster.itemDrops[i].maxDrops);
 
-                rewardedIt.Add(new StoredItem(spawn.monster.itemDrops[i].item, randomAmount));
+                rewardedIt.Add(new StoredItem(spawn.monster.itemDrops[i].item, randomAmount, 0));
             }
         }
 
@@ -161,7 +161,7 @@ public class BattleManager : MonoBehaviour
             {
                 int randomAmount = Random.Range(drops[i].minDrops, drops[i].maxDrops);
 
-                rewardedIt.Add(new StoredItem(drops[i].item, randomAmount));
+                rewardedIt.Add(new StoredItem(drops[i].item, randomAmount, 0));
             }
         }
 

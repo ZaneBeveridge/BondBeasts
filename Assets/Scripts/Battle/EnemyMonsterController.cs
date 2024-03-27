@@ -419,7 +419,10 @@ public class EnemyMonsterController : MonoBehaviour
         for (int i = 0; i < mons.Count; i++)
         {
             backupMonsters.Add(new Monster(Random.Range(mons[i].minLevel, mons[i].maxLevel), mons[i].monster));
+            GM.AddBeastToSeenIDs(mons[i].monster);
         }
+
+
 
         SetMonsterActive(0);
 
@@ -468,6 +471,11 @@ public class EnemyMonsterController : MonoBehaviour
     public void SetupEnemyPunk(List<Monster> mons, NodeType type, int extraStats, int punkMaxHealth)
     {
         backupMonsters = mons;
+
+        for (int i = 0; i < mons.Count; i++)
+        {
+            GM.AddBeastToSeenIDs(mons[i].backupData);
+        }
 
         SetMonsterActive(0);
 

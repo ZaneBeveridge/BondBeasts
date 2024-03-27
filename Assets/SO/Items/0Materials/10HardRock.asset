@@ -18,7 +18,7 @@ MonoBehaviour:
   desc: Some beasts who develop hard defences begin to sprout small traces of this
     within their hide.
   icon: {fileID: 21300000, guid: da09fdd10f252bf45a96617a2243baab, type: 3}
-  type: 1
+  type: 0
   maxStack: 1000
   canBeUpgraded: 0
   recipe:

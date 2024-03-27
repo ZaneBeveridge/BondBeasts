@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Spray Can
   desc: DESCRIPTION
   icon: {fileID: 21300000, guid: 0cf7dc12d6022c643b70f0b00eb178c3, type: 3}
-  type: 1
+  type: 0
   maxStack: 1000
   canBeUpgraded: 0
   recipe:

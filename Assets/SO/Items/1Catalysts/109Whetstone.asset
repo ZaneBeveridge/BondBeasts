@@ -17,7 +17,7 @@ MonoBehaviour:
   itemName: Whetstone
   desc: +2 Edge Up.
   icon: {fileID: 21300000, guid: 818399402f3dbec40b5cd8e8f6c37047, type: 3}
-  type: 2
+  type: 1
   maxStack: 10
   canBeUpgraded: 1
   recipe:
