@@ -688,7 +688,7 @@ public class CollectionManager : MonoBehaviour
         
 
         int selBag = bagID - (selectedFolderTemp * 9);
-        int selFolder = Mathf.FloorToInt((bagID + 1) / 9);
+        int selFolder = Mathf.FloorToInt((bagID) / 9);
 
         UpdateStorage(selBag, selFolder);
     }
