@@ -9,30 +9,37 @@ public class SurvivalSubMenu : MonoBehaviour
     public GameManager GM;
     public SurvivalMenu survivalMenu;
 
+    public Animator retreatButtonAnim;
+    public Animator fightOnButtonAnim;
+
+    public Animator loseRewardsAnim;
+    public Animator enemyStatsAnim;
+
+    public Animator clearRoundAnim;
 
     public GameObject dropPrefab;
     public GameObject monPrefab;
 
     public RectTransform dropsGrid;
-    public RectTransform monsGrid;
+
+    public GameObject leftArrow;
+    public GameObject rightArrow;
 
     public GameObject background;
 
     public TextMeshProUGUI gainedXPText;
     public TextMeshProUGUI bonusText;
-    public TextMeshProUGUI totalText;
+
+    public Color redTextColour;
+    public Color greenTextColour;
+
+    public TextMeshProUGUI clearToPassText;
+    public Image clearToPassDot;
+    public GameObject clearToPassTickImage;
+    public GameObject clearToPassObject;
 
     public TextMeshProUGUI roundText;
-    public TextMeshProUGUI currentBestText;
 
-    public TextMeshProUGUI currentXPBonusText;
-    public TextMeshProUGUI currentEnemyStatBuffText;
-
-    public TextMeshProUGUI nextRoundXPBonusText;
-    public TextMeshProUGUI nextRoundEnemyStatBuffText;
-
-
-    public TextMeshProUGUI neededText;
     public EnemyMonsterController controller;
 
     private List<Monster> capturedMonsters = new List<Monster>();
@@ -44,15 +51,25 @@ public class SurvivalSubMenu : MonoBehaviour
 
     public int scoreNeededToPass = 0;
 
-    private int xpBuffPerRound = 30;
+    private int xpBuffPerRound = 40;
     private int statBuffPerRound = 8;
 
-
+    private List<StoredItem> items = new List<StoredItem>();
+    private List<StoredMonster> mons = new List<StoredMonster>();
 
     private List<GameObject> drops = new List<GameObject>();
-    private List<GameObject> mons = new List<GameObject>();
+
+    private int currentPageID = 0;
+
+
+    private bool readyToContinue = false;
+    private bool readyToRetreat = false;
     public void Init(Monster capturedMonster, int groupXP, int numInParty, List<float> inBattleTime, int streak, int id) // with capture
     {
+        currentPageID = 0;
+        readyToContinue = false;
+        readyToRetreat = false;
+
         background.SetActive(true);
 
         capturedMonsters.Add(capturedMonster);
@@ -63,13 +80,18 @@ public class SurvivalSubMenu : MonoBehaviour
         survivalStreak = streak;
         survivalID = id;
 
+        retreatButtonAnim.SetTrigger("Start");
+        fightOnButtonAnim.SetTrigger("Start");
 
         UpdateSubMenuVisuals();
-
     }
 
     public void Init(int groupXP, int numInParty, List<float> inBattleTime, int streak, int id)
     {
+        currentPageID = 0;
+        readyToContinue = false;
+        readyToRetreat = false;
+
         background.SetActive(true);
 
         numberOfMonsInParty = numInParty;
@@ -78,103 +100,204 @@ public class SurvivalSubMenu : MonoBehaviour
         survivalStreak = streak;
         survivalID = id;
 
+        retreatButtonAnim.SetTrigger("Start");
+        fightOnButtonAnim.SetTrigger("Start");
+
         UpdateSubMenuVisuals();
     }
 
     private void UpdateSubMenuVisuals()
     {
-        if (survivalStreak >= scoreNeededToPass)
+        if (GM.survivalBest[survivalID] >= scoreNeededToPass)
         {
-            neededText.text = "Retreat now to unlock the next node";
+            clearToPassObject.SetActive(false);
         }
         else
         {
-            neededText.text = "Needed To Pass\n" + scoreNeededToPass.ToString();
+            clearToPassObject.SetActive(true);            
+            if (survivalStreak >= scoreNeededToPass)
+            {
+                clearToPassText.text = "CLEAR ROUND " + scoreNeededToPass.ToString() + " TO PASS THIS NODE";
+                clearToPassText.color = greenTextColour;
+                clearToPassDot.color = greenTextColour;
+                clearToPassTickImage.SetActive(true);
+            }
+            else
+            {
+                clearToPassText.text = "CLEAR ROUND " + scoreNeededToPass.ToString() + " TO PASS THIS NODE";
+                clearToPassText.color = redTextColour;
+                clearToPassDot.color = redTextColour;
+                clearToPassTickImage.SetActive(false);
+            }
         }
 
-        gainedXPText.text = gainedGroupXP.ToString() + "xp";
+        
+
+        gainedXPText.text = gainedGroupXP.ToString();
         bonusText.text = "+" + survivalStreak * xpBuffPerRound + "%";
         
-        float perc = survivalStreak / 10f;
-        int amount = gainedGroupXP + (int)(gainedGroupXP * perc);
-        Debug.Log(perc);
-        Debug.Log(amount);
-        totalText.text = amount.ToString() + "xp";
+        roundText.text = survivalStreak.ToString();
 
-        roundText.text = "Round " + survivalStreak.ToString() + " Complete!";
-
-        currentBestText.text = GM.survivalBest[survivalID].ToString();
-
-        currentXPBonusText.text = survivalStreak * xpBuffPerRound + "%";
-        currentEnemyStatBuffText.text = "+" + survivalStreak * statBuffPerRound;
-
-        nextRoundXPBonusText.text = "+" + xpBuffPerRound + "%";
-        nextRoundEnemyStatBuffText.text = "+" + statBuffPerRound;
-
-
-        UpdateItemsVisuals();
-        UpdateMonsterVisuals();
-
+        UpdateDropsStorage();
+        UpdateDropsVisuals(0);
     }
 
 
-    private void UpdateItemsVisuals()
+    private void UpdateDropsStorage()
     {
-        for (int i = 0; i < GM.battleManager.rewardedItems.Count; i++)
-        {
-            GameObject obj = Instantiate(dropPrefab, dropsGrid);
-            obj.GetComponent<DropSlot>().Init(GM.battleManager.rewardedItems[i], GM);
-            drops.Add(obj);
-        }
-    }
+        int storedID = 0;
 
-    private void UpdateMonsterVisuals()
-    {
         for (int i = 0; i < capturedMonsters.Count; i++)
         {
-            GameObject obj = Instantiate(monPrefab, monsGrid);
-            obj.GetComponent<BeastSlot>().Init(capturedMonsters[i], GM);
-            mons.Add(obj);
+            StoredMonster mon = new StoredMonster(capturedMonsters[i], storedID);
+            mons.Add(mon);
+            storedID++;
+        }
+
+        for (int i = 0; i < GM.battleManager.rewardedItems.Count; i++)
+        {
+            StoredItem itm = new StoredItem(GM.battleManager.rewardedItems[i].item, GM.battleManager.rewardedItems[i].amount, storedID);
+            items.Add(itm);
+            storedID++;
         }
     }
 
-
-    private void ClearItemsAndMonsVisuals()
+    private void UpdateDropsVisuals(int pageID)
     {
+        int amountOfDropsPerPage = 4;
+
+        int minIDRange = (pageID * amountOfDropsPerPage);
+        int maxIDRange = (pageID * amountOfDropsPerPage) + (amountOfDropsPerPage - 1); // max collection size on page here
+
         for (int i = 0; i < drops.Count; i++)
         {
             Destroy(drops[i]);
         }
 
+        drops = new List<GameObject>();
+
         for (int i = 0; i < mons.Count; i++)
         {
-            Destroy(mons[i]);
+            if (mons[i].storedID >= minIDRange && mons[i].storedID <= maxIDRange) // if monster ID range is within the selected bags range of stored IDs
+            {
+                GameObject obj = Instantiate(monPrefab, dropsGrid);
+                obj.GetComponent<BeastSlot>().Init(mons[i].monster, GM);
+                drops.Add(obj);
+            }
         }
 
-        drops = new List<GameObject>();
-        mons = new List<GameObject>();
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].storedID >= minIDRange && items[i].storedID <= maxIDRange) // if monster ID range is within the selected bags range of stored IDs
+            {
+                GameObject obj = Instantiate(dropPrefab, dropsGrid);
+                obj.GetComponent<DropSlot>().Init(items[i], GM);
+                drops.Add(obj);
+            }
+        }
+
+        if (pageID > 0)
+        {
+            leftArrow.SetActive(true);
+        }
+        else
+        {
+            leftArrow.SetActive(false);
+        }
+
+        int totalCount = mons.Count + items.Count;
+
+        if (totalCount > (pageID + 1) * amountOfDropsPerPage)
+        {
+            rightArrow.SetActive(true);
+        }
+        else
+        {
+            rightArrow.SetActive(false);
+        }
+
     }
+    public void PressDropsButtonLeft()
+    {
+        if (currentPageID - 1 < 0) { return; }
+
+        UpdateDropsVisuals(currentPageID - 1);
+    }
+
+    public void PressDropsButtonRight()
+    {
+        UpdateDropsVisuals(currentPageID + 1);
+    }
+
+    private void ClearItemsAndMonsVisuals()
+    {
+        mons = new List<StoredMonster>();
+        items = new List<StoredItem>();
+    }
+
+    private void UpdatePressedButtonVisuals() // after pressing either retreat or continue once, update the text visuals on screen, or start/stop playing anims
+    {
+        if (readyToContinue)
+        {
+            enemyStatsAnim.SetBool("Active", true);
+            loseRewardsAnim.SetBool("Active", true);
+        }
+        else
+        {
+            enemyStatsAnim.SetBool("Active", false);
+            loseRewardsAnim.SetBool("Active", false);
+        }
+
+        if (readyToRetreat & survivalStreak >= scoreNeededToPass)
+        {
+            clearRoundAnim.SetBool("Active", true);
+        }
+        else
+        {
+            clearRoundAnim.SetBool("Active", false);
+        }
+    }
+    
 
 
     public void Retreat() // collect monsters, then drops and xp, then quit
     {
-        ClearItemsAndMonsVisuals();
-
-        background.SetActive(false);
-
-        if (capturedMonsters.Count > 0)
+        if (readyToRetreat)
         {
-            if (GM.survivalBest[survivalID] < survivalStreak)
-            {
-                GM.survivalBest[survivalID] = survivalStreak;
-            }
+            ClearItemsAndMonsVisuals();
 
-            GM.captureChoiceWindow.Init(capturedMonsters, controller, this);
+            background.SetActive(false);
+
+            if (capturedMonsters.Count > 0)
+            {
+                if (GM.survivalBest[survivalID] < survivalStreak)
+                {
+                    GM.survivalBest[survivalID] = survivalStreak;
+                }
+
+                GM.captureChoiceWindow.Init(capturedMonsters, controller, this);
+            }
+            else
+            {
+                ToVictory();
+            }
         }
         else
         {
-            ToVictory();
+            readyToRetreat = true;
+            retreatButtonAnim.SetTrigger("Pressed");
+
+            if (readyToContinue)
+            {
+                readyToContinue = false;
+                fightOnButtonAnim.SetTrigger("Unpressed");
+            }
+            
+
+            UpdatePressedButtonVisuals();
         }
+
+        
 
     }
 
@@ -215,10 +338,28 @@ public class SurvivalSubMenu : MonoBehaviour
 
     public void Continue() // goto next battle +10% xp, +20% all enemy stats, new monster
     {
-        ClearItemsAndMonsVisuals();
-        background.SetActive(false);
+        if (readyToContinue)
+        {
+            ClearItemsAndMonsVisuals();
+            background.SetActive(false);
 
-        GM.battleManager.StartBattle(survivalMenu.monsSpawns, survivalMenu.nodeType, survivalMenu.backG, survivalStreak, true);
+            GM.battleManager.StartBattle(survivalMenu.monsSpawns, survivalMenu.nodeType, survivalMenu.backG, survivalStreak, true);
+
+        }
+        else
+        {
+            readyToContinue = true;
+            fightOnButtonAnim.SetTrigger("Pressed");
+
+            if (readyToRetreat)
+            {
+                readyToRetreat = false;
+                retreatButtonAnim.SetTrigger("Unpressed");
+            }
+            
+
+            UpdatePressedButtonVisuals();
+        }
         
     }
 }
