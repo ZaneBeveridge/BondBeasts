@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     public CaptureChoiceWindow captureChoiceWindow;
 
     public PopupManager popupManager;
+    public TimeManager timeManager;
+    public FadeToBlackManager fadeManager;
 
     [Header("DATA")]
     public List<MonsterSO> monsterSOData = new List<MonsterSO>();
@@ -430,19 +432,17 @@ public class GameManager : MonoBehaviour
             }
 
 
-            Monster mon = new Monster(playerData.mNames[i], playerData.mLevels[i], capLevel, playerData.mXPs[i], playerData.mSymbiotics[i], natureSOData[nat], monsterSOData[dt].possibleVariants[var].variant, playerData.mStranges[i], col, st, monsterSOData[dt], bMove, sMove, pMove, ownedItems);
+            Monster mon = new Monster(playerData.mNames[i], playerData.mLevels[i], capLevel, playerData.mXPs[i], playerData.mStatPoints[i], playerData.mSymbiotics[i], natureSOData[nat], monsterSOData[dt].possibleVariants[var].variant, playerData.mStranges[i], col, st, monsterSOData[dt], bMove, sMove, pMove, ownedItems);
 
 
 
 
 
-
-
-            if (playerData.mStoredID[i] <= 2) // in party
+            if (playerData.mInParty[i]) // in party
             {
                 collectionManager.SpawnMonsterInParty(mon, playerData.mStoredID[i]);
             }
-            else if (playerData.mStoredID[i] > 2) //in collection
+            else if (!playerData.mInParty[i]) //in collection
             {
                 collectionManager.SpawnMonsterInCollectionWithID(mon, playerData.mStoredID[i]);
             }
@@ -475,11 +475,6 @@ public class GameManager : MonoBehaviour
         }
 
     }
-    public void DoBattleAftermath(string text, List<float> times, int xp, int num)
-    {
-        aftermathUI.Init(text, times, xp, num);
-    }
-
 
     public bool PassageClear(Node currNode) // if is battle/challenge node, if completed is false, only allow moving back to previous node, if completed is true, allow all movement
     {
@@ -654,10 +649,7 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    public void Pause(float time)
-    {
-        Time.timeScale = time;
-    }
+    
 
     public void Quit()
     {
@@ -665,14 +657,9 @@ public class GameManager : MonoBehaviour
     }
 
 
-    
-
-    
-
-
-    public void OpenItemInspectTooltip(MonsterItemSO item, Transform pos)
+    public void OpenItemInspectTooltip(MonsterItemSO item, Transform pos, bool simple)
     {
-        itemInspectManagerPopup.SpawnInspectPanel(item, pos, this);
+        itemInspectManagerPopup.SpawnInspectPanel(item, pos, this, simple);
     }
 
     public void CloseItemInspectTooltip()
@@ -707,5 +694,6 @@ public class GameManager : MonoBehaviour
     }
    
 }
+
 
 

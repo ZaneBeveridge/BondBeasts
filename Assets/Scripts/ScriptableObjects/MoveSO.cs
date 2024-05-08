@@ -9,6 +9,8 @@ public class MoveSO : ScriptableObject
     public int id;
     public string moveName;
     public string moveDescription;
+    public string editableMoveDescription;
+    public string moveType;
     public MoveSet moveSet;
     //public Sprite iconSprite;
     public float baseCooldown = 1f;
@@ -124,6 +126,7 @@ public enum MoveSet
     Basic,
     Special
 }
+
 
 
 

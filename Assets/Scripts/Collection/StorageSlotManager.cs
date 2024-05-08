@@ -4,10 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
-public class StorageSlotManager : MonoBehaviour, IDropHandler
+public class StorageSlotManager : MonoBehaviour, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
     public TextMeshProUGUI text;
     public Image image;
+
+    public GameObject hoverObject;
+    public TextMeshProUGUI hoverText;
 
     public Color selectedColour;
     public Color unselectedColour;
@@ -96,6 +99,17 @@ public class StorageSlotManager : MonoBehaviour, IDropHandler
 
         manager.UpdateCollectionAll();
 
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        hoverObject.SetActive(true);
+        hoverText.text = (storageSlotID + 1).ToString();
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        hoverObject.SetActive(false);
     }
 }
 

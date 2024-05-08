@@ -7,36 +7,25 @@ public class ItemInspectManagerPopup : MonoBehaviour
     public GameObject panelPrefab;
     public Transform thisObjectTransform;
 
-    private GameObject currentPanel;
-    private bool timerOn = false;
-    private float timer = 0f;
-    public void Update()
-    {
-        if (timerOn)
-        {
-            if (timer > 0)
-            {
-                timer -= Time.deltaTime;
-            }
-            else if (timer <= 0)
-            {
-                CloseCurrentPanel();
-                timerOn = false;
-                timer = 0f;
-            }
-        }
-    }
+    public GameObject closePrefab;
 
-    public void SpawnInspectPanel(MonsterItemSO item, Transform loc, GameManager g)
+    private GameObject currentPanel;
+    private GameObject currentClose;
+
+    public void SpawnInspectPanel(MonsterItemSO item, Transform loc, GameManager g, bool simple)
     {
         CloseCurrentPanel();
 
+        GameObject closeObj = Instantiate(closePrefab, thisObjectTransform);
+        closeObj.GetComponent<ItemInspectCloseButton>().Init(g);
+        currentClose = closeObj;
+
         GameObject obj = Instantiate(panelPrefab, loc.position, Quaternion.identity, thisObjectTransform);
-        obj.GetComponent<ItemInspectPopup>().Init(item,g);
+        obj.GetComponent<ItemInspectPopup>().Init(item,g, simple);
         currentPanel = obj;
 
-        //timerOn = true;
-        //timer = 5f;
+        
+
     }
 
     public void CloseCurrentPanel()
@@ -45,6 +34,12 @@ public class ItemInspectManagerPopup : MonoBehaviour
         {
             Destroy(currentPanel);
             currentPanel = null;
+        }
+
+        if (currentClose != null)
+        {
+            Destroy(currentClose);
+            currentClose = null;
         }
     }
 }

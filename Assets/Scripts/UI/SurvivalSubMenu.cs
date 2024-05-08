@@ -43,6 +43,7 @@ public class SurvivalSubMenu : MonoBehaviour
     public EnemyMonsterController controller;
 
     private List<Monster> capturedMonsters = new List<Monster>();
+    private List<Monster> tempMonsters = new List<Monster>();
     private int gainedGroupXP = 0;
     private int numberOfMonsInParty = 0;
     private List<float> inBattleTimes = new List<float>();
@@ -220,19 +221,28 @@ public class SurvivalSubMenu : MonoBehaviour
     public void PressDropsButtonLeft()
     {
         if (currentPageID - 1 < 0) { return; }
-
-        UpdateDropsVisuals(currentPageID - 1);
+        currentPageID--;
+        UpdateDropsVisuals(currentPageID);
     }
 
     public void PressDropsButtonRight()
     {
-        UpdateDropsVisuals(currentPageID + 1);
+        currentPageID++;
+        UpdateDropsVisuals(currentPageID);
     }
 
     private void ClearItemsAndMonsVisuals()
     {
+        mons = null;
+        items = null;
         mons = new List<StoredMonster>();
         items = new List<StoredItem>();
+    }
+
+    public void ClearCaptureMons()
+    {
+        capturedMonsters = null;
+        capturedMonsters = new List<Monster>();
     }
 
     private void UpdatePressedButtonVisuals() // after pressing either retreat or continue once, update the text visuals on screen, or start/stop playing anims
@@ -248,7 +258,7 @@ public class SurvivalSubMenu : MonoBehaviour
             loseRewardsAnim.SetBool("Active", false);
         }
 
-        if (readyToRetreat & survivalStreak >= scoreNeededToPass)
+        if (readyToRetreat)
         {
             clearRoundAnim.SetBool("Active", true);
         }
@@ -262,11 +272,20 @@ public class SurvivalSubMenu : MonoBehaviour
 
     public void Retreat() // collect monsters, then drops and xp, then quit
     {
+        tempMonsters = new List<Monster>();
+
+        for (int i = 0; i < capturedMonsters.Count; i++)
+        {
+            tempMonsters.Add(capturedMonsters[i]);
+        }
+
         if (readyToRetreat)
         {
             ClearItemsAndMonsVisuals();
 
             background.SetActive(false);
+
+            
 
             if (capturedMonsters.Count > 0)
             {
@@ -281,6 +300,8 @@ public class SurvivalSubMenu : MonoBehaviour
             {
                 ToVictory();
             }
+
+            
         }
         else
         {
@@ -327,13 +348,29 @@ public class SurvivalSubMenu : MonoBehaviour
 
 
 
-        float perc = survivalStreak / 10f;
+        float perc = survivalStreak * 0.4f;
         int amount = gainedGroupXP + (int)(gainedGroupXP * perc);
 
-        GM.DoBattleAftermath("WON", inBattleTimes, amount, numberOfMonsInParty);
+
+        List<StoredMonster> partyMons = new List<StoredMonster>();
+
+        for (int i = 0; i < GM.collectionManager.partySlots.Count; i++)
+        {
+            if (GM.collectionManager.partySlots[i].storedMonsterObject != null)
+            {
+                StoredMonster storedMon = new StoredMonster(GM.collectionManager.partySlots[i].storedMonsterObject.GetComponent<PartySlot>().storedMonster, i);
+                partyMons.Add(storedMon);
+            }
+        }
+
+        Debug.Log(tempMonsters.Count);
+
+
+        GM.aftermathUI.Init(inBattleTimes, amount, partyMons, tempMonsters);
         GM.battleManager.groupXp = 0;
 
-        GM.SaveData();
+        ClearCaptureMons();
+        //GM.SaveData();
     }
 
     public void Continue() // goto next battle +10% xp, +20% all enemy stats, new monster
@@ -344,6 +381,8 @@ public class SurvivalSubMenu : MonoBehaviour
             background.SetActive(false);
 
             GM.battleManager.StartBattle(survivalMenu.monsSpawns, survivalMenu.nodeType, survivalMenu.backG, survivalStreak, true);
+
+            GM.overworldGameobject.SetActive(false);
 
         }
         else

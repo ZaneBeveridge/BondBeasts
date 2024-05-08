@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 104
   moveName: Large Strike
-  moveDescription: Fires a projectile dealing 10 damage. 2s Cooldown
+  moveDescription: Fires a projectile dealing 10 damage.
+  editableMoveDescription: Fires a projectile dealing [damage] damage.
+  moveType: Projectile
   moveSet: 0
   baseCooldown: 2
   minCooldown: 0
@@ -23,7 +25,6 @@ MonoBehaviour:
     effect: {fileID: 11400000, guid: f9b041fcfda8ea541ade0a674de65bfd, type: 2}
     delay: 0
     targets:
-      self: 0
       team: 0
       enemy: 0
     conditions:

@@ -67,7 +67,6 @@ public class BattleHealthBar : MonoBehaviour
             }
             else if (easeTimer <= 0)
             {
-                
                 easeSlider.value = Mathf.Lerp(easeSlider.value, currentAimingHealth, lerpSpeed);
             }
         }

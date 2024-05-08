@@ -383,7 +383,7 @@ public class EvolveUIManager : MonoBehaviour
             itms.Add(currentMonster.item2);
             itms.Add(currentMonster.item3);
 
-            Monster aMon = new Monster(currentMonster.name, currentMonster.level, currentMonster.capLevel + 1, currentMonster.xp, currentMonster.symbiotic, currentMonster.nature, currentMonster.variant, currentMonster.strange, currentMonster.colour, currentMonster.stats, currentMonster.backupData, currentMonster.basicMove, currentMonster.specialMove, currentMonster.passiveMove, itms);
+            Monster aMon = new Monster(currentMonster.name, currentMonster.level, currentMonster.capLevel + 1, currentMonster.xp, currentMonster.statPoints, currentMonster.symbiotic, currentMonster.nature, currentMonster.variant, currentMonster.strange, currentMonster.colour, currentMonster.stats, currentMonster.backupData, currentMonster.basicMove, currentMonster.specialMove, currentMonster.passiveMove, itms);
             aMon.backupData = currentMonster.backupData.ascendForm.form;
             aMon.basicMove = currentMonster.backupData.ascendForm.form.basicMove;
             aMon.specialMove = currentMonster.backupData.ascendForm.form.specialMove;
@@ -428,7 +428,7 @@ public class EvolveUIManager : MonoBehaviour
             itms.Add(currentMonster.item2);
             itms.Add(currentMonster.item3);
 
-            Monster dMon = new Monster(currentMonster.name, currentMonster.level, currentMonster.capLevel - 1, currentMonster.xp, currentMonster.symbiotic, currentMonster.nature, currentMonster.variant, currentMonster.strange, currentMonster.colour, currentMonster.stats, currentMonster.backupData, currentMonster.basicMove, currentMonster.specialMove, currentMonster.passiveMove, itms);
+            Monster dMon = new Monster(currentMonster.name, currentMonster.level, currentMonster.capLevel - 1, currentMonster.xp, currentMonster.statPoints, currentMonster.symbiotic, currentMonster.nature, currentMonster.variant, currentMonster.strange, currentMonster.colour, currentMonster.stats, currentMonster.backupData, currentMonster.basicMove, currentMonster.specialMove, currentMonster.passiveMove, itms);
 
             dMon.backupData = currentMonster.backupData.descendForm.form;
             dMon.basicMove = currentMonster.backupData.descendForm.form.basicMove;

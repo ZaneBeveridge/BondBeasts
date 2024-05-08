@@ -75,10 +75,9 @@ public class ButtonAttackSlot : MonoBehaviour
                     if (!controller.basicReady[controller.currentSlot] && !controller.basicReady2[controller.currentSlot] && !controller.basicReady3[controller.currentSlot])
                     {
                         attackButton.color = new Color(0.25f, 0.25f, 0.25f);
-
                         float f = GM.battleManager.friendlyMonsterController.basicC3[GM.battleManager.friendlyMonsterController.currentSlot];
-                        f = Mathf.Round(f * 10.0f) * 0.1f;
-                        num.text = f.ToString() + "s";
+                        //f = Mathf.Round(f * 10.0f) * 0.1f;
+                        num.text = f.ToString("F1") + "s";
                         trueReady = true;
 
                     }
@@ -94,10 +93,8 @@ public class ButtonAttackSlot : MonoBehaviour
                     if (!controller.specialReady[controller.currentSlot] && !controller.specialReady2[controller.currentSlot] && !controller.specialReady3[controller.currentSlot])
                     {
                         attackButton.color = new Color(0.25f, 0.25f, 0.25f);
-
                         float f = GM.battleManager.friendlyMonsterController.specialC3[GM.battleManager.friendlyMonsterController.currentSlot];
-                        f = Mathf.Round(f * 10.0f) * 0.1f;
-                        num.text = f.ToString() + "s";
+                        num.text = f.ToString("F1") + "s";
                         trueReady = true;
                     }
                     else
@@ -121,8 +118,7 @@ public class ButtonAttackSlot : MonoBehaviour
                     {
                         float f = GM.battleManager.friendlyMonsterController.basicC2[GM.battleManager.friendlyMonsterController.currentSlot];
                         attackButton.color = new Color(0.25f, 0.25f, 0.25f);
-                        f = Mathf.Round(f * 10.0f) * 0.1f;
-                        num.text = f.ToString() + "s";
+                        num.text = f.ToString("F1") + "s";
                         trueReady = true;
                     }
                     else
@@ -138,8 +134,7 @@ public class ButtonAttackSlot : MonoBehaviour
                     {
                         float f = GM.battleManager.friendlyMonsterController.specialC2[GM.battleManager.friendlyMonsterController.currentSlot];
                         attackButton.color = new Color(0.25f, 0.25f, 0.25f);
-                        f = Mathf.Round(f * 10.0f) * 0.1f;
-                        num.text = f.ToString() + "s";
+                        num.text = f.ToString("F1") + "s";
                         trueReady = true;
                     }
                     else
@@ -161,8 +156,7 @@ public class ButtonAttackSlot : MonoBehaviour
                 {
                     float f = GM.battleManager.friendlyMonsterController.basicC[GM.battleManager.friendlyMonsterController.currentSlot];
                     attackButton.color = new Color(0.25f, 0.25f, 0.25f);
-                    f = Mathf.Round(f * 10.0f) * 0.1f;
-                    num.text = f.ToString() + "s";
+                    num.text = f.ToString("F1") + "s";
                     trueReady = true;
                 }
                 else
@@ -178,8 +172,7 @@ public class ButtonAttackSlot : MonoBehaviour
                 {
                     float f = GM.battleManager.friendlyMonsterController.specialC[GM.battleManager.friendlyMonsterController.currentSlot];
                     attackButton.color = new Color(0.25f, 0.25f, 0.25f);
-                    f = Mathf.Round(f * 10.0f) * 0.1f;
-                    num.text = f.ToString() + "s";
+                    num.text = f.ToString("F1") + "s";
                     trueReady = true;
                 }
                 else

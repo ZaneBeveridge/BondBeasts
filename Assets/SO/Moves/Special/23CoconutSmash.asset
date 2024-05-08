@@ -15,15 +15,16 @@ MonoBehaviour:
   id: 23
   moveName: Coconut Smash
   moveDescription: Stuns for 3 seconds, CD 15
+  editableMoveDescription: Stuns for 3 seconds.
+  moveType: Projectile
   moveSet: 1
-  iconSprite: {fileID: 21300000, guid: 21fe48850f2c38f418eab46cb76adc7c, type: 3}
   baseCooldown: 15
   minCooldown: 3
   moveActions:
   - name: 
     effect: {fileID: 11400000, guid: d6164be547b5f9c40a5dd0d2b49837ed, type: 2}
+    delay: 0
     targets:
-      self: 0
       team: 0
       enemy: 0
     conditions:

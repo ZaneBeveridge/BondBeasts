@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 18
   moveName: Shark Block
-  moveDescription: Guard. Perfect timing heals 16. 16.4s CD
+  moveDescription: Perfect timing heals 16.
+  editableMoveDescription: 
+  moveType: Guard
   moveSet: 1
   baseCooldown: 16.4
   minCooldown: 3

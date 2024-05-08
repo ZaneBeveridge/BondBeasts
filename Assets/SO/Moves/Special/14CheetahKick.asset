@@ -15,6 +15,8 @@ MonoBehaviour:
   id: 14
   moveName: Cheetah Kick
   moveDescription: 5 dmg. CD 6. Fast projectile
+  editableMoveDescription: '[damage] damage.'
+  moveType: Fast Projectile
   moveSet: 1
   baseCooldown: 6
   minCooldown: 0
@@ -23,7 +25,6 @@ MonoBehaviour:
     effect: {fileID: 11400000, guid: aceab912f54427345a9d1abf4a69ab1e, type: 2}
     delay: 0
     targets:
-      self: 1
       team: 0
       enemy: 0
     conditions:

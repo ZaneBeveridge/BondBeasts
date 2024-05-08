@@ -15,6 +15,8 @@ MonoBehaviour:
   id: 37
   moveName: Ragoon Smash
   moveDescription: 10 dmg, CD 10, Very Slow Projectile
+  editableMoveDescription: '[damage] damage.'
+  moveType: Very Slow Projectile
   moveSet: 1
   baseCooldown: 10
   minCooldown: 0

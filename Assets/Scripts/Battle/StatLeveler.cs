@@ -111,7 +111,7 @@ public class StatLeveler : MonoBehaviour
     public void Continue() // HERERERERERERE
     {
         active = false;
-        captureChoiceWindow.NamePick(addedStats);
+        //captureChoiceWindow.NamePick(addedStats);
 
     }
 

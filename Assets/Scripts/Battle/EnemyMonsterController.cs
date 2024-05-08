@@ -447,6 +447,8 @@ public class EnemyMonsterController : MonoBehaviour
         healthBar.SetMaxHealth(100);
         healthBar.SetHealth(100, false);
 
+        regenCooldownTime = regenCoolodownBaseTime;
+
         for (int i = 0; i < 3; i++)
         {
             if (backupMonsters.Count >= i + 1)
@@ -536,7 +538,11 @@ public class EnemyMonsterController : MonoBehaviour
             tagReady[currentSlot] = false;
         }
 
-
+        if (isStart)
+        {
+            regenCooldownTime = regenCoolodownBaseTime;
+            ActivateAI(true);
+        }
 
         currentSlot = slot;
         List<Monster> pMons = new List<Monster>();
@@ -804,6 +810,8 @@ public class EnemyMonsterController : MonoBehaviour
 
     public void TakeDamage(int damage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile)
     {
+        if (GM.battleManager.isLosing || GM.battleManager.isWinning) { return; }
+
         if (parryOn)
         {
             // NO damage but do guard effect
@@ -1062,11 +1070,11 @@ public class EnemyMonsterController : MonoBehaviour
                 GM.battleManager.GetXP();
                 if (nodeType == NodeType.Survival)
                 {
-                    GM.battleManager.WinRoundSurvival(false);
+                    GM.battleManager.StartWinSurvival();
                 }
                 else
                 {
-                    GM.battleManager.Win();
+                    GM.battleManager.StartWin();
                 }
 
             }
@@ -1138,7 +1146,7 @@ public class EnemyMonsterController : MonoBehaviour
         {
             stunned = false;
             ActivateAI(true);
-            stunManager.Stun(time);
+            stunManager.StopStun();
         }
 
     }

@@ -15,6 +15,8 @@ MonoBehaviour:
   id: 29
   moveName: Vermillion Mash
   moveDescription: Heal 3 and -6 Guts. 0 CD
+  editableMoveDescription: Heal 3 and -6 Guts.
+  moveType: Instant
   moveSet: 1
   baseCooldown: 0
   minCooldown: 0

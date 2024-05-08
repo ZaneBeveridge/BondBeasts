@@ -113,7 +113,7 @@ public class CollectionManager : MonoBehaviour
     {
         // FIND NEXT POSSIBLE PLACE
         bool foundSpot = false;
-        int countUp = 3;
+        int countUp = 0;
         if (collectionMonsters.Count <= 0)
         {
             monster.storedID = countUp;
@@ -184,24 +184,10 @@ public class CollectionManager : MonoBehaviour
 
     public void SpawnMonsterInParty(Monster monster, int slot)
     {
-        for (int i = 0; i < collectionMonsters.Count; i++)
-        {
-            if (collectionMonsters[i].storedID == slot)
-            {
-                Debug.Log("Error: Tried to put monster into same stored ID slot as another IN PARTY");
-                return;
-            }
-        }
-
-
         GameObject mon = Instantiate(partySlotPrefab, partySlots[slot].gameObject.transform) as GameObject;
         partySlots[slot].storedMonsterObject = mon;
-        mon.GetComponent<PartySlot>().Init(monster, this, partySlots[slot]);
-
         monster.storedID = slot;
-        StoredMonster storedMon = new StoredMonster(monster, slot);
-        collectionMonsters.Add(storedMon);
-
+        mon.GetComponent<PartySlot>().Init(monster, this, partySlots[slot]);
         UpdatePartyLevel();
     }
 
@@ -210,15 +196,6 @@ public class CollectionManager : MonoBehaviour
     {
         partySlots[num].storedMonsterObject = null;
         Destroy(monsterObject);
-
-        for (int i = 0; i < collectionMonsters.Count; i++)
-        {
-            if (collectionMonsters[i].storedID == num)
-            {
-                collectionMonsters.Remove(collectionMonsters[i]);
-                break;
-            }
-        }
     }
 
     public void ClearMonster(Monster monsterObject)
@@ -554,8 +531,8 @@ public class CollectionManager : MonoBehaviour
 
         currentAmountOfCollectionSlots = 10;
 
-        int minIDRange = (bagID * currentAmountOfCollectionSlots) + 3;
-        int maxIDRange = (bagID * currentAmountOfCollectionSlots) + 12; // max collection size on page here
+        int minIDRange = (bagID * currentAmountOfCollectionSlots);
+        int maxIDRange = (bagID * currentAmountOfCollectionSlots) + 9; // max collection size on page here
 
         for (int i = 0; i < currentCollectionMonsters.Count; i++)
         {
@@ -568,7 +545,7 @@ public class CollectionManager : MonoBehaviour
         {
             if (collectionMonsters[i].storedID >= minIDRange && collectionMonsters[i].storedID <= maxIDRange) // if monster ID range is within the selected bags range of stored IDs
             {
-                int realSlot = collectionMonsters[i].storedID - (3 + (currentAmountOfCollectionSlots * bagID));
+                int realSlot = collectionMonsters[i].storedID - (currentAmountOfCollectionSlots * bagID);
                 GameObject mon = Instantiate(collectionSlotPrefab, collectionContents[realSlot]);
                 mon.GetComponent<CollectionSlot>().Init(collectionMonsters[i].monster, this, collectionMonsters[i].storedID);
                 currentCollectionMonsters.Add(mon);
@@ -769,8 +746,8 @@ public class CollectionManager : MonoBehaviour
         switch (bagMode)
         {
             case 0:
-                addedExtraLow = 3;
-                addedExtraHigh = 12;
+                addedExtraLow = 0;
+                addedExtraHigh = 9;
                 break;
             case 1:
                 addedExtraLow = 0;

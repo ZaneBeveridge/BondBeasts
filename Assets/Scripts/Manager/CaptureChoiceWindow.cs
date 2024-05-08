@@ -8,26 +8,59 @@ public class CaptureChoiceWindow : MonoBehaviour
 {
     public GameManager GM;
 
-    public GameObject firstObject;
+
+    [Header("Main")]
+
+    public GameObject mainObject;
+
+    public TextMeshProUGUI nameText;
+    public TMP_InputField inputField;
+    public TextMeshProUGUI levelText;
+
     public Image dynamicImg;
     public Image staticImg;
     public Image variantImg;
 
-    public GameObject symObject;
-    public GameObject paraObject;
-    public GameObject nameObject;
-    public TMP_InputField inputField;
+    public Animator paraAnim;
+    public Animator symbAnim;
 
-    public TextMeshProUGUI levelText;
-    public GameObject amountsObject;
-    public TextMeshProUGUI amountsText;
+    public Button statsButton;
+    public GameObject statsArea;
+    public GameObject movesArea;
 
-    public GameObject lvlsParent;
-    public GameObject statPickParent;
+    public Sprite personalityUp;
+    public Sprite personalityDown;
 
-    public TextMeshProUGUI typeText;
+    public Color normalTextColour;
+    public Color redTextColour;
+    public Color greenTextColour;
 
-    public StatLeveler statLeveler;
+    public List<TextMeshProUGUI> statNumbers = new List<TextMeshProUGUI>();
+    public List<Image> statPersonalityIcon = new List<Image>();
+    public List<TextMeshProUGUI> statMultipliers = new List<TextMeshProUGUI>();
+
+    public Sprite typeProjectileSprite;
+    public Sprite typeInstantSprite;
+    public Sprite typeGuardSprite;
+
+    public TextMeshProUGUI personalityText;
+    public GameObject strangeObject;
+
+    [Header("Basic")]
+    public TextMeshProUGUI basicEffectText;
+    public TextMeshProUGUI basicTypeText;
+    public TextMeshProUGUI basicCooldownText;
+    public Image basicTypeImage;
+
+    [Header("Special")]
+    public TextMeshProUGUI specialEffectText;
+    public TextMeshProUGUI specialTypeText;
+    public TextMeshProUGUI specialCooldownText;
+    public Image specialTypeImage;
+    [Header("Passive")]
+    public TextMeshProUGUI passiveEffectText;
+
+
     public Monster currentMonster;
     public EnemyMonsterController enemyMonsterController;
     private SurvivalSubMenu subMenu;
@@ -38,9 +71,7 @@ public class CaptureChoiceWindow : MonoBehaviour
     public void Init(List<Monster> mons, EnemyMonsterController controller)
     {
         survivalMode = false;
-        firstObject.SetActive(true);
-        GM.battleUI.gameObject.SetActive(false);
-        GM.battleManager.PauseControls();
+        mainObject.SetActive(true);
         monsters = mons;
         enemyMonsterController = controller;
 
@@ -51,9 +82,7 @@ public class CaptureChoiceWindow : MonoBehaviour
     {
         subMenu = menu;
         survivalMode = true;
-        firstObject.SetActive(true);
-        GM.battleUI.gameObject.SetActive(false);
-        GM.battleManager.PauseControls();
+        mainObject.SetActive(true);
         monsters = mons;
         enemyMonsterController = controller;
 
@@ -75,112 +104,175 @@ public class CaptureChoiceWindow : MonoBehaviour
         staticImg.sprite = currentMonster.staticSprite;
         variantImg.sprite = currentMonster.variant.variantStillSprite;
 
-        levelText.text = "Level " + currentMonster.level.ToString();
+        nameText.text = currentMonster.backupData.defaultName;
+        inputField.text = currentMonster.backupData.defaultName;
 
-        symObject.SetActive(true);
-        paraObject.SetActive(true);
-        nameObject.SetActive(false);
-        lvlsParent.SetActive(true);
-        amountsObject.SetActive(false);
-        statPickParent.SetActive(false);
+        levelText.text = "Lvl " + currentMonster.level.ToString();
+
+        for (int i = 0; i < statNumbers.Count; i++)
+        {
+            float personalityMod = currentMonster.nature.addedStats[i].value;
+
+            statNumbers[i].text = (currentMonster.stats[i].value * personalityMod).ToString();
+
+            if (personalityMod > 1)
+            {
+                statNumbers[i].color = greenTextColour;
+                statPersonalityIcon[i].gameObject.SetActive(true);
+                statPersonalityIcon[i].sprite = personalityUp;
+                statMultipliers[i].text = "x" + personalityMod.ToString();
+                statMultipliers[i].color = greenTextColour;
+            }
+            else if (personalityMod < 1)
+            {
+                statNumbers[i].color = redTextColour;
+                statPersonalityIcon[i].gameObject.SetActive(true);
+                statPersonalityIcon[i].sprite = personalityDown;
+                statMultipliers[i].text = "x" + personalityMod.ToString();
+                statMultipliers[i].color = redTextColour;
+            }
+            else
+            {
+                statNumbers[i].color = normalTextColour;
+                statPersonalityIcon[i].gameObject.SetActive(false);
+                statMultipliers[i].text = "";
+            }
+        }
+
+
+        personalityText.text = "Personality: " + currentMonster.nature.natureName;
+
+        if (currentMonster.strange)
+        {
+            strangeObject.SetActive(true);
+        }
+        else
+        {
+            strangeObject.SetActive(false);
+        }
+
+        //BASIC
+
+        basicEffectText.text = currentMonster.basicMove.moveDescription;
+
+        basicTypeText.text = currentMonster.basicMove.moveType;
+
+        if (currentMonster.basicMove.moveType == "Guard")
+        {
+            basicTypeImage.sprite = typeGuardSprite;
+        }
+        else if (currentMonster.basicMove.moveType == "Instant")
+        {
+            basicTypeImage.sprite = typeInstantSprite;
+        }
+        else
+        {
+            basicTypeImage.sprite = typeProjectileSprite;
+        }
+
+
+        basicCooldownText.text = currentMonster.basicMove.baseCooldown.ToString("F1");
+
+        //SPECIAL
+        specialEffectText.text = currentMonster.specialMove.moveDescription;
+
+        specialTypeText.text = currentMonster.specialMove.moveType;
+
+        if (currentMonster.specialMove.moveType == "Guard")
+        {
+            specialTypeImage.sprite = typeGuardSprite;
+        }
+        else if (currentMonster.specialMove.moveType == "Instant")
+        {
+            specialTypeImage.sprite = typeInstantSprite;
+        }
+        else
+        {
+            specialTypeImage.sprite = typeProjectileSprite;
+        }
+
+        specialCooldownText.text = currentMonster.specialMove.baseCooldown.ToString("F1");
+
+
+        //PASSIVE
+
+        passiveEffectText.text = currentMonster.passiveMove.moveDescription;
+
+        statsButton.Select();
+        statsArea.SetActive(true);
+        movesArea.SetActive(false);
+
     }
 
-    public void UpdateLevelAmounts(string type)
+    public void PressType(string type)
     {
-        int firstAddedAmount = 6;
-        int secondAddedAmount = 3;
-
         if (type == "Symbiotic")
         {
-            firstAddedAmount = 6;
-            secondAddedAmount = 3;
+            symbAnim.SetBool("Open", true);
+            paraAnim.SetBool("Open", false);
         }
         else if (type == "Parasitic")
         {
-            firstAddedAmount = 4;
-            secondAddedAmount = 2;
+            symbAnim.SetBool("Open", false);
+            paraAnim.SetBool("Open", true);
         }
-
-        if (currentMonster.level == 1)
-        {
-            amountsObject.SetActive(false);
-        }
-        else if (currentMonster.level <= 20 && currentMonster.level > 1)
-        {
-            amountsObject.SetActive(true);
-            if (currentMonster.level - 1 == 1)
-            {
-                amountsText.text = (currentMonster.level - 1).ToString() + " Level of +" + firstAddedAmount;
-            }
-            else
-            {
-                amountsText.text = (currentMonster.level - 1).ToString() + " Levels of +" + firstAddedAmount;
-            }
-            
-        }
-        else if (currentMonster.level > 20)
-        {
-            amountsObject.SetActive(true);
-            if (currentMonster.level - 20 == 1)
-            {
-                amountsText.text = "19 Levels of +" + firstAddedAmount + "\n" + (currentMonster.level - 20).ToString() + " Level of +" + secondAddedAmount;
-            }
-            else
-            {
-                amountsText.text = "19 Levels of +" + firstAddedAmount + "\n" + (currentMonster.level - 20).ToString() + " Levels of +" + secondAddedAmount;
-            }
-
-            
-
-        }
-
     }
 
-    public void StatPick(string type)
+    public void ConfirmType(string type)
     {
+        int amountOfUsableLevels = 0;
+
+        for (int i = 0; i < currentMonster.level; i++)
+        {
+            amountOfUsableLevels++;
+        }
+
+        if (amountOfUsableLevels > 30)
+        {
+            amountOfUsableLevels = 30;
+        }
+
+
         if (type == "Symbiotic")
         {
             currentMonster.symbiotic = true;
-            typeText.text = "Symbiotic";
-            typeText.color = new Color(0f, 180f, 255f);
+            currentMonster.statPoints = amountOfUsableLevels * 6;
         }
         else if (type == "Parasitic")
         {
             currentMonster.symbiotic = false;
-            typeText.text = "Parasitic";
-            typeText.color = new Color(255f, 0, 0);
+            currentMonster.statPoints = amountOfUsableLevels * 4;
         }
 
+        GM.levelUpUI.Init(currentMonster);
+    }
+
+    public void OnClickRename()
+    {
+        nameText.gameObject.SetActive(false);
+        inputField.gameObject.SetActive(true);
+
+        inputField.text = nameText.text;
+        inputField.Select();
+    }
+
+    public void FinishNameEdit()
+    {
+        nameText.gameObject.SetActive(true);
+        inputField.gameObject.SetActive(false);
 
 
-        symObject.SetActive(false);
-        paraObject.SetActive(false);
-        nameObject.SetActive(false);
-        lvlsParent.SetActive(false);
-        statPickParent.SetActive(true);
-        statLeveler.Init(currentMonster);
+        currentMonster.name = inputField.text;
+
+
+        nameText.text = inputField.text;
 
     }
 
-    public void NamePick(List<int> addedStats)
+    public void UpdateFromLevelUp(Monster updateMonster)
     {
-        for (int i = 0; i < currentMonster.stats.Count; i++)
-        {
-            if (addedStats[i] > 0)
-            {
-                currentMonster.AddStat(i, addedStats[i]);
-                //monster.stats[i].value += addedStats[i];
-            }    
-            
-        }
-
-        
-        symObject.SetActive(false);
-        paraObject.SetActive(false);
-        nameObject.SetActive(true);
-        lvlsParent.SetActive(false);
-        statPickParent.SetActive(false);
-        inputField.text = currentMonster.name;
+        currentMonster = updateMonster;
+        Fin();
     }
 
     public void Fin()
@@ -203,7 +295,7 @@ public class CaptureChoiceWindow : MonoBehaviour
                 {
                     subMenu.ToVictory();
                 }
-                firstObject.SetActive(false);
+                mainObject.SetActive(false);
             }
             else
             {
@@ -221,11 +313,6 @@ public class CaptureChoiceWindow : MonoBehaviour
 
                 GM.overworldUI.healthBar.SetHealth(GM.playerHP, false);
 
-                List<float> tms = new List<float>();
-                tms.Add(0);
-                tms.Add(0);
-                tms.Add(0);
-
                 int num = 0;
                 for (int i = 0; i < 3; i++)
                 {
@@ -235,12 +322,9 @@ public class CaptureChoiceWindow : MonoBehaviour
                     }
                 }
 
-
-                GM.DoBattleAftermath("CAPTURE", tms, 0, num);
-
                 GM.SaveData();
 
-                firstObject.SetActive(false);
+                mainObject.SetActive(false);
             }
 
             

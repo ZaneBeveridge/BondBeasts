@@ -23,6 +23,8 @@ public class BattleManager : MonoBehaviour
 
     public List<ButtonTagSlot> tagButtons = new List<ButtonTagSlot>();
 
+    public GameObject mountainPictureObject;
+
     [Header("Friendly")]
     public FriendlyMonsterController friendlyMonsterController;
 
@@ -33,6 +35,7 @@ public class BattleManager : MonoBehaviour
 
     [Header("Enemy")]
     public EnemyMonsterController enemyMonsterController;
+    public Animator enemyDieAnim;
 
     [Header("XP/Values")]
     public int xpGainedPerLevel = 25;
@@ -71,6 +74,9 @@ public class BattleManager : MonoBehaviour
 
     public Animator cameraAnimator;
 
+    public bool isLosing = false;
+    public bool isWinning = false;
+
     void Start()
     {
         // FOR TESTING 
@@ -80,8 +86,6 @@ public class BattleManager : MonoBehaviour
 
     public void CalcRewardSurv()
     {
-        
-
         if (actualStoredItems.Count > 0)
         {
             for (int i = 0; i < actualStoredItems.Count; i++)
@@ -96,7 +100,7 @@ public class BattleManager : MonoBehaviour
                         {
                             rewardedItems[j].amount += actualStoredItems[i].amount;
                             passed = true;
-                            Debug.Log("MergeItems");
+                            //Debug.Log("MergeItems");
                             break;
                             
                         }
@@ -105,13 +109,13 @@ public class BattleManager : MonoBehaviour
                     if (!passed)
                     {
                         rewardedItems.Add(actualStoredItems[i]);
-                        Debug.Log("NewItems");
+                        //Debug.Log("NewItems");
                         break;
                     }
                 }
                 else
                 {
-                    Debug.Log("NoItems");
+                    //Debug.Log("NoItems");
                     rewardedItems.Add(actualStoredItems[i]);
                 }
 
@@ -170,6 +174,8 @@ public class BattleManager : MonoBehaviour
 
     public void InitSurvival(List<MonsterSpawn> mons, NodeType type, Sprite background, int id, int scoreNeededToPass)
     {
+        isLosing = false;
+        isWinning = false;
         survival = true;
         rewardedItems = new List<StoredItem>();
         actualStoredItems = new List<StoredItem>();
@@ -185,11 +191,14 @@ public class BattleManager : MonoBehaviour
         friendlyMonsterController.inBattleTime.Add(0f);
         friendlyMonsterController.inBattleTime.Add(0f);
 
+        
 
     }
 
     public void InitBattle(List<MonsterSpawn> mons, NodeType type, Sprite background)
     {
+        isLosing = false;
+        isWinning = false;
         survival = false;
         rewardedItems = new List<StoredItem>();
         actualStoredItems = new List<StoredItem>();
@@ -203,6 +212,8 @@ public class BattleManager : MonoBehaviour
 
     public void InitPunk(List<Monster> mons, NodeType type, Sprite background, List<ItemDrop> drops, int punkMaxHealth)
     {
+        isLosing = false;
+        isWinning = false;
         survival = false;
         rewardedItems = new List<StoredItem>();
         actualStoredItems = new List<StoredItem>();
@@ -217,6 +228,8 @@ public class BattleManager : MonoBehaviour
 
     public void InitAlpha(List<Monster> mons, Sprite background, List<ItemDrop> drops, AlphaRoamer roamer, int roamerMaxHealth)
     {
+        isLosing = false;
+        isWinning = false;
         survival = false;
         currentRoamer = roamer;
         rewardedItems = new List<StoredItem>();
@@ -231,6 +244,9 @@ public class BattleManager : MonoBehaviour
 
     public void StartBattle(List<MonsterSpawn> mons, NodeType type, Sprite background, int extraStats, bool captureOn)
     {
+        isLosing = false;
+        isWinning = false;
+
         gameType = type;
         
         isPlayingIntro = true;
@@ -547,14 +563,158 @@ public class BattleManager : MonoBehaviour
         groupXp = groupXp + baseXp;
     }
 
-    public void WinRoundSurvival(bool withCapture)
+    
+
+    public void StartLoss()
     {
-        // Spawn sub menu
+        isLosing = true;
+        GM.timeManager.DoSlowMotion(2f);
+        friendlyMonsterController.alive = false;
+        PauseControls();
+        List<GameObject> hideObjs = new List<GameObject>();
+        hideObjs.Add(GM.battleUI.gameObject);
+        hideObjs.Add(GM.battleGameobject);
+        
+        List<GameObject> showObjs = new List<GameObject>();
+        showObjs.Add(mountainPictureObject);
+        showObjs.Add(GM.overworldGameobject);
+        showObjs.Add(GM.overworldUI.gameObject);
+
+        cameraAnimator.SetTrigger("ZoomLeft");
+        GM.fadeManager.Fade(hideObjs, showObjs, "Lose", 0f);
+
+        //play loss anim then,
+        //goto Loss()
+    }
+
+    public void MiddleLoss()
+    {
+        enemyMonsterController.ActivateAI(false);
+
+        List<GameObject> hideObjs = new List<GameObject>();
+        hideObjs.Add(mountainPictureObject);
+        List<GameObject> showObjs = new List<GameObject>();
+        
+        GM.fadeManager.Fade(hideObjs, showObjs, "LoseFinal", 1f);
+    }
+
+    public void StartCap()
+    {
+        isWinning = true;
+        enemyMonsterController.ActivateAI(false);
+        friendlyMonsterController.alive = false;
+        PauseControls();
+        GM.timeManager.DoSlowMotion(2f);
+
+        List<GameObject> hideObjs = new List<GameObject>();
+        hideObjs.Add(GM.battleUI.gameObject);
+        
+
+        List<GameObject> showObjs = new List<GameObject>();
+        
+        if (!survival)
+        {
+            hideObjs.Add(GM.battleGameobject);
+            showObjs.Add(GM.overworldGameobject);
+        }
+
+
+        cameraAnimator.SetTrigger("ZoomRight");
+        GM.fadeManager.Fade(hideObjs, showObjs, "Capture", 2f);
+
+        
+        //play cap anim then,
+        //goto Capture()
+    }
+
+    public void StartWin()
+    {
+        isWinning = true;
+        enemyMonsterController.ActivateAI(false);
+        friendlyMonsterController.alive = false;
+        PauseControls();
+        GM.timeManager.DoSlowMotion(4f);
+
+        //zoom in on enemy
+        //enemy flash yellow
+        //enemy explode
+
+        List<GameObject> hideObjs = new List<GameObject>();
+        hideObjs.Add(GM.battleUI.gameObject);
+        hideObjs.Add(GM.battleGameobject);
+
+        List<GameObject> showObjs = new List<GameObject>();
+        showObjs.Add(GM.overworldGameobject);
+
+        cameraAnimator.SetTrigger("ZoomRight");
+        enemyDieAnim.SetTrigger("FlashExplode");
+        GM.fadeManager.Fade(hideObjs, showObjs, "Win", 2f);
+        //play win anim then,
+        //goto Win()
+    }
+    public void StartWinSurvival()
+    {
+        isWinning = true;
+        enemyMonsterController.ActivateAI(false);
+        friendlyMonsterController.alive = false;
+        PauseControls();
+        GM.timeManager.DoSlowMotion(4f);
+
+        List<GameObject> hideObjs = new List<GameObject>();
+        hideObjs.Add(GM.battleUI.gameObject);
+
+        List<GameObject> showObjs = new List<GameObject>();
+
+        cameraAnimator.SetTrigger("ZoomRight");
+        enemyDieAnim.SetTrigger("FlashExplode");
+        GM.fadeManager.Fade(hideObjs, showObjs, "WinSurvival", 2f);
+        //play win anim then,
+        //goto WinRoundSurvival(false);
+    }
+
+    public void Win()
+    {
         friendlyMonsterController.alive = false;
         CleanUpProjectiles();
         enemyMonsterController.ActivateAI(false);
 
-        //GM.battleGameobject.SetActive(false);
+        GM.playerManager.currentNode.SetComplete(true);
+        GM.playerManager.currentNode.Refresh();
+
+        if (currentRoamer != null)
+        {
+            groupXp = groupXp * 2;
+            currentRoamer.Kill();
+            currentRoamer = null;
+        }
+
+        List<StoredMonster> partyMons = new List<StoredMonster>();
+
+        for (int i = 0; i < GM.collectionManager.partySlots.Count; i++)
+        {
+            if (GM.collectionManager.partySlots[i].storedMonsterObject != null)
+            {
+                StoredMonster storedMon = new StoredMonster(GM.collectionManager.partySlots[i].storedMonsterObject.GetComponent<PartySlot>().storedMonster, i);
+                partyMons.Add(storedMon);
+            }
+        }
+
+
+
+        List<Monster> emptyMons = new List<Monster>();
+
+        GM.aftermathUI.Init(friendlyMonsterController.inBattleTime, groupXp, partyMons, emptyMons);
+        groupXp = 0;
+
+        GM.SaveData();
+    }
+
+    public void WinRoundSurvival(bool withCapture)
+    {
+        friendlyMonsterController.alive = false;
+        CleanUpProjectiles();
+        enemyMonsterController.ActivateAI(false);
+
         GM.battleUI.gameObject.SetActive(false);
 
 
@@ -580,57 +740,12 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    public void Win()
-    {
-
-        friendlyMonsterController.alive = false;
-        CleanUpProjectiles();
-        enemyMonsterController.ActivateAI(false);
-
-        GM.playerManager.currentNode.SetComplete(true);
-        GM.playerManager.currentNode.Refresh();
-
-        GM.battleGameobject.SetActive(false);
-        GM.battleUI.gameObject.SetActive(false);
-
-        GM.overworldGameobject.SetActive(true);
-        GM.overworldUI.gameObject.SetActive(true);
-
-
-        if (currentRoamer != null)
-        {
-            groupXp = groupXp * 2;
-            currentRoamer.Kill();
-            currentRoamer = null;
-        }
-
-        int num = 0;
-        for (int i = 0; i < 3; i++)
-        {
-            if (GM.collectionManager.partySlots[i].storedMonsterObject != null)
-            {
-                num++;
-            }
-        }
-
-
-        GM.DoBattleAftermath("WON", friendlyMonsterController.inBattleTime, groupXp, num);
-        groupXp = 0;
-
-        GM.SaveData();
-    }
-
     public void Lose()
     {
         friendlyMonsterController.alive = false;
         CleanUpProjectiles();
-        enemyMonsterController.ActivateAI(false);
 
-        GM.battleGameobject.SetActive(false);
-        GM.battleUI.gameObject.SetActive(false);
-
-        GM.overworldGameobject.SetActive(true);
-        GM.overworldUI.gameObject.SetActive(true);
+        survivalSubMenu.ClearCaptureMons();
 
         int num = 0;
         for (int i = 0; i < 3; i++)
@@ -641,23 +756,31 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        GM.DoBattleAftermath("LOST", friendlyMonsterController.inBattleTime, 0, num);
+        GM.playerHP = 50f;
+
+        GM.popupManager.FullyHealed();
+        GM.MovePlayerHome();
+
+
+        //GM.DoBattleAftermath("LOST", friendlyMonsterController.inBattleTime, 0, num);
         groupXp = 0;
     }
 
 
     public void Capture() // Captures the monster
     {
-        //PAUSE GAME
+        CleanUpProjectiles();
+        enemyMonsterController.ActivateAI(false);
+        friendlyMonsterController.alive = false;
+        
+
         if (survival)
         {
             WinRoundSurvival(true);
         }
         else
         {
-            CleanUpProjectiles();
-            enemyMonsterController.ActivateAI(false);
-
+            
             List<Monster> ms = new List<Monster>();
             ms.Add(enemyMonsterController.currentMonster);
 

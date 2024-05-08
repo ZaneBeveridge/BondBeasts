@@ -15,6 +15,8 @@ MonoBehaviour:
   id: 107
   moveName: Echo Strike
   moveDescription: Fires a projectile dealing 1 damage. 3s Cooldown. Echo
+  editableMoveDescription: Fires a projectile dealing [damage] damage. Echo.
+  moveType: Projectile
   moveSet: 0
   baseCooldown: 3
   minCooldown: 0

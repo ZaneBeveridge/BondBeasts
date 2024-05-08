@@ -28,11 +28,6 @@ public class DragableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (manager != null)
-        {
-            manager.itemInspectManagerPopup.CloseCurrentPanel();
-        }
-       
         startPosition = draggingObject.position;
         parentAfterDrag = transform.parent;
         transform.SetParent(transform.root);
@@ -55,11 +50,6 @@ public class DragableItem : MonoBehaviour, IDragHandler, IBeginDragHandler, IEnd
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (manager != null)
-        {
-            manager.itemInspectManagerPopup.CloseCurrentPanel();
-        }
-        
         draggingObject.position = startPosition;
         transform.SetParent(parentAfterDrag);
 
