@@ -13,6 +13,9 @@ public class PartySlot : Slot
 
     public Slider slider;
     public TextMeshProUGUI sliderText1;
+    public Image sliderBacking;
+    public Color blueSliderColour;
+    public Color yellowSliderColour;
 
     public GameObject levelUpObject;
     public GameObject evolveObject;
@@ -85,25 +88,28 @@ public class PartySlot : Slot
             slider.value = storedMonster.xp / xpMax;
             sliderText1.text = storedMonster.xp.ToString() + "/" + xpMax.ToString() + " XP";
 
-            if (storedMonster.xp >= xpMax)
-            {
-                levelUpObject.SetActive(true);
-            }
-            else
-            {
-                levelUpObject.SetActive(false);
-            }
         }
+
+        if (storedMonster.statPoints > 0)
+        {
+            levelUpObject.SetActive(true);
+        }
+        else
+        {
+            levelUpObject.SetActive(false);
+        }
+
 
         if (((storedMonster.level / 10) - 1) == storedMonster.capLevel && !levelUpObject.activeSelf)
         {
             evolveObject.SetActive(true);
             slider.value = 1f;
             sliderText1.text = "TRANSFORM READY";
-            levelUpObject.SetActive(false);
+            sliderBacking.color = yellowSliderColour;
         }
         else
         {
+            sliderBacking.color = blueSliderColour;
             evolveObject.SetActive(false);
         }
 
@@ -186,7 +192,7 @@ public class PartySlot : Slot
 
     public void ClickLevelup()
     {
-        manager.GM.levelUpUI.Init(storedMonster, partySlotManager.slotNum - 1, LevelUpType.Party);
+        manager.GM.levelUpUI.Init(storedMonster, partySlotManager.slotNum - 1, true);
     }
 
     public void ClickEvolve()

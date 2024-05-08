@@ -9,22 +9,21 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class MenuMan : MonoBehaviour
 {
-    public GameObject button;
-    public GameObject resetButton;
+    public GameObject mainScreen;
+    public GameObject loadingScreen;
 
     public string mainScene;
 
 
     public TextMeshProUGUI text;
     public Slider slider;
-    public GameObject loadingScreen;
+    
 
     private float time = 0f;
 
     public void LoadScene()
     {
-        button.gameObject.SetActive(false);
-        resetButton.gameObject.SetActive(false);
+        mainScreen.SetActive(false);
         loadingScreen.SetActive(true);
         StartCoroutine(LoadAsynchronously(mainScene));
     }
@@ -38,20 +37,15 @@ public class MenuMan : MonoBehaviour
         while (!operation.isDone)
         {
             time = time + Time.deltaTime;
-            text.text = "Loading... " + (int)(operation.progress * 100f) + "%";
+            text.text = "LOADING... " + (int)(operation.progress * 100f) + "%";
             
             float progress = Mathf.Clamp01(operation.progress / 0.9f);
             slider.value = progress;
 
             if (operation.progress >= 0.9f)
             {
-                text.text = "Finished Loading";
-                if (time > 2f)
-                {
-                    operation.allowSceneActivation = true;
-                    loadingScreen.SetActive(false);
-                }
-                
+                text.text = "FINALIZING BOND BEASTS...";
+                operation.allowSceneActivation = true;
             }
             yield return null;
         }

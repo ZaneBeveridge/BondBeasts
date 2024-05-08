@@ -93,7 +93,7 @@ public class CaptureButton : MonoBehaviour
 
         if (currentCharge >= realCap)
         {
-            manager.Capture();
+            manager.StartCap();
             StopCharging();
             currentCharge = 0f;
         }

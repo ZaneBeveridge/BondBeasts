@@ -15,6 +15,16 @@ public class TimelineController : MonoBehaviour
         playableDirector.Play();
         playableDirector.playableGraph.GetRootPlayable(0).SetSpeed(newSpeed);
     }
+
+    public void Pause()
+    {
+        playableDirector.Pause();
+    }
+
+    public void Resume()
+    {
+        playableDirector.Resume();
+    }
 }
 
 

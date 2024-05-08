@@ -21,7 +21,7 @@ public class CollectionSlotManager : MonoBehaviour, IDropHandler
 
         if (slot.type == SlotType.Party)
         {
-            int realSlot = slotID + ((manager.currentBag * 10) + 3);
+            int realSlot = slotID + (manager.currentBag * 10);
 
 
             manager.SpawnMonsterInCollectionWithID(slot.storedMonster, realSlot);
@@ -30,7 +30,7 @@ public class CollectionSlotManager : MonoBehaviour, IDropHandler
         }
         else if (slot.type == SlotType.Collection)
         {
-            int realSlot = slotID + ((manager.currentBag * 10) + 3);
+            int realSlot = slotID + (manager.currentBag * 10);
 
             manager.ClearMonster(slot.storedMonster);
 

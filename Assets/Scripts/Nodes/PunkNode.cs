@@ -104,6 +104,7 @@ public class PunkNode : Node
                 monsters[i].level,
                 monsters[i].capLevel,
                 monsters[i].xp,
+                0,
                 monsters[i].symbiotic,
                 monsters[i].nature,
                 monsters[i].variant,

@@ -15,15 +15,16 @@ MonoBehaviour:
   id: 34
   moveName: Fox Cut
   moveDescription: 8 dmg, resets on hit. CD 24
+  editableMoveDescription: '[damage] dmg, resets on hit.'
+  moveType: Projectile
   moveSet: 1
-  iconSprite: {fileID: 21300000, guid: 21fe48850f2c38f418eab46cb76adc7c, type: 3}
   baseCooldown: 24
   minCooldown: 0
   moveActions:
   - name: 
     effect: {fileID: 11400000, guid: 34dc720b4c067b846961604c89908574, type: 2}
+    delay: 0
     targets:
-      self: 1
       team: 0
       enemy: 0
     conditions:

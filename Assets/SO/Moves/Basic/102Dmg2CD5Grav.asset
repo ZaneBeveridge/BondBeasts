@@ -16,15 +16,17 @@ MonoBehaviour:
   moveName: Fluffy Strike
   moveDescription: Fires a projectile that deals 2 Damage, and applies Low Gravity
     to the enemy. 5s CD
+  editableMoveDescription: Fires a projectile that deals [damage] Damage, and applies
+    Low Gravity to the enemy.
+  moveType: Projectile
   moveSet: 0
-  iconSprite: {fileID: 21300000, guid: 975933a28b79be646923246c7e3ffe25, type: 3}
   baseCooldown: 5
   minCooldown: 0
   moveActions:
   - name: 2Dmg Projectile
     effect: {fileID: 11400000, guid: 82574ee509f027b4e9179b85f954666f, type: 2}
+    delay: 0
     targets:
-      self: 0
       team: 0
       enemy: 0
     conditions:

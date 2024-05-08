@@ -17,6 +17,7 @@ public class OverworldUI : MonoBehaviour
     [Header("Menu")]
     public GameObject menuUI;
     public GameManager GM;
+    public PostBattleLootManager postBattleLootManager;
 
     public BattleHealthBar healthBar;
     public NodeInfoPopupManager popupManager;
@@ -143,6 +144,7 @@ public class OverworldUI : MonoBehaviour
 
     public void SetMenuOpen(bool state)
     {
+        GM.overworldUI.gameObject.SetActive(!state);
         menuUI.SetActive(state);
     }
     

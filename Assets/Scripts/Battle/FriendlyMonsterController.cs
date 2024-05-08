@@ -164,6 +164,62 @@ public class FriendlyMonsterController : MonoBehaviour
             {
                 inBattleTime[2] += Time.deltaTime;
             }
+
+
+            if (regenCooldown)
+            {
+                if (regenCooldownTime > 0)
+                {
+                    regenCooldownTime -= Time.deltaTime;
+                }
+                else if (regenCooldownTime <= 0)
+                {
+                    //REGEN
+                    regenOn = true;
+                    regenCooldown = false;
+                }
+
+                juiceRegenSlider.value = regenCooldownTime / regenCoolodownBaseTime;
+            }
+
+            if (regenOn)
+            {
+                if (regenTimer > 0)
+                {
+                    regenTimer -= Time.deltaTime;
+                }
+                else if (regenTimer <= 0)
+                {
+
+                    float regenAmount = 0f;
+                    float itemPassives = friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice);
+                    float buffSlots = friendlyBattleBuffManager.slotValues[2];
+                    regenAmount = 0.1f * (juice + itemPassives + buffSlots);
+
+                    //Debug.Log("Regen Amount: " + regenAmount.ToString());
+
+                    int flooredRegen = Mathf.FloorToInt(regenAmount + accumulatedJuiceHealing);
+                    //Debug.Log("Floored: " + flooredRegen.ToString());
+
+                    float leftOvers = (regenAmount + accumulatedJuiceHealing) - flooredRegen;
+                    //Debug.Log("Left Overs: " + leftOvers.ToString());
+
+                    accumulatedJuiceHealing = leftOvers;
+
+                    if (flooredRegen >= 1 || flooredRegen <= -1)
+                    {
+                        healthBar.SetHealth(GM.playerHP + flooredRegen, false);
+                        GM.playerHP = healthBar.slider.value;
+
+                    }
+
+
+
+                    regenTimer = regenBaseTime;
+                }
+            }
+
+
         }
 
 
@@ -191,58 +247,7 @@ public class FriendlyMonsterController : MonoBehaviour
         DoCooldowns();
 
 
-        if (regenCooldown)
-        {
-            if (regenCooldownTime > 0)
-            {
-                regenCooldownTime -= Time.deltaTime;
-            }
-            else if (regenCooldownTime <= 0)
-            {
-                //REGEN
-                regenOn = true;
-                regenCooldown = false;
-            }
-
-            juiceRegenSlider.value = regenCooldownTime / regenCoolodownBaseTime;
-        }
-
-        if (regenOn)
-        {
-            if (regenTimer > 0)
-            {
-                regenTimer -= Time.deltaTime;
-            }
-            else if (regenTimer <= 0)
-            {
-
-                float regenAmount = 0f;
-                float itemPassives = friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice);
-                float buffSlots = friendlyBattleBuffManager.slotValues[2];
-                regenAmount = 0.1f * (juice + itemPassives + buffSlots);
-
-                //Debug.Log("Regen Amount: " + regenAmount.ToString());
-
-                int flooredRegen = Mathf.FloorToInt(regenAmount + accumulatedJuiceHealing);
-                //Debug.Log("Floored: " + flooredRegen.ToString());
-
-                float leftOvers = (regenAmount + accumulatedJuiceHealing) - flooredRegen;
-                //Debug.Log("Left Overs: " + leftOvers.ToString());
-
-                accumulatedJuiceHealing = leftOvers;
-
-                if (flooredRegen >= 1 || flooredRegen <= -1)
-                {
-                    healthBar.SetHealth(GM.playerHP + flooredRegen, false);
-                    GM.playerHP = healthBar.slider.value;
-
-                }
-
-                
-
-                regenTimer = regenBaseTime;
-            }
-        }
+        
 
         if (tagOn)
         {
@@ -418,6 +423,12 @@ public class FriendlyMonsterController : MonoBehaviour
         {
             tagC[currentSlot] = cooldown - (cooldown * (0.008f * (spark + friendlyBattleBuffManager.slotValues[5] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark)))); //tagCooldown;
             tagReady[currentSlot] = false;
+        }
+
+        if (isStart)
+        {
+            regenCooldownTime = regenCoolodownBaseTime;
+            alive = true;
         }
         
 
@@ -634,6 +645,8 @@ public class FriendlyMonsterController : MonoBehaviour
 
     public void TakeDamage(int damage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile) // if effect cant be parried, guarded
     {
+        if (GM.battleManager.isWinning || GM.battleManager.isLosing) { return; }
+
         //USE DEFENCE HERE
         if (!effect)
         {
@@ -904,7 +917,7 @@ public class FriendlyMonsterController : MonoBehaviour
 
             if (GM.playerHP <= 0)
             {
-                GM.battleManager.Lose();
+                GM.battleManager.StartLoss();
             }
             else
             {

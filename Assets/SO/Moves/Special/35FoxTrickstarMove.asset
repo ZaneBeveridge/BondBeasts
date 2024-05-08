@@ -15,6 +15,8 @@ MonoBehaviour:
   id: 35
   moveName: Fox Crash
   moveDescription: 12 dmg, resets on hit. CD 40
+  editableMoveDescription: '[damage] damage, resets on hit. '
+  moveType: Projectile
   moveSet: 1
   baseCooldown: 40
   minCooldown: 0

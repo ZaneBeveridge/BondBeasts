@@ -10,6 +10,11 @@ public class CollectionSlot : Slot, IDropHandler
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI levelText;
 
+    public Image backingImage;
+
+    public Sprite symbioticSprite;
+    public Sprite parasiticSprite;
+
     public int slotNum;
     public void Init(Monster monster, CollectionManager man, int num)
     {
@@ -28,7 +33,14 @@ public class CollectionSlot : Slot, IDropHandler
         nameText.text = monster.name;
         levelText.text = monster.level.ToString();
 
-
+        if(monster.symbiotic)
+        {
+            backingImage.sprite = symbioticSprite;
+        }
+        else
+        {
+            backingImage.sprite = parasiticSprite;
+        }
     }
 
     public void UpdateItem()

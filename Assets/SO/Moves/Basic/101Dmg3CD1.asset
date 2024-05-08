@@ -15,8 +15,9 @@ MonoBehaviour:
   id: 101
   moveName: Long Strike
   moveDescription: Fires a projectile that deals 3 Damage. 1s CD
+  editableMoveDescription: Fires a projectile that deals [damage] Damage.
+  moveType: Projectile
   moveSet: 0
-  iconSprite: {fileID: 21300000, guid: 975933a28b79be646923246c7e3ffe25, type: 3}
   baseCooldown: 1
   minCooldown: 0
   moveActions:
@@ -24,7 +25,6 @@ MonoBehaviour:
     effect: {fileID: 11400000, guid: 3ec54304c79bf8f4b8e56e626907ff1c, type: 2}
     delay: 0
     targets:
-      self: 0
       team: 0
       enemy: 0
     conditions:

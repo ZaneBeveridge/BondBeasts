@@ -17,7 +17,7 @@ public class ItemInspectPopup : MonoBehaviour
     private MonsterItemSO item;
 
     private GameManager GM;
-    public void Init(MonsterItemSO i, GameManager g)
+    public void Init(MonsterItemSO i, GameManager g, bool simple)
     {
         GM = g;
         item = i;
@@ -25,7 +25,7 @@ public class ItemInspectPopup : MonoBehaviour
         nameText.text = i.itemName;
         descText.text = i.desc;
 
-        if (i.canBeUpgraded)
+        if (i.canBeUpgraded && !simple)
         {
             upgradeObject.SetActive(true);
         }

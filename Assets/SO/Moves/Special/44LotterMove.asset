@@ -15,6 +15,8 @@ MonoBehaviour:
   id: 44
   moveName: Lotter Blast
   moveDescription: Fire four 2 dmg projectiles
+  editableMoveDescription: Fire four [damage] damage projectiles
+  moveType: Multi Projectile
   moveSet: 1
   baseCooldown: 8
   minCooldown: 0

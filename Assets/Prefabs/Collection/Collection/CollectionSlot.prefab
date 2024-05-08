@@ -111,7 +111,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -7, y: -6.6}
+  m_AnchoredPosition: {x: -2.7051, y: 40.175}
   m_SizeDelta: {x: 190, y: 158}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &530618511550336285
@@ -359,8 +359,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -4.5}
-  m_SizeDelta: {x: 190, y: 150}
+  m_AnchoredPosition: {x: -0.3227, y: -7.1494}
+  m_SizeDelta: {x: 184.5898, y: 238.3506}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!222 &4353632999337864082
 CanvasRenderer:
@@ -880,6 +880,7 @@ MonoBehaviour:
     level: 0
     capLevel: 0
     xp: 0
+    statPoints: 0
     symbiotic: 0
     basicMove: {fileID: 0}
     specialMove: {fileID: 0}
@@ -905,6 +906,9 @@ MonoBehaviour:
   manager: {fileID: 0}
   nameText: {fileID: 3348428504423516705}
   levelText: {fileID: 7847292613612206037}
+  backingImage: {fileID: 9196567197003152394}
+  symbioticSprite: {fileID: 21300000, guid: 4fde205f3fcb7b74a8b590b9c10a5db5, type: 3}
+  parasiticSprite: {fileID: 21300000, guid: 8bbbea6c6c45ee44a9c8c87f2a9cee68, type: 3}
   slotNum: 0
 --- !u!114 &894844810558561295
 MonoBehaviour:
@@ -919,6 +923,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentAfterDrag: {fileID: 0}
+  active: 1
 --- !u!114 &3188654237461801886
 MonoBehaviour:
   m_ObjectHideFlags: 0

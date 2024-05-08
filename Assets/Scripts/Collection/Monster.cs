@@ -12,6 +12,7 @@ public class Monster
     public int level;
     public int capLevel; 
     public int xp;
+    public int statPoints;
     public bool symbiotic;
 
     public MoveSO basicMove;
@@ -91,7 +92,17 @@ public class Monster
 
         if (strange)
         {
-            specialMove = data.strangePoolMoves[Random.Range(0, data.strangePoolMoves.Count - 1)];
+            List<MoveSO> newMoves = new List<MoveSO>();
+
+            for (int i = 0; i < data.strangePoolMoves.Count; i++)
+            {
+                if (data.strangePoolMoves[i].id != data.specialMove.id)
+                {
+                    newMoves.Add(data.strangePoolMoves[i]);
+                }
+            }
+
+            specialMove = newMoves[Random.Range(0, newMoves.Count - 1)];
         }
         else
         {
@@ -149,7 +160,18 @@ public class Monster
 
         if (strange)
         {
-            specialMove = data.strangePoolMoves[Random.Range(0, data.strangePoolMoves.Count - 1)];
+            List<MoveSO> newMoves = new List<MoveSO>();
+
+            for (int i = 0; i < data.strangePoolMoves.Count; i++)
+            {
+                if (data.strangePoolMoves[i].id != data.specialMove.id)
+                {
+                    newMoves.Add(data.strangePoolMoves[i]);
+                }
+            }
+
+
+            specialMove = newMoves[Random.Range(0, newMoves.Count - 1)];
         }
         else
         {
@@ -168,13 +190,14 @@ public class Monster
     }
 
     // 1 item
-    public Monster(string _name, int _level, int _capLevel, int _xp, bool _symbiotic, NatureSO _nature, VariantSO _variant, bool _strange, ColourRoll _color, List<Stat> _stats, MonsterSO _data, MoveSO _bMove, MoveSO _sMove, PassiveSO _pMove, List<MonsterItemSO> items)
+    public Monster(string _name, int _level, int _capLevel, int _xp, int _statPoints, bool _symbiotic, NatureSO _nature, VariantSO _variant, bool _strange, ColourRoll _color, List<Stat> _stats, MonsterSO _data, MoveSO _bMove, MoveSO _sMove, PassiveSO _pMove, List<MonsterItemSO> items)
     {
         //Debug.Log("Hello3");
         name = _name;
         level = _level;
         capLevel = _capLevel;
         xp = _xp;
+        statPoints = _statPoints;
         symbiotic = _symbiotic;
         nature = _nature;
         variant = _variant;

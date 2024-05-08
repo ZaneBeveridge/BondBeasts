@@ -10,6 +10,12 @@ public class SurvivalMenu : MonoBehaviour
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI neededText;
 
+    public GameObject clearedObject;
+    public GameObject unclearedObject;
+
+    public Animator leaveButtonAnim;
+    public Animator startButtonAnim;
+
     public GameObject background;
 
     [HideInInspector] public List<MonsterSpawn> monsSpawns = new List<MonsterSpawn>();
@@ -28,14 +34,18 @@ public class SurvivalMenu : MonoBehaviour
 
         if (GM.survivalBest[id] >= scoreN)
         {
-            neededText.text = "Passed!";
+            clearedObject.SetActive(true);
+            unclearedObject.SetActive(false);
         }
         else
         {
-            neededText.text = "Needed To Pass\n" + scoreN.ToString();
+            clearedObject.SetActive(false);
+            unclearedObject.SetActive(true);
+            neededText.text = scoreN.ToString();
         }
 
-
+        leaveButtonAnim.SetTrigger("Start");
+        startButtonAnim.SetTrigger("Start");
         
     }
 
@@ -44,7 +54,6 @@ public class SurvivalMenu : MonoBehaviour
 
     public void Leave()
     {
-        
         GM.overworldUI.gameObject.SetActive(true);
         background.SetActive(false);
     }

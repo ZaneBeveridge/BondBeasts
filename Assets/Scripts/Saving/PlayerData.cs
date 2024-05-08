@@ -42,6 +42,7 @@ public class PlayerData
     public List<int> mLevels = new List<int>();
     public List<int> mCapLevels = new List<int>();
     public List<int> mXPs = new List<int>();
+    public List<int> mStatPoints = new List<int>();
     public List<bool> mSymbiotics = new List<bool>();
     public List<int> mNatures = new List<int>();
     public List<int> mVariants = new List<int>();
@@ -75,7 +76,7 @@ public class PlayerData
     public List<int> mData = new List<int>();
 
     public List<int> mStoredID = new List<int>();
-
+    public List<bool> mInParty = new List<bool>();
 
     public PlayerData(GameManager m)
     {
@@ -113,8 +114,80 @@ public class PlayerData
             itemsStoredID.Add(m.collectionManager.itemsOwned[i].storedID);
         }
 
+        for (int i = 0; i < m.collectionManager.partySlots.Count; i++)
+        {
+            if (m.collectionManager.partySlots[i].storedMonsterObject != null)
+            {
+                Monster mon = m.collectionManager.partySlots[i].storedMonsterObject.GetComponent<PartySlot>().storedMonster;
 
-        
+                mNames.Add(mon.name);
+                mLevels.Add(mon.level);
+                mCapLevels.Add(mon.capLevel);
+                mXPs.Add(mon.xp);
+                mStatPoints.Add(mon.statPoints);
+                mSymbiotics.Add(mon.symbiotic);
+                mNatures.Add(mon.nature.id);
+                mVariants.Add(mon.variant.id);
+                mStranges.Add(mon.strange);
+
+                mBasic.Add(mon.basicMove.id);
+                mSpecial.Add(mon.specialMove.id);
+                mPassive.Add(mon.passiveMove.id);
+
+                mColoursR.Add(mon.colour.colour.r);
+                mColoursG.Add(mon.colour.colour.g);
+                mColoursB.Add(mon.colour.colour.b);
+                mColoursA.Add(mon.colour.colour.a);
+
+                mColoursRarity.Add(mon.colour.rarity);
+                mColoursNumber.Add(mon.colour.number);
+                mColoursRolled.Add(mon.colour.rolledNum);
+                mColoursTotalRolled.Add(mon.colour.totalRoll);
+
+                mStat1.Add(mon.stats[0].value);
+                mStat2.Add(mon.stats[1].value);
+                mStat3.Add(mon.stats[2].value);
+                mStat4.Add(mon.stats[3].value);
+                mStat5.Add(mon.stats[4].value);
+                mStat6.Add(mon.stats[5].value);
+
+
+                if (mon.item1 != null)
+                {
+                    mEquipItem1.Add(mon.item1.id);
+                }
+                else
+                {
+                    mEquipItem1.Add(0);
+                }
+
+                if (mon.item2 != null)
+                {
+                    mEquipItem2.Add(mon.item2.id);
+                }
+                else
+                {
+                    mEquipItem2.Add(0);
+                }
+
+                if (mon.item3 != null)
+                {
+                    mEquipItem3.Add(mon.item3.id);
+                }
+                else
+                {
+                    mEquipItem3.Add(0);
+                }
+
+                mData.Add(mon.backupData.ID.ID);
+
+                mStoredID.Add(m.collectionManager.partySlots[i].slotNum - 1);
+
+                mInParty.Add(true);
+            }
+            
+        }
+
 
         for (int i = 0; i < m.collectionManager.collectionMonsters.Count; i++)
         {
@@ -124,6 +197,7 @@ public class PlayerData
             mLevels.Add(mon.level);
             mCapLevels.Add(mon.capLevel);
             mXPs.Add(mon.xp);
+            mStatPoints.Add(mon.statPoints);
             mSymbiotics.Add(mon.symbiotic);
             mNatures.Add(mon.nature.id);
             mVariants.Add(mon.variant.id);
@@ -182,8 +256,7 @@ public class PlayerData
 
             mStoredID.Add(m.collectionManager.collectionMonsters[i].storedID);
 
-
-
+            mInParty.Add(false);
         }
     }
 

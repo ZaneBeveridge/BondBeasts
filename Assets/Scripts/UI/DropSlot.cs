@@ -20,7 +20,7 @@ public class DropSlot : MonoBehaviour
         image.sprite = item.icon;
         amountText.text = i.amount.ToString();
 
-        Debug.Log("Item: " + item.itemName + ". Amount: " + i.amount.ToString());
+        //Debug.Log("Item: " + item.itemName + ". Amount: " + i.amount.ToString());
     }
 
     public void OnClick()

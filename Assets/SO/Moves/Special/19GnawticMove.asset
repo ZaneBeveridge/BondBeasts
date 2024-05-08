@@ -15,6 +15,8 @@ MonoBehaviour:
   id: 19
   moveName: Gnawtic Move
   moveDescription: On Hit Drain 1 of all stats from enemy to team
+  editableMoveDescription: 
+  moveType: Projectile
   moveSet: 1
   baseCooldown: 3
   minCooldown: 0
