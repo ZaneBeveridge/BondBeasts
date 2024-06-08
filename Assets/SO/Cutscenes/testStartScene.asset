@@ -14,52 +14,97 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cutsceneName: firstStart
   sceneFrames:
-  - name: establishing shot of woods
-    talker: 
-    isAnim: 0
-    backgroundAnimation: {fileID: 0}
-    backgroundImage: {fileID: 21300000, guid: 4b2c717ffc6ab964d85fd5fbe96d7aa6, type: 3}
-    onScreenText: In the calm woods....
-  - name: shot of boy stumbling, tired, through woods
-    talker: 
-    isAnim: 1
-    backgroundAnimation: {fileID: 9100000, guid: aeb1431499aa3004ea5edc94614dc269, type: 2}
-    backgroundImage: {fileID: 0}
-    onScreenText: 
-  - name: boy is approached by scary monster [fat rhino?]
-    talker: 
-    isAnim: 1
-    backgroundAnimation: {fileID: 9100000, guid: 6f897354e5c986744b60f8d6d5a92097, type: 2}
-    backgroundImage: {fileID: 0}
-    onScreenText: 
-  - name: monster attacks while boy defends
-    talker: 
-    isAnim: 0
-    backgroundAnimation: {fileID: 0}
-    backgroundImage: {fileID: 21300000, guid: ac3e115474868dd4c868ae36269cc058, type: 3}
-    onScreenText: Ouch! He attacked me :(
-  - name: other monster [cheetah adult lightning?] intercepts attack and protects
-      boy
-    talker: 
-    isAnim: 1
-    backgroundAnimation: {fileID: 9100000, guid: dc80b9ded508c5b4eb71ffe9c22da2c3, type: 2}
-    backgroundImage: {fileID: 0}
-    onScreenText: A creature leaps in front of you and the monster and attacks!
-  - name: other monster vanishes
-    talker: 
-    isAnim: 0
-    backgroundAnimation: {fileID: 0}
-    backgroundImage: {fileID: 21300000, guid: 81721151d77a453449c8f10d6d278b8a, type: 3}
-    onScreenText: the angry monster vanishes
-  - name: (M)entor reveals himself
-    talker: 
-    isAnim: 1
-    backgroundAnimation: {fileID: 9100000, guid: 31b456e76f4a6d04588b9942915f7d50, type: 2}
-    backgroundImage: {fileID: 0}
-    onScreenText: I strange man appears out of no where
-  - name: M "stay back, (K)id!"
-    talker: Mentor
-    isAnim: 0
-    backgroundAnimation: {fileID: 0}
-    backgroundImage: {fileID: 21300000, guid: 00e29ac7cc46fa54395a9ff00ed645f7, type: 3}
-    onScreenText: Stay back Kid!
+  - sceneName: test01
+    imagesToDisplay:
+    - image: {fileID: 21300000, guid: edb24e47952576648b8a11ed3f7da512, type: 3}
+      imageID: 1
+      fade: 0
+      shake: 0
+    imagesToRemove: []
+    displayText:
+      dialogueText: This is the first test shot, black dot should be on the left
+        and it should of faded in.
+      dialogueTextColour: {r: 1, g: 1, b: 1, a: 1}
+      speakerText: Page 01
+      speakerTextColour: {r: 1, g: 1, b: 1, a: 1}
+      backgroundColour: {r: 1, g: 1, b: 1, a: 1}
+      fade: 0
+      shake: 0
+    removeText:
+      removeText: 0
+      fade: 0
+      shake: 0
+  - sceneName: test02
+    imagesToDisplay:
+    - image: {fileID: 21300000, guid: 4ca89981b259457408c4fb713588c05f, type: 3}
+      imageID: 2
+      fade: 1
+      shake: 0
+    imagesToRemove:
+    - imageID: 1
+      fade: 0
+      shake: 1
+    displayText:
+      dialogueText: This is the second test shot, the previous image should of shaked
+        before leaving, and the next black dot should of faded in on the right hand
+        side. The text here should of also shook.
+      dialogueTextColour: {r: 1, g: 1, b: 1, a: 1}
+      speakerText: Page 02
+      speakerTextColour: {r: 1, g: 1, b: 1, a: 1}
+      backgroundColour: {r: 1, g: 1, b: 1, a: 1}
+      fade: 0
+      shake: 1
+    removeText:
+      removeText: 0
+      fade: 0
+      shake: 0
+  - sceneName: test03
+    imagesToDisplay:
+    - image: {fileID: 21300000, guid: edb24e47952576648b8a11ed3f7da512, type: 3}
+      imageID: 3
+      fade: 1
+      shake: 0
+    - image: {fileID: 21300000, guid: 4ca89981b259457408c4fb713588c05f, type: 3}
+      imageID: 4
+      fade: 1
+      shake: 0
+    imagesToRemove:
+    - imageID: 2
+      fade: 0
+      shake: 0
+    displayText:
+      dialogueText: This is the 3rd test shot, the previous black dot on the right
+        should of instantly disapeared and then the two black dots should both come
+        in together, fading in. The text should of also faded in. In the next shot,
+        the text will be gone, and images with disapear.
+      dialogueTextColour: {r: 1, g: 1, b: 1, a: 1}
+      speakerText: Page 03
+      speakerTextColour: {r: 1, g: 1, b: 1, a: 1}
+      backgroundColour: {r: 1, g: 1, b: 1, a: 1}
+      fade: 1
+      shake: 0
+    removeText:
+      removeText: 0
+      fade: 0
+      shake: 0
+  - sceneName: test04
+    imagesToDisplay: []
+    imagesToRemove:
+    - imageID: 3
+      fade: 0
+      shake: 1
+    - imageID: 4
+      fade: 0
+      shake: 1
+    displayText:
+      dialogueText: 
+      dialogueTextColour: {r: 1, g: 1, b: 1, a: 1}
+      speakerText: 
+      speakerTextColour: {r: 1, g: 1, b: 1, a: 1}
+      backgroundColour: {r: 1, g: 1, b: 1, a: 1}
+      fade: 0
+      shake: 0
+    removeText:
+      removeText: 1
+      fade: 1
+      shake: 0

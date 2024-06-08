@@ -2,48 +2,119 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+
 
 public class CutsceneController : MonoBehaviour
 {
     public GameObject cutsceneGameobject;
-    public Image cutsceneBackground;
-    public Animator backgroundAnim;
+    public Transform imageArea;
+    public GameObject imagePrefab;
 
-    public TextMeshProUGUI nameOnScreen;
-    public TextMeshProUGUI textOnScreen;
-    public GameObject textObject;
-    public GameObject continueBackgroundButton;
+    public CutsceneTextController textController;
+
+    
 
     private int frameIndex = 0;
     private CutsceneSO currentScene;
 
-
+    private List<CutsceneImagePrefab> currentImages = new List<CutsceneImagePrefab>();
 
     private void DoFrame(SceneFrame frame)
     {
-        if (frame.isAnim)
+        // remove images
+        if (frame.imagesToRemove.Count > 0)
         {
-            backgroundAnim.runtimeAnimatorController = frame.backgroundAnimation;
-        }
-        else
-        {
-            backgroundAnim.runtimeAnimatorController = null;
-            cutsceneBackground.sprite = frame.backgroundImage;
+            for (int i = 0; i < frame.imagesToRemove.Count; i++)
+            {
+                for (int j = 0; j < currentImages.Count; j++)
+                {
+                    if (currentImages[j].index == frame.imagesToRemove[i].imageID)
+                    {
+                        if (frame.imagesToRemove[i].fade)
+                        {
+                            currentImages[j].FadeOut();
+                        }
+                        else if (frame.imagesToRemove[i].shake)
+                        {
+                            currentImages[j].Shake(true);
+                        }
+                        else
+                        {
+                            currentImages[j].Hide();
+                        }
+
+                        currentImages.RemoveAt(j);
+                    }
+                }
+            }
         }
 
-        if (frame.onScreenText != "")
+        // add images
+
+        if (frame.imagesToDisplay.Count > 0)
         {
-            textObject.SetActive(true);
-            continueBackgroundButton.SetActive(false);
-            textOnScreen.text = frame.onScreenText;
-            nameOnScreen.text = frame.talker;
+            for (int i = 0; i < frame.imagesToDisplay.Count; i++)
+            {
+                GameObject img = Instantiate(imagePrefab, imageArea) as GameObject;
+                CutsceneImagePrefab manager = img.GetComponent<CutsceneImagePrefab>();
+                manager.index = frame.imagesToDisplay[i].imageID;
+                manager.image.sprite = frame.imagesToDisplay[i].image;
+
+                if (frame.imagesToDisplay[i].fade)
+                {
+                    manager.FadeIn();
+                }
+                else if (frame.imagesToDisplay[i].shake)
+                {
+                    manager.Shake(false);
+                }
+                else
+                {
+                    manager.Show();
+                }
+
+                currentImages.Add(manager);
+            }
         }
-        else
+
+        // remove text
+
+        if (frame.removeText.removeText)
+        { 
+            if (frame.removeText.fade)
+            {
+                textController.FadeOut();
+            }
+            if (frame.removeText.shake)
+            {
+                textController.Shake();
+            }
+            else
+            {
+                textController.Hide();
+            } 
+        }
+        else // add text
         {
-            continueBackgroundButton.SetActive(true);
-            textObject.SetActive(false);
+            textController.Init(frame.displayText.dialogueText, frame.displayText.speakerText, frame.displayText.dialogueTextColour, frame.displayText.speakerTextColour, frame.displayText.backgroundColour);
+
+            if (frame.displayText.fade)
+            {
+                textController.FadeIn();
+            }
+            if (frame.displayText.shake)
+            {
+                textController.Shake();
+            }
+            else
+            {
+                textController.Show();
+            }
         }
+
+        
+
+
     }
 
     public void NextFrame()
