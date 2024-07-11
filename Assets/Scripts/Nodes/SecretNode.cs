@@ -9,7 +9,7 @@ public class SecretNode : Node
 
     public override void SetComplete(bool state)
     {
-        completed = state;
+        base.SetComplete(state);
 
         for (int i = 0; i < hiddingNodes.Count; i++)
         {
@@ -26,18 +26,19 @@ public class SecretNode : Node
 
     public override void OnEnter()
     {
-        
         GM.playerManager.OnEnterNode("", this);
 
         if (!completed)
         {
-            if (cutscene != null)
-            {
-                GM.cutsceneController.PlayCutscene(cutscene);
-            }
-
             SetComplete(true);
         }
+
+        if (!entered & onEnterCutscene != null)
+        {
+            GM.cutsceneController.PlayCutscene(onEnterCutscene);
+        }
+
+        entered = true;
         
     }
 
@@ -60,11 +61,6 @@ public class SecretNode : Node
     public override void OnInteract()
     {
 
-    }
-
-    public override bool IsComplete()
-    {
-        return completed;
     }
 
     public override void Refresh()

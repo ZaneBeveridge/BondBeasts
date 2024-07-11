@@ -8,6 +8,7 @@ public class FriendlyMonsterController : MonoBehaviour
     [Header("References")]
     public GameManager GM;
     public BattleHealthBar healthBar;
+    public GameObject parentMain;
     public Animator friendlyAnim;
     public Animator friendlyAnimVariant;
     public Animator friendlyParentAnim;
@@ -616,7 +617,7 @@ public class FriendlyMonsterController : MonoBehaviour
         }
     }
 
-   
+
     public void SetFriendlyMonster(int slot)
     {
         if (GM.collectionManager.partySlots[slot].storedMonsterObject == null) return;
@@ -641,6 +642,18 @@ public class FriendlyMonsterController : MonoBehaviour
         }
 
 
+    }
+
+    public void SetEmpty(bool state)
+    {
+        if (state) // set empty for bond battle, only bond button active, no beast yet
+        {
+            parentMain.SetActive(false);
+        }
+        else
+        {
+            parentMain.SetActive(true);
+        }
     }
 
     public void TakeDamage(int damage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile) // if effect cant be parried, guarded

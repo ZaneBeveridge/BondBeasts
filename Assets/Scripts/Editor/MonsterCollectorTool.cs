@@ -127,7 +127,7 @@ public class MonsterCollectorTool : EditorWindow
         CollectionManager collectionManager = GameObject.FindGameObjectWithTag("CollectionManager").GetComponent<CollectionManager>();
         if (collectionManager == null) return;
 
-        if (collectionManager.CheckFreePartySlot() == 0) return;
+        if (collectionManager.CheckFreePartySlot() >= 3) return;
         
 
         Monster monster = new Monster(customName, level, baseMonsterInfo);

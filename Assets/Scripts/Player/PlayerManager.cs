@@ -8,6 +8,8 @@ public class PlayerManager : MonoBehaviour
     public OverworldUI overworldUI;
     public GameManager GM;
     public RoamerController currentRoamerController;
+
+    public CutsceneSO startingCutscene;
     [Header("Node")]
     public Node homeNode;
 
@@ -73,7 +75,7 @@ public class PlayerManager : MonoBehaviour
             }
             else
             {
-                GM.SaveData();
+                //GM.SaveData(); //this make saving happen when landing on a node but no when landing on a roamer, without save should happen after the nodes been cleared or interacted with.
             }
 
             
@@ -86,6 +88,10 @@ public class PlayerManager : MonoBehaviour
         currentNode = homeNode;
         previousNode = homeNode;
         SetUI("");
+        GM.overworldUI.HideUI(true);
+        GM.overworldUI.partyButtonParent.SetActive(false);
+
+        GM.cutsceneController.PlayCutscene(startingCutscene);
     }
 
     public void StartLoad(Node node, Node prevNode)
@@ -133,6 +139,7 @@ public class PlayerManager : MonoBehaviour
             currentNode.westNode, currentNode.wTotalMonstersNeeded, currentNode.wTotalLevelNeeded, currentNode.wLevelCapNeeded, currentNode.wObjectiveNeeded, currentNode.wNodesCompleteNeeded
             );
         overworldUI.SetInteractionText(txt);
+        overworldUI.SetDialogueButton(currentNode);
         overworldUI.popupManager.Open(currentNode);
     }
 
@@ -140,6 +147,11 @@ public class PlayerManager : MonoBehaviour
     public void Interact()
     {
         currentNode.OnInteract();
+    }
+
+    public void DialogueButton()
+    {
+        currentNode.OnDialogue();
     }
 
     public void Move(int direction)
@@ -204,5 +216,10 @@ public class PlayerManager : MonoBehaviour
 
         readyToAttackRoamer = true;
         //GM.playerManager.isMoving = false;
+
+        if (currentNode.nodeType == NodeType.Blank)
+        {
+            GM.SaveData();
+        }
     }
 }

@@ -1,0 +1,46 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 251c9dab7d6b78749bf12270a2ebcc85, type: 3}
+  m_Name: 02farmCutscene
+  m_EditorClassIdentifier: 
+  cutsceneName: 
+  sceneFrames:
+  - sceneName: 
+    imagesToDisplay: []
+    imagesToRemove: []
+    displayText:
+      dialogueText: 'You made it! '
+      dialogueTextColour: {r: 1, g: 1, b: 1, a: 1}
+      speakerText: 
+      speakerTextColour: {r: 0, g: 0, b: 0, a: 0}
+      backgroundColour: {r: 1, g: 1, b: 1, a: 1}
+      fade: 1
+      shake: 0
+    removeText:
+      removeText: 0
+      fade: 0
+      shake: 0
+  - sceneName: 
+    imagesToDisplay: []
+    imagesToRemove: []
+    displayText:
+      dialogueText: Pick a Bond Beast to start your adventures with!
+      dialogueTextColour: {r: 1, g: 1, b: 1, a: 1}
+      speakerText: 
+      speakerTextColour: {r: 0, g: 0, b: 0, a: 0}
+      backgroundColour: {r: 1, g: 1, b: 1, a: 1}
+      fade: 0
+      shake: 0
+    removeText:
+      removeText: 0
+      fade: 0
+      shake: 0

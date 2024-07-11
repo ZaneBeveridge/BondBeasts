@@ -13,7 +13,7 @@ public class CapIncreaseNode : Node
     public CutsceneSO enoughLevelScene;
     public override void SetComplete(bool state)
     {
-        completed = state;
+        base.SetComplete(state);
 
         for (int i = 0; i < unlockGates.Count; i++)
         {
@@ -30,14 +30,8 @@ public class CapIncreaseNode : Node
 
     public override void OnEnter()
     {
-
         if (!completed)
         {
-            if (cutscene != null)
-            {
-                GM.cutsceneController.PlayCutscene(cutscene);
-            }
-
             GM.playerManager.OnEnterNode(text, this);
         }
         else
@@ -45,7 +39,12 @@ public class CapIncreaseNode : Node
             GM.playerManager.OnEnterNode(doneText, this);
         }
 
-        
+        if (!entered & onEnterCutscene != null)
+        {
+            GM.cutsceneController.PlayCutscene(onEnterCutscene);
+        }
+
+        entered = true;
     }
 
     public override void OnExit(Node previousNode, Node currentNode, Node newNode)
@@ -84,11 +83,6 @@ public class CapIncreaseNode : Node
                 GM.cutsceneController.PlayCutscene(notEnoughLevelScene);
             }
         }
-    }
-
-    public override bool IsComplete()
-    {
-        return completed;
     }
 
     public override void Refresh()

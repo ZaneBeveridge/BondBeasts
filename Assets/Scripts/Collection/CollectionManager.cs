@@ -1158,7 +1158,7 @@ public class CollectionManager : MonoBehaviour
 
     public int CheckFreePartySlot()
     {
-        int value = 0;
+        int value = 0; // 3 == full 0,1,2 = space
 
         for (int i = 0; i < partySlots.Count; i++)
         {

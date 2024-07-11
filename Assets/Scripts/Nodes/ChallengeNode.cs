@@ -12,8 +12,8 @@ public class ChallengeNode : Node
     public Sprite completeSprite;
     public override void SetComplete(bool state)
     {
-        completed = state;
-        //Debug.Log("hello");
+        base.SetComplete(state);
+
         for (int i = 0; i < unlockGates.Count; i++)
         {
             if (completed)
@@ -44,10 +44,6 @@ public class ChallengeNode : Node
     {
         if (!completed)
         {
-            if (cutscene != null)
-            {
-                GM.cutsceneController.PlayCutscene(cutscene);
-            }
 
             GM.playerManager.OnEnterNode(text, this);
         }
@@ -55,6 +51,13 @@ public class ChallengeNode : Node
         {
             GM.playerManager.OnEnterNode(doneText, this);
         }
+
+        if (!entered & onEnterCutscene != null)
+        {
+            GM.cutsceneController.PlayCutscene(onEnterCutscene);
+        }
+
+        entered = true;
     }
 
     public override void OnExit(Node previousNode, Node currentNode, Node newNode)
@@ -74,11 +77,6 @@ public class ChallengeNode : Node
     {
         SetComplete(true);
         Refresh();
-    }
-
-    public override bool IsComplete()
-    {
-        return completed;
     }
 
     public override void Refresh()

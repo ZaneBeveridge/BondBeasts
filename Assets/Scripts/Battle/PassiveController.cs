@@ -472,5 +472,7 @@ public class PassiveController : MonoBehaviour
         passivesOn = false;
         currentMonPassive = null;
         sharedPassives = new List<PassiveSO>();
+        delayedEffects = new List<DelayedEffect>();
+        delayedEffectsTime = new List<float>();
     }
 }

@@ -7,13 +7,22 @@ public class OverworldUI : MonoBehaviour
 {
     [Header("Interaction Button")]
     public Button interactionButton;
+    public GameObject interactionParent;
     public TextMeshProUGUI interactionText;
     [Header("Direction Butttons")]
+    public GameObject navControls;
     public Button northButton;
     public Button eastButton;
     public Button southButton;
     public Button westButton;
-
+    [Header("Dialogue Button")]
+    public GameObject dialogueButton;
+    public GameObject dialogueButtonParent;
+    [Header("Other Butttons")]
+    public GameObject partyButton;
+    public GameObject partyButtonParent;
+    public GameObject pauseButton;
+    public GameObject healthBarParent;
     [Header("Menu")]
     public GameObject menuUI;
     public GameManager GM;
@@ -27,6 +36,52 @@ public class OverworldUI : MonoBehaviour
         healthBar.SetHealth(GM.playerHP, false);
     }
 
+    public void HideUI(bool state)
+    {
+        if (state)
+        {
+            interactionParent.SetActive(false);
+            navControls.SetActive(false);
+            dialogueButtonParent.SetActive(false);
+            partyButton.SetActive(false);
+            pauseButton.SetActive(false);
+            healthBarParent.SetActive(false);
+        }
+        else
+        {
+            interactionParent.SetActive(true);
+            navControls.SetActive(true);
+            dialogueButtonParent.SetActive(true);
+            partyButton.SetActive(true);
+            pauseButton.SetActive(true);
+            healthBarParent.SetActive(true);
+        }
+    }
+    public void SetDialogueButton(Node currentNode)
+    {
+        if (!currentNode.completed)
+        {
+            if (currentNode.dialogueButtonCutsceneUncompleted != null)
+            {
+                dialogueButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                dialogueButton.gameObject.SetActive(false);
+            }
+        }
+        else
+        {
+            if (currentNode.dialogueButtonCutsceneCompleted != null)
+            {
+                dialogueButton.gameObject.SetActive(true);
+            }
+            else
+            {
+                dialogueButton.gameObject.SetActive(false);
+            }
+        }
+    }
 
     public void SetInteractionText(string text) // Sets the text on the interact button
     {

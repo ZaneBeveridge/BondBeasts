@@ -52,20 +52,21 @@ public class SurvivalNode : Node
     }
     public override void OnEnter() // Entering node
     {
-
         if (!completed)
         {
-            if (cutscene != null)
-            {
-                GM.cutsceneController.PlayCutscene(cutscene);
-            }
-
             GM.playerManager.OnEnterNode(text, this);
         }
         else
         {
             GM.playerManager.OnEnterNode(doneText, this);
         }
+
+        if (!entered & onEnterCutscene != null)
+        {
+            GM.cutsceneController.PlayCutscene(onEnterCutscene);
+        }
+
+        entered = true;
     }
 
     public override void OnExit(Node previousNode, Node currentNode, Node newNode)
@@ -94,11 +95,6 @@ public class SurvivalNode : Node
             GM.battleManager.InitSurvival(monsterPool, nodeType, backgroundSprite, survivalID, scoreNeededToPass);
         }
 
-    }
-
-    public override bool IsComplete()
-    {
-        return completed;
     }
 
     public override void Refresh()

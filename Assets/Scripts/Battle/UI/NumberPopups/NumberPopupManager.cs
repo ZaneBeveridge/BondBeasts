@@ -14,17 +14,28 @@ public class NumberPopupManager : MonoBehaviour
     public GameObject negatedTextPrefab;
     public GameObject reflectedTextPrefab;
 
+    public Camera uiCam;
+    public Camera worldCam;
+    public Canvas thisCanvas;
 
     public Transform textParent;
 
     private List<GameObject> nums = new List<GameObject>();
 
-    public void SpawnPopup(PopupType type, Transform transform, string txt, int eTxt)
+    public void SpawnPopup(PopupType type, Transform tran, string txt, int eTxt)
     {
-        Vector2 worldPos = transform.position;
+        var screen = worldCam.WorldToScreenPoint(tran.position);
+        screen.z = (thisCanvas.transform.position - uiCam.transform.position).magnitude;
+        var position = uiCam.ScreenToWorldPoint(screen);
+        Vector3 viewportPos = position; // element is the Text show in the UI.
 
 
-        Vector2 viewportPos = Camera.main.WorldToScreenPoint(worldPos);
+
+        //var worldPos = cam.WorldToScreenPoint(tran.position);
+        //worldPos.z = (thisCanvas.transform.position - cam.transform.position).magnitude;
+        //Vector2 viewportPos = Camera.main.ScreenToWorldPoint(worldPos);
+
+        //Vector3 viewportPos = cam.WorldToScreenPoint(worldPos);
 
         GameObject textToSpawn = damageTextPrefab;
 
@@ -59,7 +70,7 @@ public class NumberPopupManager : MonoBehaviour
                 break;
         }
 
-        GameObject spawnedText = Instantiate(textToSpawn, new Vector3(viewportPos.x, viewportPos.y, 0f), Quaternion.identity, textParent);
+        GameObject spawnedText = Instantiate(textToSpawn, viewportPos, Quaternion.identity, textParent);
         spawnedText.GetComponent<NumberPopup>().Init(txt, eTxt);
 
         nums.Add(spawnedText);

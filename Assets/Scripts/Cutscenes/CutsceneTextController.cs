@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine.UI;
 public class CutsceneTextController : MonoBehaviour
 {
+    public GameObject speakerObject;
+
     public TextMeshProUGUI dialogueText;
     public TextMeshProUGUI speakerNameText;
     
@@ -14,6 +16,15 @@ public class CutsceneTextController : MonoBehaviour
 
     public void Init(string text, string speaker, Color textColour, Color speakerColour, Color backgroundColour)
     {
+        if (speaker == "")
+        {
+            speakerObject.SetActive(false);
+        }
+        else
+        {
+            speakerObject.SetActive(true);
+        }
+
         dialogueText.text = text;
         speakerNameText.text = speaker;
         dialogueText.color = textColour;

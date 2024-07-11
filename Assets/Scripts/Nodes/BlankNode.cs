@@ -4,20 +4,18 @@ using UnityEngine;
 
 public class BlankNode : Node
 {
-    public override void SetComplete(bool state)
-    {
-        completed = state;
-    }
 
     public override void OnEnter()
     {
-        completed = true;
-        GM.playerManager.OnEnterNode("", this);
-
-        if (cutscene != null)
+        if (!entered && onEnterCutscene != null)
         {
-            GM.cutsceneController.PlayCutscene(cutscene);
+            GM.cutsceneController.PlayCutscene(onEnterCutscene);
         }
+
+
+        entered = true;
+        completed = true;
+        GM.playerManager.OnEnterNode("", this); 
     }
 
     public override void OnExit(Node previousNode, Node currentNode, Node newNode)
@@ -39,11 +37,6 @@ public class BlankNode : Node
     public override void OnInteract()
     {
         
-    }
-
-    public override bool IsComplete()
-    {
-        return completed;
     }
 
     public override void Refresh()

@@ -77,6 +77,8 @@ public class BattleManager : MonoBehaviour
     public bool isLosing = false;
     public bool isWinning = false;
 
+    private bool isBondBattle = false;
+
     void Start()
     {
         // FOR TESTING 
@@ -172,6 +174,21 @@ public class BattleManager : MonoBehaviour
         rewardedItems = rewardedIt;
     }
 
+    public void InitFirstBondBattle(Monster mon, Sprite background)
+    {
+        isLosing = false;
+        isWinning = false;
+        survival = false;
+        rewardedItems = new List<StoredItem>();
+        actualStoredItems = new List<StoredItem>();
+        friendlyMonsterController.inBattleTime = new List<float>();
+        friendlyMonsterController.inBattleTime.Add(0f);
+        friendlyMonsterController.inBattleTime.Add(0f);
+        friendlyMonsterController.inBattleTime.Add(0f);
+
+        StartBattleBond(mon, background);
+    }
+
     public void InitSurvival(List<MonsterSpawn> mons, NodeType type, Sprite background, int id, int scoreNeededToPass)
     {
         isLosing = false;
@@ -190,9 +207,6 @@ public class BattleManager : MonoBehaviour
         friendlyMonsterController.inBattleTime.Add(0f);
         friendlyMonsterController.inBattleTime.Add(0f);
         friendlyMonsterController.inBattleTime.Add(0f);
-
-        
-
     }
 
     public void InitBattle(List<MonsterSpawn> mons, NodeType type, Sprite background)
@@ -246,17 +260,9 @@ public class BattleManager : MonoBehaviour
     {
         isLosing = false;
         isWinning = false;
-
+        isBondBattle = false;
         gameType = type;
-        
         isPlayingIntro = true;
-        // Sets up the battle.
-        // Generates the monster to fight
-        // Sets the initial player monster to be switch in to first found going from top slot to bottom
-        // Sets the BATTLE button to true and positons in the middle of the screen
-
-
-        
         friendlyPunk.gameObject.SetActive(true);
         enemyPunk.gameObject.SetActive(false);
 
@@ -270,8 +276,6 @@ public class BattleManager : MonoBehaviour
             GM.battleUI.captureButton.SetActive(false);
             GM.battleUI.enemyHealthBar.ActivateCapBar(false);
         }
-
-        
 
         GM.battleUI.gameObject.SetActive(true);
         GM.battleGameobject.SetActive(true);
@@ -338,7 +342,9 @@ public class BattleManager : MonoBehaviour
         friendlyMonsterController.healthBar.SetMaxHealth(100);
         friendlyMonsterController.healthBar.SetHealth(GM.playerHP, false);
 
-        
+        friendlyMonsterController.SetEmpty(false);
+
+
         for (int i = 0; i < 3; i++)
         {
             if (GM.collectionManager.partySlots[i].storedMonsterObject != null)
@@ -382,6 +388,7 @@ public class BattleManager : MonoBehaviour
         gameType = type;
 
         isPlayingIntro = true;
+        isBondBattle = false;
         // Sets up the battle.
         // Generates the monster to fight
         // Sets the initial player monster to be switch in to first found going from top slot to bottom
@@ -423,6 +430,8 @@ public class BattleManager : MonoBehaviour
         friendlyMonsterController.healthBar.SetMaxHealth(100);
         friendlyMonsterController.healthBar.SetHealth(GM.playerHP, false);
 
+        friendlyMonsterController.SetEmpty(false);
+
 
         for (int i = 0; i < 3; i++)
         {
@@ -460,6 +469,40 @@ public class BattleManager : MonoBehaviour
 
     }
 
+    public void StartBattleBond(Monster mon, Sprite background)
+    {
+        isPlayingIntro = true;
+        isBondBattle = true;
+
+        GM.battleUI.enemyMultiMonsterSwitches.SetActive(false);
+        enemyPunk.gameObject.SetActive(false);
+        friendlyPunk.gameObject.SetActive(true);
+
+        GM.battleUI.captureButton.SetActive(true);
+        GM.battleUI.enemyHealthBar.ActivateCapBar(true);
+
+        GM.battleUI.gameObject.SetActive(true);
+        GM.battleGameobject.SetActive(true);
+        backgroundImage.sprite = background;
+        enemyMonsterController.RefreshCooldowns();
+        friendlyMonsterController.RefreshCooldowns();
+
+        enemyMonsterController.SetupEnemyBondBattle(mon);
+
+        friendlyMonsterController.healthBar.SetMaxHealth(100);
+        friendlyMonsterController.healthBar.SetHealth(GM.playerHP, false);
+
+        friendlyMonsterController.SetEmpty(true);
+
+        GM.battleUI.HideAllButtonsButCapture(true);
+
+        //PLAY ENTER ANIM HERE
+        fightingIntroObject.SetActive(true);
+
+        battleIntroTimeline.Play(enemyMonsterController.currentMonster);
+
+    }
+
     public void EnterStart()
     {
         //Debug.Log("Start");
@@ -477,7 +520,19 @@ public class BattleManager : MonoBehaviour
         ResumeControls();
 
         friendlyMonsterController.alive = true;
-        enemyMonsterController.ActivateAI(true);
+
+        if (isBondBattle)
+        {
+            enemyMonsterController.ActivateAI(false);
+            GM.battleUI.HideAllButtonsButCapture(true);
+        }
+        else
+        {
+            enemyMonsterController.ActivateAI(true);
+            GM.battleUI.HideAllButtonsButCapture(false);
+        }
+
+        
 
         float averageLevel = 0f;
         int numOfMons = 0;
@@ -507,7 +562,7 @@ public class BattleManager : MonoBehaviour
 
         float enemyDifference = averageLevelEnemy - averageLevel;
 
-        if (enemyDifference < 1)
+        if (enemyDifference < 1 || isBondBattle)
         {
             enemyCapturePoints = 100f;
         }
@@ -515,6 +570,7 @@ public class BattleManager : MonoBehaviour
         {
             enemyCapturePoints = 100 + (enemyDifference * 40f);
         }
+
         //Debug.Log(averageLevelEnemy);
         //Debug.Log(enemyDifference);
         //Debug.Log(enemyCapturePoints);
@@ -759,6 +815,7 @@ public class BattleManager : MonoBehaviour
         GM.playerHP = 50f;
 
         GM.popupManager.FullyHealed();
+        GM.overworldUI.healthBar.SetHealth(50f, false);
         GM.MovePlayerHome();
 
 

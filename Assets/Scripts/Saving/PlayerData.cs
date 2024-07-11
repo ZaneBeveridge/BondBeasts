@@ -26,6 +26,7 @@ public class PlayerData
 
     public List<bool> objectivesComplete = new List<bool>();
     public List<bool> nodesComplete = new List<bool>();
+    public List<bool> nodesEntered= new List<bool>();
 
     public List<int> survivalBest = new List<int>();
 
@@ -105,6 +106,7 @@ public class PlayerData
 
         objectivesComplete = m.objectivesComplete;
         nodesComplete = m.nodesCompleted;
+        nodesEntered = m.nodesEntered;
         survivalBest = m.survivalBest;
 
         for (int i = 0; i < m.collectionManager.itemsOwned.Count; i++)

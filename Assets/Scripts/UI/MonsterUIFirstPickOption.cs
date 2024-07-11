@@ -6,43 +6,58 @@ using TMPro;
 
 public class MonsterUIFirstPickOption : MonoBehaviour
 {
-    public string monsterName;
-
     [Header("References")]
     public Sprite selectedArt;
     public Sprite unselectedArt;
     public Image background;
 
-    public TextMeshProUGUI monsterText;
     public Image dynamicImage;
     public Image staticImage;
     public Image variantImage;
 
-    public List<MonsterSO> monsterDatas = new List<MonsterSO>();
+    public Animator anim;
+    public Button button;
 
     public Monster monster;
 
     public void Reroll()
     {
-        int rand = Random.Range(0, monsterDatas.Count - 1);
-
-        monster = new Monster(monsterName, 1, monsterDatas[rand]);
-
-        monsterText.text = monsterName;
         dynamicImage.sprite = monster.dynamicSprite;
         staticImage.sprite = monster.staticSprite;
         variantImage.sprite = monster.variant.variantStillSprite;
 
         dynamicImage.color = monster.colour.colour;
+
+        anim.SetBool("Hidden", false);
+        anim.SetBool("Inspect", false);
+    }
+
+    
+
+    public void Hide()
+    {
+        background.sprite = unselectedArt;
+        button.interactable = false;
+        anim.SetBool("Hidden", true);
+    }
+    public void Show()
+    {
+        background.sprite = unselectedArt;
+        button.interactable = true;
+        anim.SetBool("Hidden", false);
     }
 
     public void Deselect()
     {
         background.sprite = unselectedArt;
+        button.interactable = true;
+        anim.SetBool("Inspect", false);
     }
 
     public void Select()
     {
         background.sprite = selectedArt;
+        button.interactable = false;
+        anim.SetBool("Inspect", true);
     }
 }

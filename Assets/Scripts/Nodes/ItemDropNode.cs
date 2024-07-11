@@ -5,26 +5,24 @@ using UnityEngine;
 public class ItemDropNode : Node
 {
     public List<StoredItem> items = new List<StoredItem>();
-    public override void SetComplete(bool state)
-    {
-        completed = state;
-    }
 
     public override void OnEnter()
     {
         if (!completed)
         {
-            if (cutscene != null)
-            {
-                GM.cutsceneController.PlayCutscene(cutscene);
-            }
-
             GM.playerManager.OnEnterNode(text, this);
         }
         else
         {
             GM.playerManager.OnEnterNode(doneText, this);
         }
+
+        if (!entered & onEnterCutscene != null)
+        {
+            GM.cutsceneController.PlayCutscene(onEnterCutscene);
+        }
+
+        entered = true;
 
     }
 
@@ -77,11 +75,6 @@ public class ItemDropNode : Node
         SetComplete(true);
         Refresh();
         GM.SaveData();
-    }
-
-    public override bool IsComplete()
-    {
-        return completed;
     }
 
     public override void Refresh()
