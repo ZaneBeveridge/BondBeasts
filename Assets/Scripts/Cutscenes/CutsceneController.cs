@@ -19,6 +19,12 @@ public class CutsceneController : MonoBehaviour
 
     private List<CutsceneImagePrefab> currentImages = new List<CutsceneImagePrefab>();
 
+    public GameManager GM;
+
+
+    //EXTRA
+    private bool isPreStarter = false;
+
     private void DoFrame(SceneFrame frame)
     {
         // remove images
@@ -133,6 +139,8 @@ public class CutsceneController : MonoBehaviour
 
     public void PlayCutscene(CutsceneSO cutscene)
     {
+        isPreStarter = false;
+        GM.overworldUI.HideUI(true);
         cutsceneGameobject.SetActive(true);
         frameIndex = 0;
         currentScene = cutscene;
@@ -142,6 +150,27 @@ public class CutsceneController : MonoBehaviour
 
     public void FinishCutscene()
     {
+        GM.overworldUI.HideUI(false);
         cutsceneGameobject.SetActive(false);
+
+        if (isPreStarter)
+        {
+            GM.beastStarterMenuGUI.Init();
+        }
+    }
+
+
+    // EXTRA STUFF
+
+
+    public void PlayCutscenePreStarter(CutsceneSO cutscene)
+    {
+        isPreStarter = true;
+        GM.overworldUI.HideUI(true);
+        cutsceneGameobject.SetActive(true);
+        frameIndex = 0;
+        currentScene = cutscene;
+
+        DoFrame(currentScene.sceneFrames[frameIndex]);
     }
 }

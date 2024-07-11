@@ -49,10 +49,12 @@ public abstract class Node : MonoBehaviour
     public int wMoveAmount = 1;
 
     [Header("Cutscenes")]
-    public CutsceneSO cutscene;
+    public CutsceneSO onEnterCutscene; // cutscene for when entering the node for the first time, only plays once and stores that in the save file
+    //public CutsceneSO onFinishCutscene; // cutscene for when completly a node for the first time, only plays once and stores that in the save file as well
+    public CutsceneSO dialogueButtonCutsceneUncompleted; // cutscene for button when uncompleted
+    public CutsceneSO dialogueButtonCutsceneCompleted; // cutscene for button when completed
     [Header("Completion")]
-
-
+    public bool entered = false;
     public bool completed = false;
     public int completedObjectiveUnlock = 0; //0 is nothing 1 and above are different objectives that get activated when completing
     [Header("Manager")]
@@ -61,12 +63,47 @@ public abstract class Node : MonoBehaviour
 
 
     public abstract void OnEnter(); // Is called from the last node on after passing through the exit method, sets UI to active and sets the directions and interaction buttons to that of the node
-
     public abstract void OnExit(Node previousNode, Node currentNode, Node newNode); // Is called when the player presses in a direction and checks for the movement of roaming enemies on the map
     public abstract void OnInteract(); // Initiates after pressing the interaction button and starts an interation based on what node the player is on
 
-    public abstract void SetComplete(bool state);
-    public abstract bool IsComplete();
+
+    public virtual void OnDialogue()
+    {
+        if (!completed)
+        {
+            if (dialogueButtonCutsceneUncompleted != null)
+            {
+                GM.cutsceneController.PlayCutscene(dialogueButtonCutsceneUncompleted);
+            }
+        }
+        else
+        {
+            if (dialogueButtonCutsceneCompleted != null)
+            {
+                GM.cutsceneController.PlayCutscene(dialogueButtonCutsceneCompleted);
+            }
+        }
+    }
+
+    public virtual void SetEntered(bool state)
+    {
+        entered = state;
+    }
+
+    public virtual void SetComplete(bool state)
+    {
+        completed = state;
+    }
+
+    public virtual bool IsComplete()
+    {
+        return completed;
+    }
+
+    public virtual bool IsEntered()
+    {
+        return entered;
+    }
 
     public abstract void Refresh();
 

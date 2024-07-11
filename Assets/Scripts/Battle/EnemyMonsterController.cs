@@ -526,6 +526,39 @@ public class EnemyMonsterController : MonoBehaviour
         }
 
     }
+
+    public void SetupEnemyBondBattle(Monster mon)
+    {
+        backupMonsters.Add(mon);
+        GM.AddBeastToSeenIDs(mon.backupData);
+        SetMonsterActive(0);
+        aiController.SetBattleType(false);
+        //nodeType = type;
+        enemyHealth = 100;
+        healthBar.SetMaxHealth(100);
+        healthBar.SetHealth(100, false);
+
+        for (int i = 0; i < 3; i++)
+        {
+            if (backupMonsters.Count >= i + 1)
+            {
+                if (i == 0)
+                {
+                    GM.battleUI.enemyTagSprites1.tagSprites.UpdateArt(backupMonsters[0]);
+                }
+                else if (i == 1)
+                {
+                    GM.battleUI.enemyTagSprites2.tagSprites.UpdateArt(backupMonsters[1]);
+                }
+                else if (i == 2)
+                {
+                    GM.battleUI.enemyTagSprites3.tagSprites.UpdateArt(backupMonsters[2]);
+                }
+            }
+        }
+
+        aiController.SetActive(false);
+    }
     private void SpawnNewMonster(int slot, bool isStart)
     {
         float cooldown = 7f;

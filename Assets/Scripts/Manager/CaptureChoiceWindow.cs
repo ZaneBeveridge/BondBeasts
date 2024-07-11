@@ -279,7 +279,17 @@ public class CaptureChoiceWindow : MonoBehaviour
     {
         currentMonster.name = inputField.text;
         ///enemyMonsterController.ActivateAI(true);
-        GM.collectionManager.SpawnMonsterInCollection(currentMonster);
+
+
+        if (GM.collectionManager.CheckFreePartySlot() >= 3)
+        {
+            GM.collectionManager.SpawnMonsterInCollection(currentMonster);
+        }
+        else
+        {
+            GM.collectionManager.SpawnMonsterInParty(currentMonster, GM.collectionManager.CheckFreePartySlot());
+        }
+
         currentMonster = null;
         
 

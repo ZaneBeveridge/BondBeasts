@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     public int numOfBagsMaterials = 5;
     public int numOfBagsEquipment = 5;
 
-    public MenuGUI menuGUI;
+    public BeastStarterMenuGUI beastStarterMenuGUI;
     public CollectionManager collectionManager;
 
     public OverworldUI overworldUI;
@@ -49,8 +49,10 @@ public class GameManager : MonoBehaviour
 
     public List<GameObject> roamerPrefabData = new List<GameObject>();
 
-    public List<bool> objectivesComplete = new List<bool>(); // 0 = shortcut1, 1=RoamersStart
+    public List<bool> objectivesComplete = new List<bool>(); // (+1 to id to get the object)
+                                                             // 1 = completedFirstBattle(node 12 + 21),
     public List<bool> nodesCompleted = new List<bool>();
+    public List<bool> nodesEntered = new List<bool>();
     public List<int> survivalBest = new List<int>();
     public List<int> numOfBeastsSeenIDs = new List<int>();
 
@@ -72,15 +74,34 @@ public class GameManager : MonoBehaviour
         if (SaveSystem.GetSave() == false) // First time!
         {
             playerHP = 100f;
-            menuGUI.OpenNewProfileMenu();
+            playerName = "Kid";
             playerManager.StartNew();
+
+            for (int i = 0; i < nodesData.Count; i++)
+            {
+                nodesData[i].SetComplete(nodesCompleted[i]);
+            }
+
+            for (int i = 0; i < nodesData.Count; i++)
+            {
+                nodesData[i].SetEntered(nodesEntered[i]);
+            }
         }
         else
         {
             LoadData();
             // LOAD NODES
             //Set current and prev location
-            
+
+            if (nodesCompleted[8])
+            {
+                overworldUI.partyButtonParent.SetActive(true);
+            }
+            else
+            {
+                overworldUI.partyButtonParent.SetActive(false);
+            }
+
             for (int i = 0; i < nodesData.Count; i++)
             {
                 if (nodesData[i].id == playerData.currentLocation)
@@ -103,6 +124,11 @@ public class GameManager : MonoBehaviour
             for (int i = 0; i < nodesData.Count; i++)
             {
                 nodesData[i].SetComplete(nodesCompleted[i]);
+            }
+
+            for (int i = 0; i < nodesData.Count; i++)
+            {
+                nodesData[i].SetEntered(nodesEntered[i]);
             }
 
             if (cNode != null)
@@ -212,8 +238,6 @@ public class GameManager : MonoBehaviour
         
 
 
-
-
         if (nodesCompleted.Count == playerData.nodesComplete.Count) // if game count is bigger than save count
         {
             nodesCompleted = playerData.nodesComplete;
@@ -241,6 +265,36 @@ public class GameManager : MonoBehaviour
                 }
 
                 nodesCompleted = tempNodes;
+            }
+        }
+
+        if (nodesEntered.Count == playerData.nodesEntered.Count) // if game count is bigger than save count
+        {
+            nodesEntered = playerData.nodesEntered;
+        }
+        else
+        {
+            if (nodesEntered.Count < playerData.nodesEntered.Count) //remove until the same
+            {
+                List<bool> tempNodes = new List<bool>();
+                tempNodes = playerData.nodesEntered;
+                while (nodesEntered.Count != tempNodes.Count)
+                {
+                    tempNodes.RemoveAt(tempNodes.Count - 1);
+                }
+
+                nodesEntered = tempNodes;
+            }
+            else if (nodesEntered.Count > playerData.nodesEntered.Count) // add until the same
+            {
+                List<bool> tempNodes = new List<bool>();
+                tempNodes = playerData.nodesEntered;
+                while (nodesEntered.Count != tempNodes.Count)
+                {
+                    tempNodes.Add(false);
+                }
+
+                nodesEntered = tempNodes;
             }
         }
 
@@ -620,13 +674,15 @@ public class GameManager : MonoBehaviour
 
     public void SaveData()
     {
-        //Debug.Log("Saved");
+        Debug.Log("Saved");
 
         for (int i = 0; i < nodesData.Count; i++)
         {
             nodesCompleted[i] = nodesData[i].IsComplete();
+            nodesEntered[i] = nodesData[i].IsEntered();
 
         }
+
 
 
         PlayerData data = new PlayerData(this);

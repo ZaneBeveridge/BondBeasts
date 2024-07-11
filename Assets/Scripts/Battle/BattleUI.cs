@@ -40,6 +40,13 @@ public class BattleUI : MonoBehaviour
     // WILL SET THE VISUALS OF CONTROLS AND WHAT THE BUTTONS LOOK LIKE ON SCREEN, ALL FUNCTIONALITY IN BATTLE WILL BE INSIDE THE BATTLE MANAGER
 
 
+    public void HideAllButtonsButCapture(bool state)
+    {
+        jumpButton.SetActive(!state);
+        basicBut.gameObject.SetActive(!state);
+        specialBut.gameObject.SetActive(!state);
+    }
+
 
     public void DisableAllButCapture()
     {

@@ -4,18 +4,17 @@ using UnityEngine;
 
 public class TownNode : Node
 {
-    public override void SetComplete(bool state)
-    {
-        completed = true;
-    }
     public override void OnEnter() // Entering node
     {
         GM.playerManager.OnEnterNode(text, this);
-
-        if (cutscene != null)
+        if (!entered & onEnterCutscene != null)
         {
-            GM.cutsceneController.PlayCutscene(cutscene);
+            GM.overworldUI.partyButtonParent.SetActive(true);
+            GM.cutsceneController.PlayCutscenePreStarter(onEnterCutscene);
+            completed = true;
         }
+
+        entered = true;
     }
 
     public override void OnExit(Node previousNode, Node currentNode, Node newNode)
@@ -45,10 +44,6 @@ public class TownNode : Node
         //GM.collectionManager.OpenInterface();
     }
 
-    public override bool IsComplete()
-    {
-        return completed;
-    }
 
     public override void Refresh()
     {
