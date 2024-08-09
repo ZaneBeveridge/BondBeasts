@@ -6,7 +6,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class GameManager : MonoBehaviour
 {
     public string playerName;
-    public float playerHP = 100f;
+    public float playerHP = 1000f;
     public int levelCap = 3;
 
     public int playerHomeNodeID = 0;
@@ -73,7 +73,7 @@ public class GameManager : MonoBehaviour
     {
         if (SaveSystem.GetSave() == false) // First time!
         {
-            playerHP = 100f;
+            playerHP = 1000f;
             playerName = "Kid";
             playerManager.StartNew();
 
@@ -674,7 +674,7 @@ public class GameManager : MonoBehaviour
 
     public void SaveData()
     {
-        Debug.Log("Saved");
+        //Debug.Log("Saved");
 
         for (int i = 0; i < nodesData.Count; i++)
         {

@@ -15,7 +15,7 @@ public class FriendlyMonsterController : MonoBehaviour
     public Animator friendlyUIAnimBasic;
     public Animator friendlyUIAnimSpecial;
     public Animator healthBarShakeAnim;
-    public Slider juiceRegenSlider;
+    public TextMeshProUGUI regenText;
     public SpriteRenderer friendlyDynamicSprite;
     public TextMeshProUGUI friendlyNameText;
     public TextMeshProUGUI friendlyLevelText;
@@ -63,40 +63,15 @@ public class FriendlyMonsterController : MonoBehaviour
     public List<bool> specialReady = new List<bool>();
     public List<bool> tagReady = new List<bool>();
 
-
     public List<float> basicC = new List<float>();
     public List<float> specialC = new List<float>();
     public List<float> tagC = new List<float>();
 
-    public List<bool> basicReady2 = new List<bool>();
-    public List<bool> specialReady2 = new List<bool>();
-    public List<bool> tagReady2 = new List<bool>();
 
-
-    public List<float> basicC2 = new List<float>();
-    public List<float> specialC2 = new List<float>();
-    public List<float> tagC2 = new List<float>();
-
-    public List<bool> basicReady3 = new List<bool>();
-    public List<bool> specialReady3 = new List<bool>();
-    public List<bool> tagReady3 = new List<bool>();
-
-
-    public List<float> basicC3 = new List<float>();
-    public List<float> specialC3 = new List<float>();
-    public List<float> tagC3 = new List<float>();
-
-    private int basicExtraCharges = 0;
-    private int specialExtraCharges = 0;
-    private int tagExtraCharges = 0;
-
-    private bool regenOn = false;
+    public bool regenOn = false;
     private float regenTimer = 0f;
     private float regenBaseTime = 1f;
-
-    private bool regenCooldown = true;
-    private float regenCooldownTime = 3f;
-    private float regenCoolodownBaseTime = 3f;
+    private float regenMulti = 0.25f;
 
     public List<float> inBattleTime = new List<float>();
 
@@ -167,22 +142,6 @@ public class FriendlyMonsterController : MonoBehaviour
             }
 
 
-            if (regenCooldown)
-            {
-                if (regenCooldownTime > 0)
-                {
-                    regenCooldownTime -= Time.deltaTime;
-                }
-                else if (regenCooldownTime <= 0)
-                {
-                    //REGEN
-                    regenOn = true;
-                    regenCooldown = false;
-                }
-
-                juiceRegenSlider.value = regenCooldownTime / regenCoolodownBaseTime;
-            }
-
             if (regenOn)
             {
                 if (regenTimer > 0)
@@ -191,12 +150,11 @@ public class FriendlyMonsterController : MonoBehaviour
                 }
                 else if (regenTimer <= 0)
                 {
+                    float juiceAmount = juice + friendlyBattleBuffManager.slotValues[2] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice);
 
-                    float regenAmount = 0f;
-                    float itemPassives = friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice);
-                    float buffSlots = friendlyBattleBuffManager.slotValues[2];
-                    regenAmount = 0.1f * (juice + itemPassives + buffSlots);
-
+                    float regenAmount = (regenMulti * (juiceAmount * (0.001f * 1000f)));
+                    regenMulti += 0.25f;
+                    regenText.text = "HPs x " + regenMulti.ToString("F2");
                     //Debug.Log("Regen Amount: " + regenAmount.ToString());
 
                     int flooredRegen = Mathf.FloorToInt(regenAmount + accumulatedJuiceHealing);
@@ -303,24 +261,14 @@ public class FriendlyMonsterController : MonoBehaviour
                 }
                 else
                 {
-                   
-                    float regenAmount = 0.1f * (juice + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Juice) + friendlyBattleBuffManager.slotValues[2]);
-
-                    if (regenOn && GM.playerHP < 100)
-                    {
-                        healthBar.ChangeColor("Regen");
-                    }
-                    else
-                    {
-                        healthBar.ChangeColor("Normal");
-                    }
+                    healthBar.ChangeColor("Normal");
                 }
             }
         }
     }
 
     private void DoCooldowns()
-    { // 1111111111
+    {
         for (int i = 0; i < basicReady.Count; i++)
         {
             if (!basicReady[i])
@@ -347,60 +295,6 @@ public class FriendlyMonsterController : MonoBehaviour
                 else if (tagC[i] <= 0) { tagReady[i] = true; tagC[i] = 0f; }
             }
         }
-        // 22222222222
-        for (int i = 0; i < basicReady2.Count; i++)
-        {
-            if (!basicReady2[i] && basicReady[i])
-            {
-                if (basicC2[i] > 0) { basicC2[i] -= Time.deltaTime; }
-                else if (basicC2[i] <= 0) { basicReady2[i] = true; basicC2[i] = 0f; }
-            }
-        }
-
-        for (int i = 0; i < specialReady2.Count; i++)
-        {
-            if (!specialReady2[i] && specialReady[i])
-            {
-                if (specialC2[i] > 0) { specialC2[i] -= Time.deltaTime; }
-                else if (specialC2[i] <= 0) { specialReady2[i] = true; specialC2[i] = 0f; }
-            }
-        }
-
-        for (int i = 0; i < tagReady2.Count; i++)
-        {
-            if (!tagReady2[i] && tagReady[i])
-            {
-                if (tagC2[i] > 0) { tagC2[i] -= Time.deltaTime; }
-                else if (tagC2[i] <= 0) { tagReady2[i] = true; tagC2[i] = 0f; }
-            }
-        }
-        // 33333333333333333
-        for (int i = 0; i < basicReady3.Count; i++)
-        {
-            if (!basicReady3[i] && basicReady[i] && basicReady2[i])
-            {
-                if (basicC3[i] > 0) { basicC3[i] -= Time.deltaTime; }
-                else if (basicC3[i] <= 0) { basicReady3[i] = true; basicC3[i] = 0f; }
-            }
-        }
-
-        for (int i = 0; i < specialReady3.Count; i++)
-        {
-            if (!specialReady3[i] && specialReady[i] && specialReady2[i])
-            {
-                if (specialC3[i] > 0) { specialC3[i] -= Time.deltaTime; }
-                else if (specialC3[i] <= 0) { specialReady3[i] = true; specialC3[i] = 0f; }
-            }
-        }
-
-        for (int i = 0; i < tagReady3.Count; i++)
-        {
-            if (!tagReady3[i] && tagReady[i] && tagReady2[i])
-            {
-                if (tagC3[i] > 0) { tagC3[i] -= Time.deltaTime; }
-                else if (tagC3[i] <= 0) { tagReady3[i] = true; tagC3[i] = 0f; }
-            }
-        }
     }
     public void RefreshCooldowns()
     {
@@ -422,13 +316,13 @@ public class FriendlyMonsterController : MonoBehaviour
 
         if (!isStart)
         {
-            tagC[currentSlot] = cooldown - (cooldown * (0.008f * (spark + friendlyBattleBuffManager.slotValues[5] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark)))); //tagCooldown;
+            float sparkAmount = spark + friendlyBattleBuffManager.slotValues[5] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark);
+            tagC[currentSlot] = 1 / (1 / cooldown) * sparkAmount * 0.04f + (1 / cooldown);
             tagReady[currentSlot] = false;
         }
 
         if (isStart)
         {
-            regenCooldownTime = regenCoolodownBaseTime;
             alive = true;
         }
         
@@ -525,32 +419,7 @@ public class FriendlyMonsterController : MonoBehaviour
         //wits = Mathf.RoundToInt(friendlyMonster.stats[4].value * friendlyMonster.nature.addedStats[4].value);
         //spark = Mathf.RoundToInt(friendlyMonster.stats[5].value * friendlyMonster.nature.addedStats[5].value);
 
-        float edgeAmount = edge + friendlyBattleBuffManager.slotValues[3] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Edge);
-        float witsAmount = wits + friendlyBattleBuffManager.slotValues[4] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Wits);
-        float sparkAmount = spark + friendlyBattleBuffManager.slotValues[5] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark);
-
-        basicExtraCharges = 0;
-        specialExtraCharges = 0;
-        tagExtraCharges = 0;
-
-        while (edgeAmount > 100)
-        {
-            edgeAmount -= 100f;
-            basicExtraCharges++;
-        }
-
-        while (witsAmount > 100)
-        {
-            witsAmount -= 100f;
-            specialExtraCharges++;
-        }
-
-        while (sparkAmount > 100)
-        {
-            sparkAmount -= 100f;
-            tagExtraCharges++;
-        }
-
+    
 
         //tagC[currentSlot] = tagCooldown;
         //Debug.Log(friendlyMonster.name + pMons[0].name + pMons[1].name);
@@ -624,11 +493,14 @@ public class FriendlyMonsterController : MonoBehaviour
 
         if (!tagReady[slot]) { return; }
 
-
+        
         if (!GM.battleManager.isPlayingIntro)
         {
             //Debug.Log("what?");
             GM.battleManager.PauseControls();
+
+            invulnerable = true;
+            invTime = 0.2f;
 
             taggingSlot = slot;
             tagTimer = 0.3f;
@@ -656,7 +528,7 @@ public class FriendlyMonsterController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile) // if effect cant be parried, guarded
+    public void TakeDamage(int damage, int baseDamage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile) // if effect cant be parried, guarded
     {
         if (GM.battleManager.isWinning || GM.battleManager.isLosing) { return; }
 
@@ -724,23 +596,22 @@ public class FriendlyMonsterController : MonoBehaviour
         }
         else if (effect || !guardOn && !invulnerable)
         {
-            regenCooldownTime = regenCoolodownBaseTime;
-            regenCooldown = true;
+            regenMulti = 0.25f;
+            regenTimer = regenBaseTime;
+            regenText.text = "HPs x " + regenMulti.ToString("F2");
 
-            regenOn = false;
-
-            float flDmg = damage;
+            float floatDamage = damage;
 
             if (!effect)
             {
                 
                 if (critical)
                 {
-                    flDmg = damage * 2;
+                    floatDamage = damage * 2;
                 }
                 else
                 {
-                    flDmg = damage;
+                    floatDamage = damage;
                 }
             }
             
@@ -748,70 +619,10 @@ public class FriendlyMonsterController : MonoBehaviour
 
             // (BASE + NATURE) * (ITEM + BUFF + PASSIVE)
 
-            float gutsReal = 0f;
-            float gutsAmount = 0f;
-
             float itemPassives = friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Guts);
             float buffSlots = friendlyBattleBuffManager.slotValues[1];
-            gutsAmount = guts + itemPassives + buffSlots;
+            float gutsAmount = guts + itemPassives + buffSlots;
 
-
-            //float gutsAmount = guts + (guts * ((friendlyBattleBuffManager.slotValues[1] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Guts)) / 100f));
-
-            if (gutsAmount > 100 && !effect)
-            {
-                gutsReal = 100f;
-
-                float gutsNegateAmount = 0f;
-
-                if (gutsAmount > 200) // reflect chance
-                {
-                    gutsNegateAmount = 100f;
-                    float gutsReflectAmount = gutsAmount - 200f;
-
-                    float reflectRand = Random.Range(0f, 1f);
-                    float reflectChance = 0.008f * gutsReflectAmount;
-
-                    //Debug.Log("Reflect Try: Rand: " + reflectRand.ToString() + ", Chance: " + reflectChance.ToString() + ", Guts Reflect Amount: " + gutsReflectAmount.ToString());
-
-                    if (reflectRand <= reflectChance) // reflect projectile and take no dmg
-                    {
-                        if (effectProjectile != null)
-                        {
-                            friendlyMoveController.DoProjectile(effectProjectile.projectilePrefab, effectProjectile.projectileDamage, effectProjectile.projectileSpeed, effectProjectile.lifetime, effectProjectile.collideWithAmountOfObjects, effectProjectile.criticalProjectile, effectProjectile);
-                        }
-                        else
-                        {
-                            Debug.LogError("Projectile Data is Null, But is needed for reflecting");
-                        }
-
-
-                        hitNumbers.SpawnPopup(PopupType.Reflected, pos, "", 0);
-                        return;
-                    }
-                }
-                else
-                {
-                    gutsNegateAmount = gutsAmount - 100f;
-                }
-
-                float rand = Random.Range(0f, 1f);
-                float chance = ((0.008f * gutsNegateAmount));
-
-                //Debug.Log("Negate Try: Rand: " + rand.ToString() + ", Chance: " + chance.ToString() + ", Guts Negate Amount: " + gutsNegateAmount.ToString());
-
-                if (rand <= chance) // negate damage
-                {
-                    hitNumbers.SpawnPopup(PopupType.Negated, pos, "", 0);
-                    return;
-                }
-            }
-            else
-            {
-                gutsReal = gutsAmount;
-            }
-
-            // IF NO NEGATE OR REFLECT THIS WILL CONTINUE BUT OTHERWISE THIS CODE WON'T RUN
 
             if (!effect)
             {
@@ -901,18 +712,18 @@ public class FriendlyMonsterController : MonoBehaviour
                 }
             }
 
+            float baseDmgFloat = baseDamage;
 
-            float trueDamage = flDmg - (flDmg * (0.008f * gutsReal));
+            float trueDamage = floatDamage - (gutsAmount * 0.04f * baseDmgFloat);
+
+            if (trueDamage < 1)
+            {
+                trueDamage = 1f;
+            }
 
 
             int dmg = Mathf.RoundToInt(trueDamage);
-
-            if (dmg < 1)
-            {
-                dmg = 1;
-            }
-
-            int protectedDamage = dmg - (int)flDmg;
+            int protectedDamage = dmg - (int)floatDamage;
             //Debug.Log("True dmg: " + dmg);
 
             if (GM.invulnerableDebug)
@@ -977,12 +788,12 @@ public class FriendlyMonsterController : MonoBehaviour
     public void Heal(int amount)
     {
         //Debug.Log("here");
-        if (GM.playerHP < 100)
+        if (GM.playerHP < 1000)
         {
             int realAmount = amount;
-            if (amount + GM.playerHP > 100)
+            if (amount + GM.playerHP > 1000)
             {
-                realAmount = (amount + (int)GM.playerHP) - 100;
+                realAmount = (amount + (int)GM.playerHP) - 1000;
             }
 
             healthBar.SetHealth(GM.playerHP + amount, false);
@@ -1076,48 +887,18 @@ public class FriendlyMonsterController : MonoBehaviour
     {
         if (specialReady[currentSlot])
         {
-            DoSpecial(0f, 100);
+            DoSpecial();
         }
-        else
-        {
-            if (specialReady2[currentSlot] && specialExtraCharges > 0)
-            {
-                DoSpecial(100f, 200);
-            }
-            else
-            {
-                if (specialReady3[currentSlot] && specialExtraCharges > 1)
-                {
-                    DoSpecial(200f, 300);
-                }
-            }
-        }
-
     }
 
     public void Attack() // Used Basic Attack
     {
         if (basicReady[currentSlot])
         {
-            DoAttack(0f, 100);
+            DoAttack();
         }
-        else
-        {
-            if (basicReady2[currentSlot] && basicExtraCharges > 0)
-            {
-                DoAttack(100f, 200);
-            }
-            else
-            {
-                if (basicReady3[currentSlot] && basicExtraCharges > 1)
-                {
-                    DoAttack(200f, 300);
-                }
-            }
-        }
-
     }
-    private void DoSpecial(float sizeNum, int num)
+    private void DoSpecial()
     {
         //if (friendlyMonster.specialMove == null) return;
 
@@ -1136,53 +917,30 @@ public class FriendlyMonsterController : MonoBehaviour
 
         TriggerAction(TriggerType.useSpecial);
 
-        float valueAmount = 0f;
-        float itemPassives = friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Wits);
-        float buffSlots = friendlyBattleBuffManager.slotValues[4];
-
-        valueAmount = wits + itemPassives + buffSlots;
-
-        
-
-        float valueReal = 0f;
+        float witsAmount = wits + friendlyBattleBuffManager.slotValues[4] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Wits);
 
 
-        if (valueAmount > num)
+        float baseCD = friendlyMonster.specialMove.baseCooldown;
+        float sCool = 0f;
+        if (witsAmount < 0)
         {
-            valueReal = 100f;
-
+            sCool = baseCD - (baseCD * (0.008f * witsAmount));
         }
         else
         {
-            valueReal = valueAmount - sizeNum;
+            sCool = 1f / ((1f / baseCD) * witsAmount * 0.04f + (1f / baseCD));
         }
 
-        float sCool = friendlyMonster.specialMove.baseCooldown - (friendlyMonster.specialMove.baseCooldown * (0.008f * valueReal));
         if (sCool < friendlyMonster.specialMove.minCooldown)
         {
             sCool = friendlyMonster.specialMove.minCooldown;
         }
 
 
-        if (num == 100)
-        {
-            specialC[currentSlot] = sCool;
-            specialReady[currentSlot] = false;
-        }
-        else if (num == 200)
-        {
-            specialC2[currentSlot] = sCool;
-            specialReady2[currentSlot] = false;
-        }
-        else if (num == 300)
-        {
-            specialC3[currentSlot] = sCool;
-            specialReady3[currentSlot] = false;
-        }
-
-
+        specialC[currentSlot] = sCool;
+        specialReady[currentSlot] = false;
     }
-    private void DoAttack(float sizeNum, int num)
+    private void DoAttack()
     {
         //if (friendlyMonster.basicMove == null) return;
 
@@ -1198,55 +956,33 @@ public class FriendlyMonsterController : MonoBehaviour
 
         TriggerAction(TriggerType.useBasic);
 
-        float valueAmount = 0f;
-        float itemPassives = friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Edge);
-        float buffSlots = friendlyBattleBuffManager.slotValues[3];
-        valueAmount = edge + itemPassives + buffSlots;
+        float edgeAmount = edge + friendlyBattleBuffManager.slotValues[3] + friendlyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Edge);
 
-        float valueReal = 0f;
+        float baseCD = friendlyMonster.basicMove.baseCooldown;
+        float bCool = 0f;
 
-
-        if (valueAmount > num)
+        if (edgeAmount < 0)
         {
-            valueReal = 100f;
-
+            bCool = baseCD - (baseCD * (0.008f * edgeAmount));
         }
         else
         {
-            valueReal = valueAmount - sizeNum;
+            bCool = 1f / ((1f / baseCD) * edgeAmount * 0.04f + (1f / baseCD));
         }
 
-        float bCool = friendlyMonster.basicMove.baseCooldown - (friendlyMonster.basicMove.baseCooldown * (0.008f * valueReal));
+
         if (bCool < friendlyMonster.basicMove.minCooldown)
         {
             bCool = friendlyMonster.basicMove.minCooldown;
         }
 
 
-        if (num == 100)
-        {
-            basicC[currentSlot] = bCool;
-            basicReady[currentSlot] = false;
-        }
-        else if (num == 200)
-        {
-            basicC2[currentSlot] = bCool;
-            basicReady2[currentSlot] = false;
-        }
-        else if (num == 300)
-        {
-            basicC3[currentSlot] = bCool;
-            basicReady3[currentSlot] = false;
-        }
-
-
-        invulnerable = true;
-        invTime = 0.1f;
-
+        basicC[currentSlot] = bCool;
+        basicReady[currentSlot] = false;
 
     }
 
-    public void FireProjectile(GameObject prefab, float speed, int dmg, float lifeTime, int collideWithAmountOfObjects, bool criticalProjectile, FireProjectileEffectSO projEffect)
+    public void FireProjectile(GameObject prefab, float speed, int dmg, int baseDmg, float lifeTime, int collideWithAmountOfObjects, bool criticalProjectile, FireProjectileEffectSO projEffect)
     {
         GameObject proj = Instantiate(prefab, firePoint.position, firePoint.rotation);
         projectiles.Add(proj);
@@ -1255,28 +991,28 @@ public class FriendlyMonsterController : MonoBehaviour
         {
             int amount = friendlyBattleBuffManager.slotValues[11];
 
-            if (amount >= 100) // crit higher than 100
+            if (amount >= 1000) // crit higher than 100
             {
-                proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, true, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, projEffect);
+                proj.GetComponent<Projectile>().Init(speed, dmg, baseDmg, lifeTime, collideWithAmountOfObjects, true, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, projEffect);
             }
             else
             {
-                float random = Random.Range(1, 100);
+                float random = Random.Range(1, 1000);
                 //Debug.Log(random);
 
                 if (random <= amount)
                 {
-                    proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, true, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, projEffect);
+                    proj.GetComponent<Projectile>().Init(speed, dmg, baseDmg, lifeTime, collideWithAmountOfObjects, true, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, projEffect);
                 }
                 else
                 {
-                    proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, projEffect);
+                    proj.GetComponent<Projectile>().Init(speed, dmg, baseDmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, projEffect);
                 }
             }
         }
         else
         {
-            proj.GetComponent<Projectile>().Init(speed, dmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, projEffect);
+            proj.GetComponent<Projectile>().Init(speed, dmg, baseDmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, "Enemy", GM.battleManager.enemyMonsterController.enemyBattleBuffManager, projEffect);
         }
 
     }
@@ -1291,32 +1027,11 @@ public class FriendlyMonsterController : MonoBehaviour
     public void ClearCooldowns()
     {
         for (int i = 0; i < basicReady.Count; i++) { basicReady[i] = true ; }
-        for (int i = 0; i < basicReady2.Count; i++) { basicReady2[i] = true; }
-        for (int i = 0; i < basicReady3.Count; i++) { basicReady3[i] = true; }
-
         for (int i = 0; i < specialReady.Count; i++) { specialReady[i] = true; }
-        for (int i = 0; i < specialReady2.Count; i++) { specialReady2[i] = true; }
-        for (int i = 0; i < specialReady3.Count; i++) { specialReady3[i] = true; }
-
         for (int i = 0; i < tagReady.Count; i++) { tagReady[i] = true; }
-        for (int i = 0; i < tagReady2.Count; i++) { tagReady2[i] = true; }
-        for (int i = 0; i < tagReady3.Count; i++) { tagReady3[i] = true; }
-
-
-
         for (int i = 0; i < basicC.Count; i++) { basicC[i] = 0; }
-        for (int i = 0; i < basicC2.Count; i++) { basicC2[i] = 0; }
-        for (int i = 0; i < basicC3.Count; i++) { basicC3[i] = 0; }
-
         for (int i = 0; i < specialC.Count; i++) { specialC[i] = 0; }
-        for (int i = 0; i < specialC2.Count; i++) { specialC2[i] = 0; }
-        for (int i = 0; i < specialC3.Count; i++) { specialC3[i] = 0; }
-
         for (int i = 0; i < tagC.Count; i++) { tagC[i] = 0; }
-        for (int i = 0; i < tagC2.Count; i++) { tagC2[i] = 0; }
-        for (int i = 0; i < tagC3.Count; i++) { tagC3[i] = 0; }
-
-
     }
 
     

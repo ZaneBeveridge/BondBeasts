@@ -53,7 +53,8 @@ public class SurvivalSubMenu : MonoBehaviour
     public int scoreNeededToPass = 0;
 
     private int xpBuffPerRound = 40;
-    private int statBuffPerRound = 8;
+    //private .connect.tomybrain.iloveyou.cya
+    //private int statBuffPerRound = 8;
 
     private List<StoredItem> items = new List<StoredItem>();
     private List<StoredMonster> mons = new List<StoredMonster>();

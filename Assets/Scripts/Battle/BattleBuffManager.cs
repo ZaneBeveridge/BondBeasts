@@ -51,11 +51,11 @@ public class BattleBuffManager : MonoBehaviour
                         {
                             if (isFriendly)
                             {
-                                GM.battleManager.friendlyMonsterController.TakeDamage(slotValues[6], true, false, 0, 0f, 0f, false, 0f, false, null, null, GM.battleManager.friendlyMonsterController.defaultHitNumbersLocation, null);
+                                GM.battleManager.friendlyMonsterController.TakeDamage(slotValues[6], slotValues[6], true, false, 0, 0f, 0f, false, 0f, false, null, null, GM.battleManager.friendlyMonsterController.defaultHitNumbersLocation, null);
                             }
                             else
                             {
-                                GM.battleManager.enemyMonsterController.TakeDamage(slotValues[6], true, false, 0, 0f, 0f, false, 0f, false, null, null, GM.battleManager.enemyMonsterController.defaultHitNumbersLocation, null);
+                                GM.battleManager.enemyMonsterController.TakeDamage(slotValues[6], slotValues[6], true, false, 0, 0f, 0f, false, 0f, false, null, null, GM.battleManager.enemyMonsterController.defaultHitNumbersLocation, null);
                             }
                         }
 

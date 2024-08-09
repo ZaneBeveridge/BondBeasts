@@ -9,7 +9,7 @@ public class AlphaRoamer : Roamer
     [Header("Background")]
     public Sprite background;
     [Header("Monster")]
-    public int roamerMaxHealth = 100;
+    public int roamerMaxHealth = 1000;
     public Monster monster;
 
     private bool isMoving;

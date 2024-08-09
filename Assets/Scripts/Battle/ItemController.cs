@@ -380,7 +380,7 @@ public class ItemController : MonoBehaviour
 
         if (conditions.whileFullHP)
         {
-            if (GM.playerHP >= 100)
+            if (GM.playerHP >= 1000)
             {
                 state = true;
             }
@@ -392,7 +392,7 @@ public class ItemController : MonoBehaviour
 
         if (conditions.whileBelow15HP)
         {
-            if (GM.playerHP < 15)
+            if (GM.playerHP < 150)
             {
                 state = true;
             }
@@ -404,7 +404,7 @@ public class ItemController : MonoBehaviour
 
         if (conditions.whileEnemyFullHP)
         {
-            if (GM.battleManager.enemyMonsterController.enemyHealth >= 100)
+            if (GM.battleManager.enemyMonsterController.enemyHealth >= 1000)
             {
                 state = true;
             }
@@ -416,7 +416,7 @@ public class ItemController : MonoBehaviour
 
         if (conditions.whileEnemyBelow15HP)
         {
-            if (GM.battleManager.enemyMonsterController.enemyHealth < 15)
+            if (GM.battleManager.enemyMonsterController.enemyHealth < 150)
             {
                 state = true;
             }

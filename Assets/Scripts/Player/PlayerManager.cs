@@ -52,9 +52,9 @@ public class PlayerManager : MonoBehaviour
                     //Heal
 
                     int rand = Random.Range(healerRoamer.minHeal, healerRoamer.maxHeal);
-                    if (rand + GM.playerHP >= 100)
+                    if (rand + GM.playerHP >= 1000)
                     {
-                        GM.playerHP = 100;
+                        GM.playerHP = 1000;
                     }
                     else
                     {
