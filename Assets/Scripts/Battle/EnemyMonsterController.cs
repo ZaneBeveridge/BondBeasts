@@ -885,7 +885,7 @@ public class EnemyMonsterController : MonoBehaviour
 
             float trueDamage = floatDamage - (gutsAmount * 0.04f * baseDmgFloat);
 
-            if (trueDamage < 1)
+            if (trueDamage < 1 && baseDamage > 0)
             {
                 trueDamage = 1f;
             }
