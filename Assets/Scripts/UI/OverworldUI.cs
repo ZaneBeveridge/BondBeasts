@@ -32,7 +32,7 @@ public class OverworldUI : MonoBehaviour
     public NodeInfoPopupManager popupManager;
     void Start()
     {
-        healthBar.SetMaxHealth(100f);
+        healthBar.SetMaxHealth(1000f);
         healthBar.SetHealth(GM.playerHP, false);
     }
 
