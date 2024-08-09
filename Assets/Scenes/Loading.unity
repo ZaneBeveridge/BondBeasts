@@ -541,16 +541,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '- Cutscene player
-
-    - New start
-
-    - Starter picking at town
-
-    -
-    First Bond Battle
-
-    - WIP'
+  m_text: "- New Combat!\n       All stats revamped!\n- The Steven Upgrade 1.0\n      
+    UI\n       Shaders\n       Rarities\n       Art\n       Good Pizza Fillings\n      
+    AND MORE!\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7c28407b57ba23e438dac8b40dc1ab8e, type: 2}
   m_sharedMaterial: {fileID: -5054045798517456936, guid: 7c28407b57ba23e438dac8b40dc1ab8e, type: 2}
@@ -1436,7 +1429,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: UPDATE 0.24 - Starters
+  m_text: UPDATE 0.25 - Combat 2.0
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7c28407b57ba23e438dac8b40dc1ab8e, type: 2}
   m_sharedMaterial: {fileID: -5054045798517456936, guid: 7c28407b57ba23e438dac8b40dc1ab8e, type: 2}
