@@ -33,15 +33,15 @@ public class BattleCapBar : MonoBehaviour
         float realCap = 0f;
         float realHealth = 0f;
 
-        if (health > 25f)
+        if (health > 250f)
         {
-            realCap = maxCapturePoints * (health / 100f);
+            realCap = maxCapturePoints * (health / 1000f);
             realHealth = health;
         }
         else
         {
             realCap = maxCapturePoints * 0.25f;
-            realHealth = 25f;
+            realHealth = 250f;
         }
 
         slider.maxValue = (int)realCap;
@@ -49,7 +49,7 @@ public class BattleCapBar : MonoBehaviour
 
         healthText.text = slider.value.ToString() + " / " + maxCapture.ToString();
 
-        SetSize(realHealth);
+        SetSize(realHealth / 10);
     }
 
     public void ResetCapBar()
@@ -65,6 +65,6 @@ public class BattleCapBar : MonoBehaviour
         slider.value = (int)amount;
         healthText.text = slider.value.ToString() + " / " + maxCapture.ToString();
 
-        SetSize(health);
+        SetSize(health / 10);
     }
 }

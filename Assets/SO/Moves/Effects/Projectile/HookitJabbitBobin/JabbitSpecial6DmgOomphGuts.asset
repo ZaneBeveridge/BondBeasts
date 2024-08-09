@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectType: 0
   projectilePrefab: {fileID: 1483389819041474986, guid: 81d181a5dd5366445aea119f4d4702e6, type: 3}
-  projectileDamage: 6
+  projectileDamage: 60
   projectileSpeed: 2
   lifetime: 0
   collideWithAmountOfObjects: 0
   criticalProjectile: 0
+  echo: 0

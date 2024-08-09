@@ -5,6 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     private int damage;
+    private int baseDamage;
 
     public bool isBasic;
 
@@ -62,7 +63,7 @@ public class Projectile : MonoBehaviour
         }
     }
 
-    public void Init(float spd, int dmg, float lifeTime, int collideWithAmountOfObjects, bool criticalProjectile, string op, BattleBuffManager man, FireProjectileEffectSO projEffect)
+    public void Init(float spd, int dmg, int bDmg, float lifeTime, int collideWithAmountOfObjects, bool criticalProjectile, string op, BattleBuffManager man, FireProjectileEffectSO projEffect)
     {
         if (onFireParticle != null)
         {
@@ -85,6 +86,7 @@ public class Projectile : MonoBehaviour
 
         
         damage = dmg;
+        baseDamage = bDmg;
 
         amountOfObjectsToCollideWith = collideWithAmountOfObjects;
         criticalProj = criticalProjectile;
@@ -115,26 +117,26 @@ public class Projectile : MonoBehaviour
 
                     if (enemy.transform.position.y > -1.1)
                     {
-                        enemy.TakeDamage(damage + (int)(damage * 0.5f), false, true, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
+                        enemy.TakeDamage(damage + (int)(damage * 0.5f), baseDamage, false, true, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
                         enemy.hitNumbers.SpawnPopup(PopupType.AirHit, this.transform, "", 0);
                         enemy.fMonsterController.TriggerAction(TriggerType.enemyHitInAir);
                     }
                     else
                     {
-                        enemy.TakeDamage(damage, false, true, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
+                        enemy.TakeDamage(damage, baseDamage, false, true, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
                     }
                 }
                 else
                 {
                     if (enemy.transform.position.y > -1.1)
                     {
-                        enemy.TakeDamage(damage + (int)(damage * 0.5f), false, false, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
+                        enemy.TakeDamage(damage + (int)(damage * 0.5f), baseDamage, false, false, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
                         enemy.hitNumbers.SpawnPopup(PopupType.AirHit, this.transform, "", 0);
                         enemy.fMonsterController.TriggerAction(TriggerType.enemyHitInAir);
                     }
                     else
                     {
-                        enemy.TakeDamage(damage, false, false, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
+                        enemy.TakeDamage(damage, baseDamage, false, false, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
                     }
                 }
 
@@ -175,26 +177,26 @@ public class Projectile : MonoBehaviour
                 {
                     if (friend.transform.position.y > -1.1)
                     {
-                        friend.TakeDamage(damage + (int)(damage * 0.5f), false, true, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
+                        friend.TakeDamage(damage + (int)(damage * 0.5f), baseDamage, false, true, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
                         friend.hitNumbers.SpawnPopup(PopupType.AirHit, this.transform, "", 0);
                         //friend.TriggerAction(TriggerType.enemyHitInAir);
                     }
                     else
                     {
-                        friend.TakeDamage(damage, false, true, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
+                        friend.TakeDamage(damage, baseDamage, false, true, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
                     }
                 }
                 else
                 {
                     if (friend.transform.position.y > -1.1)
                     {
-                        friend.TakeDamage(damage + (int)(damage * 0.5f), false, false, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
+                        friend.TakeDamage(damage + (int)(damage * 0.5f), baseDamage, false, false, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
                         friend.hitNumbers.SpawnPopup(PopupType.AirHit, this.transform, "", 0);
                         //friend.fMonsterController.TriggerAction(TriggerType.enemyHitInAir);
                     }
                     else
                     {
-                        friend.TakeDamage(damage, false, false, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
+                        friend.TakeDamage(damage, baseDamage, false, false, dotAmount, dotTime, stunnedTime, resetSpecialCooldownOnHit, antiGravTime, projectileEffect.echo, enemyStatsBuff, friendlyStatsBuff, this.transform, projectileEffect);
                     }
                 }
 

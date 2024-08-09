@@ -62,12 +62,6 @@ public class NumberPopupManager : MonoBehaviour
             case PopupType.AirHit:
                 textToSpawn = airHitPrefab;
                 break;
-            case PopupType.Negated:
-                textToSpawn = negatedTextPrefab;
-                break;
-            case PopupType.Reflected:
-                textToSpawn = reflectedTextPrefab;
-                break;
         }
 
         GameObject spawnedText = Instantiate(textToSpawn, viewportPos, Quaternion.identity, textParent);
@@ -98,6 +92,4 @@ public enum PopupType
     PerfectBlock,
     Parry,
     AirHit,
-    Negated,
-    Reflected
 }

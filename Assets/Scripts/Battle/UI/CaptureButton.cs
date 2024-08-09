@@ -71,8 +71,6 @@ public class CaptureButton : MonoBehaviour
                     loopCharge = 0.5f;
                 }
             }
-
-            
         }
 
         manager.enemyMonsterController.capBar.SetCaptureLevel(currentCharge, manager.enemyMonsterController.enemyHealth);
@@ -82,9 +80,9 @@ public class CaptureButton : MonoBehaviour
 
         float realCap = 0f;
 
-        if (manager.enemyMonsterController.enemyHealth > 25)
+        if (manager.enemyMonsterController.enemyHealth > 250)
         {
-            realCap = manager.enemyCapturePoints * (manager.enemyMonsterController.enemyHealth / 100f);
+            realCap = manager.enemyCapturePoints * (manager.enemyMonsterController.enemyHealth / 1000f);
         }
         else
         {

@@ -339,7 +339,7 @@ public class BattleManager : MonoBehaviour
         }
 
         
-        friendlyMonsterController.healthBar.SetMaxHealth(100);
+        friendlyMonsterController.healthBar.SetMaxHealth(1000);
         friendlyMonsterController.healthBar.SetHealth(GM.playerHP, false);
 
         friendlyMonsterController.SetEmpty(false);
@@ -427,7 +427,7 @@ public class BattleManager : MonoBehaviour
         enemyMonsterController.SetupEnemyPunk(mons, type, 0, punkMaxHealth);
 
 
-        friendlyMonsterController.healthBar.SetMaxHealth(100);
+        friendlyMonsterController.healthBar.SetMaxHealth(1000);
         friendlyMonsterController.healthBar.SetHealth(GM.playerHP, false);
 
         friendlyMonsterController.SetEmpty(false);
@@ -489,7 +489,7 @@ public class BattleManager : MonoBehaviour
 
         enemyMonsterController.SetupEnemyBondBattle(mon);
 
-        friendlyMonsterController.healthBar.SetMaxHealth(100);
+        friendlyMonsterController.healthBar.SetMaxHealth(1000);
         friendlyMonsterController.healthBar.SetHealth(GM.playerHP, false);
 
         friendlyMonsterController.SetEmpty(true);
@@ -520,6 +520,8 @@ public class BattleManager : MonoBehaviour
         ResumeControls();
 
         friendlyMonsterController.alive = true;
+        friendlyMonsterController.regenOn = true;
+        enemyMonsterController.regenOn = true;
 
         if (isBondBattle)
         {
@@ -812,10 +814,10 @@ public class BattleManager : MonoBehaviour
             }
         }
 
-        GM.playerHP = 50f;
+        GM.playerHP = 500f;
 
         GM.popupManager.FullyHealed();
-        GM.overworldUI.healthBar.SetHealth(50f, false);
+        GM.overworldUI.healthBar.SetHealth(500f, false);
         GM.MovePlayerHome();
 
 

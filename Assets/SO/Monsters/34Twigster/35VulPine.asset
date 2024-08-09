@@ -100,8 +100,8 @@ MonoBehaviour:
   height: 0
   weight: 0
   lore: A thief
-  locations: Evolution
-  strangeChance: 20
+  locations: Stage 2 Ascension
+  strangeChance: 1
   defaultStats:
   - name: Oomph
     value: 5

@@ -213,16 +213,16 @@ public class MoveController : MonoBehaviour
 
             //Debug.Log("Base Damage: " + damage.ToString());
 
-            float tD = damage + (damage * (0.016f * oomphAmount));
+            float tD = damage + (damage * (0.04f * oomphAmount));
 
             //Debug.Log("Before Crit Damage: " + tD.ToString());
 
             int realDmg = (int)tD;
-
+            int baseDmg = (int)damage;
 
             //Debug.Log("Real Damage: " + realDmg.ToString());
 
-            GM.battleManager.friendlyMonsterController.FireProjectile(projectile, speed * 10, realDmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, projEffect);
+            GM.battleManager.friendlyMonsterController.FireProjectile(projectile, speed * 10, realDmg, baseDmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, projEffect);
         }
         else
         {
@@ -233,16 +233,16 @@ public class MoveController : MonoBehaviour
             oomphAmount = GM.battleManager.enemyMonsterController.oomph + itemPassives + buffSlots;
 
             //spd = speed + (speed * (0.02f * amt));
-
-            float tD = damage + (damage * (0.016f * oomphAmount));
+            float tD = damage + (damage * (0.04f * oomphAmount));
 
             int realDmg = (int)tD;
+            int baseDmg = (int)damage;
 
             // ENEMY SPEED MODIFIER - CHANGE THIS TO ALTER THE SLIGHT SLOWER SPEED OF ALL ENEMY PROJECTILES COMPARED TO THE PLAYERS 
             float enemyProjectileSpeedModifier = 0.6f; // 0-1   0%-100%
 
 
-            GM.battleManager.enemyMonsterController.FireProjectile(projectile, (speed * 10) * enemyProjectileSpeedModifier, realDmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, projEffect);
+            GM.battleManager.enemyMonsterController.FireProjectile(projectile, (speed * 10) * enemyProjectileSpeedModifier, realDmg, baseDmg, lifeTime, collideWithAmountOfObjects, criticalProjectile, projEffect);
         }
     }
 
@@ -376,7 +376,7 @@ public class MoveController : MonoBehaviour
 
             if (conditions.whenFullHP)
             {
-                if (GM.playerHP >= 100)
+                if (GM.playerHP >= 1000)
                 {
                     state = true;
                 }
@@ -387,7 +387,7 @@ public class MoveController : MonoBehaviour
             }
             else if (conditions.whenBelow15HP)
             {
-                if (GM.playerHP < 15)
+                if (GM.playerHP < 150)
                 {
                     state = true;
                 }
@@ -423,7 +423,7 @@ public class MoveController : MonoBehaviour
 
             if (conditions.whenFullHP)
             {
-                if (GM.battleManager.enemyMonsterController.enemyHealth >= 100)
+                if (GM.battleManager.enemyMonsterController.enemyHealth >= 1000)
                 {
                     state = true;
                 }
@@ -434,7 +434,7 @@ public class MoveController : MonoBehaviour
             }
             else if (conditions.whenBelow15HP)
             {
-                if (GM.battleManager.enemyMonsterController.enemyHealth < 15)
+                if (GM.battleManager.enemyMonsterController.enemyHealth < 150)
                 {
                     state = true;
                 }

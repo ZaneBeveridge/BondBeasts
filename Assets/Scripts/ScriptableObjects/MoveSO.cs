@@ -32,14 +32,14 @@ public class MoveSO : ScriptableObject
                 {
                     if (move.conditions.whenFullHP)
                     {
-                        if (hp >= 100)
+                        if (hp >= 1000)
                         {
                             return move.effect as FireProjectileEffectSO;
                         }
                     }
                     else if (move.conditions.whenBelow15HP)
                     {
-                        if (hp < 15)
+                        if (hp < 150)
                         {
                             return move.effect as FireProjectileEffectSO;
                         }

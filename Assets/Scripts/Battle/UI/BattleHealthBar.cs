@@ -48,7 +48,7 @@ public class BattleHealthBar : MonoBehaviour
     public GameObject capExtra;
     public GameObject capArt;
 
-    private string maxHealthText = "100";
+    private string maxHealthText = "1000";
 
 
     //private bool startTimerForEaseSlider = false;
@@ -117,7 +117,7 @@ public class BattleHealthBar : MonoBehaviour
 
         if (pulsingOverlay != null)
         {
-            if (health < 35f)
+            if (health < 350f)
             {
                 pulsingOverlay.SetActive(true);
             }

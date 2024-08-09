@@ -32,11 +32,11 @@ public class TownNode : Node
 
     public override void OnInteract()
     {
-        if (GM.playerHP < 50f)
+        if (GM.playerHP < 500f)
         {
-            GM.playerHP = 50f;
+            GM.playerHP = 500f;
             GM.popupManager.FullyHealed();
-            GM.overworldUI.healthBar.SetHealth(50f, false);
+            GM.overworldUI.healthBar.SetHealth(500f, false);
         }
 
         
