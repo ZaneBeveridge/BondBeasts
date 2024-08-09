@@ -98,8 +98,8 @@ MonoBehaviour:
   lore: Switches up strategy to be more offensive but over commits, thinks nothing
     is working and it is just bad at fighting, cursed to always be bad because it
     wasn't born talented.
-  locations: Evolution
-  strangeChance: 20
+  locations: Stage 2 Ascension
+  strangeChance: 1
   defaultStats:
   - name: Oomph
     value: 10

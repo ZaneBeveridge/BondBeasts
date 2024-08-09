@@ -62,35 +62,35 @@ MonoBehaviour:
   - variant: {fileID: 11400000, guid: 4c2badfbe2767f3489568572536d087a, type: 2}
     weight: 32768
   - variant: {fileID: 11400000, guid: 3ad446520949dc34188eed4f60ace7fa, type: 2}
-    weight: 16384
+    weight: 32768
   - variant: {fileID: 11400000, guid: 6d30b4dee9c8258458afeeaac32a0c5c, type: 2}
-    weight: 8192
+    weight: 16364
   - variant: {fileID: 11400000, guid: fe0d386d22129bc43855f5c0169cff55, type: 2}
-    weight: 4096
+    weight: 16364
   - variant: {fileID: 11400000, guid: 3714e702c9887dc4fb9b80a1fb052cad, type: 2}
-    weight: 2048
+    weight: 8192
   - variant: {fileID: 11400000, guid: f9903c8f2ea5509488fc27bbfaa7f54d, type: 2}
-    weight: 1024
+    weight: 8192
   - variant: {fileID: 11400000, guid: ef5510080224a5a49adde9fcd7a09aa4, type: 2}
-    weight: 512
+    weight: 4096
   - variant: {fileID: 11400000, guid: a8b0ebc72c49dff4aa39270ca84d49ac, type: 2}
-    weight: 256
+    weight: 4096
   - variant: {fileID: 11400000, guid: 220d4fdc37f5328479ab3f9cef5e69a1, type: 2}
-    weight: 128
+    weight: 2048
   - variant: {fileID: 11400000, guid: 99e19eb9f9db2874882910398b59b184, type: 2}
-    weight: 64
+    weight: 2048
   - variant: {fileID: 11400000, guid: e02e0a383efc96d489639846744e007e, type: 2}
-    weight: 32
+    weight: 1024
   - variant: {fileID: 11400000, guid: 5375ae569d59b824ba7c8f25cf61b95a, type: 2}
-    weight: 16
+    weight: 512
   - variant: {fileID: 11400000, guid: 3903224654dfeef41930a5d53d884e89, type: 2}
-    weight: 8
+    weight: 256
   - variant: {fileID: 11400000, guid: 317963d45291f6849a37b3708aad4bf5, type: 2}
-    weight: 4
+    weight: 128
   - variant: {fileID: 11400000, guid: 0e70ae71b93a7cc4180acef115d94b05, type: 2}
-    weight: 2
+    weight: 64
   - variant: {fileID: 11400000, guid: c80563e99b251d54bb995284417062f4, type: 2}
-    weight: 1
+    weight: 32
   startColour: 9
   amountOfColours: 9
   colourData: {fileID: 11400000, guid: cdef74056f4d24f49a01629c87019535, type: 2}
@@ -99,7 +99,7 @@ MonoBehaviour:
   weight: 45kg
   lore: If cannot keep up with herd, is left behind to starve
   locations: Plains
-  strangeChance: 20
+  strangeChance: 1
   defaultStats:
   - name: Oomph
     value: 8

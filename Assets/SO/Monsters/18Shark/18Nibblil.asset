@@ -62,47 +62,47 @@ MonoBehaviour:
     maxDrops: 5
   possibleVariants:
   - variant: {fileID: 11400000, guid: 17feec844fd853643a744ee6b8f58eda, type: 2}
-    weight: 1048576
+    weight: 50
   - variant: {fileID: 11400000, guid: 3033395b56e021d4fb3d07f529ca210d, type: 2}
-    weight: 524288
+    weight: 5
   - variant: {fileID: 11400000, guid: bfd881f5375256746b8cd3dbdcfdb5d6, type: 2}
-    weight: 262144
+    weight: 5
   - variant: {fileID: 11400000, guid: 74def4d81dc7ffd438bddc7d2d598acd, type: 2}
-    weight: 131072
+    weight: 5
   - variant: {fileID: 11400000, guid: 69954bd4395ed8240a100f7fcb146df0, type: 2}
-    weight: 65536
+    weight: 5
   - variant: {fileID: 11400000, guid: 9ff792249993bc947bd35d0e79841f8e, type: 2}
-    weight: 32768
+    weight: 5
   - variant: {fileID: 11400000, guid: b7a8388570440234aa81ca600575b5c6, type: 2}
-    weight: 16384
+    weight: 5
   - variant: {fileID: 11400000, guid: c25261b9c989e6543b016a71a9b09c1a, type: 2}
-    weight: 8192
-  - variant: {fileID: 11400000, guid: 026e1419a51f5304ba1aab6c626794d1, type: 2}
-    weight: 4096
-  - variant: {fileID: 11400000, guid: fa2f43f0d78bcb34486033863a581006, type: 2}
-    weight: 2048
-  - variant: {fileID: 11400000, guid: a560749ce4463cf4480f6e7180f9468c, type: 2}
-    weight: 1024
-  - variant: {fileID: 11400000, guid: 9699d22810027ba46887a4340baaa760, type: 2}
-    weight: 512
-  - variant: {fileID: 11400000, guid: e07efd6e514e734438614230e09bb7c8, type: 2}
-    weight: 256
-  - variant: {fileID: 11400000, guid: 22d295abd331483469f0f5a86174d4d5, type: 2}
-    weight: 128
-  - variant: {fileID: 11400000, guid: 1c2c782e902dc5643b933fa20f2b4c95, type: 2}
-    weight: 64
-  - variant: {fileID: 11400000, guid: 9bb480bb4d01be44fb974c296451f7e4, type: 2}
-    weight: 32
-  - variant: {fileID: 11400000, guid: 885ba135595792d40aaf13b68e9a77b9, type: 2}
-    weight: 16
-  - variant: {fileID: 11400000, guid: 7a261c9325aab0344bf648f90c75d7fe, type: 2}
-    weight: 8
-  - variant: {fileID: 11400000, guid: 40317bfbdb8befa43bc943209ce5821c, type: 2}
-    weight: 4
-  - variant: {fileID: 11400000, guid: 9330ea1649001254290132274f83b89a, type: 2}
-    weight: 2
-  - variant: {fileID: 11400000, guid: 783042b15e437dd4b979dc6e2461a9da, type: 2}
     weight: 1
+  - variant: {fileID: 11400000, guid: 026e1419a51f5304ba1aab6c626794d1, type: 2}
+    weight: 5
+  - variant: {fileID: 11400000, guid: fa2f43f0d78bcb34486033863a581006, type: 2}
+    weight: 1
+  - variant: {fileID: 11400000, guid: a560749ce4463cf4480f6e7180f9468c, type: 2}
+    weight: 1
+  - variant: {fileID: 11400000, guid: 9699d22810027ba46887a4340baaa760, type: 2}
+    weight: 0.666
+  - variant: {fileID: 11400000, guid: e07efd6e514e734438614230e09bb7c8, type: 2}
+    weight: 1
+  - variant: {fileID: 11400000, guid: 22d295abd331483469f0f5a86174d4d5, type: 2}
+    weight: 5
+  - variant: {fileID: 11400000, guid: 1c2c782e902dc5643b933fa20f2b4c95, type: 2}
+    weight: 0.666
+  - variant: {fileID: 11400000, guid: 9bb480bb4d01be44fb974c296451f7e4, type: 2}
+    weight: 1
+  - variant: {fileID: 11400000, guid: 885ba135595792d40aaf13b68e9a77b9, type: 2}
+    weight: 1
+  - variant: {fileID: 11400000, guid: 7a261c9325aab0344bf648f90c75d7fe, type: 2}
+    weight: 1
+  - variant: {fileID: 11400000, guid: 40317bfbdb8befa43bc943209ce5821c, type: 2}
+    weight: 1
+  - variant: {fileID: 11400000, guid: 9330ea1649001254290132274f83b89a, type: 2}
+    weight: 0.666
+  - variant: {fileID: 11400000, guid: 783042b15e437dd4b979dc6e2461a9da, type: 2}
+    weight: 0.1
   startColour: 7
   amountOfColours: 9
   colourData: {fileID: 11400000, guid: cdef74056f4d24f49a01629c87019535, type: 2}
@@ -110,7 +110,7 @@ MonoBehaviour:
   height: 0
   weight: 0
   lore: Bites first, asks questions later
-  locations: Beach
+  locations: Beaches
   strangeChance: 20
   defaultStats:
   - name: Oomph

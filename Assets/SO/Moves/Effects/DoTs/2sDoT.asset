@@ -12,8 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 947e0b7583b206c4b88e9297a516fff5, type: 3}
   m_Name: 2sDoT
   m_EditorClassIdentifier: 
-  effectType: 8
+  effectType: 5
   perma: 0
-  amount: 1
-  decayTime: 2
-  decayAmount: 1
+  amount: 10
+  time: 0

@@ -86,7 +86,7 @@ MonoBehaviour:
   critAttackTime: 0
   takingCritsTime: 0
   stunnedTime: 0
-  dotAmount: 1
+  dotAmount: 10
   dotTime: 1
   resetSpecialCooldownOnHit: 0
   triggersBasicORSpecial: 1

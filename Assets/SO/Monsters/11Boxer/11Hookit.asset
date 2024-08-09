@@ -62,42 +62,42 @@ MonoBehaviour:
     maxDrops: 5
   possibleVariants:
   - variant: {fileID: 11400000, guid: 17feec844fd853643a744ee6b8f58eda, type: 2}
-    weight: 8192
+    weight: 50
   - variant: {fileID: 11400000, guid: c933a535e7e1c564caf9da7bb95873be, type: 2}
-    weight: 4096
-  - variant: {fileID: 11400000, guid: c34e2aefbe75ccd49929c6862cca1ea1, type: 2}
-    weight: 2048
-  - variant: {fileID: 11400000, guid: 5efffaabf900bb240b1b83d3f99e1c07, type: 2}
-    weight: 1024
-  - variant: {fileID: 11400000, guid: 0c63b3ed594538142889eb82f862632f, type: 2}
-    weight: 512
-  - variant: {fileID: 11400000, guid: db9c8e1cd5cd5214b9ccd3ea0be2b3ca, type: 2}
-    weight: 256
-  - variant: {fileID: 11400000, guid: f8e15e9d5f1cfa84eb20667380cbe02a, type: 2}
-    weight: 128
-  - variant: {fileID: 11400000, guid: 955617620736530499ac6a3cbd086ce0, type: 2}
-    weight: 64
-  - variant: {fileID: 11400000, guid: 2acd549122aca85409d83b6950a1bb8a, type: 2}
-    weight: 32
-  - variant: {fileID: 11400000, guid: c2104ce641ac79d449dcbf15d3e28b03, type: 2}
-    weight: 16
-  - variant: {fileID: 11400000, guid: 283a5f9305a30f14d99b909d96985fe4, type: 2}
     weight: 8
+  - variant: {fileID: 11400000, guid: c34e2aefbe75ccd49929c6862cca1ea1, type: 2}
+    weight: 8
+  - variant: {fileID: 11400000, guid: 5efffaabf900bb240b1b83d3f99e1c07, type: 2}
+    weight: 8
+  - variant: {fileID: 11400000, guid: 0c63b3ed594538142889eb82f862632f, type: 2}
+    weight: 8
+  - variant: {fileID: 11400000, guid: db9c8e1cd5cd5214b9ccd3ea0be2b3ca, type: 2}
+    weight: 8
+  - variant: {fileID: 11400000, guid: f8e15e9d5f1cfa84eb20667380cbe02a, type: 2}
+    weight: 1.3333
+  - variant: {fileID: 11400000, guid: 955617620736530499ac6a3cbd086ce0, type: 2}
+    weight: 1.3333
+  - variant: {fileID: 11400000, guid: 2acd549122aca85409d83b6950a1bb8a, type: 2}
+    weight: 1.3333
+  - variant: {fileID: 11400000, guid: c2104ce641ac79d449dcbf15d3e28b03, type: 2}
+    weight: 1.3333
+  - variant: {fileID: 11400000, guid: 283a5f9305a30f14d99b909d96985fe4, type: 2}
+    weight: 1.3333
   - variant: {fileID: 11400000, guid: 81765cbae4423cf4e9621b7737053929, type: 2}
-    weight: 4
+    weight: 1.3333
   - variant: {fileID: 11400000, guid: c62ecb86196ea304cb70543b7a51461c, type: 2}
     weight: 2
   - variant: {fileID: 11400000, guid: 3ded954b9167ff04f9331cb8a91aeec3, type: 2}
-    weight: 1
+    weight: 0.01
   startColour: 6
   amountOfColours: 9
   colourData: {fileID: 11400000, guid: cdef74056f4d24f49a01629c87019535, type: 2}
   chanceData: {fileID: 11400000, guid: 1178a54ee9a0ecb4c93d22bbd54719db, type: 2}
-  height: 58cm (including horn)
+  height: 58cm
   weight: 20kg
   lore: Is too defensive in fights and scared to commit, so it loses often.
-  locations: Plains
-  strangeChance: 20
+  locations: Cliffs
+  strangeChance: 1
   defaultStats:
   - name: Oomph
     value: 4

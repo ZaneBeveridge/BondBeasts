@@ -58,37 +58,37 @@ MonoBehaviour:
     maxDrops: 1
   possibleVariants:
   - variant: {fileID: 11400000, guid: 17feec844fd853643a744ee6b8f58eda, type: 2}
-    weight: 32768
+    weight: 50
   - variant: {fileID: 11400000, guid: 91ad534b6e58e5e4aa0dc468fc5bebbc, type: 2}
-    weight: 16384
-  - variant: {fileID: 11400000, guid: 051aa9f72a19d0d4bb96ce3e13081ab7, type: 2}
-    weight: 8192
-  - variant: {fileID: 11400000, guid: c2c8c7062feef0146879ffdaefb201de, type: 2}
-    weight: 4096
-  - variant: {fileID: 11400000, guid: 5a5a1ad490778ef47a0d2afb332e40b0, type: 2}
-    weight: 2048
-  - variant: {fileID: 11400000, guid: ac285095ed39df64c83fa122188342c3, type: 2}
-    weight: 1024
-  - variant: {fileID: 11400000, guid: fb6be9d86c45aca489916644e5a111e5, type: 2}
-    weight: 512
-  - variant: {fileID: 11400000, guid: 85bfef16402d208478bc105d6bbf7b68, type: 2}
-    weight: 256
-  - variant: {fileID: 11400000, guid: 02d34cc3b8bfa69449359d6e547628a9, type: 2}
-    weight: 128
-  - variant: {fileID: 11400000, guid: 2bc607b3a2fe6f2419bba8b19f2d1f5a, type: 2}
-    weight: 64
-  - variant: {fileID: 11400000, guid: 20ba27aa922d0aa4fbcb3927d9b3b9b0, type: 2}
-    weight: 32
-  - variant: {fileID: 11400000, guid: 45f76a3e69b7e0546a836a0ebc118369, type: 2}
-    weight: 16
-  - variant: {fileID: 11400000, guid: d2e716724fad8534296351da1ae0c378, type: 2}
     weight: 8
-  - variant: {fileID: 11400000, guid: 7016f91168db1ed45a0c280cc3a163d7, type: 2}
-    weight: 4
-  - variant: {fileID: 11400000, guid: de2f68f5cbf1adf4db618c0c5bfc348a, type: 2}
+  - variant: {fileID: 11400000, guid: 051aa9f72a19d0d4bb96ce3e13081ab7, type: 2}
+    weight: 8
+  - variant: {fileID: 11400000, guid: c2c8c7062feef0146879ffdaefb201de, type: 2}
+    weight: 8
+  - variant: {fileID: 11400000, guid: 5a5a1ad490778ef47a0d2afb332e40b0, type: 2}
+    weight: 8
+  - variant: {fileID: 11400000, guid: ac285095ed39df64c83fa122188342c3, type: 2}
+    weight: 8
+  - variant: {fileID: 11400000, guid: fb6be9d86c45aca489916644e5a111e5, type: 2}
+    weight: 1.1428
+  - variant: {fileID: 11400000, guid: 85bfef16402d208478bc105d6bbf7b68, type: 2}
+    weight: 1.1428
+  - variant: {fileID: 11400000, guid: 02d34cc3b8bfa69449359d6e547628a9, type: 2}
+    weight: 1.1428
+  - variant: {fileID: 11400000, guid: 2bc607b3a2fe6f2419bba8b19f2d1f5a, type: 2}
+    weight: 1.1428
+  - variant: {fileID: 11400000, guid: 20ba27aa922d0aa4fbcb3927d9b3b9b0, type: 2}
+    weight: 1.1428
+  - variant: {fileID: 11400000, guid: 45f76a3e69b7e0546a836a0ebc118369, type: 2}
     weight: 2
+  - variant: {fileID: 11400000, guid: d2e716724fad8534296351da1ae0c378, type: 2}
+    weight: 1.1428
+  - variant: {fileID: 11400000, guid: 7016f91168db1ed45a0c280cc3a163d7, type: 2}
+    weight: 1.1428
+  - variant: {fileID: 11400000, guid: de2f68f5cbf1adf4db618c0c5bfc348a, type: 2}
+    weight: 0.05
   - variant: {fileID: 11400000, guid: 9bcad761914004e46a691e8361cff2d2, type: 2}
-    weight: 1
+    weight: 0.05
   startColour: 7
   amountOfColours: 9
   colourData: {fileID: 11400000, guid: cdef74056f4d24f49a01629c87019535, type: 2}
@@ -96,8 +96,8 @@ MonoBehaviour:
   height: 0
   weight: 0
   lore: Works for Fox to steal
-  locations: Bushes, City
-  strangeChance: 20
+  locations: Woods, Cliffs
+  strangeChance: 1
   defaultStats:
   - name: Oomph
     value: 1

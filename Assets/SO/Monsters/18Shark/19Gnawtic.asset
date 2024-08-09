@@ -110,7 +110,7 @@ MonoBehaviour:
   height: 0
   weight: 0
   lore: These mons debate the best way to kill prey
-  locations: Evolution
+  locations: Stage 2 Ascension
   strangeChance: 20
   defaultStats:
   - name: Oomph

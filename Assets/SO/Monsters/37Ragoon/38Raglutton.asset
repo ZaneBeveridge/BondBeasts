@@ -96,8 +96,8 @@ MonoBehaviour:
   height: 0
   weight: 0
   lore: Steals too much and becomes too fat and gives up
-  locations: Evolution
-  strangeChance: 20
+  locations: Stage 2 Ascension
+  strangeChance: 1
   defaultStats:
   - name: Oomph
     value: 1

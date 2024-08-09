@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Heal60
   m_EditorClassIdentifier: 
   effectType: 3
-  healAmount: 60
+  healAmount: 600
