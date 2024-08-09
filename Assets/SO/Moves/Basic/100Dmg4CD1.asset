@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 100
   moveName: Flash Attack
-  moveDescription: Fires a projectile that deals 4 Damage. 1s CD
+  moveDescription: Fires a projectile that deals 4 Damage
   editableMoveDescription: Fires a projectile that deals [damage] Damage.
   moveType: Projectile
   moveSet: 0

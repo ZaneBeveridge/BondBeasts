@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: Heal3
   m_EditorClassIdentifier: 
   effectType: 3
-  healAmount: 3
+  healAmount: 30

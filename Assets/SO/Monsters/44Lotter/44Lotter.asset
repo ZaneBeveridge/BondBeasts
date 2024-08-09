@@ -37,29 +37,29 @@ MonoBehaviour:
     maxDrops: 5
   possibleVariants:
   - variant: {fileID: 11400000, guid: 17feec844fd853643a744ee6b8f58eda, type: 2}
-    weight: 2048
+    weight: 32
   - variant: {fileID: 11400000, guid: 8b63bf01508ef1c46b08c891768be454, type: 2}
-    weight: 1024
+    weight: 64
   - variant: {fileID: 11400000, guid: 31db9fbc4ed65b4428a66919f321eb8d, type: 2}
-    weight: 512
+    weight: 128
   - variant: {fileID: 11400000, guid: 46ad54ce048d1c142a38030ec58b94d7, type: 2}
     weight: 256
   - variant: {fileID: 11400000, guid: 63e0071da2544e448b1e13157e5b58a2, type: 2}
-    weight: 128
+    weight: 512
   - variant: {fileID: 11400000, guid: 8c816464df81d7f438ba0f5221447a40, type: 2}
-    weight: 64
+    weight: 1024
   - variant: {fileID: 11400000, guid: 78e2daab3d9d1f04b876e8978f71f0c8, type: 2}
-    weight: 32
+    weight: 1024
   - variant: {fileID: 11400000, guid: 9ac08c4460af0f54ea7e3601f0308784, type: 2}
-    weight: 16
+    weight: 512
   - variant: {fileID: 11400000, guid: 05e74dfa8f0d4dc49946a5b9d0ed00f5, type: 2}
-    weight: 8
+    weight: 256
   - variant: {fileID: 11400000, guid: 900118a4f2d8ca9419e85fd48311a9a2, type: 2}
-    weight: 4
+    weight: 128
   - variant: {fileID: 11400000, guid: 3f016c3b12bd6a846a67304e44d5b149, type: 2}
-    weight: 2
+    weight: 64
   - variant: {fileID: 11400000, guid: f0cd7251ba902e8499fdcec56049f8c9, type: 2}
-    weight: 1
+    weight: 32
   startColour: 2
   amountOfColours: 9
   colourData: {fileID: 11400000, guid: cdef74056f4d24f49a01629c87019535, type: 2}
@@ -67,8 +67,8 @@ MonoBehaviour:
   height: 
   weight: 
   lore: 
-  locations: Rivers
-  strangeChance: 20
+  locations: Rarely near rivers
+  strangeChance: 1
   defaultStats:
   - name: Oomph
     value: 5

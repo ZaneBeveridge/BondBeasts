@@ -98,8 +98,8 @@ MonoBehaviour:
   height: 0
   weight: 0
   lore: More people die each year from this mon, than [shark ball]
-  locations: Evolution
-  strangeChance: 20
+  locations: Stage 2 Ascension
+  strangeChance: 1
   defaultStats:
   - name: Oomph
     value: 1

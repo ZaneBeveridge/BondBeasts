@@ -58,35 +58,35 @@ MonoBehaviour:
     maxDrops: 5
   possibleVariants:
   - variant: {fileID: 11400000, guid: 17feec844fd853643a744ee6b8f58eda, type: 2}
-    weight: 16384
+    weight: 50
   - variant: {fileID: 11400000, guid: e7a16a91338ae434e87175fce306be2b, type: 2}
-    weight: 8192
+    weight: 6
   - variant: {fileID: 11400000, guid: 8eabcc24f90529a48a067466160d20bb, type: 2}
-    weight: 4096
+    weight: 6
   - variant: {fileID: 11400000, guid: e914ff6d641eea041bece7f30cab5882, type: 2}
-    weight: 2048
+    weight: 6
   - variant: {fileID: 11400000, guid: 09cfbacf07e72cb40892ebe9707a7fce, type: 2}
-    weight: 1024
+    weight: 6
   - variant: {fileID: 11400000, guid: 3bf0ca33f652f1544817ad75f06e95a8, type: 2}
-    weight: 512
+    weight: 6
   - variant: {fileID: 11400000, guid: 8a25c7c3a1bb7104e8a420a22debf07e, type: 2}
-    weight: 256
+    weight: 6
   - variant: {fileID: 11400000, guid: df7bb2b02ee1045458118bf6200c3cb5, type: 2}
-    weight: 128
+    weight: 2.66
   - variant: {fileID: 11400000, guid: aadcc20f4f4f4d940b2eb69ab7004921, type: 2}
-    weight: 64
+    weight: 2.66
   - variant: {fileID: 11400000, guid: 30981d92829ac444790c094b98cccc9c, type: 2}
-    weight: 32
+    weight: 2.66
   - variant: {fileID: 11400000, guid: e9e54c836d31f7346bd8fa5a7fc3dad1, type: 2}
-    weight: 16
+    weight: 0.5
   - variant: {fileID: 11400000, guid: d56bd249c3d5c0948a1e2149f6437596, type: 2}
-    weight: 8
+    weight: 0.5
   - variant: {fileID: 11400000, guid: 8f12d24c232106b48970ee651fa5bfa1, type: 2}
-    weight: 4
+    weight: 0.5
   - variant: {fileID: 11400000, guid: 6eaca66acd5000341bd0ecfc213da752, type: 2}
-    weight: 2
+    weight: 0.5
   - variant: {fileID: 11400000, guid: fc4031eed2267184082744187f3c85e2, type: 2}
-    weight: 1
+    weight: 0.1
   startColour: 6
   amountOfColours: 9
   colourData: {fileID: 11400000, guid: cdef74056f4d24f49a01629c87019535, type: 2}
@@ -94,8 +94,8 @@ MonoBehaviour:
   height: 0
   weight: 0
   lore: Wishes to fly, goes where the wind blows it
-  locations: Plains (Rare)
-  strangeChance: 20
+  locations: Rarely in plains
+  strangeChance: 1
   defaultStats:
   - name: Oomph
     value: 5

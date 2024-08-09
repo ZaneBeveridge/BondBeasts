@@ -98,8 +98,8 @@ MonoBehaviour:
   height: 14.1hh
   weight: 450kg
   lore: Competitive with cheetah, but is better at distance
-  locations: Evolution
-  strangeChance: 20
+  locations: Stage 2 Ascension
+  strangeChance: 1
   defaultStats:
   - name: Oomph
     value: 8
