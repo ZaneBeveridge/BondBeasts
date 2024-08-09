@@ -742,6 +742,20 @@ public class FriendlyMonsterController : MonoBehaviour
             if (GM.playerHP <= 0)
             {
                 GM.battleManager.StartLoss();
+
+                if (dmg > 0)
+                {
+                    if (effect)
+                    {
+                        hitNumbers.SpawnPopup(PopupType.Dot, pos, dmg.ToString(), protectedDamage); //dot popup
+                        healthBarShakeAnim.SetTrigger("DotShake");
+                    }
+                    else
+                    {
+                        hitNumbers.SpawnPopup(PopupType.Damage, pos, dmg.ToString(), protectedDamage); //damage popup
+                        healthBarShakeAnim.SetTrigger("Shake");
+                    }
+                }
             }
             else
             {
@@ -750,13 +764,11 @@ public class FriendlyMonsterController : MonoBehaviour
                     if (effect)
                     {
                         hitNumbers.SpawnPopup(PopupType.Dot, pos, dmg.ToString(), protectedDamage); //dot popup
-
                         healthBarShakeAnim.SetTrigger("DotShake");
                     }
                     else
                     {
                         hitNumbers.SpawnPopup(PopupType.Damage, pos, dmg.ToString(), protectedDamage); //damage popup
-
                         healthBarShakeAnim.SetTrigger("Shake");
                         GM.battleManager.cameraAnimator.SetInteger("Focus", 3);
                     }
