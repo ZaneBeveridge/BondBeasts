@@ -917,6 +917,21 @@ public class EnemyMonsterController : MonoBehaviour
                     GM.battleManager.StartWin();
                 }
 
+                if (dmg > 0)
+                {
+                    if (effect)
+                    {
+                        hitNumbers.SpawnPopup(PopupType.Dot, pos, dmg.ToString(), protectedDamage); //dot popup
+                        healthBarShakeAnim.SetTrigger("DotShake");
+                    }
+                    else
+                    {
+                        hitNumbers.SpawnPopup(PopupType.Damage, pos, dmg.ToString(), protectedDamage); //damage popup
+                        healthBarShakeAnim.SetTrigger("Shake");
+                    }
+                }
+
+
             }
             else
             {

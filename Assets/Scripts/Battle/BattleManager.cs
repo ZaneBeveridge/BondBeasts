@@ -628,6 +628,8 @@ public class BattleManager : MonoBehaviour
         isLosing = true;
         GM.timeManager.DoSlowMotion(2f);
         friendlyMonsterController.alive = false;
+        friendlyMonsterController.regenOn = false;
+        enemyMonsterController.regenOn = false;
         PauseControls();
         List<GameObject> hideObjs = new List<GameObject>();
         hideObjs.Add(GM.battleUI.gameObject);
@@ -661,6 +663,8 @@ public class BattleManager : MonoBehaviour
         isWinning = true;
         enemyMonsterController.ActivateAI(false);
         friendlyMonsterController.alive = false;
+        friendlyMonsterController.regenOn = false;
+        enemyMonsterController.regenOn = false;
         PauseControls();
         GM.timeManager.DoSlowMotion(2f);
 
@@ -690,6 +694,9 @@ public class BattleManager : MonoBehaviour
         isWinning = true;
         enemyMonsterController.ActivateAI(false);
         friendlyMonsterController.alive = false;
+        friendlyMonsterController.regenOn = false;
+        enemyMonsterController.regenOn = false;
+
         PauseControls();
         GM.timeManager.DoSlowMotion(4f);
 
@@ -715,6 +722,8 @@ public class BattleManager : MonoBehaviour
         isWinning = true;
         enemyMonsterController.ActivateAI(false);
         friendlyMonsterController.alive = false;
+        friendlyMonsterController.regenOn = false;
+        enemyMonsterController.regenOn = false;
         PauseControls();
         GM.timeManager.DoSlowMotion(4f);
 
