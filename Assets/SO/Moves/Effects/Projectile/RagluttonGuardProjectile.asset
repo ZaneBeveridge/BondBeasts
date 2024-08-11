@@ -15,7 +15,7 @@ MonoBehaviour:
   effectType: 0
   projectilePrefab: {fileID: 1483389819041474986, guid: dca0a1ae2835082418b2b8204ab6bf23, type: 3}
   projectileDamage: 350
-  projectileSpeed: 0.5
+  projectileSpeed: 0.05
   lifetime: 0
   collideWithAmountOfObjects: 0
   criticalProjectile: 0

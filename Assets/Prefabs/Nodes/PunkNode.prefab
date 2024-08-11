@@ -141,7 +141,7 @@ MonoBehaviour:
   GM: {fileID: 0}
   backgroundSprite: {fileID: 21300000, guid: 98ee39ba0ed4ced47ba945cbb90d1605, type: 3}
   punkName: 
-  punkMaxHealth: 100
+  punkMaxHealth: 1000
   monsters: []
   drops: []
   unlockGates: []

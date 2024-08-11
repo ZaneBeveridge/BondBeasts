@@ -80,8 +80,8 @@ MonoBehaviour:
   rb: {fileID: 7886508744218910038}
   sprite: {fileID: 9116299386454378248}
   opposition: 
-  enemyStatsBuff: ffffffffffffffffffffffffffffffffffffffffffffffff
-  friendlyStatsBuff: 010000000100000001000000010000000100000001000000
+  enemyStatsBuff: fdfffffffdfffffffdfffffffdfffffffdfffffffdffffff
+  friendlyStatsBuff: 030000000300000003000000030000000300000003000000
   antiGravTime: 0
   critAttackTime: 0
   takingCritsTime: 0
