@@ -457,7 +457,18 @@ public class EnemyMonsterController : MonoBehaviour
         if (!isStart)
         {
             float sparkAmount = spark + enemyBattleBuffManager.slotValues[5] + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Spark);
-            tagC[currentSlot] = 1 / (1 / cooldown) * sparkAmount * 0.04f + (1 / cooldown);
+            
+            if (sparkAmount < 0)
+            {
+                tagC[currentSlot] = cooldown - (cooldown * (0.008f * sparkAmount));
+            }
+            else
+            {
+                tagC[currentSlot] = 1f / ((1f / cooldown) * sparkAmount * 0.04f + (1f / cooldown));
+            }
+
+            
+
             tagReady[currentSlot] = false;
         }
 
