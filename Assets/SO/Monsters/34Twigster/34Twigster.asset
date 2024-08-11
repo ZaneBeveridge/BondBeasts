@@ -106,7 +106,7 @@ MonoBehaviour:
   - name: Oomph
     value: 5
   - name: Guts
-    value: -30
+    value: -15
   - name: Juice
     value: 1
   - name: Edge

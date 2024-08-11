@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: BuffOomph10
   m_EditorClassIdentifier: 
   effectType: 1
-  modifierType: 0
   stat: 0
   amount: 10

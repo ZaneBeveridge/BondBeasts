@@ -14,17 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 38
   moveName: Raglutton Block
-  moveDescription: Perfect timing fires projectile dealing 35 dmg and a 3s stun,
-    is comicly slow
-  editableMoveDescription: Perfect timing fires projectile dealing 35 dmg and a 3s
-    stun.
-  moveType: Guard
+  moveDescription: fires projectile dealing 35 dmg and a 3s stun, is comicly slow
+  editableMoveDescription: fires projectile dealing 35 dmg and a 3s stun.
+  moveType: Sluggish Projectile
   moveSet: 1
   baseCooldown: 35
   minCooldown: 0
   moveActions:
   - name: 
-    effect: {fileID: 11400000, guid: d5e4cae7e6f9d1b4d868aa62c132ca4e, type: 2}
+    effect: {fileID: 11400000, guid: 48ba5de0ffb3b5445a917088eeea45bf, type: 2}
     delay: 0
     targets:
       team: 0
