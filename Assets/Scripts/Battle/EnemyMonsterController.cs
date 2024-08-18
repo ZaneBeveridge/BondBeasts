@@ -325,12 +325,12 @@ public class EnemyMonsterController : MonoBehaviour
         {
             Targets targ = new Targets(false, false);
 
-            enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, extraStats * 8, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Guts, extraStats * 8, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Juice, extraStats * 8, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Edge, extraStats * 8, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Wits, extraStats * 8, targ);
-            enemyBattleBuffManager.AddBuff(EffectedStat.Spark, extraStats * 8, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, extraStats * 2, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Guts, extraStats * 2, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Juice, extraStats * 2, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Edge, extraStats * 2, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Wits, extraStats * 2, targ);
+            enemyBattleBuffManager.AddBuff(EffectedStat.Spark, extraStats * 2, targ);
         }
 
         enemyHealth = 1000;
