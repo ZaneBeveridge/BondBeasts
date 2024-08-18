@@ -136,7 +136,7 @@ public class SurvivalSubMenu : MonoBehaviour
         
 
         gainedXPText.text = gainedGroupXP.ToString();
-        bonusText.text = "+" + survivalStreak * xpBuffPerRound + "%";
+        bonusText.text = "+" + (survivalStreak - 1) * xpBuffPerRound + "%";
         
         roundText.text = survivalStreak.ToString();
 
@@ -345,11 +345,11 @@ public class SurvivalSubMenu : MonoBehaviour
         {
             GM.survivalBest[survivalID] = survivalStreak;
         }
-        
 
 
+        //Debug.Log((gainedGroupXP));
 
-        float perc = survivalStreak * 0.4f;
+        float perc = (survivalStreak - 1) * 0.4f;
         int amount = gainedGroupXP + (int)(gainedGroupXP * perc);
 
 
@@ -367,6 +367,7 @@ public class SurvivalSubMenu : MonoBehaviour
         Debug.Log(tempMonsters.Count);
 
 
+        //Debug.Log(amount);
         GM.aftermathUI.Init(inBattleTimes, amount, partyMons, tempMonsters);
         GM.battleManager.groupXp = 0;
 

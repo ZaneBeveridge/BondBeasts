@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 104
   moveName: Large Strike
-  moveDescription: Fires a projectile dealing 10 damage.
-  editableMoveDescription: Fires a projectile dealing [damage] damage.
+  moveDescription: Deal 10 DMG
+  editableMoveDescription: Deal [damage] DMG
   moveType: Projectile
   moveSet: 0
   baseCooldown: 2

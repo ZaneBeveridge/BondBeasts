@@ -698,7 +698,7 @@ public class BattleManager : MonoBehaviour
         enemyMonsterController.regenOn = false;
 
         PauseControls();
-        GM.timeManager.DoSlowMotion(4f);
+        GM.timeManager.DoSlowMotion(6f);
 
         //zoom in on enemy
         //enemy flash yellow
@@ -713,7 +713,7 @@ public class BattleManager : MonoBehaviour
 
         cameraAnimator.SetTrigger("ZoomRight");
         enemyDieAnim.SetTrigger("FlashExplode");
-        GM.fadeManager.Fade(hideObjs, showObjs, "Win", 2f);
+        GM.fadeManager.Fade(hideObjs, showObjs, "Win", 5f);
         //play win anim then,
         //goto Win()
     }
@@ -725,7 +725,7 @@ public class BattleManager : MonoBehaviour
         friendlyMonsterController.regenOn = false;
         enemyMonsterController.regenOn = false;
         PauseControls();
-        GM.timeManager.DoSlowMotion(4f);
+        GM.timeManager.DoSlowMotion(6f);
 
         List<GameObject> hideObjs = new List<GameObject>();
         hideObjs.Add(GM.battleUI.gameObject);
@@ -734,7 +734,7 @@ public class BattleManager : MonoBehaviour
 
         cameraAnimator.SetTrigger("ZoomRight");
         enemyDieAnim.SetTrigger("FlashExplode");
-        GM.fadeManager.Fade(hideObjs, showObjs, "WinSurvival", 2f);
+        GM.fadeManager.Fade(hideObjs, showObjs, "WinSurvival", 5f);
         //play win anim then,
         //goto WinRoundSurvival(false);
     }

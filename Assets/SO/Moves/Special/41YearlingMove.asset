@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 41
   moveName: Yearling Strike
-  moveDescription: +2 melt, +4 melt time. 9.6CD
-  editableMoveDescription: +2 melt, +4 melt time.
+  moveDescription: Deal 20 melt DMG + Add 4s melt time
+  editableMoveDescription: Deal 20 melt DMG + Add 4s melt time
   moveType: Projectile
   moveSet: 1
   baseCooldown: 9.6

@@ -385,7 +385,7 @@ public class MoveController : MonoBehaviour
                     state = false;
                 }
             }
-            else if (conditions.whenBelow15HP)
+            else if (conditions.whenBelow150HP)
             {
                 if (GM.playerHP < 150)
                 {
@@ -432,7 +432,7 @@ public class MoveController : MonoBehaviour
                     state = false;
                 }
             }
-            else if (conditions.whenBelow15HP)
+            else if (conditions.whenBelow150HP)
             {
                 if (GM.battleManager.enemyMonsterController.enemyHealth < 150)
                 {

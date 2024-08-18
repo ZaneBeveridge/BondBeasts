@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 34
   moveName: Fox Cut
-  moveDescription: 8 dmg, resets on hit. CD 24
-  editableMoveDescription: '[damage] dmg, resets on hit.'
+  moveDescription: 'Deal 50 DMG + On hit: Reset cooldown'
+  editableMoveDescription: 'Deal [damage] DMG + On hit: Reset cooldown'
   moveType: Projectile
   moveSet: 1
   baseCooldown: 24

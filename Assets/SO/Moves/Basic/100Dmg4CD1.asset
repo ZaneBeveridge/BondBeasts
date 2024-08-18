@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 100
   moveName: Flash Attack
-  moveDescription: Fires a projectile that deals 4 Damage
-  editableMoveDescription: Fires a projectile that deals [damage] Damage.
+  moveDescription: Deal 40 DMG
+  editableMoveDescription: Deal [damage] DMG
   moveType: Projectile
   moveSet: 0
   baseCooldown: 1
@@ -34,4 +34,4 @@ MonoBehaviour:
       whenTagIn: 0
       whenTagOut: 0
       whenFullHP: 0
-      whenBelow15HP: 0
+      whenBelow150HP: 0

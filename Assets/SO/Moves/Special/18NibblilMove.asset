@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 18
   moveName: Shark Block
-  moveDescription: Perfect timing heals 16.
+  moveDescription: 'On perfect guard: Heal 200 HP'
   editableMoveDescription: 
   moveType: Guard
   moveSet: 1

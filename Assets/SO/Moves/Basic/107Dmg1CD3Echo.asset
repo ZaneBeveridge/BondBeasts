@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 107
   moveName: Echo Strike
-  moveDescription: Fires a projectile dealing 1 damage. 3s Cooldown. Echo
-  editableMoveDescription: Fires a projectile dealing [damage] damage. Echo.
+  moveDescription: 'Deal 10 DMG + On hit: Repeat'
+  editableMoveDescription: 'Deal [damage] DMG + On hit: Repeat'
   moveType: Projectile
   moveSet: 0
   baseCooldown: 3

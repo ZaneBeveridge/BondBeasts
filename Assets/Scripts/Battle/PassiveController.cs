@@ -73,7 +73,7 @@ public class PassiveController : MonoBehaviour
             {
                 foreach (Passive itemE in sPassives[i].passiveActions)
                 {
-                    if (itemE.conditions.whileInAir || itemE.conditions.whileNotInAir || itemE.conditions.whileFullHP || itemE.conditions.whileBelow15HP || itemE.conditions.whileEnemyFullHP || itemE.conditions.whileEnemyBelow15HP)
+                    if (itemE.conditions.whileInAir || itemE.conditions.whileNotInAir || itemE.conditions.whileFullHP || itemE.conditions.whileBelow150HP || itemE.conditions.whileEnemyFullHP || itemE.conditions.whileEnemyBelow150HP)
                     {
                         activePropertyEffects.Add(itemE);
                         activePropertyEffectsOn.Add(false);
@@ -84,7 +84,7 @@ public class PassiveController : MonoBehaviour
 
         foreach (Passive itemA in cMonPassive.passiveActions)
         {
-            if (itemA.conditions.whileInAir || itemA.conditions.whileNotInAir || itemA.conditions.whileFullHP || itemA.conditions.whileBelow15HP || itemA.conditions.whileEnemyFullHP || itemA.conditions.whileEnemyBelow15HP)
+            if (itemA.conditions.whileInAir || itemA.conditions.whileNotInAir || itemA.conditions.whileFullHP || itemA.conditions.whileBelow150HP || itemA.conditions.whileEnemyFullHP || itemA.conditions.whileEnemyBelow150HP)
             {
                 activePropertyEffects.Add(itemA);
                 activePropertyEffectsOn.Add(false);
@@ -427,7 +427,7 @@ public class PassiveController : MonoBehaviour
             }
         }
 
-        if (conditions.whileBelow15HP)
+        if (conditions.whileBelow150HP)
         {
             if (GM.playerHP < 150)
             {
@@ -451,7 +451,7 @@ public class PassiveController : MonoBehaviour
             }
         }
 
-        if (conditions.whileEnemyBelow15HP)
+        if (conditions.whileEnemyBelow150HP)
         {
             if (GM.battleManager.enemyMonsterController.enemyHealth < 150)
             {

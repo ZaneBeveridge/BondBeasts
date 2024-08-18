@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 11
   moveName: Rhino Guard
-  moveDescription: 'Perfect timing: +8 Guts. 8s CD'
+  moveDescription: 'On timed guard: Gain +4 GUTS'
   editableMoveDescription: 
   moveType: Guard
   moveSet: 1

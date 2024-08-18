@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 23
   moveName: Healthy Spice
-  moveDescription: 'If full HP: +10 Oomph. Shared'
+  moveDescription: 'If full HP: Gain +10 OOMPH. Shared'
   shared: 1
   passiveActions:
   - name: 

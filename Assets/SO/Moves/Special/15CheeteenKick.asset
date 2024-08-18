@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 15
   moveName: Cheetah Kick
-  moveDescription: 7 dmg. CD 10. Fast Projectile
-  editableMoveDescription: '[damage] damage.'
+  moveDescription: Deal 70 DMG
+  editableMoveDescription: Deal [damage] DMG
   moveType: Fast Projectile
   moveSet: 1
   baseCooldown: 10

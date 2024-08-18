@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 28
   moveName: Cubbage Mash
-  moveDescription: Heal 10HP, CD 12
-  editableMoveDescription: Heal 10HP.
-  moveType: Instant
+  moveDescription: Heal 100 HP + (WIP) Fire a "Heal 50 HP" projectile.
+  editableMoveDescription: ' 100 HP + (WIP) Fire a "Heal 50 HP" projectile.'
+  moveType: Instant + Projectile
   moveSet: 1
   baseCooldown: 12
   minCooldown: 0
@@ -26,6 +26,20 @@ MonoBehaviour:
     delay: 0
     targets:
       team: 1
+      enemy: 0
+    conditions:
+      whenUsed: 1
+      whenNotInAir: 1
+      whenInAir: 1
+      whenTagIn: 0
+      whenTagOut: 0
+      whenFullHP: 0
+      whenBelow15HP: 0
+  - name: 
+    effect: {fileID: 11400000, guid: 20abdfce2e6a4764b8bd7671b8248108, type: 2}
+    delay: 0
+    targets:
+      team: 0
       enemy: 0
     conditions:
       whenUsed: 1

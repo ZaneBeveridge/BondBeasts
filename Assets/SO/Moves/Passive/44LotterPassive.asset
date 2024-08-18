@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 44
   moveName: Lotter Tag In
-  moveDescription: 'On tag in: +2 Edge. Shared'
+  moveDescription: 'On tag in: Gain +2 EDGE. Shared'
   shared: 1
   passiveActions:
   - name: 'Tag in: +2 Edge'

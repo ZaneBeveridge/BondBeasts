@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 103
   moveName: Bleed
-  moveDescription: Fires a projectile that adds 1 bleed. 2s CD
-  editableMoveDescription: Fires a projectile that adds 1 bleed.
+  moveDescription: 10 melt DMG
+  editableMoveDescription: '[damage] melt DMG'
   moveType: Projectile
   moveSet: 0
   baseCooldown: 2

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 12
   moveName: Jabbit Move
-  moveDescription: 6 dmg. +4 oomph and -8 Guts. 4s CD
-  editableMoveDescription: '[damage] dmg. +4 oomph and -8 Guts.'
+  moveDescription: Deal 60 DMG + Gain +2 OOMPH and -4 GUTS
+  editableMoveDescription: Deal [damage] DMG + Gain +2 OOMPH and -4 GUTS
   moveType: Projectile
   moveSet: 1
   baseCooldown: 4

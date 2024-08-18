@@ -14,9 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 44
   moveName: Lotter Blast
-  moveDescription: Fire four 2 dmg projectiles
-  editableMoveDescription: Fire four [damage] damage projectiles
-  moveType: Multi Projectile
+  moveDescription: Fire 4x "Deal 20 DMG" projectiles
+  editableMoveDescription: Fire 4x "Deal [damage] DMG" projectiles
+  moveType: 4x Projectiles
   moveSet: 1
   baseCooldown: 8
   minCooldown: 0
