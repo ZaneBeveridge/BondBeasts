@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 37
   moveName: Special Buffer
-  moveDescription: 'On special hit: Team +2 Oomph. Shared'
+  moveDescription: 'On special hit: Team gains +2 OOMPH. Shared'
   shared: 1
   passiveActions:
   - name: 

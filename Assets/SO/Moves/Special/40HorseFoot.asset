@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 40
   moveName: Horse Foot
-  moveDescription: +1 melt, +8 melt time. 9.6CD
-  editableMoveDescription: +1 melt, +8 melt time.
+  moveDescription: Deal 10 melt DMG + Add 8s melt time
+  editableMoveDescription: Deal 10 melt DMG + Add 8s melt time
   moveType: Projectile
   moveSet: 1
   baseCooldown: 9.6

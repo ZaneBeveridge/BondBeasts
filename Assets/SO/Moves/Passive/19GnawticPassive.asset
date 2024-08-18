@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 19
   moveName: Bitical Juice
-  moveDescription: 'On basic hit: Team +1 Juice. Shared'
+  moveDescription: 'On basic hit: Team gains +1 JUICE. Shared'
   shared: 1
   passiveActions:
   - name: 

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 28
   moveName: Team Healer
-  moveDescription: 'On special hit: Heal 3 HP. Shared'
+  moveDescription: 'On special hit: Heal 30 HP. Shared'
   shared: 1
   passiveActions:
   - name: 

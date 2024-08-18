@@ -76,7 +76,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBasic: 0
   onFireParticle: {fileID: 0}
-  onHitParticle: {fileID: 7428979386879693808, guid: 13c09c11d697aaa4b890baf0e08460f3, type: 3}
+  onHitParticle: {fileID: 6399277729167200673, guid: 646dfd6517d5eea40a7192be85238b2a, type: 3}
   rb: {fileID: 7886508744218910038}
   sprite: {fileID: 9116299386454378248}
   opposition: 

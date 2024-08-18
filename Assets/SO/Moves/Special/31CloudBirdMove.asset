@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 31
   moveName: Windy Hit
-  moveDescription: 6 damage, 25 damage in air. CD 15.5. Projectile
-  editableMoveDescription: '[damage] damage, [damage2] damage in air.'
+  moveDescription: 'Deal 60 DMG. If airborne: Deal 250 DMG'
+  editableMoveDescription: 'Deal [damage] DMG. If airborne: Deal [damage2] DMG'
   moveType: Projectile
   moveSet: 1
   baseCooldown: 15.5

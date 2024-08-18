@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 32
   moveName: Low Go No Fro Yo
-  moveDescription: 'On special hit: Give enemy +3s Low Gravity. Shared'
+  moveDescription: 'On special hit: Inflict low gravity for 3s. Shared'
   shared: 1
   passiveActions:
   - name: 

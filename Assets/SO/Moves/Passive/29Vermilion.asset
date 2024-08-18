@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 29
   moveName: Team Juicer
-  moveDescription: 'On special hit: +20 Juice for 3s. Shared'
+  moveDescription: 'On special hit: Gain +20 JUICE for 3s. Shared'
   shared: 1
   passiveActions:
   - name: 

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 106
   moveName: Slow Strike
-  moveDescription: Fires a projectile dealing 3 damage. 2s Cooldown. Slow
-  editableMoveDescription: Fires a projectile dealing [damage] damage.
+  moveDescription: Deal 30 DMG
+  editableMoveDescription: Deal [damage] DMG
   moveType: Slow Projectile
   moveSet: 0
   baseCooldown: 2

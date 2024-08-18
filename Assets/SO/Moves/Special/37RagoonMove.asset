@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 37
   moveName: Ragoon Smash
-  moveDescription: 10 dmg, CD 10, Very Slow Projectile
-  editableMoveDescription: '[damage] damage.'
+  moveDescription: Deal 100 DMG
+  editableMoveDescription: Deal [damage] DMG
   moveType: Very Slow Projectile
   moveSet: 1
   baseCooldown: 10

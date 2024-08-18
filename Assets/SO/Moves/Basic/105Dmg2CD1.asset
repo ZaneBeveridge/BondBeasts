@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 105
   moveName: Low Strike
-  moveDescription: Fires a projectile dealing 2 damage. 1s Cooldown
-  editableMoveDescription: Fires a projectile dealing [damage] damage.
+  moveDescription: Deal 20 DMG
+  editableMoveDescription: Deal [damage] DMG
   moveType: Projectile
   moveSet: 0
   baseCooldown: 1

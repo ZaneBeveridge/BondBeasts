@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 40
   moveName: Mini Pony
-  moveDescription: 'On tag in: Fire a +3 melt time mini-pony. Shared'
+  moveDescription: 'On tag in: Fire a "Add 3s melt time" mini-pony. Shared'
   shared: 1
   passiveActions:
   - name: 
     effect: {fileID: 11400000, guid: acddbd5096b5ae34388e20ba78f701cc, type: 2}
+    delay: 0
     targets:
-      self: 1
       team: 0
       enemy: 0
     conditions:
