@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 18
   moveName: Hitical Wits
-  moveDescription: 'On special hit: Team +2 Wits. Shared'
+  moveDescription: 'On special hit: Team gains +2 WITS. Shared'
   shared: 1
   passiveActions:
   - name: 

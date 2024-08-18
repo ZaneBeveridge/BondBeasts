@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 12
   moveName: Splinter
-  moveDescription: 'On special hit: Fire a 2 dmg jab. Shared'
+  moveDescription: 'On special hit: Fire a "Deal 20 DMG" jab. Shared'
   shared: 1
   passiveActions:
   - name: 

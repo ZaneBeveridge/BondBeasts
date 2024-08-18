@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 24
   moveName: Dire Times
-  moveDescription: 'If below 15HP: +14 Oomph. Shared'
+  moveDescription: 'If below 150 HP: Gain +14 OOMPH. Shared'
   shared: 1
   passiveActions:
   - name: 

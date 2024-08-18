@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 38
   moveName: Raglutton Block
-  moveDescription: fires projectile dealing 35 dmg and a 3s stun, is comicly slow
-  editableMoveDescription: fires projectile dealing 35 dmg and a 3s stun.
+  moveDescription: Deal 350 DMG + Stun for 3s
+  editableMoveDescription: Deal [damage] DMG + Stun for 3s
   moveType: Sluggish Projectile
   moveSet: 1
   baseCooldown: 35

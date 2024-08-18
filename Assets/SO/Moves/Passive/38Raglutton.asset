@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 38
   moveName: Stun Lock
-  moveDescription: 'On stun: Team +2 Oomph. Shared'
+  moveDescription: 'On stun: Team gains +2 OOMPH. Shared'
   shared: 1
   passiveActions:
   - name: 

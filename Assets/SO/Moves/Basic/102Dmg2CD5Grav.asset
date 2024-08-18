@@ -14,10 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 102
   moveName: Fluffy Strike
-  moveDescription: Fires a projectile that deals 2 Damage, and applies Low Gravity
-    to the enemy. 5s CD
-  editableMoveDescription: Fires a projectile that deals [damage] Damage, and applies
-    Low Gravity to the enemy.
+  moveDescription: Deal 20 DMG + Inflicts 3s of low gravity
+  editableMoveDescription: Deal [damage] DMG + Inflicts 3s of low gravity
   moveType: Projectile
   moveSet: 0
   baseCooldown: 5

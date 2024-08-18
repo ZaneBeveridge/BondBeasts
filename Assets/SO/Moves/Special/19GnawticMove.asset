@@ -14,11 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 19
   moveName: Gnawtic Move
-  moveDescription: On Hit Drain 1 of all stats from enemy to team
-  editableMoveDescription: 
+  moveDescription: 'On hit: Drain 3 of each stat from enemy to your team'
+  editableMoveDescription: 'On hit: Drain 3 of each stat from enemy to your team'
   moveType: Projectile
   moveSet: 1
-  baseCooldown: 3
+  baseCooldown: 15
   minCooldown: 0
   moveActions:
   - name: 

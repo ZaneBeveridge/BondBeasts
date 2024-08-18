@@ -76,7 +76,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isBasic: 1
   onFireParticle: {fileID: 0}
-  onHitParticle: {fileID: 7428979386879693808, guid: 13c09c11d697aaa4b890baf0e08460f3, type: 3}
+  onHitParticle: {fileID: 8870168067202918295, guid: 0b18d731efebcae40a95336f4d54e514, type: 3}
   rb: {fileID: 7886508744218910038}
   sprite: {fileID: 9116299386454378248}
   opposition: 
@@ -122,9 +122,9 @@ CircleCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.06, y: 0}
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.22
 --- !u!1 &7889825815839583891
 GameObject:
   m_ObjectHideFlags: 0

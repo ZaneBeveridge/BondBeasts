@@ -14,12 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 24
   moveName: Coconut Clash
-  moveDescription: Stuns for 4 seconds, CD 20
-  editableMoveDescription: Stuns for 4 seconds.
+  moveDescription: Stun for 4s
+  editableMoveDescription: Stun for 4s
   moveType: Projectile
   moveSet: 1
   baseCooldown: 20
-  minCooldown: 4
+  minCooldown: 5
   moveActions:
   - name: 
     effect: {fileID: 11400000, guid: e2f42acb0cf81a04eb40b42189448c42, type: 2}

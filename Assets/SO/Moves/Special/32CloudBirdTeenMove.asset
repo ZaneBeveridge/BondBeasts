@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 32
   moveName: Windy Stun
-  moveDescription: 4 damage, 4s stun in air. CD 14. Projectile
-  editableMoveDescription: '[damage] damage, 4s stun in air.'
+  moveDescription: 'Deal 40 DMG + If airborne: Stun for 4s'
+  editableMoveDescription: 'Deal [damage] DMG + If airborne: Stun for 4s'
   moveType: Projectile
   moveSet: 1
   baseCooldown: 14

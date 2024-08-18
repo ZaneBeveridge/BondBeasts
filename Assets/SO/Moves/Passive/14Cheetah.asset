@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 14
   moveName: Special Switch
-  moveDescription: 'On tag in: Use free special.'
+  moveDescription: 'On tag in: Use free special'
   shared: 0
   passiveActions:
   - name: 
     effect: {fileID: 11400000, guid: aceab912f54427345a9d1abf4a69ab1e, type: 2}
+    delay: 0
     targets:
-      self: 1
       team: 0
       enemy: 0
     conditions:

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 35
   moveName: Team Critical
-  moveDescription: Permanent 3% chance to crit
+  moveDescription: +3% Crit chance. Shared
   shared: 1
   passiveActions:
   - name: 
