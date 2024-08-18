@@ -37,7 +37,7 @@ public class MoveSO : ScriptableObject
                             return move.effect as FireProjectileEffectSO;
                         }
                     }
-                    else if (move.conditions.whenBelow15HP)
+                    else if (move.conditions.whenBelow150HP)
                     {
                         if (hp < 150)
                         {
@@ -84,7 +84,7 @@ public class Conditions
     public bool whenTagIn;
     public bool whenTagOut;
     public bool whenFullHP;
-    public bool whenBelow15HP;
+    public bool whenBelow150HP;
     //public InequalityCondition whenHP;
 }
 
