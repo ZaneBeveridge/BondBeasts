@@ -26,6 +26,7 @@ public class FriendlyMonsterController : MonoBehaviour
 
     public StunManager stunManager;
     public UIStunManager uiStunManager;
+    public EnemyMonsterController eMonsterController;
 
     public MoveController friendlyMoveController;
     public ItemController friendlyItemController;
@@ -78,9 +79,9 @@ public class FriendlyMonsterController : MonoBehaviour
     [HideInInspector] public List<GameObject> projectiles = new List<GameObject>();
 
     [HideInInspector] public bool alive = false;
-    private bool tagOn = false;
-    private float tagTimer = 0f;
-    private int taggingSlot = 0;
+    //private bool tagOn = false;
+    //private float tagTimer = 0f;
+    //private int taggingSlot = 0;
 
     public bool guardOn = false;
     private float parryTimer = 0f;
@@ -93,7 +94,7 @@ public class FriendlyMonsterController : MonoBehaviour
     //private bool takingCrits = false;
     private int critchance = 0;
 
-    public MaskCutout maskCutout;
+    //public MaskCutout maskCutout;
 
 
     private bool invulnerable = false;
@@ -206,7 +207,7 @@ public class FriendlyMonsterController : MonoBehaviour
         DoCooldowns();
 
 
-        
+        /*
 
         if (tagOn)
         {
@@ -218,12 +219,15 @@ public class FriendlyMonsterController : MonoBehaviour
             else if (tagTimer <= 0)
             {
                 GM.battleManager.ResumeControls();
-                SpawnNewMonster(taggingSlot, false);
+                
                 tagTimer = 0f;
                 tagOn = false;
+                SpawnNewMonster(taggingSlot, false);
                 //transform.localPosition = new Vector3(-5f, -1f, 0f);
             }
         }
+        */
+        
 
         if (parryOn)
         {
@@ -487,7 +491,7 @@ public class FriendlyMonsterController : MonoBehaviour
 
 
         friendlyPassiveController.StartPassives(friendlyMonster.passiveMove, passivesShared);
-        friendlyItemController.StartItems(itemsFriendly);
+        friendlyItemController.StartItems(itemsFriendly, currentSlot);
 
         if (!st)
         {
@@ -505,17 +509,17 @@ public class FriendlyMonsterController : MonoBehaviour
         
         if (!GM.battleManager.isPlayingIntro)
         {
-            //Debug.Log("what?");
-            GM.battleManager.PauseControls();
-
             invulnerable = true;
             invTime = 0.2f;
-
+            TriggerAction(TriggerType.tagOut);
+            SpawnNewMonster(slot, false);
+            /*
+            GM.battleManager.PauseControls();
             taggingSlot = slot;
             tagTimer = 0.3f;
             maskCutout.Play(tagTimer);
-            TriggerAction(TriggerType.tagOut);
             tagOn = true;
+            */
         }
         else
         {
@@ -537,7 +541,7 @@ public class FriendlyMonsterController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage, int baseDamage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile) // if effect cant be parried, guarded
+    public void TakeDamage(int damage, int baseDamage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile, int healOnHitAmount) // if effect cant be parried, guarded
     {
         if (GM.battleManager.isWinning || GM.battleManager.isLosing) { return; }
 
@@ -600,7 +604,7 @@ public class FriendlyMonsterController : MonoBehaviour
 
             Targets targs = new Targets(false, false);
             hitNumbers.SpawnPopup(PopupType.PerfectBlock, pos, "", 0);// perfectblock popup
-            GuardOff();
+            //GuardOff();
 
         }
         else if (effect || !guardOn && !invulnerable)
@@ -746,7 +750,10 @@ public class FriendlyMonsterController : MonoBehaviour
 
             friendlyParentAnim.SetTrigger("Hit");
             
-
+            if (healOnHitAmount > 0)
+            {
+                Heal(healOnHitAmount);
+            }
 
             if (GM.playerHP <= 0)
             {
@@ -801,14 +808,13 @@ public class FriendlyMonsterController : MonoBehaviour
 
 
 
-            GuardOff();
+            //GuardOff();
         }
 
     }
 
     public void Heal(int amount)
     {
-        //Debug.Log("here");
         if (GM.playerHP < 1000)
         {
             int realAmount = amount;
@@ -817,10 +823,16 @@ public class FriendlyMonsterController : MonoBehaviour
                 realAmount = (amount + (int)GM.playerHP) - 1000;
             }
 
-            healthBar.SetHealth(GM.playerHP + amount, false);
+            healthBar.SetHealth(GM.playerHP + realAmount, false);
             GM.playerHP = healthBar.slider.value;
             hitNumbers.SpawnPopup(PopupType.Heal, defaultHitNumbersLocation, realAmount.ToString(), 0); // heal popup
         }
+        else
+        {
+            hitNumbers.SpawnPopup(PopupType.Heal, defaultHitNumbersLocation, "0", 0); // heal popup
+        }
+
+        
 
     }
 
@@ -828,6 +840,8 @@ public class FriendlyMonsterController : MonoBehaviour
     {
         if (state)
         {
+            GM.battleManager.enemyMonsterController.TriggerAction(TriggerType.enemyStunned);
+
             stunned = true;
             GM.battleManager.PauseControls();
             uiStunManager.Stun(time);
@@ -1007,7 +1021,7 @@ public class FriendlyMonsterController : MonoBehaviour
     {
         GameObject proj = Instantiate(prefab, firePoint.position, firePoint.rotation);
         projectiles.Add(proj);
-        //Debug.Log("What?");
+        //Debug.Log(dmg);
         if (friendlyBattleBuffManager.slotValues[11] > 0) // critical chance
         {
             int amount = friendlyBattleBuffManager.slotValues[11];

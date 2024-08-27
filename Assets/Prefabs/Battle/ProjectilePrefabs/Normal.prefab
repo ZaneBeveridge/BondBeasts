@@ -88,6 +88,7 @@ MonoBehaviour:
   stunnedTime: 0
   dotAmount: 0
   dotTime: 0
+  healOnHitAmount: 0
   resetSpecialCooldownOnHit: 0
   triggersBasicORSpecial: 1
 --- !u!58 &6759204649117613942

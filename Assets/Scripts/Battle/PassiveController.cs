@@ -16,7 +16,7 @@ public class PassiveController : MonoBehaviour
     private List<Passive> activePropertyEffects = new List<Passive>();
     private List<bool> activePropertyEffectsOn = new List<bool>();
 
-    private List<DelayedEffect> delayedEffects = new List<DelayedEffect>();
+    private List<DelayedEffectMove> delayedEffects = new List<DelayedEffectMove>();
     private List<float> delayedEffectsTime = new List<float>();
     void Update()
     {
@@ -285,7 +285,7 @@ public class PassiveController : MonoBehaviour
             {
                 if (m.delay > 0)
                 {
-                    delayedEffects.Add(new DelayedEffect(m.effect, m.targets));
+                    delayedEffects.Add(new DelayedEffectMove(m.effect, m.targets));
                     delayedEffectsTime.Add(m.delay);
                 }
                 else
@@ -472,7 +472,7 @@ public class PassiveController : MonoBehaviour
         passivesOn = false;
         currentMonPassive = null;
         sharedPassives = new List<PassiveSO>();
-        delayedEffects = new List<DelayedEffect>();
+        delayedEffects = new List<DelayedEffectMove>();
         delayedEffectsTime = new List<float>();
     }
 }

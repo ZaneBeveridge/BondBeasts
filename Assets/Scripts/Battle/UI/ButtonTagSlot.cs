@@ -53,8 +53,6 @@ public class ButtonTagSlot : MonoBehaviour
                     tagGlow.SetActive(false);
                 }
 
-
-
                 anim.SetBool("Ready", true);
             }
 

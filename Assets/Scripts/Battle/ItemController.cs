@@ -7,8 +7,10 @@ public class ItemController : MonoBehaviour
     public BattleBuffManager manager;
     public GameManager GM;
     public MoveController moveController;
+    public Transform itemConditionParticleSpawnLocation;
 
     private List<MonsterItemSO> items = new List<MonsterItemSO>();
+    private List<ItemUsesInBattle> itemUses = new List<ItemUsesInBattle>();
 
     public bool itemsOn = false;
 
@@ -16,8 +18,10 @@ public class ItemController : MonoBehaviour
     private List<bool> activePropertyEffectsOn = new List<bool>();
 
 
-    private List<DelayedEffect> delayedEffects = new List<DelayedEffect>();
+    private List<DelayedEffectItem> delayedEffects = new List<DelayedEffectItem>();
     private List<float> delayedEffectsTime = new List<float>();
+
+    private int currentSelectedMonsterID = 0;
 
     void Update()
     {
@@ -48,7 +52,7 @@ public class ItemController : MonoBehaviour
                     }
                     else if (delayedEffectsTime[i] <= 0)
                     {
-                        UseEffect(delayedEffects[i].effect, delayedEffects[i].targets);
+                        UseEffect(delayedEffects[i].effect, delayedEffects[i].targets, delayedEffects[i].particle);
 
                         delayedEffects.RemoveAt(i);
                         delayedEffectsTime.RemoveAt(i);
@@ -61,14 +65,43 @@ public class ItemController : MonoBehaviour
     }
 
     
-    public void StartItems(List<MonsterItemSO> it) // Start of passives each time a monster switches
+    public void StartItems(List<MonsterItemSO> it, int currentSlot) // Start of passives each time a monster switches
     {
+        currentSelectedMonsterID = currentSlot;
         ClearLastMonsterEffectsForAlways();
         ClearActivePropertyEffects();
 
         items = it;
 
+        bool isSpace = false;
+
+        if (itemUses.Count > 0)
+        {
+            for (int i = 0; i < itemUses.Count; i++)
+            {
+                if (itemUses[i].monstersID == currentSlot)
+                {
+                    break;
+                }
+
+                isSpace = true;
+            }
+
+            if (isSpace)
+            {
+                itemUses.Add(new ItemUsesInBattle(it, currentSlot));
+            }
+            
+        }
+        else
+        {
+            itemUses.Add(new ItemUsesInBattle(it, currentSlot));
+        }
+
         
+
+        
+
 
         for (int i = 0; i < items.Count; i++)
         {
@@ -125,7 +158,7 @@ public class ItemController : MonoBehaviour
         for (int i = 0; i < items.Count; i++)
         {
             //Debug.Log(items[i].itemName);
-            ActivateItemTrigger(items[i], triggerType);
+            ActivateItemTrigger(items[i], triggerType, i);
         }
     }
     private void ActivateItem(MonsterItemSO item, int id) // for start 0 == negative, 1 == positive
@@ -194,8 +227,13 @@ public class ItemController : MonoBehaviour
         }
     }
 
-    private void UseEffect(EffectSO effect, Targets targets)
+    private void UseEffect(EffectSO effect, Targets targets, GameObject particle)
     {
+        if (particle != null)
+        {
+            Instantiate(particle, itemConditionParticleSpawnLocation.position, Quaternion.identity);
+        }
+
         if (effect.effectType == EffectType.StatMod)
         {
             StatModEffectSO newEffect = effect as StatModEffectSO;
@@ -243,27 +281,49 @@ public class ItemController : MonoBehaviour
         }
     }
 
-    private void ActivateItemTrigger(MonsterItemSO item, TriggerType triggerType) // for start 0 == negative, 1 == positive
+    private void ActivateItemTrigger(MonsterItemSO item, TriggerType triggerType, int itemID) // for start 0 == negative, 1 == positive
     {
-        foreach (ItemEffect m in item.itemEffects)
+        for (int i = 0; i < item.itemEffects.Count; i++)
         {
-            //Debug.Log(m.conditions.whenTagIn);
-            //Debug.Log(PassConditionTest(m.conditions));
-            //Debug.Log(PassTriggerTest(m.conditions, triggerType));
-            if (!PassConditionTestAlways(m.conditions))
+            if (!PassConditionTestAlways(item.itemEffects[i].conditions))
             {
-                if (PassConditionTest(m.conditions) && PassTriggerTest(m.conditions, triggerType))
+                if (PassConditionTest(item.itemEffects[i].conditions) && PassTriggerTest(item.itemEffects[i].conditions, triggerType))
                 {
                     //Debug.Log("Trigger:" + triggerType.ToString());
 
-                    if (m.delay > 0)
+                    if (item.itemEffects[i].maxUsesPerBattle > 0)
                     {
-                        delayedEffects.Add(new DelayedEffect(m.effect, m.targets));
-                        delayedEffectsTime.Add(m.delay);
+                        for (int j = 0; j < itemUses.Count; j++)
+                        {
+                            if (itemUses[j].monstersID == currentSelectedMonsterID)
+                            {
+                                if (itemUses[j].ListOfList[itemID].effectUses[i] > 0)
+                                {
+                                    itemUses[j].ListOfList[itemID].effectUses[i]--;
+                                    if (item.itemEffects[i].delay > 0)
+                                    {
+                                        delayedEffects.Add(new DelayedEffectItem(item.itemEffects[i].effect, item.itemEffects[i].targets, item.itemEffects[i].particleToTrigger));
+                                        delayedEffectsTime.Add(item.itemEffects[i].delay);
+                                    }
+                                    else
+                                    {
+                                        UseEffect(item.itemEffects[i].effect, item.itemEffects[i].targets, item.itemEffects[i].particleToTrigger);
+                                    }
+                                }
+                            }
+                        }
                     }
                     else
                     {
-                        UseEffect(m.effect, m.targets);
+                        if (item.itemEffects[i].delay > 0)
+                        {
+                            delayedEffects.Add(new DelayedEffectItem(item.itemEffects[i].effect, item.itemEffects[i].targets, item.itemEffects[i].particleToTrigger));
+                            delayedEffectsTime.Add(item.itemEffects[i].delay);
+                        }
+                        else
+                        {
+                            UseEffect(item.itemEffects[i].effect, item.itemEffects[i].targets, item.itemEffects[i].particleToTrigger);
+                        }
                     }
                 }
             }
@@ -434,5 +494,55 @@ public class ItemController : MonoBehaviour
     {
         itemsOn = false;
         items = new List<MonsterItemSO>();
+        itemUses = new List<ItemUsesInBattle>();
+    }
+
+}
+
+[System.Serializable]
+public class ItemUsesInBattle
+{
+    public int monstersID;
+    public List<ListOfEffectUses> ListOfList = new List<ListOfEffectUses>();
+
+    public ItemUsesInBattle(List<MonsterItemSO> its, int id)
+    {
+        monstersID = id;
+
+        for (int i = 0; i < its.Count; i++)
+        {
+            ListOfList.Add(new ListOfEffectUses(its[i]));
+        }
     }
 }
+
+[System.Serializable]
+public class ListOfEffectUses
+{
+    public List<int> effectUses = new List<int>();
+
+    public ListOfEffectUses(MonsterItemSO item)
+    {
+        for (int i = 0; i < item.itemEffects.Count; i++)
+        {
+            effectUses.Add(item.itemEffects[i].maxUsesPerBattle);
+        }
+    }
+}
+
+
+public class DelayedEffectItem
+{
+    public EffectSO effect;
+    public Targets targets;
+    public GameObject particle;
+
+    public DelayedEffectItem(EffectSO e, Targets t, GameObject p)
+    {
+        effect = e;
+        targets = t;
+        particle = p;
+    }
+}
+
+
