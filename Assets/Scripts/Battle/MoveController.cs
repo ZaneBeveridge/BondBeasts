@@ -13,7 +13,7 @@ public class MoveController : MonoBehaviour
     public bool friendlyController = false;
     public BattleBuffManager manager;
 
-    private List<DelayedEffect> delayedEffects = new List<DelayedEffect>();
+    private List<DelayedEffectMove> delayedEffects = new List<DelayedEffectMove>();
     private List<float> delayedEffectsTime = new List<float>();
     public void Update()
     {
@@ -95,7 +95,7 @@ public class MoveController : MonoBehaviour
             {
                 if (m.delay > 0)
                 {
-                    delayedEffects.Add(new DelayedEffect(m.effect, m.targets));
+                    delayedEffects.Add(new DelayedEffectMove(m.effect, m.targets));
                     delayedEffectsTime.Add(m.delay);
                 }
                 else
@@ -215,7 +215,7 @@ public class MoveController : MonoBehaviour
 
             float tD = damage + (damage * (0.04f * oomphAmount));
 
-            //Debug.Log("Before Crit Damage: " + tD.ToString());
+            Debug.Log("Before Crit Damage: " + tD.ToString());  // FIX THIS FOR SOME REASON IF I REMOVE THE COMMENT IT STOP CALCULATING THE RIGHT AMOUNTS
 
             int realDmg = (int)tD;
             int baseDmg = (int)damage;
@@ -455,12 +455,12 @@ public class MoveController : MonoBehaviour
 
 
 
-public class DelayedEffect
+public class DelayedEffectMove
 {
     public EffectSO effect;
     public Targets targets;
 
-    public DelayedEffect(EffectSO e, Targets t)
+    public DelayedEffectMove(EffectSO e, Targets t)
     {
         effect = e;
         targets = t;

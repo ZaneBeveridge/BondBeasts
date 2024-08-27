@@ -29,8 +29,8 @@ public class EnemyMonsterController : MonoBehaviour
     public FriendlyMonsterController fMonsterController;
 
     public MoveController enemyMoveController;
-    //public ItemController enemyItemController;
-    //public PassiveController enemyPassiveController;
+    public ItemController enemyItemController;
+    public PassiveController enemyPassiveController;
 
     [Header("Effects")]
     public SpriteRenderer guardRenderer;
@@ -76,11 +76,11 @@ public class EnemyMonsterController : MonoBehaviour
 
     [HideInInspector] public List<GameObject> projectiles = new List<GameObject>();
 
-    private bool tagOn = false;
-    private float tagTimer = 0f;
-    private int taggingSlot = 0;
+    //private bool tagOn = false;
+    //private float tagTimer = 0f;
+    //private int taggingSlot = 0;
 
-    public MaskCutout maskCutout;
+    //public MaskCutout maskCutout;
 
     public bool guardOn = false;
     private float parryTimer = 0f;
@@ -180,6 +180,7 @@ public class EnemyMonsterController : MonoBehaviour
                 regenTimer = regenBaseTime;
             }
         }
+        /*
 
         if (tagOn)
         {
@@ -197,7 +198,7 @@ public class EnemyMonsterController : MonoBehaviour
                 tagTimer = 0f;
             }
         }
-
+        */
 
         if (parryOn)
         {
@@ -647,13 +648,6 @@ public class EnemyMonsterController : MonoBehaviour
                 sparkB = (0.66f * (currentMonster.stats[5].value / 5)) * (currentMonster.level - 20);
             }
             
-
- 
-
-            
-
-          
-
         }
 
 
@@ -682,7 +676,54 @@ public class EnemyMonsterController : MonoBehaviour
         enemyNameText.text = currentMonster.name;
         enemyLevelText.text = "Level " + currentMonster.level.ToString();
 
+
+        if (currentMonster.backupData.isHeavyJumper)
+        {
+            jumpForce = 10f;
+        }
+        else
+        {
+            jumpForce = 15f;
+        }
+
+
+        //OnTagInBuffs
+
+
+        StartBuffs(isStart);
+
     }
+
+    private void StartBuffs(bool st)
+    {
+        List<PassiveSO> passivesShared = new List<PassiveSO>();
+        for (int i = 0; i < backupMonsters.Count; i++)
+        {
+            if (backupMonsters[i].passiveMove.shared)
+            {
+                if (!passivesShared.Contains(backupMonsters[i].passiveMove))
+                {
+                    passivesShared.Add(backupMonsters[i].passiveMove);
+                }
+            }
+        }
+
+        List<MonsterItemSO> itemsEnemy = new List<MonsterItemSO>();
+        itemsEnemy.Add(currentMonster.item1);
+        itemsEnemy.Add(currentMonster.item2);
+        itemsEnemy.Add(currentMonster.item3);
+
+
+
+        enemyPassiveController.StartPassives(currentMonster.passiveMove, passivesShared);
+        enemyItemController.StartItems(itemsEnemy, currentSlot);
+
+        if (!st)
+        {
+            TriggerAction(TriggerType.tagIn);
+        }
+    }
+
     public void SetMonsterActive(int slot)
     {
         if (backupMonsters.Count <= 0) { return; }
@@ -691,16 +732,18 @@ public class EnemyMonsterController : MonoBehaviour
 
         if (!GM.battleManager.isPlayingIntro)
         {
-            aiController.SetActive(false);
 
             invulnerable = true;
             invTime = 0.2f;
-
+            TriggerAction(TriggerType.tagOut);
+            SpawnNewMonster(slot, false);
+            /*
+            aiController.SetActive(false);
             taggingSlot = slot;
             tagTimer = 0.3f;
             maskCutout.Play(tagTimer);
-            //TriggerAction(TriggerType.tagOut);
             tagOn = true;
+            */
         }
         else
         {
@@ -719,9 +762,14 @@ public class EnemyMonsterController : MonoBehaviour
 
 
 
-    public void TakeDamage(int damage, int baseDamage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile)
+    public void TakeDamage(int damage, int baseDamage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile, int healOnHitAmount)
     {
         if (GM.battleManager.isLosing || GM.battleManager.isWinning) { return; }
+
+        if (!effect)
+        {
+            TriggerAction(TriggerType.beingHit);
+        }
 
         if (parryOn)
         {
@@ -773,7 +821,7 @@ public class EnemyMonsterController : MonoBehaviour
 
             Targets ts = new Targets(false, false);
             hitNumbers.SpawnPopup(PopupType.PerfectBlock, pos, "", 0); // perfectblock popup
-            GuardOff();
+            //GuardOff();
         }    
         else if (effect || !guardOn  && !invulnerable)
         {
@@ -781,7 +829,10 @@ public class EnemyMonsterController : MonoBehaviour
             regenTimer = regenBaseTime;
             regenText.text = "HPs x " + regenMulti.ToString("F2");
 
+
+            //Debug.Log(damage);
             float floatDamage = damage;
+
 
             if (!effect)
             {
@@ -900,10 +951,11 @@ public class EnemyMonsterController : MonoBehaviour
             {
                 trueDamage = 1f;
             }
-
+            //Debug.Log(trueDamage);
+            //Debug.Log(floatDamage);
 
             int dmg = Mathf.RoundToInt(trueDamage);
-            int protectedDamage = dmg - (int)floatDamage;
+            int protectedDamage = dmg - Mathf.RoundToInt(floatDamage);
 
             //Debug.Log("Real Guts: " + gutsReal);
             //Debug.Log("True dmg: " + dmg);
@@ -913,8 +965,11 @@ public class EnemyMonsterController : MonoBehaviour
             enemyHealth = healthBar.slider.value;
 
             enemyParentAnim.SetTrigger("Hit");
-            
 
+            if (healOnHitAmount > 0)
+            {
+                Heal(healOnHitAmount);
+            }
 
             if (enemyHealth <= 0)
             {
@@ -978,7 +1033,7 @@ public class EnemyMonsterController : MonoBehaviour
                 hitNumbers.SpawnPopup(PopupType.Block, pos, "", 0); // block popup
             }
 
-            GuardOff();
+            //GuardOff();
         }
     }
 
@@ -992,9 +1047,13 @@ public class EnemyMonsterController : MonoBehaviour
                 realAmount = (amount + (int)enemyHealth) - 1000;
             }
 
-            healthBar.SetHealth(enemyHealth + amount, false);
+            healthBar.SetHealth(enemyHealth + realAmount, false);
             enemyHealth = healthBar.slider.value;
             hitNumbers.SpawnPopup(PopupType.Heal, defaultHitNumbersLocation, realAmount.ToString(), 0); // heal popup
+        }
+        else
+        {
+            hitNumbers.SpawnPopup(PopupType.Heal, defaultHitNumbersLocation, "0", 0); // heal popup
         }
     }
 
@@ -1123,7 +1182,8 @@ public class EnemyMonsterController : MonoBehaviour
         enemyAnim.SetTrigger("Special");
         enemyAnimVariant.SetTrigger("Special");
 
-        
+        TriggerAction(TriggerType.useSpecial);
+
         float witsAmount = wits + enemyBattleBuffManager.slotValues[4] + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Wits);
 
         float baseCD = currentMonster.specialMove.baseCooldown;
@@ -1159,6 +1219,8 @@ public class EnemyMonsterController : MonoBehaviour
         enemyParentAnim.SetTrigger("Attack");
         enemyAnim.SetTrigger("Basic");
         enemyAnimVariant.SetTrigger("Basic");
+
+        TriggerAction(TriggerType.useBasic);
 
         float edgeAmount = edge + enemyBattleBuffManager.slotValues[3] + enemyBattleBuffManager.GetStatsFromItemsPassives(EffectedStat.Edge);
 
@@ -1223,6 +1285,13 @@ public class EnemyMonsterController : MonoBehaviour
         }
 
 
+    }
+
+    public void TriggerAction(TriggerType triggerType)
+    {
+        //Debug.Log("Trigger: " + triggerType);
+        enemyPassiveController.PassiveTrigger(triggerType);
+        enemyItemController.ItemTrigger(triggerType);
     }
 
     public void ClearCooldowns()

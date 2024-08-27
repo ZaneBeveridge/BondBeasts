@@ -187,12 +187,12 @@ public class TagPauseTip : PauseTip
         if (mon.specialMove.editableMoveDescription.Contains("[damage]") & mon.specialMove.editableMoveDescription != "")
         {
             FireProjectileEffectSO effect = mon.specialMove.moveActions[0].effect as FireProjectileEffectSO;
-            string personlizedString = mon.specialMove.editableMoveDescription.Replace("[damage]", (effect.projectileDamage + (effect.projectileDamage * (0.016 * oomphAmount))).ToString("F2"));
+            string personlizedString = mon.specialMove.editableMoveDescription.Replace("[damage]", (effect.projectileDamage + (effect.projectileDamage * (0.04f * oomphAmount))).ToString());
 
             if (personlizedString.Contains("[damage2]"))
             {
                 FireProjectileEffectSO effect2 = mon.specialMove.moveActions[1].effect as FireProjectileEffectSO;
-                personlizedString = personlizedString.Replace("[damage2]", (effect2.projectileDamage + (effect2.projectileDamage * (0.016 * oomphAmount))).ToString("F2"));
+                personlizedString = personlizedString.Replace("[damage2]", (effect2.projectileDamage + (effect2.projectileDamage * (0.04f * oomphAmount))).ToString());
             }
 
             specialEffectText.text = personlizedString;
@@ -222,7 +222,7 @@ public class TagPauseTip : PauseTip
             witsAmount = 100;
         }
 
-        float specialCool = mon.specialMove.baseCooldown - (mon.specialMove.baseCooldown * (0.008f * witsAmount));
+        float specialCool = mon.specialMove.baseCooldown - (mon.specialMove.baseCooldown * (0.04f * witsAmount));
         if (specialCool < mon.specialMove.minCooldown)
         {
             specialCool = mon.specialMove.baseCooldown;
@@ -235,12 +235,12 @@ public class TagPauseTip : PauseTip
         if (mon.basicMove.editableMoveDescription.Contains("[damage]") & mon.basicMove.editableMoveDescription != "")
         {
             FireProjectileEffectSO effect = mon.basicMove.moveActions[0].effect as FireProjectileEffectSO;
-            string personlizedString = mon.basicMove.editableMoveDescription.Replace("[damage]", (effect.projectileDamage + (effect.projectileDamage * (0.016 * oomphAmount))).ToString("F2"));
+            string personlizedString = mon.basicMove.editableMoveDescription.Replace("[damage]", (effect.projectileDamage + (effect.projectileDamage * (0.04f * oomphAmount))).ToString());
 
             if (personlizedString.Contains("[damage2]"))
             {
                 FireProjectileEffectSO effect2 = mon.basicMove.moveActions[1].effect as FireProjectileEffectSO;
-                personlizedString = personlizedString.Replace("[damage2]", (effect2.projectileDamage + (effect2.projectileDamage * (0.016 * oomphAmount))).ToString("F2"));
+                personlizedString = personlizedString.Replace("[damage2]", (effect2.projectileDamage + (effect2.projectileDamage * (0.04f * oomphAmount))).ToString());
             }
 
             basicEffectText.text = personlizedString;
@@ -270,7 +270,7 @@ public class TagPauseTip : PauseTip
             edgeAmount = 100;
         }
 
-        float basicCool = mon.basicMove.baseCooldown - (mon.basicMove.baseCooldown * (0.008f * edgeAmount));
+        float basicCool = mon.basicMove.baseCooldown - (mon.basicMove.baseCooldown * (0.04f * edgeAmount));
         if (basicCool < mon.basicMove.minCooldown)
         {
             basicCool = mon.basicMove.baseCooldown;

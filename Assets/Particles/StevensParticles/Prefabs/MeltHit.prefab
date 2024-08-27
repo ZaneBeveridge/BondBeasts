@@ -14555,6 +14555,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5889646272982609286}
+  - component: {fileID: 8218206374690889197}
   m_Layer: 0
   m_Name: MeltHit
   m_TagString: Untagged
@@ -14578,3 +14579,16 @@ Transform:
   - {fileID: 8004539098654345898}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8218206374690889197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6399277729167200673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 452143018b29cc847bccbe125c9afaec, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToDestroy: 2

@@ -39,6 +39,8 @@ MonoBehaviour:
   - name: Upon tagging in, +20 Oomph
     effect: {fileID: 11400000, guid: 93bfbedd76658b54988fb57ce887a01f, type: 2}
     delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
     targets:
       team: 0
       enemy: 0
@@ -62,6 +64,8 @@ MonoBehaviour:
   - name: Upon tagging in, -20 oomp after 2 seconds
     effect: {fileID: 11400000, guid: 98ac6562eeb848e4e8ce9cacc2bfd18d, type: 2}
     delay: 2
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
     targets:
       team: 0
       enemy: 0
