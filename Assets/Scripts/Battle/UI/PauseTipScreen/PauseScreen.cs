@@ -47,8 +47,8 @@ public class PauseScreen : MonoBehaviour
         }
         
 
-        float cooldownBasic = Mathf.Round(controller.friendlyMonster.basicMove.baseCooldown - (controller.friendlyMonster.basicMove.baseCooldown * (0.008f * valueRealB)));
-        float cooldownSpecial = Mathf.Round(controller.friendlyMonster.specialMove.baseCooldown - (controller.friendlyMonster.specialMove.baseCooldown * (0.008f * valueRealS)));
+        float cooldownBasic = Mathf.Round(controller.friendlyMonster.basicMove.baseCooldown - (controller.friendlyMonster.basicMove.baseCooldown * (0.04f * valueRealB)));
+        float cooldownSpecial = Mathf.Round(controller.friendlyMonster.specialMove.baseCooldown - (controller.friendlyMonster.specialMove.baseCooldown * (0.04f * valueRealS)));
 
         
 

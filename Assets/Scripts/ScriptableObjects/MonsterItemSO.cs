@@ -13,7 +13,7 @@ public class MonsterItemSO : ScriptableObject
     public Sprite icon;
     public ItemType type;
     public int maxStack = 1000;
-
+    
 
     [Header("Upgrading")]
 
@@ -68,12 +68,15 @@ public class ItemConditions
     public bool whileBelow15HP; // property change
 }
 
+
 [System.Serializable]
 public class ItemEffect
 {
     public string name;
     public EffectSO effect;
     public float delay = 0f;
+    public int maxUsesPerBattle = 0; // 0 = infinite
+    public GameObject particleToTrigger;
     public Targets targets;
     public ItemConditions conditions;
 }

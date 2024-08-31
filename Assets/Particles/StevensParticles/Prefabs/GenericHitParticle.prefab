@@ -4850,7 +4850,6 @@ GameObject:
   - component: {fileID: 165119767094978747}
   - component: {fileID: 9053802368753938382}
   - component: {fileID: 6830676066953430627}
-  - component: {fileID: 4942114444444957726}
   m_Layer: 0
   m_Name: arcs
   m_TagString: Untagged
@@ -9680,19 +9679,6 @@ ParticleSystemRenderer:
   m_MeshWeighting2: 1
   m_MeshWeighting3: 1
   m_MaskInteraction: 0
---- !u!114 &4942114444444957726
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8864260085382677113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 452143018b29cc847bccbe125c9afaec, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  timeToDestroy: 1
 --- !u!1 &8870168067202918295
 GameObject:
   m_ObjectHideFlags: 0
@@ -9702,7 +9688,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 880730172363593072}
-  - component: {fileID: 4295726395817181005}
+  - component: {fileID: 128094791735681999}
   m_Layer: 0
   m_Name: GenericHitParticle
   m_TagString: Untagged
@@ -9726,7 +9712,7 @@ Transform:
   - {fileID: 165119767094978747}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4295726395817181005
+--- !u!114 &128094791735681999
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

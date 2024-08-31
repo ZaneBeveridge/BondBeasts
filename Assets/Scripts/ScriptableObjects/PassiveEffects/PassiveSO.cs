@@ -58,11 +58,11 @@ public class PassiveConditions
     
 
     public bool whileEnemyFullHP; // property change
-    public bool whileEnemyBelow15HP; // property change
+    public bool whileEnemyBelow150HP; // property change
     public bool whileInAir; // property change
     public bool whileNotInAir; // property change
     public bool whileFullHP; // property change
-    public bool whileBelow15HP; // property change
+    public bool whileBelow150HP; // property change
 }
 
 

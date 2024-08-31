@@ -16,7 +16,7 @@ public class PassiveController : MonoBehaviour
     private List<Passive> activePropertyEffects = new List<Passive>();
     private List<bool> activePropertyEffectsOn = new List<bool>();
 
-    private List<DelayedEffect> delayedEffects = new List<DelayedEffect>();
+    private List<DelayedEffectMove> delayedEffects = new List<DelayedEffectMove>();
     private List<float> delayedEffectsTime = new List<float>();
     void Update()
     {
@@ -73,7 +73,7 @@ public class PassiveController : MonoBehaviour
             {
                 foreach (Passive itemE in sPassives[i].passiveActions)
                 {
-                    if (itemE.conditions.whileInAir || itemE.conditions.whileNotInAir || itemE.conditions.whileFullHP || itemE.conditions.whileBelow15HP || itemE.conditions.whileEnemyFullHP || itemE.conditions.whileEnemyBelow15HP)
+                    if (itemE.conditions.whileInAir || itemE.conditions.whileNotInAir || itemE.conditions.whileFullHP || itemE.conditions.whileBelow150HP || itemE.conditions.whileEnemyFullHP || itemE.conditions.whileEnemyBelow150HP)
                     {
                         activePropertyEffects.Add(itemE);
                         activePropertyEffectsOn.Add(false);
@@ -84,7 +84,7 @@ public class PassiveController : MonoBehaviour
 
         foreach (Passive itemA in cMonPassive.passiveActions)
         {
-            if (itemA.conditions.whileInAir || itemA.conditions.whileNotInAir || itemA.conditions.whileFullHP || itemA.conditions.whileBelow15HP || itemA.conditions.whileEnemyFullHP || itemA.conditions.whileEnemyBelow15HP)
+            if (itemA.conditions.whileInAir || itemA.conditions.whileNotInAir || itemA.conditions.whileFullHP || itemA.conditions.whileBelow150HP || itemA.conditions.whileEnemyFullHP || itemA.conditions.whileEnemyBelow150HP)
             {
                 activePropertyEffects.Add(itemA);
                 activePropertyEffectsOn.Add(false);
@@ -285,7 +285,7 @@ public class PassiveController : MonoBehaviour
             {
                 if (m.delay > 0)
                 {
-                    delayedEffects.Add(new DelayedEffect(m.effect, m.targets));
+                    delayedEffects.Add(new DelayedEffectMove(m.effect, m.targets));
                     delayedEffectsTime.Add(m.delay);
                 }
                 else
@@ -427,7 +427,7 @@ public class PassiveController : MonoBehaviour
             }
         }
 
-        if (conditions.whileBelow15HP)
+        if (conditions.whileBelow150HP)
         {
             if (GM.playerHP < 150)
             {
@@ -451,7 +451,7 @@ public class PassiveController : MonoBehaviour
             }
         }
 
-        if (conditions.whileEnemyBelow15HP)
+        if (conditions.whileEnemyBelow150HP)
         {
             if (GM.battleManager.enemyMonsterController.enemyHealth < 150)
             {
@@ -472,7 +472,7 @@ public class PassiveController : MonoBehaviour
         passivesOn = false;
         currentMonPassive = null;
         sharedPassives = new List<PassiveSO>();
-        delayedEffects = new List<DelayedEffect>();
+        delayedEffects = new List<DelayedEffectMove>();
         delayedEffectsTime = new List<float>();
     }
 }

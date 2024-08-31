@@ -168,26 +168,26 @@ public class LevelUpUI : MonoBehaviour
             specialDamage = effect.projectileDamage;
         }
 
-        detailedStatBases[0].text = Mathf.RoundToInt(basicDamage + (basicDamage * (currentMonster.stats[0].value * 0.0016f))).ToString();
-        detailedStatChangables[0].text = Mathf.RoundToInt(basicDamage + (basicDamage * ((currentMonster.stats[0].value + addedStats[0]) * 0.0016f))).ToString();
+        detailedStatBases[0].text = Mathf.RoundToInt(basicDamage + (basicDamage * (currentMonster.stats[0].value * 0.04f))).ToString();
+        detailedStatChangables[0].text = Mathf.RoundToInt(basicDamage + (basicDamage * ((currentMonster.stats[0].value + addedStats[0]) * 0.04f))).ToString();
 
-        float basicCooldown = Mathf.RoundToInt(currentMonster.basicMove.baseCooldown - (currentMonster.basicMove.baseCooldown * (currentMonster.stats[3].value * 0.008f)));
+        float basicCooldown = Mathf.RoundToInt(currentMonster.basicMove.baseCooldown - (currentMonster.basicMove.baseCooldown * (currentMonster.stats[3].value * 0.04f)));
         if (basicCooldown < currentMonster.basicMove.minCooldown) { basicCooldown = currentMonster.basicMove.minCooldown; }
 
-        float basicCooldownNew = Mathf.RoundToInt(currentMonster.basicMove.baseCooldown - (currentMonster.basicMove.baseCooldown * ((currentMonster.stats[3].value + addedStats[3]) * 0.008f)));
+        float basicCooldownNew = Mathf.RoundToInt(currentMonster.basicMove.baseCooldown - (currentMonster.basicMove.baseCooldown * ((currentMonster.stats[3].value + addedStats[3]) * 0.04f)));
         if (basicCooldownNew < currentMonster.basicMove.minCooldown) { basicCooldownNew = currentMonster.basicMove.minCooldown; }
 
         detailedStatBases[1].text = basicCooldown.ToString() + "s";
         detailedStatChangables[1].text = basicCooldownNew.ToString() + "s";
 
-        detailedStatBases[2].text = Mathf.RoundToInt(specialDamage + (specialDamage * (currentMonster.stats[0].value * 0.0016f))).ToString();
-        detailedStatChangables[2].text = Mathf.RoundToInt(specialDamage + (specialDamage * ((currentMonster.stats[0].value + addedStats[0]) * 0.0016f))).ToString();
+        detailedStatBases[2].text = Mathf.RoundToInt(specialDamage + (specialDamage * (currentMonster.stats[0].value * 0.04f))).ToString();
+        detailedStatChangables[2].text = Mathf.RoundToInt(specialDamage + (specialDamage * ((currentMonster.stats[0].value + addedStats[0]) * 0.04f))).ToString();
 
 
-        float specialCooldown = Mathf.RoundToInt(currentMonster.specialMove.baseCooldown - (currentMonster.specialMove.baseCooldown * (currentMonster.stats[4].value * 0.008f)));
+        float specialCooldown = Mathf.RoundToInt(currentMonster.specialMove.baseCooldown - (currentMonster.specialMove.baseCooldown * (currentMonster.stats[4].value * 0.04f)));
         if (specialCooldown < currentMonster.specialMove.minCooldown) { specialCooldown = currentMonster.specialMove.minCooldown; }
 
-        float specialCooldownNew = Mathf.RoundToInt(currentMonster.specialMove.baseCooldown - (currentMonster.specialMove.baseCooldown * ((currentMonster.stats[4].value + addedStats[4]) * 0.008f)));
+        float specialCooldownNew = Mathf.RoundToInt(currentMonster.specialMove.baseCooldown - (currentMonster.specialMove.baseCooldown * ((currentMonster.stats[4].value + addedStats[4]) * 0.04f)));
         if (specialCooldownNew < currentMonster.specialMove.minCooldown) { specialCooldownNew = currentMonster.specialMove.minCooldown; }
 
         detailedStatBases[3].text = specialCooldown.ToString() + "s";
@@ -206,10 +206,10 @@ public class LevelUpUI : MonoBehaviour
         detailedStatChangables[5].text = ((currentMonster.stats[2].value + addedStats[2]) * 0.1f).ToString() + "%";
 
 
-        float tagInTime = 7f - (7f * (currentMonster.stats[5].value * 0.008f));
+        float tagInTime = 7f - (7f * (currentMonster.stats[5].value * 0.04f));
         if (tagInTime < 0f) { tagInTime = 0f; }
 
-        float tagInTimeNew = 7f - (7f * ((currentMonster.stats[5].value + addedStats[5]) * 0.008f));
+        float tagInTimeNew = 7f - (7f * ((currentMonster.stats[5].value + addedStats[5]) * 0.04f));
         if (tagInTimeNew < 0f) { tagInTimeNew = 0f; }
 
         detailedStatBases[6].text = tagInTime.ToString() + "s";
@@ -269,7 +269,7 @@ public class LevelUpUI : MonoBehaviour
 
     private void LevelRandomStat()
     {
-        int rand = Random.Range(0, 5);
+        int rand = Random.Range(0, 6);
 
         addedStats[rand]++;
         currentStatPointsLeft--;
