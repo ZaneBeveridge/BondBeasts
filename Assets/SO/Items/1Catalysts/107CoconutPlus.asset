@@ -27,11 +27,7 @@ MonoBehaviour:
     glitter:
       item: {fileID: 11400000, guid: 23efad9e80d1c9f4e87c2c4700f31bd7, type: 2}
       amount: 25
-    extraMats:
-    - item: {fileID: 11400000, guid: aa594d33b3c413044a52b7434c4b841e, type: 2}
-      amount: 2
-    - item: {fileID: 11400000, guid: 77ea8fb12728c1a44a2cdb0c79a6eee3, type: 2}
-      amount: 2
+    extraMats: []
     createdCatalyst:
       item: {fileID: 11400000, guid: 9560251cdaf941e47bc7b5c2c4ea0ebe, type: 2}
       amount: 1
@@ -39,6 +35,8 @@ MonoBehaviour:
   - name: +8 Guts Up while healthy.
     effect: {fileID: 11400000, guid: 715d3aeacfd7e264b90c4b8d3ddb5c6f, type: 2}
     delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 4085563352751338114, guid: 7af93ca6ce198f940b4a8190004f6863, type: 3}
     targets:
       team: 0
       enemy: 0

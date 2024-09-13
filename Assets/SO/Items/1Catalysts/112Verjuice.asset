@@ -27,11 +27,7 @@ MonoBehaviour:
     glitter:
       item: {fileID: 11400000, guid: 23efad9e80d1c9f4e87c2c4700f31bd7, type: 2}
       amount: 25
-    extraMats:
-    - item: {fileID: 11400000, guid: 8f3ace89d25be1a479d915bfe7c419a4, type: 2}
-      amount: 2
-    - item: {fileID: 11400000, guid: d72c82031651cb84f9253bbedff5804c, type: 2}
-      amount: 2
+    extraMats: []
     createdCatalyst:
       item: {fileID: 11400000, guid: c4ee030372fed1f4e8dcf44d2f740f89, type: 2}
       amount: 1
@@ -39,6 +35,8 @@ MonoBehaviour:
   - name: +20 Juice Up while below 15 hp
     effect: {fileID: 11400000, guid: b40ae581cc4567340a1df9be17fa7213, type: 2}
     delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
     targets:
       team: 0
       enemy: 0

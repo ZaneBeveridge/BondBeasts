@@ -27,11 +27,7 @@ MonoBehaviour:
     glitter:
       item: {fileID: 11400000, guid: 23efad9e80d1c9f4e87c2c4700f31bd7, type: 2}
       amount: 25
-    extraMats:
-    - item: {fileID: 11400000, guid: aa594d33b3c413044a52b7434c4b841e, type: 2}
-      amount: 2
-    - item: {fileID: 11400000, guid: bba0894febf88f74dbbce4633d27faa7, type: 2}
-      amount: 2
+    extraMats: []
     createdCatalyst:
       item: {fileID: 11400000, guid: d429fe992642a8c44be997357d031acb, type: 2}
       amount: 1
@@ -40,7 +36,7 @@ MonoBehaviour:
     effect: {fileID: 11400000, guid: 93bfbedd76658b54988fb57ce887a01f, type: 2}
     delay: 0
     maxUsesPerBattle: 0
-    particleToTrigger: {fileID: 0}
+    particleToTrigger: {fileID: 4085563352751338114, guid: 687cbac2042b98f4e9dd314e479fb53a, type: 3}
     targets:
       team: 0
       enemy: 0

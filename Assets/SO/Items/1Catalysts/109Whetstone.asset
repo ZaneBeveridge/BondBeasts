@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 109
   groupedId: 4
   itemName: Whetstone
-  desc: +2 Edge Up.
+  desc: +2 Edge Up, -2 Wits
   icon: {fileID: 21300000, guid: 818399402f3dbec40b5cd8e8f6c37047, type: 3}
   type: 1
   maxStack: 10
@@ -27,11 +27,7 @@ MonoBehaviour:
     glitter:
       item: {fileID: 11400000, guid: 23efad9e80d1c9f4e87c2c4700f31bd7, type: 2}
       amount: 25
-    extraMats:
-    - item: {fileID: 11400000, guid: bba0894febf88f74dbbce4633d27faa7, type: 2}
-      amount: 2
-    - item: {fileID: 11400000, guid: 91ed5fcaa62fe5c4abfcf6679a704927, type: 2}
-      amount: 2
+    extraMats: []
     createdCatalyst:
       item: {fileID: 11400000, guid: ae2f2b67d0b792349995d5947cab6ac0, type: 2}
       amount: 1
@@ -39,6 +35,33 @@ MonoBehaviour:
   - name: +2 Edge Up.
     effect: {fileID: 11400000, guid: ab9ace0666bf2cb489ddaa6000dae54f, type: 2}
     delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
+    targets:
+      team: 0
+      enemy: 0
+    conditions:
+      always: 1
+      whenBeingHit: 0
+      whenTagIn: 0
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0
+  - name: -2 Wits
+    effect: {fileID: 11400000, guid: 9c5ba66f59b4b1b4aa167103d20d641b, type: 2}
+    delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
     targets:
       team: 0
       enemy: 0
