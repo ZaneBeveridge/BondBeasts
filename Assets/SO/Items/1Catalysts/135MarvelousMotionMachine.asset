@@ -1,0 +1,109 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bf3f53d8ec9434aaf48b41bb48adcc, type: 3}
+  m_Name: 135MarvelousMotionMachine
+  m_EditorClassIdentifier: 
+  id: 135
+  groupedId: 12
+  itemName: Marvelous Motion Machine
+  desc: 
+  icon: {fileID: 21300000, guid: 97ca464abd919074485886270b19ec0c, type: 3}
+  type: 1
+  maxStack: 10
+  canBeUpgraded: 0
+  recipe:
+    usedCatalyst:
+      item: {fileID: 11400000}
+      amount: 2
+    glitter:
+      item: {fileID: 11400000, guid: 23efad9e80d1c9f4e87c2c4700f31bd7, type: 2}
+      amount: 25
+    extraMats: []
+    createdCatalyst:
+      item: {fileID: 11400000, guid: 7cc8ac1dbc42294438ff2859077d57fc, type: 2}
+      amount: 1
+  itemEffects:
+  - name: 
+    effect: {fileID: 11400000, guid: cb2208a077c6d4d49b8da0bc30ca5a83, type: 2}
+    delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 4085563352751338114, guid: 20eda7c321d81d84b936e762fbb796e5, type: 3}
+    targets:
+      team: 0
+      enemy: 0
+    conditions:
+      always: 1
+      whenBeingHit: 0
+      whenTagIn: 0
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0
+  - name: 
+    effect: {fileID: 11400000, guid: c8913f732a13d5948b11dcdd937a2bf1, type: 2}
+    delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
+    targets:
+      team: 0
+      enemy: 0
+    conditions:
+      always: 1
+      whenBeingHit: 0
+      whenTagIn: 0
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0
+  - name: 
+    effect: {fileID: 11400000, guid: d0f56139eda6b104d94335cfdba97bf3, type: 2}
+    delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
+    targets:
+      team: 0
+      enemy: 0
+    conditions:
+      always: 1
+      whenBeingHit: 0
+      whenTagIn: 0
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0

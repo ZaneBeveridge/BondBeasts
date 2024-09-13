@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 111
   groupedId: 4
   itemName: Whetgem
-  desc: +6 Edge Up.
+  desc: +6 Edge Up, -6 Wits
   icon: {fileID: 21300000, guid: 4c199e88252916c4f9651a7727b70e76, type: 3}
   type: 1
   maxStack: 10
@@ -35,6 +35,33 @@ MonoBehaviour:
   - name: +6 Edge Up.
     effect: {fileID: 11400000, guid: 21bd54f619a549941b02214419a33047, type: 2}
     delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
+    targets:
+      team: 0
+      enemy: 0
+    conditions:
+      always: 1
+      whenBeingHit: 0
+      whenTagIn: 0
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0
+  - name: -6 Wits
+    effect: {fileID: 11400000, guid: bebf6eb6bb1d38f4a9d850f11e416b9f, type: 2}
+    delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
     targets:
       team: 0
       enemy: 0

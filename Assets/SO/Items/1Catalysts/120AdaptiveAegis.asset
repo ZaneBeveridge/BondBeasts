@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 36bf3f53d8ec9434aaf48b41bb48adcc, type: 3}
+  m_Name: 120AdaptiveAegis
+  m_EditorClassIdentifier: 
+  id: 120
+  groupedId: 7
+  itemName: Adaptive Aegis
+  desc: 'After being hit: Gain +20 GUTS for 0.5s'
+  icon: {fileID: 21300000, guid: 806ba3655d235d44d9a1feaa46545b08, type: 3}
+  type: 1
+  maxStack: 10
+  canBeUpgraded: 0
+  recipe:
+    usedCatalyst:
+      item: {fileID: 11400000}
+      amount: 2
+    glitter:
+      item: {fileID: 11400000, guid: 23efad9e80d1c9f4e87c2c4700f31bd7, type: 2}
+      amount: 25
+    extraMats: []
+    createdCatalyst:
+      item: {fileID: 11400000, guid: d429fe992642a8c44be997357d031acb, type: 2}
+      amount: 1
+  itemEffects:
+  - name: 
+    effect: {fileID: 11400000, guid: cfe2d767ab2d5554a926df40ce13c3b0, type: 2}
+    delay: 0.1
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 4085563352751338114, guid: f8cf138b82e9cf048b2f3f5beb68799f, type: 3}
+    targets:
+      team: 0
+      enemy: 0
+    conditions:
+      always: 0
+      whenBeingHit: 1
+      whenTagIn: 0
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0
+  - name: 
+    effect: {fileID: 11400000, guid: bbf890d1ce8109c4996a2a2f51458469, type: 2}
+    delay: 0.5
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
+    targets:
+      team: 0
+      enemy: 0
+    conditions:
+      always: 0
+      whenBeingHit: 1
+      whenTagIn: 0
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0

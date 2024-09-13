@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 103
   groupedId: 2
   itemName: Tough Hide
-  desc: +2 Guts Up
+  desc: +2 Guts Up, -2 Oomph
   icon: {fileID: 21300000, guid: cbab837c638a2c5488455ae6a9560cc3, type: 3}
   type: 1
   maxStack: 10
@@ -27,11 +27,7 @@ MonoBehaviour:
     glitter:
       item: {fileID: 11400000, guid: 23efad9e80d1c9f4e87c2c4700f31bd7, type: 2}
       amount: 25
-    extraMats:
-    - item: {fileID: 11400000, guid: cf8aa78de3002a74b846689fd96a0cfb, type: 2}
-      amount: 2
-    - item: {fileID: 11400000, guid: be56f19532481634081eba35635bcb32, type: 2}
-      amount: 2
+    extraMats: []
     createdCatalyst:
       item: {fileID: 11400000, guid: c2e0a0ba5dd40024f8acf389f58a9fab, type: 2}
       amount: 1
@@ -39,6 +35,33 @@ MonoBehaviour:
   - name: +2 Guts Up.
     effect: {fileID: 11400000, guid: b94c73aba1b7def4c94f744de7a574ee, type: 2}
     delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
+    targets:
+      team: 0
+      enemy: 0
+    conditions:
+      always: 1
+      whenBeingHit: 0
+      whenTagIn: 0
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0
+  - name: -2 Oomph.
+    effect: {fileID: 11400000, guid: 30076e58fc869c847b42213c70be1a19, type: 2}
+    delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
     targets:
       team: 0
       enemy: 0

@@ -27,11 +27,7 @@ MonoBehaviour:
     glitter:
       item: {fileID: 11400000, guid: 23efad9e80d1c9f4e87c2c4700f31bd7, type: 2}
       amount: 25
-    extraMats:
-    - item: {fileID: 11400000, guid: 8f3ace89d25be1a479d915bfe7c419a4, type: 2}
-      amount: 2
-    - item: {fileID: 11400000, guid: aa594d33b3c413044a52b7434c4b841e, type: 2}
-      amount: 2
+    extraMats: []
     createdCatalyst:
       item: {fileID: 11400000, guid: 900c02c9310a82b4a9655cc724f84d88, type: 2}
       amount: 1
@@ -39,6 +35,8 @@ MonoBehaviour:
   - name: +4 Oomph Up while airborne.
     effect: {fileID: 11400000, guid: 332d1907ed5aefd46a2dec4049399d3e, type: 2}
     delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
     targets:
       team: 0
       enemy: 0

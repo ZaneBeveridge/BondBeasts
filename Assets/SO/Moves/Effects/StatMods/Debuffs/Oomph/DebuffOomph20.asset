@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectType: 1
   stat: 0
-  amount: -10
+  amount: -20

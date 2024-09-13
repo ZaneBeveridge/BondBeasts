@@ -15,7 +15,7 @@ MonoBehaviour:
   id: 105
   groupedId: 2
   itemName: Toughest Hide
-  desc: +6 Guts Up
+  desc: +6 Guts Up, -6 Oomph
   icon: {fileID: 21300000, guid: 91dafcbe90cfb24409c7ed677a866ec6, type: 3}
   type: 1
   maxStack: 10
@@ -35,6 +35,33 @@ MonoBehaviour:
   - name: +6 Guts Up.
     effect: {fileID: 11400000, guid: f2d7f570341e617468afe6cf8c4594ff, type: 2}
     delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
+    targets:
+      team: 0
+      enemy: 0
+    conditions:
+      always: 1
+      whenBeingHit: 0
+      whenTagIn: 0
+      whenTagOut: 0
+      whenCrit: 0
+      whenEnemyStunned: 0
+      whenUseBasic: 0
+      whenUseSpecial: 0
+      whenEnemyHitBasic: 0
+      whenEnemyHitSpecial: 0
+      whileEnemyFullHP: 0
+      whileEnemyBelow15HP: 0
+      whileInAir: 0
+      whileNotInAir: 0
+      whileFullHP: 0
+      whileBelow15HP: 0
+  - name: -6 Oomph
+    effect: {fileID: 11400000, guid: 2cb16bc0c05e8aa4ab6a203c8b86344f, type: 2}
+    delay: 0
+    maxUsesPerBattle: 0
+    particleToTrigger: {fileID: 0}
     targets:
       team: 0
       enemy: 0
