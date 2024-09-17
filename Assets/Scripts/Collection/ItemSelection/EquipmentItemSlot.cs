@@ -29,7 +29,7 @@ public class EquipmentItemSlot : ItemSlot, IDropHandler
 
     public override void OnClick()
     {
-        manager.OpenItemInspectTooltip(item, transform, false);
+        manager.OpenItemInspectTooltip(item);
     }
 
     public void OnDrop(PointerEventData eventData)

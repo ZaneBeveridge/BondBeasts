@@ -80,6 +80,7 @@ MonoBehaviour:
   rb: {fileID: 7886508744218910038}
   sprite: {fileID: 9116299386454378248}
   opposition: 
+  triggersBasicORSpecial: 1
   enemyStatsBuff: fdfffffffdfffffffdfffffffdfffffffdfffffffdffffff
   friendlyStatsBuff: 030000000300000003000000030000000300000003000000
   antiGravTime: 0
@@ -88,8 +89,22 @@ MonoBehaviour:
   stunnedTime: 0
   dotAmount: 0
   dotTime: 0
+  healOnHitAmount: 0
   resetSpecialCooldownOnHit: 0
-  triggersBasicORSpecial: 1
+  effectsToTriggerOnFriendly:
+  - {fileID: 11400000, guid: 29a83368aa09150409f7cde1d479936a, type: 2}
+  - {fileID: 11400000, guid: 8830a68c79c3ce54bb6a80e2205530b2, type: 2}
+  - {fileID: 11400000, guid: 2234d508db5cfbd4e90a146afdbd3784, type: 2}
+  - {fileID: 11400000, guid: 1e0f0f058c0134645a3d9301b0efd70f, type: 2}
+  - {fileID: 11400000, guid: 0417b194525c1a64cab517a4621ad982, type: 2}
+  - {fileID: 11400000, guid: 40860ed4ba1e0dd418c01085c59add09, type: 2}
+  effectsToTriggerOnEnemy:
+  - {fileID: 11400000, guid: c71cc256403e92c40a398e28491bd9c8, type: 2}
+  - {fileID: 11400000, guid: 4e09d7682fa9b754293fa0466c38f870, type: 2}
+  - {fileID: 11400000, guid: f1bcf02bd0b732c4786530b380c55c7e, type: 2}
+  - {fileID: 11400000, guid: 1760bf76b25ba44468bed01d5e51493a, type: 2}
+  - {fileID: 11400000, guid: 16e7d7e1e5ba5534197634ae6314efeb, type: 2}
+  - {fileID: 11400000, guid: 07f910a5acf41eb43b90c4c26c8a000a, type: 2}
 --- !u!58 &1500175711961408653
 CircleCollider2D:
   m_ObjectHideFlags: 0

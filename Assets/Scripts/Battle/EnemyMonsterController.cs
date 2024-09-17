@@ -106,6 +106,8 @@ public class EnemyMonsterController : MonoBehaviour
 
     private bool isJumping;
     private float jumpTime;
+
+    private List<MonsterItemSO> customPunkItems = new List<MonsterItemSO>();
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -357,10 +359,12 @@ public class EnemyMonsterController : MonoBehaviour
                 }
             }
         }
+        customPunkItems = null;
+        customPunkItems = new List<MonsterItemSO>();
 
     }
 
-    public void SetupEnemyPunk(List<Monster> mons, NodeType type, int extraStats, int punkMaxHealth)
+    public void SetupEnemyPunk(List<Monster> mons, NodeType type, int extraStats, int punkMaxHealth, List<MonsterItemSO> customItems)
     {
         backupMonsters = mons;
 
@@ -415,6 +419,8 @@ public class EnemyMonsterController : MonoBehaviour
             }
         }
 
+        customPunkItems = customItems;
+
     }
 
     public void SetupEnemyBondBattle(Monster mon)
@@ -446,6 +452,8 @@ public class EnemyMonsterController : MonoBehaviour
                 }
             }
         }
+        customPunkItems = null;
+        customPunkItems = new List<MonsterItemSO>();
 
         aiController.SetActive(false);
     }
@@ -713,6 +721,14 @@ public class EnemyMonsterController : MonoBehaviour
         itemsEnemy.Add(currentMonster.item2);
         itemsEnemy.Add(currentMonster.item3);
 
+        if (customPunkItems.Count > 0)
+        {
+            for (int i = 0; i < customPunkItems.Count; i++)
+            {
+                itemsEnemy.Add(customPunkItems[i]);
+            }
+        }
+
 
 
         enemyPassiveController.StartPassives(currentMonster.passiveMove, passivesShared);
@@ -762,7 +778,7 @@ public class EnemyMonsterController : MonoBehaviour
 
 
 
-    public void TakeDamage(int damage, int baseDamage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile, int healOnHitAmount)
+    public void TakeDamage(int damage, int baseDamage, bool effect, bool critical, bool echo,Transform pos, FireProjectileEffectSO effectProjectile, List<EffectSO> effectsToTriggerOnFriendly, List<EffectSO> effectsToTriggerOnEnemy)
     {
         if (GM.battleManager.isLosing || GM.battleManager.isWinning) { return; }
 
@@ -857,91 +873,18 @@ public class EnemyMonsterController : MonoBehaviour
 
             if (!effect)
             {
-
-                if (dotAmount > 0 || dotTime > 0) // has dot
+                for (int i = 0; i < effectsToTriggerOnFriendly.Count; i++) // Trigger these on friendlyMonsterController
                 {
-                    enemyBattleBuffManager.AddBuff(dotAmount, dotTime);
+                    Targets tar = new Targets(false, true);
+                    enemyMoveController.UseEffect(effectsToTriggerOnFriendly[i], tar);
                 }
 
-                if (stunnedTime > 0)
+                for (int i = 0; i < effectsToTriggerOnEnemy.Count; i++) // Trigger these on the enemyMonsterController (this)
                 {
-                    enemyBattleBuffManager.AddBuff(stunnedTime, 3);
+                    Targets tar = new Targets(true, false);
+                    enemyMoveController.UseEffect(effectsToTriggerOnEnemy[i], tar);
                 }
 
-                if (resetSpecial)
-                {
-                    GM.battleManager.friendlyMonsterController.specialReady[GM.battleManager.friendlyMonsterController.currentSlot] = true;
-                    GM.battleManager.friendlyMonsterController.specialC[GM.battleManager.friendlyMonsterController.currentSlot] = 0f;
-                }
-
-                if (antiGravTime > 0)
-                {
-                    enemyBattleBuffManager.AddBuff(antiGravTime, 5);
-                }
-
-                if (echo)
-                {
-                    GM.battleManager.friendlyMonsterController.friendlyMoveController.DoProjectile(effectProjectile.projectilePrefab, effectProjectile.projectileDamage, effectProjectile.projectileSpeed, effectProjectile.lifetime, effectProjectile.collideWithAmountOfObjects, effectProjectile.criticalProjectile, effectProjectile);
-                }
-
-                for (int i = 0; i < enemyStatBuffs.Count; i++)
-                {
-                    Targets t = new Targets(false, false);
-
-                    if (enemyStatBuffs[i] != 0)
-                    {
-                        switch (i)
-                        {
-                            case 0:
-                                enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, enemyStatBuffs[i], t);
-                                break;
-                            case 1:
-                                enemyBattleBuffManager.AddBuff(EffectedStat.Guts, enemyStatBuffs[i], t);
-                                break;
-                            case 2:
-                                enemyBattleBuffManager.AddBuff(EffectedStat.Juice, enemyStatBuffs[i], t);
-                                break;
-                            case 3:
-                                enemyBattleBuffManager.AddBuff(EffectedStat.Edge, enemyStatBuffs[i], t);
-                                break;
-                            case 4:
-                                enemyBattleBuffManager.AddBuff(EffectedStat.Wits, enemyStatBuffs[i], t);
-                                break;
-                            case 5:
-                                enemyBattleBuffManager.AddBuff(EffectedStat.Spark, enemyStatBuffs[i], t);
-                                break;
-                        }
-                    }
-                }
-
-                for (int i = 0; i < friendlyStatBuffs.Count; i++)
-                {
-                    Targets t = new Targets(false, false);
-                    if (friendlyStatBuffs[i] != 0)
-                    {
-                        switch (i)
-                        {
-                            case 0:
-                                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Oomph, friendlyStatBuffs[i], t);
-                                break;
-                            case 1:
-                                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Guts, friendlyStatBuffs[i], t);
-                                break;
-                            case 2:
-                                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Juice, friendlyStatBuffs[i], t);
-                                break;
-                            case 3:
-                                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Edge, friendlyStatBuffs[i], t);
-                                break;
-                            case 4:
-                                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Wits, friendlyStatBuffs[i], t);
-                                break;
-                            case 5:
-                                GM.battleManager.friendlyMonsterController.friendlyBattleBuffManager.AddBuff(EffectedStat.Spark, friendlyStatBuffs[i], t);
-                                break;
-                        }
-                    }
-                }
             }
             float baseDmgFloat = baseDamage;
 
@@ -965,11 +908,6 @@ public class EnemyMonsterController : MonoBehaviour
             enemyHealth = healthBar.slider.value;
 
             enemyParentAnim.SetTrigger("Hit");
-
-            if (healOnHitAmount > 0)
-            {
-                Heal(healOnHitAmount);
-            }
 
             if (enemyHealth <= 0)
             {
@@ -1035,6 +973,12 @@ public class EnemyMonsterController : MonoBehaviour
 
             //GuardOff();
         }
+    }
+
+    public void SetHealth(int amount)
+    {
+        healthBar.SetHealth(amount, false);
+        enemyHealth = healthBar.slider.value;
     }
 
     public void Heal(int amount)

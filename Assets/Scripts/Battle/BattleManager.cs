@@ -224,7 +224,7 @@ public class BattleManager : MonoBehaviour
         StartBattle(mons, type, background, 0, true);
     }
 
-    public void InitPunk(List<Monster> mons, NodeType type, Sprite background, List<ItemDrop> drops, int punkMaxHealth)
+    public void InitPunk(List<Monster> mons, NodeType type, Sprite background, List<ItemDrop> drops, int punkMaxHealth, List<MonsterItemSO> customItems)
     {
         isLosing = false;
         isWinning = false;
@@ -236,11 +236,11 @@ public class BattleManager : MonoBehaviour
         friendlyMonsterController.inBattleTime.Add(0f);
         friendlyMonsterController.inBattleTime.Add(0f);
 
-        StartBattlePunk(mons, type, background, 0, drops, true, punkMaxHealth);
+        StartBattlePunk(mons, type, background, 0, drops, true, punkMaxHealth, customItems);
     }
 
 
-    public void InitAlpha(List<Monster> mons, Sprite background, List<ItemDrop> drops, AlphaRoamer roamer, int roamerMaxHealth)
+    public void InitAlpha(List<Monster> mons, Sprite background, List<ItemDrop> drops, AlphaRoamer roamer, int roamerMaxHealth, List<MonsterItemSO> customItems)
     {
         isLosing = false;
         isWinning = false;
@@ -253,7 +253,7 @@ public class BattleManager : MonoBehaviour
         friendlyMonsterController.inBattleTime.Add(0f);
         friendlyMonsterController.inBattleTime.Add(0f);
 
-        StartBattlePunk(mons, NodeType.Roamer, background, 0, drops, false, roamerMaxHealth);
+        StartBattlePunk(mons, NodeType.Roamer, background, 0, drops, false, roamerMaxHealth, customItems);
     }
 
     public void StartBattle(List<MonsterSpawn> mons, NodeType type, Sprite background, int extraStats, bool captureOn)
@@ -383,7 +383,7 @@ public class BattleManager : MonoBehaviour
         
     }
 
-    public void StartBattlePunk(List<Monster> mons, NodeType type, Sprite background, int extraStats, List<ItemDrop> drops, bool punkOn, int punkMaxHealth)
+    public void StartBattlePunk(List<Monster> mons, NodeType type, Sprite background, int extraStats, List<ItemDrop> drops, bool punkOn, int punkMaxHealth, List<MonsterItemSO> customItems)
     {
         gameType = type;
 
@@ -424,7 +424,7 @@ public class BattleManager : MonoBehaviour
         friendlyMonsterController.RefreshCooldowns();
 
         CalcRewardNode(drops);
-        enemyMonsterController.SetupEnemyPunk(mons, type, 0, punkMaxHealth);
+        enemyMonsterController.SetupEnemyPunk(mons, type, 0, punkMaxHealth, customItems);
 
 
         friendlyMonsterController.healthBar.SetMaxHealth(1000);

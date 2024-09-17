@@ -43,7 +43,7 @@ public class PlayerManager : MonoBehaviour
 
                     GM.overworldGameobject.SetActive(false);
                     GM.overworldUI.gameObject.SetActive(false);
-                    GM.battleManager.InitAlpha(mons, alphaRoamer.background, alphaRoamer.drops, alphaRoamer, alphaRoamer.roamerMaxHealth);
+                    GM.battleManager.InitAlpha(mons, alphaRoamer.background, alphaRoamer.drops, alphaRoamer, alphaRoamer.roamerMaxHealth, alphaRoamer.customItems);
 
                 }
                 else if (roamer.roamerType == RoamerType.Healer)

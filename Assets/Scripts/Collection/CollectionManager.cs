@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Globalization;
 
 public class CollectionManager : MonoBehaviour
 {
@@ -20,9 +21,7 @@ public class CollectionManager : MonoBehaviour
     public List<StoredItem> itemsOwned = new List<StoredItem>();
 
     public List<Transform> equipmentContents = new List<Transform>();
-    public List<Transform> materialContents = new List<Transform>();
     public GameObject equipmentSlotPrefab;
-    public GameObject materialSlotPrefab;
 
     public MenuTabButtons monsterButton;
     public MenuTabButtons itemButton;
@@ -54,7 +53,7 @@ public class CollectionManager : MonoBehaviour
     public GameObject leftArrowGameObject;
 
     public GameObject equipmentParent;
-    public GameObject materialsParent;
+    public TextMeshProUGUI glitterCounterText;
     
     
     public PlayerInfoInterface playerInfoInterface;
@@ -73,7 +72,7 @@ public class CollectionManager : MonoBehaviour
     public int selectedFolderTemp = 0;
 
 
-    public int bagMode = 0;//0 = collection, 1 = materials, 2 = equipment
+    public int bagMode = 0;//0 = collection, 1 = equipment
     void Start()
     {
         /*
@@ -588,35 +587,19 @@ public class CollectionManager : MonoBehaviour
             }
         }
 
-        ActivateEquipMode(true);
-    }
-
-    public void UpdateCollectionMaterials(int bagID) // bagID: 0,1,2 etc
-    {
-        currentAmountOfCollectionSlots = 18;
-
-        int minIDRange = (bagID * currentAmountOfCollectionSlots);
-        int maxIDRange = (bagID * currentAmountOfCollectionSlots) + 17; // max collection size on page here
-
-        for (int i = 0; i < currentCollectionItems.Count; i++)
-        {
-            Destroy(currentCollectionItems[i]);
-        }
-
-        currentCollectionItems = new List<GameObject>();
-
+        int glitterAmount = 0;
         for (int i = 0; i < itemsOwned.Count; i++)
         {
-            if (itemsOwned[i].storedID >= minIDRange && itemsOwned[i].storedID <= maxIDRange && itemsOwned[i].item.type == ItemType.Material) // if item ID range is within the selected bags range of stored IDs AND item is a catalyst
+            if (itemsOwned[i].item.id == 1) // Glitter
             {
-                int realSlot = itemsOwned[i].storedID - (currentAmountOfCollectionSlots * bagID);
-                GameObject itm = Instantiate(materialSlotPrefab, materialContents[realSlot]);
-                itm.GetComponent<MaterialItemSlot>().Init(itemsOwned[i], GM);
-                currentCollectionItems.Add(itm);
+                glitterAmount = itemsOwned[i].amount;
+                break;
             }
         }
 
-        ActivateEquipMode(false);
+        glitterCounterText.text = string.Format(CultureInfo.InvariantCulture, "{0:N0}", glitterAmount);
+
+        ActivateEquipMode(true);
     }
 
     public void PressLeftStorage()
@@ -635,7 +618,7 @@ public class CollectionManager : MonoBehaviour
 
     public void PressRightStorage()
     {
-        int num = 0; // 0=collection 1=materials 2=equipment
+        int num = 0; // 0=collection 1=equipment
 
         switch (bagMode)
         {
@@ -643,9 +626,6 @@ public class CollectionManager : MonoBehaviour
                 num = GM.numOfBagsCollection;
                 break;
             case 1:
-                num = GM.numOfBagsMaterials;
-                break;
-            case 2:
                 num = GM.numOfBagsEquipment;
                 break;
         }
@@ -692,14 +672,13 @@ public class CollectionManager : MonoBehaviour
         }
         else if (num == 1) // Items
         {
-            bagMode = 2;
+            bagMode = 1;
             bagsWrapper.SetActive(true);
             itemInterface.SetActive(true);
             UpdateStorage(0, 0);
             collectionInterface.SetActive(false);
             playerInterface.SetActive(false);
             equipmentParent.SetActive(true);
-            materialsParent.SetActive(false);
             monsterButton.Hide(true);
             itemButton.Select(false);
             playerInfoButton.Hide(true);
@@ -718,24 +697,6 @@ public class CollectionManager : MonoBehaviour
         }
     }
     
-    public void PressItemCollectionSwapButton(int switchTo) // 0= equipment, 1=materials
-    {
-        if (switchTo == 0)
-        {
-            bagMode = 2;
-            equipmentParent.SetActive(true);
-            materialsParent.SetActive(false);
-        }
-        else if (switchTo == 1)
-        {
-            bagMode = 1;
-            equipmentParent.SetActive(false);
-            materialsParent.SetActive(true);
-        }
-
-        UpdateStorage(0, 0);
-    }
-
     public BagSpace CheckSpaceInBag(int bagID)
     {
         BagSpace state = new BagSpace(false, 0);
@@ -752,10 +713,6 @@ public class CollectionManager : MonoBehaviour
             case 1:
                 addedExtraLow = 0;
                 addedExtraHigh = 14;
-                break;
-            case 2:
-                addedExtraLow = 0;
-                addedExtraHigh = 17;
                 break;
         }
 
@@ -797,32 +754,6 @@ public class CollectionManager : MonoBehaviour
                 bool found = true;
                 for (int i = 0; i < itemsOwned.Count; i++)
                 {
-                    if (itemsOwned[i].storedID == countUp && itemsOwned[i].item.type == ItemType.Material)
-                    {
-                        countUp++;
-                        found = false;
-                        break;
-                    }
-                }
-                if (found)
-                {
-                    if (countUp > maxIDRange)
-                    {
-                        return state;
-                    }
-
-                    foundSpot = true;
-                    state = new BagSpace(true, countUp);
-                }
-            }
-        }
-        else if (bagMode == 2)
-        {
-            while (foundSpot == false)
-            {
-                bool found = true;
-                for (int i = 0; i < itemsOwned.Count; i++)
-                {
                     if (itemsOwned[i].storedID == countUp && itemsOwned[i].item.type == ItemType.Catalyst)
                     {
                         countUp++;
@@ -849,7 +780,7 @@ public class CollectionManager : MonoBehaviour
 
     public void UpdateStorage(int selectedBag, int selectedFolder)
     {
-        int amountOfBags = 0; // 0=collection 1=materials 2=equipment
+        int amountOfBags = 0; // 0=collection 1=equipment
 
         switch (bagMode)
         {
@@ -857,9 +788,6 @@ public class CollectionManager : MonoBehaviour
                 amountOfBags = GM.numOfBagsCollection;
                 break;
             case 1:
-                amountOfBags = GM.numOfBagsMaterials;
-                break;
-            case 2:
                 amountOfBags = GM.numOfBagsEquipment;
                 break;
         }
@@ -982,9 +910,6 @@ public class CollectionManager : MonoBehaviour
                 UpdateCollectionBeasts(selectedBagTemp + (selectedFolderTemp * 9));
                 break;
             case 1:
-                UpdateCollectionMaterials(selectedBagTemp + (selectedFolderTemp * 9));
-                break;
-            case 2:
                 UpdateCollectionEquipment(selectedBagTemp + (selectedFolderTemp * 9));
                 break;
         }

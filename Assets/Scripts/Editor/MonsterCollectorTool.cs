@@ -147,10 +147,6 @@ public class MonsterCollectorTool : EditorWindow
 
         if (collectionManager.bagMode == 1)
         {
-            collectionManager.UpdateCollectionMaterials(collectionManager.currentBag);
-        }
-        else if (collectionManager.bagMode == 2)
-        {
             collectionManager.UpdateCollectionEquipment(collectionManager.currentBag);
         }
     }

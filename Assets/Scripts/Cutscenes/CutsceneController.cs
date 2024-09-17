@@ -25,6 +25,25 @@ public class CutsceneController : MonoBehaviour
     //EXTRA
     private bool isPreStarter = false;
 
+
+    private bool autoScene = false;
+    private float autoSceneTimer = 0f;
+
+    void Update()
+    {
+        if (autoScene)
+        {
+            if (autoSceneTimer > 0)
+            {
+                autoSceneTimer -= Time.deltaTime;
+            }
+            else if (autoSceneTimer <= 0)
+            {
+                NextFrame();
+            }
+        }
+    }
+
     private void DoFrame(SceneFrame frame)
     {
         // remove images
@@ -118,13 +137,20 @@ public class CutsceneController : MonoBehaviour
             }
         }
 
-        
+        if (frame.automaticallyGoToNextScene)
+        {
+            autoSceneTimer = frame.timeUntilNextScene;
+            autoScene = true;
+        }
 
 
     }
 
     public void NextFrame()
     {
+        autoScene = false;
+        autoSceneTimer = 0f;
+
         if (frameIndex < currentScene.sceneFrames.Count - 1)
         {
             frameIndex++;

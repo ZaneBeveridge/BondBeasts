@@ -12,6 +12,8 @@ public class AlphaRoamer : Roamer
     public int roamerMaxHealth = 1000;
     public Monster monster;
 
+    public List<MonsterItemSO> customItems = new List<MonsterItemSO>();
+
     private bool isMoving;
     private Vector3 originalPos, targetPos;
     private float timeToMove = .2f;
@@ -49,7 +51,7 @@ public class AlphaRoamer : Roamer
 
         GM.overworldGameobject.SetActive(false);
         GM.overworldUI.gameObject.SetActive(false);
-        GM.battleManager.InitAlpha(mons, background, drops, this, roamerMaxHealth);
+        GM.battleManager.InitAlpha(mons, background, drops, this, roamerMaxHealth, customItems);
     }
 
     public override void Init(Node node, GameManager g, RoamerController c)

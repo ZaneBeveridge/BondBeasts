@@ -18,5 +18,6 @@ public enum EffectType
     DoT,
     RefreshCooldown,
     CritChance,
-    LowGravity
+    LowGravity,
+    SetHealth
 }

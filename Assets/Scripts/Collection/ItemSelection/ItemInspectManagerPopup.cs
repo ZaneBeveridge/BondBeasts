@@ -12,7 +12,7 @@ public class ItemInspectManagerPopup : MonoBehaviour
     private GameObject currentPanel;
     private GameObject currentClose;
 
-    public void SpawnInspectPanel(MonsterItemSO item, Transform loc, GameManager g, bool simple)
+    public void SpawnInspectPanel(MonsterItemSO item, GameManager g)// for when opening from stored item
     {
         CloseCurrentPanel();
 
@@ -20,12 +20,22 @@ public class ItemInspectManagerPopup : MonoBehaviour
         closeObj.GetComponent<ItemInspectCloseButton>().Init(g);
         currentClose = closeObj;
 
-        GameObject obj = Instantiate(panelPrefab, loc.position, Quaternion.identity, thisObjectTransform);
-        obj.GetComponent<ItemInspectPopup>().Init(item,g, simple);
+        GameObject obj = Instantiate(panelPrefab, thisObjectTransform);
+        obj.GetComponent<ItemInspectPopup>().Init(item, g);
         currentPanel = obj;
+    }
 
-        
+    public void SpawnInspectPanel(MonsterItemSO item, GameManager g, int partySlot, int equipSlot) // for when opening from equipped item
+    {
+        CloseCurrentPanel();
 
+        GameObject closeObj = Instantiate(closePrefab, thisObjectTransform);
+        closeObj.GetComponent<ItemInspectCloseButton>().Init(g);
+        currentClose = closeObj;
+
+        GameObject obj = Instantiate(panelPrefab, thisObjectTransform);
+        obj.GetComponent<ItemInspectPopup>().Init(item, g, partySlot, equipSlot);
+        currentPanel = obj;
     }
 
     public void CloseCurrentPanel()

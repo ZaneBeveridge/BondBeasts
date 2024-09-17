@@ -80,6 +80,7 @@ MonoBehaviour:
   rb: {fileID: 7886508744218910038}
   sprite: {fileID: 9116299386454378248}
   opposition: 
+  triggersBasicORSpecial: 1
   enemyStatsBuff: 000000000000000000000000000000000000000000000000
   friendlyStatsBuff: 000000000000000000000000000000000000000000000000
   antiGravTime: 0
@@ -88,8 +89,11 @@ MonoBehaviour:
   stunnedTime: 0
   dotAmount: 10
   dotTime: 1
+  healOnHitAmount: 0
   resetSpecialCooldownOnHit: 0
-  triggersBasicORSpecial: 1
+  effectsToTriggerOnFriendly: []
+  effectsToTriggerOnEnemy:
+  - {fileID: 11400000, guid: 05e0e6acfbe9d42419d4bb31f7314f71, type: 2}
 --- !u!70 &8803627509716594012
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

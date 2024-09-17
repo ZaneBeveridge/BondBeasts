@@ -541,7 +541,7 @@ public class FriendlyMonsterController : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damage, int baseDamage, bool effect, bool critical, int dotAmount, float dotTime, float stunnedTime, bool resetSpecial, float antiGravTime, bool echo, List<int> enemyStatBuffs, List<int> friendlyStatBuffs, Transform pos, FireProjectileEffectSO effectProjectile, int healOnHitAmount) // if effect cant be parried, guarded
+    public void TakeDamage(int damage, int baseDamage, bool effect, bool critical, bool echo, Transform pos, FireProjectileEffectSO effectProjectile, List<EffectSO> effectsToTriggerOnFriendly, List<EffectSO> effectsToTriggerOnEnemy) // if effect cant be parried, guarded
     {
         if (GM.battleManager.isWinning || GM.battleManager.isLosing) { return; }
 
@@ -639,90 +639,18 @@ public class FriendlyMonsterController : MonoBehaviour
 
             if (!effect)
             {
-                if (dotAmount > 0 || dotTime > 0) // has dot
+                for (int i = 0; i < effectsToTriggerOnFriendly.Count; i++) // Trigger these on enemyMonsterController
                 {
-                    friendlyBattleBuffManager.AddBuff(dotAmount, dotTime);
+                    Targets tar = new Targets(false, true);
+                    friendlyMoveController.UseEffect(effectsToTriggerOnFriendly[i], tar);
                 }
 
-                if (stunnedTime > 0)
+                for (int i = 0; i < effectsToTriggerOnEnemy.Count; i++) // Trigger these on the friendlyMonsterController (this)
                 {
-                    friendlyBattleBuffManager.AddBuff(stunnedTime, 3);
+                    Targets tar = new Targets(true, false);
+                    friendlyMoveController.UseEffect(effectsToTriggerOnEnemy[i], tar);
                 }
 
-                if (resetSpecial)
-                {
-                    GM.battleManager.enemyMonsterController.specialReady[GM.battleManager.enemyMonsterController.currentSlot] = true;
-                    GM.battleManager.enemyMonsterController.specialC[GM.battleManager.enemyMonsterController.currentSlot] = 0f;
-                }
-
-                if (antiGravTime > 0)
-                {
-                    friendlyBattleBuffManager.AddBuff(antiGravTime, 5);
-                }
-
-                if (echo)
-                {
-                    GM.battleManager.enemyMonsterController.enemyMoveController.DoProjectile(effectProjectile.projectilePrefab, effectProjectile.projectileDamage, effectProjectile.projectileSpeed, effectProjectile.lifetime, effectProjectile.collideWithAmountOfObjects, effectProjectile.criticalProjectile, effectProjectile);
-                }
-
-                for (int i = 0; i < enemyStatBuffs.Count; i++)
-                {
-                    Targets t = new Targets(false, false);
-
-                    if (enemyStatBuffs[i] != 0)
-                    {
-                        switch (i)
-                        {
-                            case 0:
-                                friendlyBattleBuffManager.AddBuff(EffectedStat.Oomph, enemyStatBuffs[i], t);
-                                break;
-                            case 1:
-                                friendlyBattleBuffManager.AddBuff(EffectedStat.Guts, enemyStatBuffs[i], t);
-                                break;
-                            case 2:
-                                friendlyBattleBuffManager.AddBuff(EffectedStat.Juice, enemyStatBuffs[i], t);
-                                break;
-                            case 3:
-                                friendlyBattleBuffManager.AddBuff(EffectedStat.Edge, enemyStatBuffs[i], t);
-                                break;
-                            case 4:
-                                friendlyBattleBuffManager.AddBuff(EffectedStat.Wits, enemyStatBuffs[i], t);
-                                break;
-                            case 5:
-                                friendlyBattleBuffManager.AddBuff(EffectedStat.Spark, enemyStatBuffs[i], t);
-                                break;
-                        }
-                    }
-                }
-
-                for (int i = 0; i < friendlyStatBuffs.Count; i++)
-                {
-                    Targets t = new Targets(false, false);
-                    if (friendlyStatBuffs[i] != 0)
-                    {
-                        switch (i)
-                        {
-                            case 0:
-                                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Oomph, friendlyStatBuffs[i], t);
-                                break;
-                            case 1:
-                                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Guts, friendlyStatBuffs[i], t);
-                                break;
-                            case 2:
-                                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Juice, friendlyStatBuffs[i], t);
-                                break;
-                            case 3:
-                                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Edge, friendlyStatBuffs[i], t);
-                                break;
-                            case 4:
-                                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Wits, friendlyStatBuffs[i], t);
-                                break;
-                            case 5:
-                                GM.battleManager.enemyMonsterController.enemyBattleBuffManager.AddBuff(EffectedStat.Spark, friendlyStatBuffs[i], t);
-                                break;
-                        }
-                    }
-                }
             }
 
             float baseDmgFloat = baseDamage;
@@ -749,11 +677,6 @@ public class FriendlyMonsterController : MonoBehaviour
             GM.playerHP = (int)healthBar.slider.value;
 
             friendlyParentAnim.SetTrigger("Hit");
-            
-            if (healOnHitAmount > 0)
-            {
-                Heal(healOnHitAmount);
-            }
 
             if (GM.playerHP <= 0)
             {
@@ -811,6 +734,12 @@ public class FriendlyMonsterController : MonoBehaviour
             //GuardOff();
         }
 
+    }
+
+    public void SetHealth(int amount)
+    {
+        healthBar.SetHealth(amount, false);
+        GM.playerHP = healthBar.slider.value;
     }
 
     public void Heal(int amount)

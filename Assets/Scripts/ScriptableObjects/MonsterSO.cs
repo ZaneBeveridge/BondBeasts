@@ -39,7 +39,9 @@ public class MonsterSO : ScriptableObject
     [Header("Background")]
     public string height;
     public string weight;
+    [TextArea]
     public string lore;
+    [TextArea]
     public string locations;
 
     [Header("Strange")]

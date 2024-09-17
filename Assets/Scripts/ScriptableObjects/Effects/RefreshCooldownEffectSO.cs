@@ -8,7 +8,6 @@ public class RefreshCooldownEffectSO : EffectSO
     [Header("Refresh Cooldown")]
     [Range(0f, 100f)]public float chance = 100f;
     public AbilityType whatToRefresh;
-    public int amount = 0;
 
     public void Awake()
     {
