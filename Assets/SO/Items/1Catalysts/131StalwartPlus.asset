@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 131
   groupedId: 11
+  ownGroupedId: 2
   itemName: Stalwart+
   desc: +75 GUTS, +30 WITS, -150 OOMPH
+  lore: 
   icon: {fileID: 21300000, guid: 97ca464abd919074485886270b19ec0c, type: 3}
   type: 1
   maxStack: 10
@@ -52,11 +54,11 @@ MonoBehaviour:
       whenEnemyHitBasic: 0
       whenEnemyHitSpecial: 0
       whileEnemyFullHP: 0
-      whileEnemyBelow15HP: 0
+      whileEnemyBelow150HP: 0
       whileInAir: 0
       whileNotInAir: 0
       whileFullHP: 0
-      whileBelow15HP: 0
+      whileBelow150HP: 0
   - name: 
     effect: {fileID: 11400000, guid: d02192f426374ca479fcc0ced9f2f8e9, type: 2}
     delay: 0
@@ -77,11 +79,11 @@ MonoBehaviour:
       whenEnemyHitBasic: 0
       whenEnemyHitSpecial: 0
       whileEnemyFullHP: 0
-      whileEnemyBelow15HP: 0
+      whileEnemyBelow150HP: 0
       whileInAir: 0
       whileNotInAir: 0
       whileFullHP: 0
-      whileBelow15HP: 0
+      whileBelow150HP: 0
   - name: 
     effect: {fileID: 11400000, guid: d50751fe9edcb0d4c89b1136a6efd9ac, type: 2}
     delay: 0
@@ -102,8 +104,8 @@ MonoBehaviour:
       whenEnemyHitBasic: 0
       whenEnemyHitSpecial: 0
       whileEnemyFullHP: 0
-      whileEnemyBelow15HP: 0
+      whileEnemyBelow150HP: 0
       whileInAir: 0
       whileNotInAir: 0
       whileFullHP: 0
-      whileBelow15HP: 0
+      whileBelow150HP: 0

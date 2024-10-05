@@ -19,8 +19,8 @@ public class CollectionManager : MonoBehaviour
 
     [Header("Items")]
     public List<StoredItem> itemsOwned = new List<StoredItem>();
+    public Transform itemListContent;
 
-    public List<Transform> equipmentContents = new List<Transform>();
     public GameObject equipmentSlotPrefab;
 
     public MenuTabButtons monsterButton;
@@ -70,6 +70,8 @@ public class CollectionManager : MonoBehaviour
 
     public int selectedBagTemp = 0;
     public int selectedFolderTemp = 0;
+
+    private List<MasterStoredItems> tItems = new List<MasterStoredItems>();
 
 
     public int bagMode = 0;//0 = collection, 1 = equipment
@@ -562,13 +564,8 @@ public class CollectionManager : MonoBehaviour
         ActivateEquipMode(false);
     }
 
-    public void UpdateCollectionEquipment(int bagID) // bagID: 0,1,2 etc
+    public void UpdateCollectionEquipment() // bagID: 0,1,2 etc
     {
-        currentAmountOfCollectionSlots = 15;
-
-        int minIDRange = (bagID * currentAmountOfCollectionSlots);
-        int maxIDRange = (bagID * currentAmountOfCollectionSlots) + 14; // max collection size on page here
-
         for (int i = 0; i < currentCollectionItems.Count; i++)
         {
             Destroy(currentCollectionItems[i]);
@@ -576,16 +573,60 @@ public class CollectionManager : MonoBehaviour
 
         currentCollectionItems = new List<GameObject>();
 
+        List<MasterStoredItems> tempItems = new List<MasterStoredItems>();
+
+
         for (int i = 0; i < itemsOwned.Count; i++)
         {
-            if (itemsOwned[i].storedID >= minIDRange && itemsOwned[i].storedID <= maxIDRange && itemsOwned[i].item.type == ItemType.Catalyst) // if item ID range is within the selected bags range of stored IDs AND item is a catalyst
+            if (itemsOwned[i].item.type == ItemType.Catalyst)
             {
-                int realSlot = itemsOwned[i].storedID - (currentAmountOfCollectionSlots * bagID);
-                GameObject itm = Instantiate(equipmentSlotPrefab, equipmentContents[realSlot]);
-                itm.GetComponent<EquipmentItemSlot>().Init(itemsOwned[i], GM);
-                currentCollectionItems.Add(itm);
+                //Merge
+                int tmN = itemsOwned[i].item.ownGroupedId;
+                bool merge = false;
+                for (int j = 0; j < tempItems.Count; j++)
+                {
+                    if (tempItems[j].groupID == itemsOwned[i].item.groupedId)
+                    {
+                        //Add to same group
+                        if (tmN == 1){tempItems[j].item01 = itemsOwned[i];}
+                        else if (tmN == 2){tempItems[j].item02 = itemsOwned[i];}
+                        else if (tmN == 3){tempItems[j].item03 = itemsOwned[i];}
+                        merge = true;
+                        break;
+                    }
+                }
+                //Add new
+
+                if (!merge)
+                {
+                    StoredItem blankI = new StoredItem(blankItem, 1, 0);
+                    MasterStoredItems masterItem = new MasterStoredItems(blankI, blankI, blankI, itemsOwned[i].item.groupedId);
+                    if (tmN == 1)
+                    {
+                        masterItem = new MasterStoredItems(itemsOwned[i], blankI, blankI, itemsOwned[i].item.groupedId);
+                    }
+                    else if (tmN == 2)
+                    {
+                        masterItem = new MasterStoredItems(blankI, itemsOwned[i], blankI, itemsOwned[i].item.groupedId);
+                    }
+                    else if (tmN == 3)
+                    {
+                        masterItem = new MasterStoredItems(blankI, blankI, itemsOwned[i], itemsOwned[i].item.groupedId);
+                    }
+                    tempItems.Add(masterItem);
+                }
             }
         }
+        tItems = tempItems;
+
+
+        for (int i = 0; i < tempItems.Count; i++)
+        {
+            GameObject itm = Instantiate(equipmentSlotPrefab, itemListContent);
+            itm.GetComponent<MasterEquipmentSlot>().Init(tempItems[i], GM);
+            currentCollectionItems.Add(itm);
+        }
+
 
         int glitterAmount = 0;
         for (int i = 0; i < itemsOwned.Count; i++)
@@ -600,6 +641,14 @@ public class CollectionManager : MonoBehaviour
         glitterCounterText.text = string.Format(CultureInfo.InvariantCulture, "{0:N0}", glitterAmount);
 
         ActivateEquipMode(true);
+
+        /*
+        currentAmountOfCollectionSlots = 15;
+
+        int minIDRange = (bagID * currentAmountOfCollectionSlots);
+        int maxIDRange = (bagID * currentAmountOfCollectionSlots) + 14; // max collection size on page here
+
+        */
     }
 
     public void PressLeftStorage()
@@ -910,7 +959,7 @@ public class CollectionManager : MonoBehaviour
                 UpdateCollectionBeasts(selectedBagTemp + (selectedFolderTemp * 9));
                 break;
             case 1:
-                UpdateCollectionEquipment(selectedBagTemp + (selectedFolderTemp * 9));
+                UpdateCollectionEquipment();
                 break;
         }
     }
@@ -1096,6 +1145,7 @@ public class CollectionManager : MonoBehaviour
         return value;
     }
 
+
    
 }
 [System.Serializable]
@@ -1136,5 +1186,23 @@ public class BagSpace
     {
         state = s;
         idEmpty = i;
+    }
+}
+
+
+[System.Serializable]
+public class MasterStoredItems
+{
+    public int groupID;
+    public StoredItem item01;
+    public StoredItem item02;
+    public StoredItem item03;
+
+    public MasterStoredItems(StoredItem itm1, StoredItem itm2, StoredItem itm3, int id)
+    {
+        groupID = id;
+        item01 = itm1;
+        item02 = itm2;
+        item03 = itm3;
     }
 }

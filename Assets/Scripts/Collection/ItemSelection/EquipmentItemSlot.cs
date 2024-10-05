@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
-public class EquipmentItemSlot : ItemSlot, IDropHandler
+public class EquipmentItemSlot : ItemSlot
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI amountText;
@@ -20,7 +20,12 @@ public class EquipmentItemSlot : ItemSlot, IDropHandler
 
         item = itm.item;
 
-        nameText.text = itm.item.itemName;
+        if (nameText != null)
+        {
+            nameText.text = itm.item.itemName;
+        }
+
+        
         amountText.text = itm.amount.ToString();
         amount = itm.amount;
         icon.sprite = itm.item.icon;
@@ -31,7 +36,7 @@ public class EquipmentItemSlot : ItemSlot, IDropHandler
     {
         manager.OpenItemInspectTooltip(item);
     }
-
+    /*
     public void OnDrop(PointerEventData eventData)
     {
         GameObject dropped = eventData.pointerDrag;
@@ -54,6 +59,6 @@ public class EquipmentItemSlot : ItemSlot, IDropHandler
 
         manager.collectionManager.UpdateCollectionAll();
     }
-
+    */
 
 }

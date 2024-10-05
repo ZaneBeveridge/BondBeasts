@@ -53,9 +53,9 @@ public class Dragable : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDrag
     {
         if (!active) { return; }
         GM.collectionManager.EndDrag(this.gameObject);// Created and ready for implementing of ondraggin funtions (that turns off at end)
-        draggingObject.position = startPosition;
+        
         transform.SetParent(parentAfterDrag);
-
+        draggingObject.position = startPosition;
         button.interactable = true;
         canvasGroup.alpha = 1f;
         canvasGroup.blocksRaycasts = true;

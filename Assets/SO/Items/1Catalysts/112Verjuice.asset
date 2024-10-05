@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 112
   groupedId: 5
+  ownGroupedId: 1
   itemName: Verjuice
   desc: +20 Juice Up while below 15 hp
   lore: 'This is lore about Verjuice

@@ -8,6 +8,7 @@ public class MonsterItemSO : ScriptableObject
     [Header("General")]
     public int id;
     public int groupedId;
+    public int ownGroupedId;
     public string itemName;
     public string desc;
     [TextArea]
