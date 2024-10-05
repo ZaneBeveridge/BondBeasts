@@ -15,6 +15,8 @@ MonoBehaviour:
   cutsceneName: firstStart
   sceneFrames:
   - sceneName: test01
+    automaticallyGoToNextScene: 1
+    timeUntilNextScene: 1
     imagesToDisplay:
     - image: {fileID: 21300000, guid: edb24e47952576648b8a11ed3f7da512, type: 3}
       imageID: 1
@@ -35,6 +37,8 @@ MonoBehaviour:
       fade: 0
       shake: 0
   - sceneName: test02
+    automaticallyGoToNextScene: 1
+    timeUntilNextScene: 1
     imagesToDisplay:
     - image: {fileID: 21300000, guid: 4ca89981b259457408c4fb713588c05f, type: 3}
       imageID: 2
@@ -59,6 +63,8 @@ MonoBehaviour:
       fade: 0
       shake: 0
   - sceneName: test03
+    automaticallyGoToNextScene: 1
+    timeUntilNextScene: 1
     imagesToDisplay:
     - image: {fileID: 21300000, guid: edb24e47952576648b8a11ed3f7da512, type: 3}
       imageID: 3
@@ -88,6 +94,8 @@ MonoBehaviour:
       fade: 0
       shake: 0
   - sceneName: test04
+    automaticallyGoToNextScene: 1
+    timeUntilNextScene: 2
     imagesToDisplay: []
     imagesToRemove:
     - imageID: 3

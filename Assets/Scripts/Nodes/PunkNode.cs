@@ -11,7 +11,7 @@ public class PunkNode : Node
     public List<MonsterStatic> monsters = new List<MonsterStatic>();
 
     public List<ItemDrop> drops = new List<ItemDrop>();
-
+    public List<MonsterItemSO> customItems = new List<MonsterItemSO>();
 
     public List<ObjectiveGate> unlockGates = new List<ObjectiveGate>();
 
@@ -119,7 +119,7 @@ public class PunkNode : Node
                 ));
         }
 
-        GM.battleManager.InitPunk(mons, nodeType, backgroundSprite, drops, punkMaxHealth);
+        GM.battleManager.InitPunk(mons, nodeType, backgroundSprite, drops, punkMaxHealth, customItems);
 
     }
 

@@ -253,7 +253,7 @@ public class PassiveController : MonoBehaviour
         else if (effect.effectType == EffectType.RefreshCooldown)
         {
             RefreshCooldownEffectSO newEffect = effect as RefreshCooldownEffectSO;
-            moveController.DoRefreshCooldown(newEffect.chance, newEffect.whatToRefresh, newEffect.amount, targets);
+            moveController.DoRefreshCooldown(newEffect.chance, newEffect.whatToRefresh, targets);
         }
         else if (effect.effectType == EffectType.Stun)
         {
@@ -274,6 +274,11 @@ public class PassiveController : MonoBehaviour
         {
             LowGravityEffectSO newEffect = effect as LowGravityEffectSO;
             moveController.DoLowGrav(newEffect.time, targets);
+        }
+        else if (effect.effectType == EffectType.SetHealth)
+        {
+            SetHealthEffectSO newEffect = effect as SetHealthEffectSO;
+            moveController.DoSetHealth(newEffect.healAmount, targets);
         }
     }    
 

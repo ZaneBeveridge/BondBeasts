@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 129
   groupedId: 10
+  ownGroupedId: 3
   itemName: Zero-Sided Orb
   desc: +60 WITS, -80 EDGE
+  lore: 
   icon: {fileID: 21300000, guid: 97ca464abd919074485886270b19ec0c, type: 3}
   type: 1
   maxStack: 10
@@ -52,11 +54,11 @@ MonoBehaviour:
       whenEnemyHitBasic: 0
       whenEnemyHitSpecial: 0
       whileEnemyFullHP: 0
-      whileEnemyBelow15HP: 0
+      whileEnemyBelow150HP: 0
       whileInAir: 0
       whileNotInAir: 0
       whileFullHP: 0
-      whileBelow15HP: 0
+      whileBelow150HP: 0
   - name: 
     effect: {fileID: 11400000, guid: 4682291998177dd498e0dccf13905ee6, type: 2}
     delay: 0
@@ -77,8 +79,8 @@ MonoBehaviour:
       whenEnemyHitBasic: 0
       whenEnemyHitSpecial: 0
       whileEnemyFullHP: 0
-      whileEnemyBelow15HP: 0
+      whileEnemyBelow150HP: 0
       whileInAir: 0
       whileNotInAir: 0
       whileFullHP: 0
-      whileBelow15HP: 0
+      whileBelow150HP: 0

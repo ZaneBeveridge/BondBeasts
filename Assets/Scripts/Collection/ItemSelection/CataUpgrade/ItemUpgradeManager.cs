@@ -7,6 +7,7 @@ using TMPro;
 public class ItemUpgradeManager : MonoBehaviour
 {
     public GameObject obj;
+    public GameObject loreObj;
     public RectTransform matArea;
     public GameObject closeButtonObject;
     public GameObject itemMatPrefab;
@@ -19,20 +20,36 @@ public class ItemUpgradeManager : MonoBehaviour
 
     public CollectionManager GM;
 
+    public ItemInspectManagerPopup itemInspectManager;
+
     private MonsterItemSO item;
 
 
     private GameObject usedCataObject;
     private List<GameObject> matObjects = new List<GameObject>();
 
-
+    private int partySlot = 0;
+    private int equipSlot = 0;
+    private bool partyItemSelected = false;
 
     private bool hasItemsToUpgrade = true;
-    public void Init(MonsterItemSO itm, GameManager g)
+    public void Init(MonsterItemSO itm, GameManager g, bool piSelected, int pSlot, int eSlot)
     {
         obj.SetActive(true);
+        loreObj.SetActive(false);
         item = itm;
         GM = g.collectionManager;
+        itemInspectManager = g.itemInspectManagerPopup;
+
+        int extraItemAmount = 0;
+
+        if (piSelected)
+        {
+            partyItemSelected = piSelected;
+            partySlot = pSlot;
+            equipSlot = eSlot;
+            extraItemAmount = 1;
+        }
 
         //Set hasItemsToUpgrade to true if the player has the items in MonsterItemSO recipe 
 
@@ -50,7 +67,7 @@ public class ItemUpgradeManager : MonoBehaviour
             }
         }
 
-        if (usedAmount >= item.recipe.usedCatalyst.amount)
+        if (usedAmount + extraItemAmount >= item.recipe.usedCatalyst.amount)
         {
             usedHas = true;
         }
@@ -63,7 +80,7 @@ public class ItemUpgradeManager : MonoBehaviour
 
 
         GameObject usedCata = Instantiate(itemMatPrefab, matArea);
-        usedCata.GetComponent<ItemUpgradeMatSlot>().Init(item.recipe.usedCatalyst, usedAmount, usedHas);
+        usedCata.GetComponent<ItemUpgradeMatSlot>().Init(item.recipe.usedCatalyst, usedAmount + extraItemAmount, usedHas);
 
         usedCataObject = usedCata;
 
@@ -156,12 +173,7 @@ public class ItemUpgradeManager : MonoBehaviour
     public void Close()
     {
         // Upgrade Item
-        for (int i = 0; i < item.recipe.usedCatalyst.amount; i++)
-        {
-            GM.RemoveItemFromStorage(item.recipe.usedCatalyst.item);
-        }
         
-
         for (int i = 0; i < item.recipe.extraMats.Count; i++)
         {
             for (int j = 0; j < item.recipe.extraMats[i].amount; j++)
@@ -175,15 +187,45 @@ public class ItemUpgradeManager : MonoBehaviour
             GM.RemoveItemFromStorage(item.recipe.glitter.item);
         }
 
-        for (int i = 0; i < item.recipe.createdCatalyst.amount; i++)
+        //Remove and add item
+
+        if (partyItemSelected)
         {
-            GM.AddItemToStorage(item.recipe.createdCatalyst.item, 1);
+            GM.RemoveItemFromMonsterInParty(partySlot, equipSlot + 1);
+
+            for (int i = 0; i < item.recipe.usedCatalyst.amount - 1; i++)
+            {
+                GM.RemoveItemFromStorage(item.recipe.usedCatalyst.item);
+            }
+
+            GM.AddItemToMonsterInParty(item.recipe.createdCatalyst.item, partySlot, equipSlot + 1);
+        }
+        else
+        {
+            for (int i = 0; i < item.recipe.usedCatalyst.amount; i++)
+            {
+                GM.RemoveItemFromStorage(item.recipe.usedCatalyst.item);
+            }
+
+            for (int i = 0; i < item.recipe.createdCatalyst.amount; i++)
+            {
+                GM.AddItemToStorage(item.recipe.createdCatalyst.item, 1);
+            }
         }
 
 
-        DeleteItems();
-        Init(item, GM.GM);
         
-        //obj.SetActive(false);
+
+
+        DeleteItems();
+        
+        obj.SetActive(false);
+        loreObj.SetActive(true);
+
+        itemInspectManager.CloseCurrentPanel();
+        itemInspectManager.SpawnInspectPanel(item.recipe.createdCatalyst.item, GM.GM);
+
+        GM.UpdateCollectionAll();
+        //GM.UpdatePartyMonsters();
     }
 }

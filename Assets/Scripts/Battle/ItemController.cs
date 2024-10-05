@@ -107,7 +107,7 @@ public class ItemController : MonoBehaviour
         {
             foreach (ItemEffect itemE in items[i].itemEffects)
             {
-                if (itemE.conditions.whileInAir || itemE.conditions.whileNotInAir || itemE.conditions.whileFullHP || itemE.conditions.whileBelow15HP || itemE.conditions.whileEnemyFullHP || itemE.conditions.whileEnemyBelow15HP)
+                if (itemE.conditions.whileInAir || itemE.conditions.whileNotInAir || itemE.conditions.whileFullHP || itemE.conditions.whileBelow150HP || itemE.conditions.whileEnemyFullHP || itemE.conditions.whileEnemyBelow150HP)
                 {
                     activePropertyEffects.Add(itemE);
                     activePropertyEffectsOn.Add(false);
@@ -197,6 +197,17 @@ public class ItemController : MonoBehaviour
                     StatModEffectSO newEffect = item.effect as StatModEffectSO;
                     manager.AddBuff(newEffect.stat, newEffect.amount, item.targets);
                 }
+                /*
+                if (item.effect.effectType == EffectType.Heal)
+                {
+                    HealEffectSO newEffect = item.effect as HealEffectSO;
+                    moveController.DoHeal(newEffect.healAmount, item.targets);
+                }
+                */
+                if (item.particleToTrigger != null)
+                {
+                    Instantiate(item.particleToTrigger, itemConditionParticleSpawnLocation.position, Quaternion.identity, itemConditionParticleSpawnLocation);
+                }
 
                 activePropertyEffectsOn[id] = true;
             }
@@ -231,7 +242,7 @@ public class ItemController : MonoBehaviour
     {
         if (particle != null)
         {
-            Instantiate(particle, itemConditionParticleSpawnLocation.position, Quaternion.identity);
+            Instantiate(particle, itemConditionParticleSpawnLocation.position, Quaternion.identity, itemConditionParticleSpawnLocation);
         }
 
         if (effect.effectType == EffectType.StatMod)
@@ -257,7 +268,7 @@ public class ItemController : MonoBehaviour
         else if (effect.effectType == EffectType.RefreshCooldown)
         {
             RefreshCooldownEffectSO newEffect = effect as RefreshCooldownEffectSO;
-            moveController.DoRefreshCooldown(newEffect.chance, newEffect.whatToRefresh, newEffect.amount, targets);
+            moveController.DoRefreshCooldown(newEffect.chance, newEffect.whatToRefresh, targets);
         }
         else if (effect.effectType == EffectType.Stun)
         {
@@ -278,6 +289,11 @@ public class ItemController : MonoBehaviour
         {
             LowGravityEffectSO newEffect = effect as LowGravityEffectSO;
             moveController.DoLowGrav(newEffect.time, targets);
+        }
+        else if (effect.effectType == EffectType.SetHealth)
+        {
+            SetHealthEffectSO newEffect = effect as SetHealthEffectSO;
+            moveController.DoSetHealth(newEffect.healAmount, targets);
         }
     }
 
@@ -450,7 +466,7 @@ public class ItemController : MonoBehaviour
             }
         }
 
-        if (conditions.whileBelow15HP)
+        if (conditions.whileBelow150HP)
         {
             if (GM.playerHP < 150)
             {
@@ -474,7 +490,7 @@ public class ItemController : MonoBehaviour
             }
         }
 
-        if (conditions.whileEnemyBelow15HP)
+        if (conditions.whileEnemyBelow150HP)
         {
             if (GM.battleManager.enemyMonsterController.enemyHealth < 150)
             {

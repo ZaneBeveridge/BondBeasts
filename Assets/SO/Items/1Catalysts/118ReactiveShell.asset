@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 118
   groupedId: 7
+  ownGroupedId: 1
   itemName: Reactive Shell
   desc: 'After being hit: Gain +6 GUTS for 0.5s'
+  lore: 
   icon: {fileID: 21300000, guid: c728ac86394e2a943be4f514c056d659, type: 3}
   type: 1
   maxStack: 10
@@ -52,11 +54,11 @@ MonoBehaviour:
       whenEnemyHitBasic: 0
       whenEnemyHitSpecial: 0
       whileEnemyFullHP: 0
-      whileEnemyBelow15HP: 0
+      whileEnemyBelow150HP: 0
       whileInAir: 0
       whileNotInAir: 0
       whileFullHP: 0
-      whileBelow15HP: 0
+      whileBelow150HP: 0
   - name: 
     effect: {fileID: 11400000, guid: f0378e185fcca9c4883ba3d66d2816a0, type: 2}
     delay: 0.5
@@ -77,8 +79,8 @@ MonoBehaviour:
       whenEnemyHitBasic: 0
       whenEnemyHitSpecial: 0
       whileEnemyFullHP: 0
-      whileEnemyBelow15HP: 0
+      whileEnemyBelow150HP: 0
       whileInAir: 0
       whileNotInAir: 0
       whileFullHP: 0
-      whileBelow15HP: 0
+      whileBelow150HP: 0

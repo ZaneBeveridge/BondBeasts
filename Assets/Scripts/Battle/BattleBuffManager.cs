@@ -32,6 +32,9 @@ public class BattleBuffManager : MonoBehaviour
     private PassiveSO currentMonPassive;
     private List<PassiveSO> sharedPassives = new List<PassiveSO>();
 
+
+    private List<EffectSO> emptyEffects = new List<EffectSO>();
+
     void Update()
     {
 
@@ -51,11 +54,11 @@ public class BattleBuffManager : MonoBehaviour
                         {
                             if (isFriendly)
                             {
-                                GM.battleManager.friendlyMonsterController.TakeDamage(slotValues[6], slotValues[6], true, false, 0, 0f, 0f, false, 0f, false, null, null, GM.battleManager.friendlyMonsterController.defaultHitNumbersLocation, null, 0);
+                                GM.battleManager.friendlyMonsterController.TakeDamage(slotValues[6], slotValues[6], true, false, false, GM.battleManager.friendlyMonsterController.defaultHitNumbersLocation, null, emptyEffects, emptyEffects);
                             }
                             else
                             {
-                                GM.battleManager.enemyMonsterController.TakeDamage(slotValues[6], slotValues[6], true, false, 0, 0f, 0f, false, 0f, false, null, null, GM.battleManager.enemyMonsterController.defaultHitNumbersLocation, null, 0);
+                                GM.battleManager.enemyMonsterController.TakeDamage(slotValues[6], slotValues[6], true, false, false, GM.battleManager.enemyMonsterController.defaultHitNumbersLocation, null, emptyEffects, emptyEffects);
                             }
                         }
 

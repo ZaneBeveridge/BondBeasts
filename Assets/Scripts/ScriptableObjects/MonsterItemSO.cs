@@ -8,8 +8,11 @@ public class MonsterItemSO : ScriptableObject
     [Header("General")]
     public int id;
     public int groupedId;
+    public int ownGroupedId;
     public string itemName;
     public string desc;
+    [TextArea]
+    public string lore;
     public Sprite icon;
     public ItemType type;
     public int maxStack = 1000;
@@ -61,11 +64,11 @@ public class ItemConditions
 
 
     public bool whileEnemyFullHP; // property change
-    public bool whileEnemyBelow15HP; // property change
+    public bool whileEnemyBelow150HP; // property change
     public bool whileInAir; // property change
     public bool whileNotInAir; // property change
     public bool whileFullHP; // property change
-    public bool whileBelow15HP; // property change
+    public bool whileBelow150HP; // property change
 }
 
 

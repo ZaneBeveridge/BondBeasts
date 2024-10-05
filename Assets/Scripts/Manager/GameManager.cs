@@ -713,9 +713,14 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void OpenItemInspectTooltip(MonsterItemSO item, Transform pos, bool simple)
+    public void OpenItemInspectTooltip(MonsterItemSO item)
     {
-        itemInspectManagerPopup.SpawnInspectPanel(item, pos, this, simple);
+        itemInspectManagerPopup.SpawnInspectPanel(item, this);
+    }
+
+    public void OpenItemInspectTooltipEquipped(MonsterItemSO item, int partySlot, int equipSlot)
+    {
+        itemInspectManagerPopup.SpawnInspectPanel(item, this, partySlot, equipSlot);
     }
 
     public void CloseItemInspectTooltip()
@@ -738,7 +743,7 @@ public class GameManager : MonoBehaviour
 
     public void FullyHealSelf()
     {
-        playerHP = 100f;
+        playerHP = 1000f;
         battleManager.friendlyMonsterController.healthBar.SetHealth(playerHP, false);
         overworldUI.healthBar.SetHealth(playerHP, false);
         

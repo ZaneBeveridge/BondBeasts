@@ -48,14 +48,6 @@ MonoBehaviour:
     chance: 100
     minDrops: 1
     maxDrops: 25
-  - item: {fileID: 11400000, guid: 8f3ace89d25be1a479d915bfe7c419a4, type: 2}
-    chance: 6
-    minDrops: 1
-    maxDrops: 5
-  - item: {fileID: 11400000, guid: be56f19532481634081eba35635bcb32, type: 2}
-    chance: 2.25
-    minDrops: 1
-    maxDrops: 5
   possibleVariants:
   - variant: {fileID: 11400000, guid: 17feec844fd853643a744ee6b8f58eda, type: 2}
     weight: 100

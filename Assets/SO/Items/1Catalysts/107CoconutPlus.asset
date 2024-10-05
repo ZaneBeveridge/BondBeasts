@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 107
   groupedId: 3
+  ownGroupedId: 2
   itemName: Coconut +
   desc: +8 Guts Up while healthy.
+  lore: 
   icon: {fileID: 21300000, guid: 88f52a6f46b2c044d82d7cea260d6a79, type: 3}
   type: 1
   maxStack: 10
@@ -52,8 +54,8 @@ MonoBehaviour:
       whenEnemyHitBasic: 0
       whenEnemyHitSpecial: 0
       whileEnemyFullHP: 0
-      whileEnemyBelow15HP: 0
+      whileEnemyBelow150HP: 0
       whileInAir: 0
       whileNotInAir: 0
       whileFullHP: 1
-      whileBelow15HP: 0
+      whileBelow150HP: 0

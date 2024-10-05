@@ -37,7 +37,7 @@ public class MoveController : MonoBehaviour
         
     }
 
-    private void UseEffect(EffectSO effect, Targets targets)
+    public void UseEffect(EffectSO effect, Targets targets)
     {
         if (effect.effectType == EffectType.DoT)
         {
@@ -63,7 +63,7 @@ public class MoveController : MonoBehaviour
         else if (effect.effectType == EffectType.RefreshCooldown)
         {
             RefreshCooldownEffectSO newEffect = effect as RefreshCooldownEffectSO;
-            DoRefreshCooldown(newEffect.chance, newEffect.whatToRefresh, newEffect.amount, targets);
+            DoRefreshCooldown(newEffect.chance, newEffect.whatToRefresh, targets);
         }
         else if (effect.effectType == EffectType.StatMod)
         {
@@ -85,6 +85,11 @@ public class MoveController : MonoBehaviour
             LowGravityEffectSO newEffect = effect as LowGravityEffectSO;
             DoLowGrav(newEffect.time, targets);
         }
+        else if (effect.effectType == EffectType.SetHealth)
+        {
+            SetHealthEffectSO newEffect = effect as SetHealthEffectSO;
+            DoSetHealth(newEffect.healAmount, targets);
+        }
     }
 
     public void UseMove(MoveSO move) // use basic or special
@@ -102,8 +107,6 @@ public class MoveController : MonoBehaviour
                 {
                     UseEffect(m.effect, m.targets);
                 }
-
-                
             }
         }
     }
@@ -215,7 +218,7 @@ public class MoveController : MonoBehaviour
 
             float tD = damage + (damage * (0.04f * oomphAmount));
 
-            Debug.Log("Before Crit Damage: " + tD.ToString());  // FIX THIS FOR SOME REASON IF I REMOVE THE COMMENT IT STOP CALCULATING THE RIGHT AMOUNTS
+            //Debug.Log("Before Crit Damage: " + tD.ToString());  // FIX THIS FOR SOME REASON IF I REMOVE THE COMMENT IT STOP CALCULATING THE RIGHT AMOUNTS
 
             int realDmg = (int)tD;
             int baseDmg = (int)damage;
@@ -274,6 +277,34 @@ public class MoveController : MonoBehaviour
         }
     }
 
+    public void DoSetHealth(int amount, Targets targets)
+    {
+        if (friendlyController)
+        {
+            if (targets.enemy)
+            {
+                GM.battleManager.enemyMonsterController.SetHealth(amount);
+            }
+
+            if (targets.team)
+            {
+                GM.battleManager.friendlyMonsterController.SetHealth(amount);
+            }
+        }
+        else
+        {
+            if (targets.enemy)
+            {
+                GM.battleManager.friendlyMonsterController.SetHealth(amount);
+            }
+
+            if (targets.team)
+            {
+                GM.battleManager.enemyMonsterController.SetHealth(amount);
+            }
+        }
+    }
+
     public void DoInvulnerability(float time, PerfectGuardEffects effect, float effectValue, FireProjectileEffectSO projectile, Targets targets)
     {
         if (friendlyController)
@@ -295,15 +326,47 @@ public class MoveController : MonoBehaviour
         }
     }
 
-    public void DoRefreshCooldown(float chance, AbilityType whatToRefresh, int amount, Targets targets)
+    public void DoRefreshCooldown(float chance, AbilityType whatToRefresh, Targets targets)
     {
         if (friendlyController)
         {
-            //DO REFRESH COOLDOWN HERE
+            if (targets.enemy)
+            {
+                if (whatToRefresh == AbilityType.Special)
+                {
+                    GM.battleManager.enemyMonsterController.specialReady[GM.battleManager.enemyMonsterController.currentSlot] = true;
+                    GM.battleManager.enemyMonsterController.specialC[GM.battleManager.enemyMonsterController.currentSlot] = 0f;
+                }
+            }
+
+            if (targets.team)
+            {
+                if (whatToRefresh == AbilityType.Special)
+                {
+                    GM.battleManager.friendlyMonsterController.specialReady[GM.battleManager.friendlyMonsterController.currentSlot] = true;
+                    GM.battleManager.friendlyMonsterController.specialC[GM.battleManager.friendlyMonsterController.currentSlot] = 0f;
+                }
+            }
         }
         else
         {
-            //DO REFRESH COOLDOWN HERE
+            if (targets.enemy)
+            {
+                if (whatToRefresh == AbilityType.Special)
+                {
+                    GM.battleManager.friendlyMonsterController.specialReady[GM.battleManager.friendlyMonsterController.currentSlot] = true;
+                    GM.battleManager.friendlyMonsterController.specialC[GM.battleManager.friendlyMonsterController.currentSlot] = 0f;
+                }
+            }
+
+            if (targets.team)
+            {
+                if (whatToRefresh == AbilityType.Special)
+                {
+                    GM.battleManager.enemyMonsterController.specialReady[GM.battleManager.enemyMonsterController.currentSlot] = true;
+                    GM.battleManager.enemyMonsterController.specialC[GM.battleManager.enemyMonsterController.currentSlot] = 0f;
+                }
+            }
         }
     }
 

@@ -14,8 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: 109
   groupedId: 4
+  ownGroupedId: 1
   itemName: Whetstone
   desc: +2 Edge Up, -2 Wits
+  lore: 
   icon: {fileID: 21300000, guid: 818399402f3dbec40b5cd8e8f6c37047, type: 3}
   type: 1
   maxStack: 10
@@ -52,11 +54,11 @@ MonoBehaviour:
       whenEnemyHitBasic: 0
       whenEnemyHitSpecial: 0
       whileEnemyFullHP: 0
-      whileEnemyBelow15HP: 0
+      whileEnemyBelow150HP: 0
       whileInAir: 0
       whileNotInAir: 0
       whileFullHP: 0
-      whileBelow15HP: 0
+      whileBelow150HP: 0
   - name: -2 Wits
     effect: {fileID: 11400000, guid: 9c5ba66f59b4b1b4aa167103d20d641b, type: 2}
     delay: 0
@@ -77,8 +79,8 @@ MonoBehaviour:
       whenEnemyHitBasic: 0
       whenEnemyHitSpecial: 0
       whileEnemyFullHP: 0
-      whileEnemyBelow15HP: 0
+      whileEnemyBelow150HP: 0
       whileInAir: 0
       whileNotInAir: 0
       whileFullHP: 0
-      whileBelow15HP: 0
+      whileBelow150HP: 0

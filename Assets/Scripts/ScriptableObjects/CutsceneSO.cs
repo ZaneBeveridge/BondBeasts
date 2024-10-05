@@ -14,8 +14,10 @@ public class CutsceneSO : ScriptableObject
 [System.Serializable]
 public class SceneFrame
 {
-    [Header("Name")]
+    [Header("Main Info")]
     public string sceneName;
+    public bool automaticallyGoToNextScene = false;
+    public float timeUntilNextScene = 0f;
     [Header("Image Display")]
     public List<DisplayImage> imagesToDisplay = new List<DisplayImage>();
     [Header("Image Removal")]
