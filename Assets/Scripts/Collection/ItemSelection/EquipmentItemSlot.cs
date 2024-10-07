@@ -11,6 +11,11 @@ public class EquipmentItemSlot : ItemSlot
 
     public int slotNum;
 
+    void Start()
+    {
+        GetComponent<Image>().alphaHitTestMinimumThreshold = 0.25f;
+    }
+
     public void Init(StoredItem itm, GameManager man)
     {
         slotType = ItemSlotType.StorageSlot;
