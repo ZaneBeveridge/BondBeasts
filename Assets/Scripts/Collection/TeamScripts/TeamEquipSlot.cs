@@ -5,9 +5,13 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
 
-public class TeamEquipSlot : ItemSlot, IDropHandler
+public class TeamEquipSlot : ItemSlot
 {
     public TextMeshProUGUI nameText;
+
+    public Sprite normalSprite;
+    public Sprite hoverSprite;
+    public Image img;
 
     [HideInInspector]public PartySlotManager pManager;
     [HideInInspector]public TeamEquipSlotManager tManager;
@@ -16,7 +20,27 @@ public class TeamEquipSlot : ItemSlot, IDropHandler
 
     public bool simple = false;
 
+    private bool inSelectToEquipMode = false;
 
+    private MonsterItemSO currentItem;
+    private TeamEquipSlot tempEquipSlot;
+    private bool partyI = false;
+
+    public void HighlightSlotForEquip(MonsterItemSO itm, bool partyItemSelected, TeamEquipSlot tEquip)
+    {
+        //Debug.Log("testequipSlot");
+        partyI = partyItemSelected;
+        tempEquipSlot = tEquip;
+        inSelectToEquipMode = true;
+        img.sprite = hoverSprite;
+        currentItem = itm;
+    }
+
+    public void ResetSelectToEquip()
+    {
+        inSelectToEquipMode = false;
+        img.sprite = normalSprite;
+    }
 
     public void Init(MonsterItemSO itm, GameManager GM, PartySlotManager p, TeamEquipSlotManager t, int sNum)
     {
@@ -48,17 +72,58 @@ public class TeamEquipSlot : ItemSlot, IDropHandler
         simple = true;
     }
 
-    public override void OnClick()
+    public override void OnClick() 
     {
-        manager.OpenItemInspectTooltipEquipped(item, pManager.slotNum - 1, slotNum);
-    }
+        if (inSelectToEquipMode) //Remove item from storage and equip it to this slot and then move the current equipped item to storage
+        {
+            if (partyI) // swap between 2 equip
+            {
+                int thisSlotNum = pManager.slotNum - 1;
+                TeamEquipSlot equipSlot = tempEquipSlot;
+                manager.collectionManager.RemoveItemFromMonsterInParty(equipSlot.pManager.slotNum - 1, equipSlot.slotNum + 1);
+                manager.collectionManager.AddItemToMonsterInParty(item, equipSlot.pManager.slotNum - 1, equipSlot.slotNum + 1);
 
+                manager.collectionManager.RemoveItemFromMonsterInParty(pManager.slotNum - 1, slotNum + 1);
+                manager.collectionManager.AddItemToMonsterInParty(currentItem, thisSlotNum, slotNum + 1);
+
+                if (manager.itemInspectManagerPopup.currentPanel != null)
+                {
+                    manager.itemInspectManagerPopup.currentPanel.GetComponent<ItemInspectPopup>().ClosePanel();
+                }
+
+            }
+            else // place to other equip
+            {
+                manager.collectionManager.RemoveItemFromStorage(currentItem);
+                manager.collectionManager.RemoveItemFromMonsterInParty(pManager.slotNum - 1, slotNum + 1); // remove item from held mon slot
+
+                int thisSlotNum = pManager.slotNum - 1;
+                manager.collectionManager.AddItemToMonsterInParty(currentItem, thisSlotNum, slotNum + 1); // add item to new slot
+
+                manager.collectionManager.AddItemToStorage(item, 1);
+
+                if (manager.itemInspectManagerPopup.currentPanel != null)
+                {
+                    manager.itemInspectManagerPopup.currentPanel.GetComponent<ItemInspectPopup>().ClosePanel();
+                }
+            }
+           
+            
+        }
+        else
+        {
+            manager.OpenItemInspectTooltipEquipped(item, pManager.slotNum - 1, slotNum, this);
+        }
+
+        
+    }
+    /*
     public void OnDrop(PointerEventData eventData)
     {
         // THIS ALL WORKS BUT LEAVING COMMENTED OUT BECAUSE I WANT TO RE DO THE EQUIPING SYSTEM, IT SUCKS
 
 
-        /*
+        
         GameObject draggingItem = eventData.pointerDrag;
         ItemSlot draggingItemSlot = draggingItem.GetComponent<ItemSlot>();
 
@@ -96,9 +161,10 @@ public class TeamEquipSlot : ItemSlot, IDropHandler
         }
 
         manager.collectionManager.UpdateCollectionAll();
-        */
+        
 
 
         throw new System.NotImplementedException();
     }
+    */
 }

@@ -11,6 +11,8 @@ public class ItemInspectPopup : MonoBehaviour
     public TextMeshProUGUI descText;
     public TextMeshProUGUI loreText;
 
+    public GameObject unequipButton;
+
     public GameObject upgradeObject;
 
     public ItemUpgradeManager upgradeManager;
@@ -19,9 +21,12 @@ public class ItemInspectPopup : MonoBehaviour
 
     private GameManager GM;
 
+
     private int partySlot = 0;
     private int equipSlot = 0;
-    private bool partyItemSelected = false;
+    public bool partyItemSelected = false;
+
+    private TeamEquipSlot cSlot;
     public void Init(MonsterItemSO i, GameManager g)
     {
         GM = g;
@@ -40,9 +45,12 @@ public class ItemInspectPopup : MonoBehaviour
         {
             upgradeObject.SetActive(false);
         }
+        unequipButton.SetActive(false);
+
+        UpdatePartySlotsEquipSlots(i, null);
     }
 
-    public void Init(MonsterItemSO i, GameManager g, int pSlot, int eSlot)
+    public void Init(MonsterItemSO i, GameManager g, int pSlot, int eSlot, TeamEquipSlot clickedSlot) // equipped item
     {
         GM = g;
         item = i;
@@ -53,7 +61,7 @@ public class ItemInspectPopup : MonoBehaviour
         partySlot = pSlot;
         equipSlot = eSlot;
         partyItemSelected = true;
-
+        cSlot = clickedSlot;
         if (i.canBeUpgraded)
         {
             upgradeObject.SetActive(true);
@@ -62,8 +70,49 @@ public class ItemInspectPopup : MonoBehaviour
         {
             upgradeObject.SetActive(false);
         }
+
+        unequipButton.SetActive(true);
+
+        UpdatePartySlotsEquipSlots(i, clickedSlot);
     }
 
+    
+
+    private void UpdatePartySlotsEquipSlots(MonsterItemSO it, TeamEquipSlot clickedSlot)
+    {
+
+        for (int i = 0; i < GM.collectionManager.partySlots.Count; i++)
+        {
+
+            if (GM.collectionManager.partySlots[i].storedMonsterObject != null)
+            {
+                PartySlot partySlot = GM.collectionManager.partySlots[i].storedMonsterObject.GetComponent<PartySlot>();
+                for (int j = 0; j < partySlot.equipSlots.Count; j++)
+                {
+                    if (partySlot.equipSlots[j].currentEquippedSlot != null) // equip slot has item in it 
+                    {
+                        if (partySlot.equipSlots[j].currentEquippedSlot.GetComponent<TeamEquipSlot>() != clickedSlot)
+                        {
+                            partySlot.equipSlots[j].currentEquippedSlot.GetComponent<TeamEquipSlot>().HighlightSlotForEquip(it, partyItemSelected, clickedSlot);
+                        }
+                        
+                    }
+                    else // no item in slot
+                    {
+                        partySlot.equipSlots[j].HighlightSlotForEquip(it, partyItemSelected, clickedSlot);
+                    }
+                }
+            }
+        }
+    }
+    public void Unequip()
+    {
+        //Unequip here
+        GM.collectionManager.RemoveItemFromMonsterInParty(cSlot.pManager.slotNum - 1, cSlot.slotNum + 1);
+
+        GM.collectionManager.AddItemToStorage(item, 1);
+        ClosePanel();
+    }
 
     public void Upgrade()
     {
@@ -72,6 +121,32 @@ public class ItemInspectPopup : MonoBehaviour
 
     public void ClosePanel()
     {
+        ResetSelections();
+        GM.collectionManager.UpdateCollectionAll();
         GM.itemInspectManagerPopup.CloseCurrentPanel();
+    }
+
+    public void ResetSelections()
+    {
+       
+        for (int i = 0; i < GM.collectionManager.partySlots.Count; i++)
+        {
+            if (GM.collectionManager.partySlots[i].storedMonsterObject != null)
+            {
+                PartySlot partySlot = GM.collectionManager.partySlots[i].storedMonsterObject.GetComponent<PartySlot>();
+                for (int j = 0; j < partySlot.equipSlots.Count; j++)
+                {
+                    if (partySlot.equipSlots[j].currentEquippedSlot != null) // equip slot has item in it 
+                    {
+                        partySlot.equipSlots[j].currentEquippedSlot.GetComponent<TeamEquipSlot>().ResetSelectToEquip();
+
+                    }
+                    else // no item in slot
+                    {
+                        partySlot.equipSlots[j].ResetSelectToEquip();
+                    }
+                }
+            }
+        }
     }
 }

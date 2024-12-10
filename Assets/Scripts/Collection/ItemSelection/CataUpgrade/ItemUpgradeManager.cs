@@ -32,6 +32,7 @@ public class ItemUpgradeManager : MonoBehaviour
     private int equipSlot = 0;
     private bool partyItemSelected = false;
 
+
     private bool hasItemsToUpgrade = true;
     public void Init(MonsterItemSO itm, GameManager g, bool piSelected, int pSlot, int eSlot)
     {
@@ -39,6 +40,7 @@ public class ItemUpgradeManager : MonoBehaviour
         loreObj.SetActive(false);
         item = itm;
         GM = g.collectionManager;
+
         itemInspectManager = g.itemInspectManagerPopup;
 
         int extraItemAmount = 0;
@@ -223,7 +225,7 @@ public class ItemUpgradeManager : MonoBehaviour
         loreObj.SetActive(true);
 
         itemInspectManager.CloseCurrentPanel();
-        itemInspectManager.SpawnInspectPanel(item.recipe.createdCatalyst.item, GM.GM);
+        //itemInspectManager.SpawnInspectPanel(item.recipe.createdCatalyst.item, GM.GM, partySlot, equipSlot,teamSlot);
 
         GM.UpdateCollectionAll();
         //GM.UpdatePartyMonsters();

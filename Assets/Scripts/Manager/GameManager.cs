@@ -718,14 +718,14 @@ public class GameManager : MonoBehaviour
         itemInspectManagerPopup.SpawnInspectPanel(item, this);
     }
 
-    public void OpenItemInspectTooltipEquipped(MonsterItemSO item, int partySlot, int equipSlot)
+    public void OpenItemInspectTooltipEquipped(MonsterItemSO item, int partySlot, int equipSlot, TeamEquipSlot tSlot)
     {
-        itemInspectManagerPopup.SpawnInspectPanel(item, this, partySlot, equipSlot);
+        itemInspectManagerPopup.SpawnInspectPanel(item, this, partySlot, equipSlot, tSlot);
     }
 
     public void CloseItemInspectTooltip()
     {
-        itemInspectManagerPopup.CloseCurrentPanel();
+        itemInspectManagerPopup.currentPanel.GetComponent<ItemInspectPopup>().ClosePanel();
     }
 
     //Random management/debug methods

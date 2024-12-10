@@ -324,15 +324,15 @@ public class CollectionManager : MonoBehaviour
     {
         for (int j = 0; j < itemsOwned.Count; j++)
         {
-            if (itemsOwned[j].item == itm && itemsOwned[j].amount > 1)
+            if (itemsOwned[j].item == itm && itemsOwned[j].amount > 0)
             {
                 itemsOwned[j].amount -= 1;
                 break;
             }
-            else if (itemsOwned[j].item == itm && itemsOwned[j].amount <= 1)
-            {
-                itemsOwned.RemoveAt(j);
-            }
+            //else if (itemsOwned[j].item == itm && itemsOwned[j].amount <= 1)
+            //{
+            //    itemsOwned.RemoveAt(j);
+            //}
         }
 
     }
@@ -341,19 +341,19 @@ public class CollectionManager : MonoBehaviour
     {
         for (int j = 0; j < itemsOwned.Count; j++)
         {
-            if (itemsOwned[j].item == itm && itemsOwned[j].amount > 1)
+            if (itemsOwned[j].item == itm && itemsOwned[j].amount > 0)
             {
                 itemsOwned[j].amount -= amount;
-                if (itemsOwned[j].amount <= 0)
-                {
-                    itemsOwned.RemoveAt(j);
-                }
+                //if (itemsOwned[j].amount <= 0)
+                //{
+                //    itemsOwned.RemoveAt(j);
+                //}
                 break;
             }
-            else if (itemsOwned[j].item == itm && itemsOwned[j].amount <= 1)
-            {
-                itemsOwned.RemoveAt(j);
-            }
+            //else if (itemsOwned[j].item == itm && itemsOwned[j].amount <= 1)
+            //{
+            //    itemsOwned.RemoveAt(j);
+            //}
         }
 
     }

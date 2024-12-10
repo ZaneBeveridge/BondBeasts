@@ -274,7 +274,6 @@ GameObject:
   - component: {fileID: 3768882687902237947}
   - component: {fileID: 3188654237461801886}
   - component: {fileID: 8489480005714045207}
-  - component: {fileID: 564170299664222188}
   - component: {fileID: 7235910845699248487}
   m_Layer: 5
   m_Name: EquippedItemSlot
@@ -409,20 +408,6 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 1
---- !u!114 &564170299664222188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9196567197003152404}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47b8584ddd5c0c744aa9d699eec5c399, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parentAfterDrag: {fileID: 0}
-  active: 1
 --- !u!114 &7235910845699248487
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,6 +428,9 @@ MonoBehaviour:
   item: {fileID: 0}
   manager: {fileID: 0}
   nameText: {fileID: 3348428504423516705}
+  normalSprite: {fileID: 21300000, guid: 8edb6218f381b354e99e2a0db265e083, type: 3}
+  hoverSprite: {fileID: 21300000, guid: 371569e956499c74985f5854b744043c, type: 3}
+  img: {fileID: 3768882687902237947}
   pManager: {fileID: 0}
   tManager: {fileID: 0}
   slotNum: 0
