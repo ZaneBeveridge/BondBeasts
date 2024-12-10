@@ -6,15 +6,11 @@ using TMPro;
 using UnityEngine.EventSystems;
 public class EquipmentItemSlot : ItemSlot
 {
+    public Image mainImage;
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI amountText;
-
     public int slotNum;
-
-    void Start()
-    {
-        GetComponent<Image>().alphaHitTestMinimumThreshold = 0.25f;
-    }
+    public Image cover;
 
     public void Init(StoredItem itm, GameManager man)
     {
@@ -25,21 +21,39 @@ public class EquipmentItemSlot : ItemSlot
 
         item = itm.item;
 
-        if (nameText != null)
+        if (itm.amount <= 0)
         {
-            nameText.text = itm.item.itemName;
+            cover.color = new Color(255f,255f,255f,0.5f);
+            button.interactable = false;
+            if (nameText != null)
+            {
+                nameText.text = "";
+            }
+        }
+        else
+        {
+            cover.color = new Color(255f, 255f, 255f, 0f);
+            button.interactable = true;
+            if (nameText != null)
+            {
+                nameText.text = itm.item.itemName;
+            }
+            
         }
 
-        
-        amountText.text = itm.amount.ToString();
-        amount = itm.amount;
         icon.sprite = itm.item.icon;
+        amountText.text = "x" + itm.amount.ToString();
+        amount = itm.amount;
+        
     }
 
 
     public override void OnClick()
     {
-        manager.OpenItemInspectTooltip(item);
+        if (amount > 0)
+        {
+            manager.OpenItemInspectTooltip(item);
+        }
     }
     /*
     public void OnDrop(PointerEventData eventData)
@@ -54,11 +68,7 @@ public class EquipmentItemSlot : ItemSlot
             int slotFrom = slot.GetComponent<EquipmentItemSlot>().slotNum;
 
 
-            manager.collectionManager.RemoveItemFromStorage(slot.item);
-            manager.collectionManager.AddItemToStorageWithID(slot.item, slot.amount, slotNum);
-
-            manager.collectionManager.RemoveItemFromStorage(item);
-            manager.collectionManager.AddItemToStorageWithID(item, amount, slotFrom);
+            
         }
 
 

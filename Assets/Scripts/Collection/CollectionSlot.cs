@@ -16,6 +16,8 @@ public class CollectionSlot : Slot, IDropHandler
     public Sprite parasiticSprite;
 
     public int slotNum;
+
+    public List<PartyItemSlotMini> miniItemSlots = new List<PartyItemSlotMini>();
     public void Init(Monster monster, CollectionManager man, int num)
     {
         type = SlotType.Collection;
@@ -41,6 +43,7 @@ public class CollectionSlot : Slot, IDropHandler
         {
             backingImage.sprite = parasiticSprite;
         }
+        UpdateItems();
     }
 
     public void UpdateItem()
@@ -53,9 +56,64 @@ public class CollectionSlot : Slot, IDropHandler
 
         nameText.text = storedMonster.name;
         levelText.text = storedMonster.level.ToString();
-
+        UpdateItems();
     }
 
+
+
+    public void UpdateItems()
+    {
+        if (storedMonster.item1.id == 0) // locked or empty
+        {
+            int unlockLevel = 0 * 10;
+            if (storedMonster.level >= unlockLevel)
+            {
+                miniItemSlots[0].Init(2);
+            }
+            else
+            {
+                miniItemSlots[0].Init(1);
+            }
+        }
+        else // full
+        {
+            miniItemSlots[0].Init(storedMonster.item1.icon);
+        }
+
+        if (storedMonster.item2.id == 0) // locked or empty
+        {
+            int unlockLevel = 1 * 10;
+            if (storedMonster.level >= unlockLevel)
+            {
+                miniItemSlots[1].Init(2);
+            }
+            else
+            {
+                miniItemSlots[1].Init(1);
+            }
+        }
+        else // full
+        {
+            miniItemSlots[1].Init(storedMonster.item2.icon);
+        }
+
+        if (storedMonster.item3.id == 0) // locked or empty
+        {
+            int unlockLevel = 2 * 10;
+            if (storedMonster.level >= unlockLevel)
+            {
+                miniItemSlots[2].Init(2);
+            }
+            else
+            {
+                miniItemSlots[2].Init(1);
+            }
+        }
+        else // full
+        {
+            miniItemSlots[2].Init(storedMonster.item3.icon);
+        }
+    }
     public override void OnClick()
     {
         manager.OpenCollectionInspect(storedMonster, this.gameObject, "Collection", slotNum);

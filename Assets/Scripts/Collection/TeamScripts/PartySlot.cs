@@ -26,10 +26,8 @@ public class PartySlot : Slot
     public TMP_InputField inputField;
     public TextMeshProUGUI levelText;
 
-    public GameObject bagIconObject;
-    public GameObject inspectIconObject;
     public GameObject renameIconObject;
-
+    public GameObject itemsObj;
     public GameObject equipModeParent;
 
     public List<TeamEquipSlotManager> equipSlots = new List<TeamEquipSlotManager>();
@@ -38,6 +36,8 @@ public class PartySlot : Slot
     public Dragable dragable;
 
     public Animator anim;
+
+    public List<PartyItemSlotMini> miniItemSlots = new List<PartyItemSlotMini>();
 
     //public int slotNum;
     public void Init(Monster monster, CollectionManager man, PartySlotManager partyMan)
@@ -113,6 +113,60 @@ public class PartySlot : Slot
             evolveObject.SetActive(false);
         }
 
+
+        if (storedMonster.item1.id == 0) // locked or empty
+        {
+            int unlockLevel = 0 * 10;
+            if (storedMonster.level >= unlockLevel)
+            {
+                miniItemSlots[0].Init(2);
+            }
+            else
+            {
+                miniItemSlots[0].Init(1);
+            }
+        }
+        else // full
+        {
+            miniItemSlots[0].Init(storedMonster.item1.icon);
+        }
+
+        if (storedMonster.item2.id == 0) // locked or empty
+        {
+            int unlockLevel = 1 * 10;
+            if (storedMonster.level >= unlockLevel)
+            {
+                miniItemSlots[1].Init(2);
+            }
+            else
+            {
+                miniItemSlots[1].Init(1);
+            }
+        }
+        else // full
+        {
+            miniItemSlots[1].Init(storedMonster.item2.icon);
+        }
+
+        if (storedMonster.item3.id == 0) // locked or empty
+        {
+            int unlockLevel = 2 * 10;
+            if (storedMonster.level >= unlockLevel)
+            {
+                miniItemSlots[2].Init(2);
+            }
+            else
+            {
+                miniItemSlots[2].Init(1);
+            }
+        }
+        else // full
+        {
+            miniItemSlots[2].Init(storedMonster.item3.icon);
+        }
+
+
+
     }
 
     public void EquipMode(bool state)
@@ -122,12 +176,10 @@ public class PartySlot : Slot
             nameText.gameObject.SetActive(false);
             levelText.gameObject.SetActive(false);
             slider.gameObject.SetActive(false);
-            bagIconObject.SetActive(false);
-            inspectIconObject.SetActive(false);
             renameIconObject.SetActive(false);
             evolveObject.SetActive(false);
             levelUpObject.SetActive(false);
-
+            itemsObj.SetActive(false);
             equipModeParent.SetActive(true);
 
             for (int i = 0; i < equipSlots.Count; i++)
@@ -144,9 +196,8 @@ public class PartySlot : Slot
             nameText.gameObject.SetActive(true);
             levelText.gameObject.SetActive(true);
             slider.gameObject.SetActive(true);
-            bagIconObject.SetActive(true);
-            inspectIconObject.SetActive(true);
             renameIconObject.SetActive(true);
+            itemsObj.SetActive(true);
 
             equipModeParent.SetActive(false);
 
@@ -163,10 +214,6 @@ public class PartySlot : Slot
         manager.OpenPartyInspect(storedMonster, this.gameObject, "Party", partySlotManager.slotNum - 1);
     }
 
-    public void OnClickBag()
-    {
-        partySlotManager.manager.PressTabButton(1);
-    }
 
     public void OnClickRename()
     {
