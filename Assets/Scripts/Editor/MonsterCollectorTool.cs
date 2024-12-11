@@ -75,6 +75,12 @@ public class MonsterCollectorTool : EditorWindow
         {
             MoveEnvironment("Collection");
         }
+
+
+        if (GUILayout.Button("RefreshCamera"))
+        {
+            RefreshCamera();
+        }
     }
 
 
@@ -168,5 +174,11 @@ public class MonsterCollectorTool : EditorWindow
         if (collectionManager == null) return;
 
         collectionManager.ClearAllMonstersFromParty();
+    }
+
+    private void RefreshCamera()
+    {
+        GameManager GM = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
+        GM.camRatio.Scale();
     }
 }
