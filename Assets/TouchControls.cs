@@ -70,6 +70,325 @@ public partial class @TouchControls: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PCControls"",
+            ""id"": ""4114b35d-ed27-4470-9ae0-0b62b83ea616"",
+            ""actions"": [
+                {
+                    ""name"": ""MoveUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""cbcf5ea9-f78e-470e-802f-51ff822c6135"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""9928adbc-942d-4650-aa7b-e5f1b170fb12"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveLeft"",
+                    ""type"": ""Button"",
+                    ""id"": ""2ad51742-16ee-4fc2-8384-65b23cf82f65"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MoveRight"",
+                    ""type"": ""Button"",
+                    ""id"": ""7e95d431-4714-417f-b3a3-d9b0634317e5"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""01c2b88c-f9fa-40f1-9080-146d12d4ed32"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dialogue"",
+                    ""type"": ""Button"",
+                    ""id"": ""7e0978a1-676c-4e5a-9042-2b35894baf8e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Party"",
+                    ""type"": ""Button"",
+                    ""id"": ""8203c191-379a-4253-bb21-753fbc3d4e5b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""bc0b4827-d891-44ba-a74b-08e8fb0e9807"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tag1"",
+                    ""type"": ""Button"",
+                    ""id"": ""dad4a5a8-4e4a-4735-85dc-150c3388fa13"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tag2"",
+                    ""type"": ""Button"",
+                    ""id"": ""84472bea-067a-487a-9c2e-f18dfe4df8bd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Tag3"",
+                    ""type"": ""Button"",
+                    ""id"": ""07f62665-f26f-49c9-821f-cb8ae32febdc"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Basic"",
+                    ""type"": ""Button"",
+                    ""id"": ""1404e7b3-52ba-4c54-8bfc-47372f5d2459"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Special"",
+                    ""type"": ""Button"",
+                    ""id"": ""7a15ae04-b0d7-49ae-af73-d4ac844b19ca"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Capture"",
+                    ""type"": ""Button"",
+                    ""id"": ""9e81a8b0-77d4-458d-afb1-08cb309762d3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""ff2866e8-07d7-41c3-80eb-672f1c0aee5d"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3f196207-1756-4994-906d-62882392dba9"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""838e1a0e-0aa5-43be-93cb-b8ca0b99aab2"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""72c33aff-97cc-4238-b809-61e65df8f119"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dialogue"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c830619f-2a39-4ce8-99d4-503b95d3df27"",
+                    ""path"": ""<Keyboard>/tab"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Party"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6961cbf6-d7e2-4730-8551-1c5cac342b25"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eda05c58-462e-4776-98c1-6460a045a92e"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tag1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bced3d87-6a52-445a-b182-7ffd787445ca"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tag2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""383eb512-1fc3-451f-9ee5-11738a7238df"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Tag3"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cfc2eec9-537a-464c-81be-2956db8cd940"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Basic"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e6f4634d-aa65-4f6e-9d0c-30fae7781be4"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Special"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9344b339-45b0-4b96-a1dc-619d971fa589"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Capture"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e944e5af-449a-46fe-b71f-b39cd1673351"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f37686d8-70e7-416f-9937-f75015a71992"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6a9b2d14-1ad1-4662-94db-5810cc991b1f"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd18f96a-cc1c-4c51-93d3-8354ec3ca463"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveLeft"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4a089c3f-c672-429c-9f13-df72da0b11fc"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MoveRight"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -78,6 +397,23 @@ public partial class @TouchControls: IInputActionCollection2, IDisposable
         m_Touch = asset.FindActionMap("Touch", throwIfNotFound: true);
         m_Touch_TouchPress = m_Touch.FindAction("TouchPress", throwIfNotFound: true);
         m_Touch_TouchPosition = m_Touch.FindAction("TouchPosition", throwIfNotFound: true);
+        // PCControls
+        m_PCControls = asset.FindActionMap("PCControls", throwIfNotFound: true);
+        m_PCControls_MoveUp = m_PCControls.FindAction("MoveUp", throwIfNotFound: true);
+        m_PCControls_MoveDown = m_PCControls.FindAction("MoveDown", throwIfNotFound: true);
+        m_PCControls_MoveLeft = m_PCControls.FindAction("MoveLeft", throwIfNotFound: true);
+        m_PCControls_MoveRight = m_PCControls.FindAction("MoveRight", throwIfNotFound: true);
+        m_PCControls_Interact = m_PCControls.FindAction("Interact", throwIfNotFound: true);
+        m_PCControls_Dialogue = m_PCControls.FindAction("Dialogue", throwIfNotFound: true);
+        m_PCControls_Party = m_PCControls.FindAction("Party", throwIfNotFound: true);
+        m_PCControls_Pause = m_PCControls.FindAction("Pause", throwIfNotFound: true);
+        m_PCControls_Tag1 = m_PCControls.FindAction("Tag1", throwIfNotFound: true);
+        m_PCControls_Tag2 = m_PCControls.FindAction("Tag2", throwIfNotFound: true);
+        m_PCControls_Tag3 = m_PCControls.FindAction("Tag3", throwIfNotFound: true);
+        m_PCControls_Basic = m_PCControls.FindAction("Basic", throwIfNotFound: true);
+        m_PCControls_Special = m_PCControls.FindAction("Special", throwIfNotFound: true);
+        m_PCControls_Capture = m_PCControls.FindAction("Capture", throwIfNotFound: true);
+        m_PCControls_Jump = m_PCControls.FindAction("Jump", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -189,9 +525,185 @@ public partial class @TouchControls: IInputActionCollection2, IDisposable
         }
     }
     public TouchActions @Touch => new TouchActions(this);
+
+    // PCControls
+    private readonly InputActionMap m_PCControls;
+    private List<IPCControlsActions> m_PCControlsActionsCallbackInterfaces = new List<IPCControlsActions>();
+    private readonly InputAction m_PCControls_MoveUp;
+    private readonly InputAction m_PCControls_MoveDown;
+    private readonly InputAction m_PCControls_MoveLeft;
+    private readonly InputAction m_PCControls_MoveRight;
+    private readonly InputAction m_PCControls_Interact;
+    private readonly InputAction m_PCControls_Dialogue;
+    private readonly InputAction m_PCControls_Party;
+    private readonly InputAction m_PCControls_Pause;
+    private readonly InputAction m_PCControls_Tag1;
+    private readonly InputAction m_PCControls_Tag2;
+    private readonly InputAction m_PCControls_Tag3;
+    private readonly InputAction m_PCControls_Basic;
+    private readonly InputAction m_PCControls_Special;
+    private readonly InputAction m_PCControls_Capture;
+    private readonly InputAction m_PCControls_Jump;
+    public struct PCControlsActions
+    {
+        private @TouchControls m_Wrapper;
+        public PCControlsActions(@TouchControls wrapper) { m_Wrapper = wrapper; }
+        public InputAction @MoveUp => m_Wrapper.m_PCControls_MoveUp;
+        public InputAction @MoveDown => m_Wrapper.m_PCControls_MoveDown;
+        public InputAction @MoveLeft => m_Wrapper.m_PCControls_MoveLeft;
+        public InputAction @MoveRight => m_Wrapper.m_PCControls_MoveRight;
+        public InputAction @Interact => m_Wrapper.m_PCControls_Interact;
+        public InputAction @Dialogue => m_Wrapper.m_PCControls_Dialogue;
+        public InputAction @Party => m_Wrapper.m_PCControls_Party;
+        public InputAction @Pause => m_Wrapper.m_PCControls_Pause;
+        public InputAction @Tag1 => m_Wrapper.m_PCControls_Tag1;
+        public InputAction @Tag2 => m_Wrapper.m_PCControls_Tag2;
+        public InputAction @Tag3 => m_Wrapper.m_PCControls_Tag3;
+        public InputAction @Basic => m_Wrapper.m_PCControls_Basic;
+        public InputAction @Special => m_Wrapper.m_PCControls_Special;
+        public InputAction @Capture => m_Wrapper.m_PCControls_Capture;
+        public InputAction @Jump => m_Wrapper.m_PCControls_Jump;
+        public InputActionMap Get() { return m_Wrapper.m_PCControls; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(PCControlsActions set) { return set.Get(); }
+        public void AddCallbacks(IPCControlsActions instance)
+        {
+            if (instance == null || m_Wrapper.m_PCControlsActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_PCControlsActionsCallbackInterfaces.Add(instance);
+            @MoveUp.started += instance.OnMoveUp;
+            @MoveUp.performed += instance.OnMoveUp;
+            @MoveUp.canceled += instance.OnMoveUp;
+            @MoveDown.started += instance.OnMoveDown;
+            @MoveDown.performed += instance.OnMoveDown;
+            @MoveDown.canceled += instance.OnMoveDown;
+            @MoveLeft.started += instance.OnMoveLeft;
+            @MoveLeft.performed += instance.OnMoveLeft;
+            @MoveLeft.canceled += instance.OnMoveLeft;
+            @MoveRight.started += instance.OnMoveRight;
+            @MoveRight.performed += instance.OnMoveRight;
+            @MoveRight.canceled += instance.OnMoveRight;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
+            @Dialogue.started += instance.OnDialogue;
+            @Dialogue.performed += instance.OnDialogue;
+            @Dialogue.canceled += instance.OnDialogue;
+            @Party.started += instance.OnParty;
+            @Party.performed += instance.OnParty;
+            @Party.canceled += instance.OnParty;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
+            @Tag1.started += instance.OnTag1;
+            @Tag1.performed += instance.OnTag1;
+            @Tag1.canceled += instance.OnTag1;
+            @Tag2.started += instance.OnTag2;
+            @Tag2.performed += instance.OnTag2;
+            @Tag2.canceled += instance.OnTag2;
+            @Tag3.started += instance.OnTag3;
+            @Tag3.performed += instance.OnTag3;
+            @Tag3.canceled += instance.OnTag3;
+            @Basic.started += instance.OnBasic;
+            @Basic.performed += instance.OnBasic;
+            @Basic.canceled += instance.OnBasic;
+            @Special.started += instance.OnSpecial;
+            @Special.performed += instance.OnSpecial;
+            @Special.canceled += instance.OnSpecial;
+            @Capture.started += instance.OnCapture;
+            @Capture.performed += instance.OnCapture;
+            @Capture.canceled += instance.OnCapture;
+            @Jump.started += instance.OnJump;
+            @Jump.performed += instance.OnJump;
+            @Jump.canceled += instance.OnJump;
+        }
+
+        private void UnregisterCallbacks(IPCControlsActions instance)
+        {
+            @MoveUp.started -= instance.OnMoveUp;
+            @MoveUp.performed -= instance.OnMoveUp;
+            @MoveUp.canceled -= instance.OnMoveUp;
+            @MoveDown.started -= instance.OnMoveDown;
+            @MoveDown.performed -= instance.OnMoveDown;
+            @MoveDown.canceled -= instance.OnMoveDown;
+            @MoveLeft.started -= instance.OnMoveLeft;
+            @MoveLeft.performed -= instance.OnMoveLeft;
+            @MoveLeft.canceled -= instance.OnMoveLeft;
+            @MoveRight.started -= instance.OnMoveRight;
+            @MoveRight.performed -= instance.OnMoveRight;
+            @MoveRight.canceled -= instance.OnMoveRight;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
+            @Dialogue.started -= instance.OnDialogue;
+            @Dialogue.performed -= instance.OnDialogue;
+            @Dialogue.canceled -= instance.OnDialogue;
+            @Party.started -= instance.OnParty;
+            @Party.performed -= instance.OnParty;
+            @Party.canceled -= instance.OnParty;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
+            @Tag1.started -= instance.OnTag1;
+            @Tag1.performed -= instance.OnTag1;
+            @Tag1.canceled -= instance.OnTag1;
+            @Tag2.started -= instance.OnTag2;
+            @Tag2.performed -= instance.OnTag2;
+            @Tag2.canceled -= instance.OnTag2;
+            @Tag3.started -= instance.OnTag3;
+            @Tag3.performed -= instance.OnTag3;
+            @Tag3.canceled -= instance.OnTag3;
+            @Basic.started -= instance.OnBasic;
+            @Basic.performed -= instance.OnBasic;
+            @Basic.canceled -= instance.OnBasic;
+            @Special.started -= instance.OnSpecial;
+            @Special.performed -= instance.OnSpecial;
+            @Special.canceled -= instance.OnSpecial;
+            @Capture.started -= instance.OnCapture;
+            @Capture.performed -= instance.OnCapture;
+            @Capture.canceled -= instance.OnCapture;
+            @Jump.started -= instance.OnJump;
+            @Jump.performed -= instance.OnJump;
+            @Jump.canceled -= instance.OnJump;
+        }
+
+        public void RemoveCallbacks(IPCControlsActions instance)
+        {
+            if (m_Wrapper.m_PCControlsActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IPCControlsActions instance)
+        {
+            foreach (var item in m_Wrapper.m_PCControlsActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_PCControlsActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public PCControlsActions @PCControls => new PCControlsActions(this);
     public interface ITouchActions
     {
         void OnTouchPress(InputAction.CallbackContext context);
         void OnTouchPosition(InputAction.CallbackContext context);
+    }
+    public interface IPCControlsActions
+    {
+        void OnMoveUp(InputAction.CallbackContext context);
+        void OnMoveDown(InputAction.CallbackContext context);
+        void OnMoveLeft(InputAction.CallbackContext context);
+        void OnMoveRight(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+        void OnDialogue(InputAction.CallbackContext context);
+        void OnParty(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
+        void OnTag1(InputAction.CallbackContext context);
+        void OnTag2(InputAction.CallbackContext context);
+        void OnTag3(InputAction.CallbackContext context);
+        void OnBasic(InputAction.CallbackContext context);
+        void OnSpecial(InputAction.CallbackContext context);
+        void OnCapture(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
     }
 }

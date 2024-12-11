@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     public PopupManager popupManager;
     public TimeManager timeManager;
     public FadeToBlackManager fadeManager;
+    public CameraScaleToAspectRatio camRatio;
 
     [Header("DATA")]
     public List<MonsterSO> monsterSOData = new List<MonsterSO>();
@@ -65,10 +66,11 @@ public class GameManager : MonoBehaviour
 
     public string monsterType;
     public int monsterNumInStorage;
-    
 
 
     [HideInInspector] public bool invulnerableDebug = false;
+
+
     private void Awake()
     {
         if (SaveSystem.GetSave() == false) // First time!
